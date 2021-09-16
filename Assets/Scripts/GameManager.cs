@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public int _shield;
     public int _minutes;
 
-    private int mBallSpeed;
+    private int mMaxEnergy;
+    private bool mIsFull = true;
 
     private void Start()
     {
@@ -18,9 +19,22 @@ public class GameManager : MonoBehaviour
         StartCoroutine(AutomaticEnergyRefiller());
     }
 
+    private void Update()
+    {
+        if(_energy > mMaxEnergy)
+        {
+            mIsFull = false;
+            return;
+        }
+        else
+        {
+            mIsFull = true;
+        }
+    }
+
     private IEnumerator AutomaticEnergyRefiller()
     {
-        while (true)
+        while (mIsFull)
         {
             yield return new WaitForSeconds(MinutesToSecondsConverter(_minutes));
             _energy += 1;

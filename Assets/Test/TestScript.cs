@@ -14,9 +14,15 @@ public class TestScript : MonoBehaviour
     private void Update()
     {
         HorizontalPanningWithRotation();
-        VerticalZooming();
+        //VerticalZooming();
     }
 
+    /// <summary>
+    /// Responsible for Making the camera move right & left along with rotation.
+    /// 1. We store first touch position as previous position or initial position when we click mouseButtonDown
+    /// 2. With mouseButtonDown being true we keep tracking the mouseposition and store it to newPosition and then we take the initial/previous position
+    /// and check the differnce and store it in as direction as it says which direction are we moving
+    /// </summary>
     private void HorizontalPanningWithRotation()
     {
         //First - Get the Initial Position
@@ -39,22 +45,22 @@ public class TestScript : MonoBehaviour
         }
     }
 
-    private void VerticalZooming()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            intialPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
-        }
+    //private void VerticalZooming()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        intialPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
+    //    }
 
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 newPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
-            Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - newPosition);
+    //    if (Input.GetMouseButton(0))
+    //    {
+    //        Vector3 newPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
+    //        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - newPosition);
 
-            Vector3 move = pos.y * 5 * transform.forward;
-            transform.Translate(move, Space.World);
-            intialPosition = newPosition;
-        }
-    }
+    //        Vector3 move = pos.y * 5 * transform.forward;
+    //        transform.Translate(move, Space.World);
+    //        intialPosition = newPosition;
+    //    }
+    //}
 }
 
