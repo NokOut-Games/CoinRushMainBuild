@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    [Header("Horizontal Panning")]
+    [Header("Camera")]
     [SerializeField] private Camera mCamRef;
+    private float mInitialPosition;
+    private float mChangedPosition;
+
+    [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
-    [SerializeField] private Vector3 mDistanceToTarget;
-    private Vector3 mInitialPosition;
 
     [Header("Vertical Zomming")]
-    [SerializeField] private float zoomSpeed;
-
-    Vector3 intialPosition;
-    public bool canMove = false;
+    [SerializeField] private float mZoomSpeed;
+    
     private void Update()
     {
-        Debug.Log( mCamRef.ScreenToViewportPoint(Input.mousePosition));
-        //HorizontalPanningWithRotation();
-        VerticalZooming();
+        HorizontalPanningWithRotation();
+        //VerticalZooming();
     }
 
     /// <summary>
@@ -28,69 +27,79 @@ public class TestScript : MonoBehaviour
     /// 2. With mouseButtonDown being true we keep tracking the mouseposition and store it to newPosition and then we take the initial/previous position
     /// and check the differnce and store it in as direction as it says which direction are we moving
     /// </summary>
-    //private void HorizontalPanningWithRotation()
-    //{
-    //    //First - Get the Initial Position
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        mInitialPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
-    //        //Debug.Log(mInitialPosition);
-    //    }
-
-    //    //Second - the difference amount and change in x
-    //    if (Input.GetMouseButton(0))
-    //    {
-    //        Vector3 newPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
-    //        Vector3 difference = mInitialPosition - newPosition;
-
-    //        float rotationAroundYAxis = -difference.x * 120;
-    //        mCamRef.transform.position = mTargetToRotateAround.position;
-
-    //        mCamRef.transform.Rotate(Vector3.up, rotationAroundYAxis, Space.World);
-    //        mCamRef.transform.Translate(new Vector3(mDistanceToTarget.x, mDistanceToTarget.y, -mDistanceToTarget.z));
-    //        mInitialPosition = newPosition;
-    //    }
-    //}
-
-    private void VerticalZooming()
+    private void HorizontalPanningWithRotation()
     {
-        Vector3 initialPosition = new Vector3();
-        Vector3 newPosition = new Vector3();
-
         if (Input.GetMouseButtonDown(0))
         {
-            initialPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);
+            mInitialPosition = Input.mousePosition.x;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            mChangedPosition = Input.mousePosition.x;
+            float difference = mChangedPosition - mInitialPosition;
+            if (mChangedPosition < mInitialPosition || mChangedPosition > mInitialPosition)
+            {
+                Rotation(-difference);
+            }
+        }
+    }
+    private void Rotation(float inDifference)
+    {
+        if (mCamRef.transform.rotation.y > -0.5f && mCamRef.transform.rotation.y < 0.5f)
+        {
+            transform.RotateAround(mTargetToRotateAround.position, transform.up, inDifference * Time.deltaTime);
+        }
+    }
+
+    /// <summary>
+    /// We get get the input position in y on click.
+    /// And keep updating the input.y position as save it to 
+    /// </summary>
+    private void VerticalZooming()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mInitialPosition = Input.mousePosition.y;
         }
         
         if (Input.GetMouseButton(0))
         {
-            newPosition = mCamRef.ScreenToViewportPoint(Input.mousePosition);   
+            mChangedPosition = Input.mousePosition.y;
 
-            if (newPosition.y < initialPosition.y)
-            {
-                Zoom((zoomSpeed * -1f) * Time.deltaTime);
-                Debug.Log(zoomSpeed);
-            }
-            if (newPosition.y > initialPosition.y)
-            {
-                Zoom(zoomSpeed * Time.deltaTime);
-                Debug.Log(zoomSpeed);
-            }
-        }
+            #region "ClampZoom"
+            float cameraZ = mCamRef.transform.position.z;
+            cameraZ = Mathf.Clamp(cameraZ, -4f, -25f);
+            #endregion
 
-        if(newPosition.y < initialPosition.y)
-        {
-            Debug.Log("Y is Lower");
-        }
-        if (newPosition.y > initialPosition.y)
-        {
-            Debug.Log("Y is Higher");
+            if (mChangedPosition == mInitialPosition)
+            {
+                return;
+            }
+            if (mChangedPosition < mInitialPosition)
+            {
+                Zoom((mZoomSpeed * -1f) * Time.deltaTime , cameraZ);
+            }
+            if (mChangedPosition > mInitialPosition)
+            {
+                Zoom(mZoomSpeed * Time.deltaTime , cameraZ);
+            }
         }
     }
-
-    private void Zoom(float inZoomSpeed)
+    private void Zoom(float inZoomSpeed , float inCameraZ)
     {
-        transform.Translate(mCamRef.transform.position.z * inZoomSpeed * transform.forward);
+        if (mCamRef.transform.position.z < -4f && mCamRef.transform.position.z > -25f)
+        {
+            transform.Translate(inCameraZ * inZoomSpeed * transform.forward);
+        }
     }
 }
 
+//void residue()
+//{
+//    float cameraZ = mCamRef.transform.position.z;
+//    float cameraRotY = mCamRef.transform.rotation.y;
+
+//    cameraZ = Mathf.Clamp(cameraZ, -4f, -20f);
+//    cameraRotY = Mathf.Clamp(cameraRotY, -60f, 60f);
+//}

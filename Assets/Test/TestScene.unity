@@ -1165,8 +1165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCamRef: {fileID: 1440105271}
   mTargetToRotateAround: {fileID: 1790705767}
-  mDistanceToTarget: {x: 0, y: 1, z: 20}
-  zoomSpeed: 2
+  mZoomSpeed: 4
 --- !u!20 &1440105271 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2950048499439001092, guid: 8f10782421b62924990952773ac447f2, type: 3}
@@ -1188,11 +1187,25 @@ MonoBehaviour:
   distance: 25
   xSpeed: 20
   ySpeed: 20
-  yMinLimit: -90
-  yMaxLimit: 90
+  yMinLimit: -60
+  yMaxLimit: 60
   distanceMin: 10
   distanceMax: 50
   smoothTime: 2
+--- !u!114 &1440105275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440105267}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89159f3e926265f4f82882caef45c421, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3.5
+  building: {fileID: 1790705767}
 --- !u!1 &1448875638
 GameObject:
   m_ObjectHideFlags: 0

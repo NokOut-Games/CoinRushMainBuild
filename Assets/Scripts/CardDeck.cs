@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public enum CardType 
-{ 
+public enum CardType
+{
     ATTACK,
     STEAL,
     SHIELD,
@@ -17,15 +17,15 @@ public enum CardType
     ONEMILLIONCOINS
 }
 
+
 public class CardDeck : MonoBehaviour
 {
     private Camera mCam;
     [SerializeField] private Transform mDeckCardCamPosition;
-    private CardType cardType;
+    //private CardType cardType;
 
     void Start()
     {
-        
         mCam = Camera.main;
         
     }
@@ -41,48 +41,48 @@ public class CardDeck : MonoBehaviour
         //Draw a card out
 
         //Check what type of card is it
-        switch (cardType)
-        {
-            case CardType.ATTACK:
-                //Open a Scene to Attack
-                break;
-            case CardType.STEAL:
-                //Opens a Scene to Steal
-                break;
-            case CardType.SHIELD:
-                //Makes shield +1
-                break;
-            case CardType.JOKER:
-                //Joker Thing
-                break;
-            case CardType.TENENERGY:
-                //grants _10 Energy Cards 
-                break;
-            case CardType.TWENTYFIVEENERGY:
-                //grants _25 Energy Cards 
-                break;
-            case CardType.HUNDREDENERGY:
-                //grants _100 Energy Cards 
-                break;
-            case CardType.FIVETHOUSANDCOINS:
-                //grants _500 coins
-                break;
-            case CardType.TWENTYFIVETHOUSANDCOINS:
-                //grants _25000 coins
-                break;
-            case CardType.HUNDREDTHOUSANDCOINS:
-                //grants _100,000 Energy Cards 
-                break;
-            case CardType.FIVEHUNDREDTHOUSANDCOINS:
-                //grants _500,000 Energy Cards 
-                break;
-            case CardType.ONEMILLIONCOINS:
-                //grants _10,00,000 Energy Cards 
-                break;
-            default:
-                Debug.Log("DoNothing");
-                break;
-        }
+        //switch (cardType)
+        //{
+        //    case CardType.ATTACK:
+        //        //Open a Scene to Attack
+        //        break;
+        //    case CardType.STEAL:
+        //        //Opens a Scene to Steal
+        //        break;
+        //    case CardType.SHIELD:
+        //        //Makes shield +1
+        //        break;
+        //    case CardType.JOKER:
+        //        //Joker Thing
+        //        break;
+        //    case CardType.TENENERGY:
+        //        //grants _10 Energy Cards 
+        //        break;
+        //    case CardType.TWENTYFIVEENERGY:
+        //        //grants _25 Energy Cards 
+        //        break;
+        //    case CardType.HUNDREDENERGY:
+        //        //grants _100 Energy Cards 
+        //        break;
+        //    case CardType.FIVETHOUSANDCOINS:
+        //        //grants _500 coins
+        //        break;
+        //    case CardType.TWENTYFIVETHOUSANDCOINS:
+        //        //grants _25000 coins
+        //        break;
+        //    case CardType.HUNDREDTHOUSANDCOINS:
+        //        //grants _100,000 Energy Cards 
+        //        break;
+        //    case CardType.FIVEHUNDREDTHOUSANDCOINS:
+        //        //grants _500,000 Energy Cards 
+        //        break;
+        //    case CardType.ONEMILLIONCOINS:
+        //        //grants _10,00,000 Energy Cards 
+        //        break;
+        //    default:
+        //        Debug.Log("DoNothing");
+        //        break;
+        //}
 
 
 
