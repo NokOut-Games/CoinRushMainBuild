@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Cards : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        
-    }
+    public List<BoosterCards> boosterCards;
+    public List<ActionCards> actionCards;
 }
