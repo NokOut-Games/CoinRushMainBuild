@@ -6,11 +6,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int _coins;
-    public int _energy;
+    public int _energy = 25;
     public int _shield;
     public int _minutes;
 
-    private int mMaxEnergy;
+    private int mMaxEnergy = 1000;
     private bool mIsFull = true;
 
     private void Start()
