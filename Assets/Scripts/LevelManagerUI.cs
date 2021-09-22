@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class LevelManagerUI : MonoBehaviour
 {
-    
-    public List<Transform> _cardSlotPoints;
+    [SerializeField] GameObject[] points;
 
-    int clicks = 0;
-    private void Update()
-    { 
+    private void Start()
+    {
+ 
     }
+
+    private void Update()
+    {
+        
+    }
+
 }
