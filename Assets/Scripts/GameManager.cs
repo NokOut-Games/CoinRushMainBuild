@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(_coins);
         if(_energy > mMaxEnergy)
         {
             mIsFull = false;
