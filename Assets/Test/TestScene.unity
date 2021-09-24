@@ -364,6 +364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 60473094}
+  - component: {fileID: 60473092}
   m_Layer: 0
   m_Name: CardSlot (3)
   m_TagString: CardSlot
@@ -371,6 +372,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &60473092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 60473091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &60473094
 Transform:
   m_ObjectHideFlags: 0
@@ -502,16 +516,8 @@ MonoBehaviour:
   mDeck: {fileID: 2066720961}
   mDeckCardCamPosition: {fileID: 907622761}
   levelManagerUI: {fileID: 1583574159}
-  _cardSlotPoints:
-  - {fileID: 313241420}
-  - {fileID: 1088771777}
-  - {fileID: 2099738623}
-  - {fileID: 60473094}
-  - {fileID: 488919436}
-  - {fileID: 1388135599}
-  - {fileID: 970014492}
-  - {fileID: 844488488}
   mCards: {fileID: 974167313}
+  handPoints: []
 --- !u!4 &248093376
 Transform:
   m_ObjectHideFlags: 0
@@ -601,6 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 313241420}
+  - component: {fileID: 313241421}
   m_Layer: 0
   m_Name: CardSlot (0)
   m_TagString: CardSlot
@@ -622,6 +629,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &313241421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313241419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!1 &378816361
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 488919436}
+  - component: {fileID: 488919434}
   m_Layer: 0
   m_Name: CardSlot (4)
   m_TagString: CardSlot
@@ -771,6 +792,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &488919434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488919433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &488919436
 Transform:
   m_ObjectHideFlags: 0
@@ -794,6 +828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 844488488}
+  - component: {fileID: 844488486}
   m_Layer: 0
   m_Name: CardSlot (7)
   m_TagString: CardSlot
@@ -801,6 +836,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &844488486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844488485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &844488488
 Transform:
   m_ObjectHideFlags: 0
@@ -854,6 +902,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 970014492}
+  - component: {fileID: 970014490}
   m_Layer: 0
   m_Name: CardSlot (6)
   m_TagString: CardSlot
@@ -861,6 +910,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &970014490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970014489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &970014492
 Transform:
   m_ObjectHideFlags: 0
@@ -941,6 +1003,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1088771777}
+  - component: {fileID: 1088771775}
   m_Layer: 0
   m_Name: CardSlot (1)
   m_TagString: CardSlot
@@ -948,6 +1011,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1088771775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088771774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &1088771777
 Transform:
   m_ObjectHideFlags: 0
@@ -1275,6 +1351,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1388135599}
+  - component: {fileID: 1388135597}
   m_Layer: 0
   m_Name: CardSlot (5)
   m_TagString: CardSlot
@@ -1282,6 +1359,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1388135597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388135596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &1388135599
 Transform:
   m_ObjectHideFlags: 0
@@ -1708,12 +1798,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OverAllCards: []
   FiveK: []
   TWENTYFIVEK: []
   HUNDREDK: []
   FIVEHUNDREDK: []
   ONEM: []
   gameManager: {fileID: 240463005}
+  isDone: 0
 --- !u!4 &1583574160
 Transform:
   m_ObjectHideFlags: 0
@@ -1863,16 +1955,16 @@ MonoBehaviour:
   mDeck: {fileID: 2066720961}
   mDeckCardCamPosition: {fileID: 907622761}
   levelManagerUI: {fileID: 1583574159}
-  _cardSlotPoints:
-  - {fileID: 313241420}
-  - {fileID: 1088771777}
-  - {fileID: 2099738623}
-  - {fileID: 60473094}
-  - {fileID: 488919436}
-  - {fileID: 1388135599}
-  - {fileID: 970014492}
-  - {fileID: 844488488}
   mCards: {fileID: 974167313}
+  handPoints:
+  - {fileID: 313241421}
+  - {fileID: 1088771775}
+  - {fileID: 2099738621}
+  - {fileID: 60473092}
+  - {fileID: 488919434}
+  - {fileID: 1388135597}
+  - {fileID: 970014490}
+  - {fileID: 844488486}
 --- !u!1 &2099738620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1882,6 +1974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2099738623}
+  - component: {fileID: 2099738621}
   m_Layer: 0
   m_Name: CardSlot (2)
   m_TagString: CardSlot
@@ -1889,6 +1982,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2099738621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099738620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isFilled: 0
 --- !u!4 &2099738623
 Transform:
   m_ObjectHideFlags: 0
@@ -2197,7 +2303,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _coins
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _energy
