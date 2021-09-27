@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class CardDeck : MonoBehaviour
 {
-    [SerializeField] private Camera mCam;
-    [SerializeField] private GameObject mDeck;
+    [SerializeField] private GameObject mCam;
     [SerializeField] private Transform mDeckCardCamPosition;
+    [SerializeField] private LevelManagerUI mlevelManagerUI;
+    [SerializeField] private GameManager mGameManager;
+    private int clicks = 0;
+    [SerializeField] private Cards mCards;
 
-    [SerializeField] LevelManagerUI levelManagerUI;
-
-    //public List<Transform> _cardSlotPoints;
-    int clicks = 0;
-    [SerializeField] Cards mCards;
-
-    public List<HandPoints> handPoints;
+    public List<HandPoints> _handPoints;
 
     private void Start()
     {
-           
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     /// <summary>
@@ -26,36 +23,37 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void DrawCard()
     {
+        mGameManager._energy -= 1;
         ZoomCameraToPlayArea();
-        if(!handPoints[clicks].isFilled)
-        {
-            GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, handPoints[clicks].transform.position, Quaternion.Euler(180f, -90f, 0f));
-            handPoints[clicks].isFilled = true;
+        //if(!_handPoints[clicks].isFilled)
+        //{
+            GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0,180f,0f));
+            //_handPoints[clicks].isFilled = true;
             switch (card.tag)
             {
                 case "5K Coins":
-                    levelManagerUI.FiveK.Add(card);
+                    mlevelManagerUI._fiveThousandCoinList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
                 case "25K Coins":
-                    levelManagerUI.TWENTYFIVEK.Add(card);
+                    mlevelManagerUI._twentyFiveThousandCoinList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
                 case "100K Coins":
-                    levelManagerUI.HUNDREDK.Add(card);
+                    mlevelManagerUI._hunderThousandCoinList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
                 case "500K Coins":
-                    levelManagerUI.FIVEHUNDREDK.Add(card);
+                    mlevelManagerUI._fiveHundredThousandCoinList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
                 case "1M Coins":
-                    levelManagerUI.ONEM.Add(card);
+                    mlevelManagerUI._OneMillionJackPotCardList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
             }
             clicks += 1;
-        }
+        //}
     }
 
     private void Update()
@@ -63,29 +61,29 @@ public class CardDeck : MonoBehaviour
         if (clicks == 8)
         {
             //levelManagerUI.OverAllCards.Clear();
-            foreach (GameObject card in levelManagerUI.FiveK)
+            foreach (GameObject card in mlevelManagerUI._fiveThousandCoinList)
             {
-                levelManagerUI.FiveK.Clear();
+                mlevelManagerUI._fiveThousandCoinList.Clear();
                 Destroy(card);
             }
-            foreach (GameObject card in levelManagerUI.TWENTYFIVEK)
+            foreach (GameObject card in mlevelManagerUI._twentyFiveThousandCoinList)
             {
-                levelManagerUI.TWENTYFIVEK.Clear();
+                mlevelManagerUI._twentyFiveThousandCoinList.Clear();
                 Destroy(card);
             }
-            foreach (GameObject card in levelManagerUI.HUNDREDK)
+            foreach (GameObject card in mlevelManagerUI._hunderThousandCoinList)
             {
-                levelManagerUI.HUNDREDK.Clear();
+                mlevelManagerUI._hunderThousandCoinList.Clear();
                 Destroy(card);
             }
-            foreach (GameObject card in levelManagerUI.FIVEHUNDREDK)
+            foreach (GameObject card in mlevelManagerUI._fiveHundredThousandCoinList)
             {
-                levelManagerUI.FIVEHUNDREDK.Clear();
+                mlevelManagerUI._fiveHundredThousandCoinList.Clear();
                 Destroy(card);
             }
-            foreach (GameObject card in levelManagerUI.ONEM)
+            foreach (GameObject card in mlevelManagerUI._OneMillionJackPotCardList)
             {
-                levelManagerUI.ONEM.Clear();
+                mlevelManagerUI._OneMillionJackPotCardList.Clear();
                 Destroy(card);
             }
 

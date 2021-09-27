@@ -19,10 +19,7 @@ public enum CardType
 
 public class Cards : MonoBehaviour
 {
-    public List<BoosterCards> boosterCards;
-    public List<ActionCards> actionCards;
-
-    [SerializeField] private Transform mDeckSpawnPosition;
+    public List<ScriptedCards> boosterCards;
     [SerializeField] private GameManager mGameManager;
     [SerializeField] private int mEnergy;
     private int mCoins;

@@ -4,7 +4,124 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("Camera")]
+    private float mInitialPosition;
+    private float mChangedPosition;
 
+    [Header("Horizontal Panning")]
+    [SerializeField] private Transform mTargetToRotateAround;
+
+    [Header("Vertical Zomming")]
+    [SerializeField] private float mZoomSpeed;
+
+    [Header("Camera Views")]
+    private Transform _currentView;
+    private bool GameView;
+
+    public Transform[] _views;
+    public float _transitionSpeed;
+
+
+
+    private void Update()
+    {
+        VerticalZooming();
+        //HorizontalPanningWithRotation();
+       //Debug.Log(transform.eulerAngles.y);
+
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    _currentView = _views[0];
+        //}
+
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    _currentView = _views[1];
+        //}
+
+        //transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+        ////Lerp position
+
+        //Vector3 currentAngle = new Vector3(
+        // Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+        // Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+        // Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+
+        //transform.eulerAngles = currentAngle;
+    }
+
+    private void LateUpdate()
+    {
+
+    }
+
+    /// <summary>
+    /// Responsible for Making the camera move right & left along with rotation.
+    /// 1. We store first touch position as previous position or initial position when we click mouseButtonDown
+    /// 2. With mouseButtonDown being true we keep tracking the mouseposition and store it to newPosition and then we take the initial/previous position
+    /// and check the differnce and store it in as direction as it says which direction are we moving
+    /// </summary>
+    private void HorizontalPanningWithRotation()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mInitialPosition = Input.mousePosition.x;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            mChangedPosition = Input.mousePosition.x;
+            float difference = mChangedPosition - mInitialPosition;
+            if (mChangedPosition < mInitialPosition || mChangedPosition > mInitialPosition)
+            {
+                Rotation(-difference);
+            }
+        }
+    }
+    private void Rotation(float inDifference)
+    {
+        //if (transform.eulerAngles.y < 60f  && transform.eulerAngles.y > -60f)
+        //{
+        transform.RotateAround(mTargetToRotateAround.position, transform.up, inDifference * Time.deltaTime);
+        //}
+    }
+
+    /// <summary>
+    /// We get get the input position in y on click.
+    /// And keep updating the input.y position as save it to 
+    /// </summary>
+    private void VerticalZooming()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mInitialPosition = Input.mousePosition.y;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            mChangedPosition = Input.mousePosition.y;
+
+            if (mChangedPosition == mInitialPosition)
+            {
+                return;
+            }
+            if (mChangedPosition < mInitialPosition)
+            {
+                Zoom(mZoomSpeed * -1f * Time.deltaTime);
+            }
+            if (mChangedPosition > mInitialPosition)
+            {
+                Zoom(mZoomSpeed * Time.deltaTime);
+            }
+        }
+    }
+    private void Zoom(float inZoomSpeed)
+    {
+        if (transform.position.z <= -40f && transform.position.z >= -90f)
+        {
+            transform.Translate(inZoomSpeed * transform.forward);
+        }
+    }
 }
 
 

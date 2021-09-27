@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public int _shield;
     public int _minutes;
 
-    private int mMaxEnergy = 1000;
+    private int mMaxEnergy = 999;
     private bool mIsFull = true;
 
     private void Start()
@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_coins);
-        if(_energy > mMaxEnergy)
+        if(_energy == mMaxEnergy)
         {
             mIsFull = false;
             return;
