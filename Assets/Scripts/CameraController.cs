@@ -16,43 +16,56 @@ public class CameraController : MonoBehaviour
 
     [Header("Camera Views")]
     private Transform _currentView;
-    private bool GameView;
+    
+    private Vector3 initialVector = Vector3.forward;
 
     public Transform[] _views;
     public float _transitionSpeed;
 
+    public bool _DrawButtonClicked = false;
 
+    private void Start()
+    {
+        if (mTargetToRotateAround != null)
+        {
+            initialVector = transform.position - mTargetToRotateAround.position;
+            initialVector.y = 0;
+        }
+    }
 
     private void Update()
     {
+        HorizontalPanningWithRotation();
         VerticalZooming();
-        //HorizontalPanningWithRotation();
-       //Debug.Log(transform.eulerAngles.y);
+        //Debug.Log(transform.eulerAngles.y);
 
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (_DrawButtonClicked)
+        {
+            _currentView = _views[1];
+
+            transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+            //Lerp position
+
+            Vector3 currentAngle = new Vector3(
+                Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+
+            transform.eulerAngles = currentAngle;
+        }
+        //else
         //{
         //    _currentView = _views[0];
+        //    transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+        //    //Lerp position
+
+        //    Vector3 currentAngle = new Vector3(
+        //        Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+        //        Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+        //        Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+
+        //    transform.eulerAngles = currentAngle;
         //}
-
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    _currentView = _views[1];
-        //}
-
-        //transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
-        ////Lerp position
-
-        //Vector3 currentAngle = new Vector3(
-        // Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
-        // Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
-        // Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
-
-        //transform.eulerAngles = currentAngle;
-    }
-
-    private void LateUpdate()
-    {
-
     }
 
     /// <summary>
@@ -65,25 +78,33 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            _DrawButtonClicked = false;
+
             mInitialPosition = Input.mousePosition.x;
         }
 
         if (Input.GetMouseButton(0))
         {
             mChangedPosition = Input.mousePosition.x;
-            float difference = mChangedPosition - mInitialPosition;
-            if (mChangedPosition < mInitialPosition || mChangedPosition > mInitialPosition)
+            //float difference = mChangedPosition - mInitialPosition;
+            float rotateDegrees = 0f;
+            if (mChangedPosition < mInitialPosition)
             {
-                Rotation(-difference);
+                //Rotation(-difference);
+                rotateDegrees += 50f * Time.deltaTime;
             }
+            if (mChangedPosition > mInitialPosition)
+            {
+                rotateDegrees -= 50f * Time.deltaTime;
+            }
+            Vector3 currentVector = transform.position - mTargetToRotateAround.position;
+            currentVector.y = 0;
+            float angleBetween = Vector3.Angle(initialVector, currentVector) * (Vector3.Cross(initialVector, currentVector).y > 0 ? 1 : -1);
+            float newAngle = Mathf.Clamp(angleBetween + rotateDegrees, -60, 60);
+            rotateDegrees = newAngle - angleBetween;
+
+            transform.RotateAround(mTargetToRotateAround.position, Vector3.up, rotateDegrees);
         }
-    }
-    private void Rotation(float inDifference)
-    {
-        //if (transform.eulerAngles.y < 60f  && transform.eulerAngles.y > -60f)
-        //{
-        transform.RotateAround(mTargetToRotateAround.position, transform.up, inDifference * Time.deltaTime);
-        //}
     }
 
     /// <summary>
@@ -115,6 +136,10 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// Zoom Condition
+    /// </summary>
+    /// <param name="inZoomSpeed"></param>
     private void Zoom(float inZoomSpeed)
     {
         if (transform.position.z <= -40f && transform.position.z >= -90f)

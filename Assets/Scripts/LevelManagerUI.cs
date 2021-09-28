@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
-using System;
 
 public class LevelManagerUI : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class LevelManagerUI : MonoBehaviour
     public List<GameObject> _hunderThousandCoinList;
     public List<GameObject> _fiveHundredThousandCoinList;
     public List<GameObject> _OneMillionJackPotCardList;
+    public List<GameObject> _AttackCardList;
+    public List<GameObject> _StealCardList;
+    public List<GameObject> _SheildCardList;
+    public List<GameObject> _TenEnergyCardList;
+    public List<GameObject> _TwentyFiveEnergyCardList;
+    public List<GameObject> _HundredEnergyCardList;
+
 
     public GameManager _gameManager;
 
@@ -36,7 +44,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _fiveThousandCoinList.Clear();
-                Invoke("IsDone", 1f);
+                Invoke("IsDone", .5f);
             }
             if (_twentyFiveThousandCoinList.Count == 3)
             {
@@ -48,7 +56,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _twentyFiveThousandCoinList.Clear();
-                Invoke("IsDone", 1f);
+                Invoke("IsDone", .5f);
             }
             if (_hunderThousandCoinList.Count == 3)
             {
@@ -60,7 +68,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _hunderThousandCoinList.Clear();
-                Invoke("IsDone", 1f);
+                Invoke("IsDone", .5f);
             }
             if (_fiveHundredThousandCoinList.Count == 3)
             {
@@ -72,8 +80,8 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _fiveHundredThousandCoinList.Clear();
-                Invoke("IsDone", 1f);
-            }
+                Invoke("IsDone", .5f);
+            } 
             if (_OneMillionJackPotCardList.Count == 3)
             {
                 _gameManager._coins += 1000000;
@@ -84,7 +92,43 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _OneMillionJackPotCardList.Clear();
-                Invoke("IsDone", 1f);
+                Invoke("IsDone", .5f);
+            }
+            if (_AttackCardList.Count == 3)
+            {
+                SceneManager.LoadScene("AttackScene");
+                isDone = true;
+                foreach (GameObject c in _AttackCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _AttackCardList.Clear();
+                Invoke("IsDone", .5f);
+            }
+            if (_SheildCardList.Count == 3)
+            {
+                _gameManager._shield += 3;
+                isDone = true;
+                foreach (GameObject c in _SheildCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _SheildCardList.Clear();
+                Invoke("IsDone", .5f);
+            }
+            if (_StealCardList.Count == 3)
+            {
+                SceneManager.LoadScene("StealScene");
+                isDone = true;
+                foreach (GameObject c in _StealCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _StealCardList.Clear();
+                Invoke("IsDone", .5f);
             }
         }
     }

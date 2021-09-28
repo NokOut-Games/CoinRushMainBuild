@@ -13,6 +13,8 @@ public class CardDeck : MonoBehaviour
 
     public List<HandPoints> _handPoints;
 
+    //public CameraController _cameraController;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -24,7 +26,8 @@ public class CardDeck : MonoBehaviour
     public void DrawCard()
     {
         mGameManager._energy -= 1;
-        ZoomCameraToPlayArea();
+        FindObjectOfType<CameraController>()._DrawButtonClicked = true;
+        //ZoomCameraToPlayArea();
         //if(!_handPoints[clicks].isFilled)
         //{
             GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0,180f,0f));
@@ -51,8 +54,17 @@ public class CardDeck : MonoBehaviour
                     mlevelManagerUI._OneMillionJackPotCardList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
+                case "Attack":
+                    mlevelManagerUI._AttackCardList.Add(card);
+                    break;
+                case "Shield":
+                    mlevelManagerUI._SheildCardList.Add(card);
+                    break;
+                case "Steal":
+                    mlevelManagerUI._StealCardList.Add(card);
+                    break;
             }
-            clicks += 1;
+        clicks += 1;
         //}
     }
 
@@ -63,28 +75,28 @@ public class CardDeck : MonoBehaviour
             //levelManagerUI.OverAllCards.Clear();
             foreach (GameObject card in mlevelManagerUI._fiveThousandCoinList)
             {
-                mlevelManagerUI._fiveThousandCoinList.Clear();
                 Destroy(card);
+                mlevelManagerUI._fiveThousandCoinList.Clear();
             }
             foreach (GameObject card in mlevelManagerUI._twentyFiveThousandCoinList)
             {
-                mlevelManagerUI._twentyFiveThousandCoinList.Clear();
                 Destroy(card);
+                mlevelManagerUI._twentyFiveThousandCoinList.Clear();
             }
             foreach (GameObject card in mlevelManagerUI._hunderThousandCoinList)
             {
-                mlevelManagerUI._hunderThousandCoinList.Clear();
                 Destroy(card);
+                mlevelManagerUI._hunderThousandCoinList.Clear();
             }
             foreach (GameObject card in mlevelManagerUI._fiveHundredThousandCoinList)
             {
-                mlevelManagerUI._fiveHundredThousandCoinList.Clear();
                 Destroy(card);
+                mlevelManagerUI._fiveHundredThousandCoinList.Clear();
             }
             foreach (GameObject card in mlevelManagerUI._OneMillionJackPotCardList)
             {
-                mlevelManagerUI._OneMillionJackPotCardList.Clear();
                 Destroy(card);
+                mlevelManagerUI._OneMillionJackPotCardList.Clear();
             }
 
             clicks = 0;
@@ -94,8 +106,7 @@ public class CardDeck : MonoBehaviour
 
     private void ZoomCameraToPlayArea()
     {
-        mCam.transform.position = mDeckCardCamPosition.position;
-        mCam.transform.rotation = mDeckCardCamPosition.transform.rotation;
+         
     }
 
 }
