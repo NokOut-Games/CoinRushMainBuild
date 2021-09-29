@@ -54,6 +54,18 @@ public class CardDeck : MonoBehaviour
                     mlevelManagerUI._OneMillionJackPotCardList.Add(card);
                     //levelManagerUI.OverAllCards.Add(card);
                     break;
+                case "10 EC":
+                    mlevelManagerUI._TenEnergyCardList.Add(card);
+                    //levelManagerUI.OverAllCards.Add(card);
+                    break;
+                case "25 EC":
+                    mlevelManagerUI._TwentyFiveEnergyCardList.Add(card);
+                    //levelManagerUI.OverAllCards.Add(card);
+                    break;
+                case "100 EC":
+                    mlevelManagerUI._HundredEnergyCardList.Add(card);
+                    //levelManagerUI.OverAllCards.Add(card);
+                    break;
                 case "Attack":
                     mlevelManagerUI._AttackCardList.Add(card);
                     break;

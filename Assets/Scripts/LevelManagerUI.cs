@@ -44,7 +44,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _fiveThousandCoinList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
             if (_twentyFiveThousandCoinList.Count == 3)
             {
@@ -56,7 +56,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _twentyFiveThousandCoinList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
             if (_hunderThousandCoinList.Count == 3)
             {
@@ -68,7 +68,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _hunderThousandCoinList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
             if (_fiveHundredThousandCoinList.Count == 3)
             {
@@ -80,7 +80,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _fiveHundredThousandCoinList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             } 
             if (_OneMillionJackPotCardList.Count == 3)
             {
@@ -92,7 +92,43 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _OneMillionJackPotCardList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
+            }
+            if (_TenEnergyCardList.Count == 3)
+            {
+                _gameManager._energy += 10;
+                isDone = true;
+                foreach (GameObject c in _TenEnergyCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _TenEnergyCardList.Clear();
+                Invoke("IsDone", .1f);
+            }
+            if (_TwentyFiveEnergyCardList.Count == 3)
+            {
+                _gameManager._energy += 25;
+                isDone = true;
+                foreach (GameObject c in _TwentyFiveEnergyCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _TwentyFiveEnergyCardList.Clear();
+                Invoke("IsDone", .1f);
+            }
+            if (_HundredEnergyCardList.Count == 3)
+            {
+                _gameManager._energy += 100;
+                isDone = true;
+                foreach (GameObject c in _HundredEnergyCardList)
+                {
+                    //PlayAnimation
+                    Destroy(c);
+                }
+                _HundredEnergyCardList.Clear();
+                Invoke("IsDone", .1f);
             }
             if (_AttackCardList.Count == 3)
             {
@@ -104,7 +140,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _AttackCardList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
             if (_SheildCardList.Count == 3)
             {
@@ -116,7 +152,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _SheildCardList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
             if (_StealCardList.Count == 3)
             {
@@ -128,7 +164,7 @@ public class LevelManagerUI : MonoBehaviour
                     Destroy(c);
                 }
                 _StealCardList.Clear();
-                Invoke("IsDone", .5f);
+                Invoke("IsDone", .1f);
             }
         }
     }

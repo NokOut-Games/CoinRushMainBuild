@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         HorizontalPanningWithRotation();
-        VerticalZooming();
+        //VerticalZooming();
         //Debug.Log(transform.eulerAngles.y);
 
         if (_DrawButtonClicked)
@@ -53,19 +54,19 @@ public class CameraController : MonoBehaviour
 
             transform.eulerAngles = currentAngle;
         }
-        //else
-        //{
-        //    _currentView = _views[0];
-        //    transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
-        //    //Lerp position
+        else
+        {
+            _currentView = _views[0];
+            transform.position = Vector3.Lerp(transform.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+            //Lerp position
 
-        //    Vector3 currentAngle = new Vector3(
-        //        Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
-        //        Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
-        //        Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+            Vector3 currentAngle = new Vector3(
+                Mathf.LerpAngle(transform.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(transform.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(transform.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
 
-        //    transform.eulerAngles = currentAngle;
-        //}
+            transform.eulerAngles = currentAngle;
+        }
     }
 
     /// <summary>
@@ -79,23 +80,26 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _DrawButtonClicked = false;
-
             mInitialPosition = Input.mousePosition.x;
         }
 
         if (Input.GetMouseButton(0))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             mChangedPosition = Input.mousePosition.x;
             //float difference = mChangedPosition - mInitialPosition;
             float rotateDegrees = 0f;
             if (mChangedPosition < mInitialPosition)
             {
                 //Rotation(-difference);
-                rotateDegrees += 50f * Time.deltaTime;
+                rotateDegrees += 100f * Time.deltaTime;
             }
             if (mChangedPosition > mInitialPosition)
             {
-                rotateDegrees -= 50f * Time.deltaTime;
+                rotateDegrees -= 100f * Time.deltaTime;
             }
             Vector3 currentVector = transform.position - mTargetToRotateAround.position;
             currentVector.y = 0;

@@ -20,21 +20,12 @@ public enum CardType
 public class Cards : MonoBehaviour
 {
     public List<ScriptedCards> boosterCards;
-    [SerializeField] private GameManager mGameManager;
-    [SerializeField] private int mEnergy;
-    private int mCoins;
     void Start()
     {
-        mEnergy += mGameManager._energy;
+        //mEnergy += mGameManager._energy;
     }
 
     private void Update()
     {
-        float j = 0;
-        //Debug.Log(boosterCards[0]._amount);
-        for (int i = 0; i < mEnergy; i++, j += 0.3f)
-        {
-            
-        }
     }
 }
