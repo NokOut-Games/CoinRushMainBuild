@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     public int _coins;
     public int _energy = 25;
     public int _shield;
-    public int _minutes;
+    public float _minutes;
 
-    private int mMaxEnergy = 999;
+    public int _maxEnergy = 50;
     private bool mIsFull = true;
 
     private void Start()
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_energy == mMaxEnergy)
+        if(_energy == _maxEnergy)
         {
             mIsFull = false;
             return;
@@ -46,9 +46,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="inMinutes"></param>
     /// <returns></returns>
-    private int MinutesToSecondsConverter(int inMinutes) 
+    private float MinutesToSecondsConverter(float inMinutes) 
     {
-        int seconds = inMinutes * 60;
+        float seconds = inMinutes * 60;
         return seconds;
     }
 }
