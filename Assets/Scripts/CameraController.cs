@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         HorizontalPanningWithRotation();
-        //VerticalZooming();
+        VerticalZooming();
         //Debug.Log(transform.eulerAngles.y);
 
         if (_DrawButtonClicked)
@@ -146,10 +146,10 @@ public class CameraController : MonoBehaviour
     /// <param name="inZoomSpeed"></param>
     private void Zoom(float inZoomSpeed)
     {
-        if (transform.position.z <= -40f && transform.position.z >= -90f)
-        {
+        //if (transform.position.z <= -40f && transform.position.z >= -90f)
+        //{
             transform.Translate(inZoomSpeed * transform.forward);
-        }
+        //}
     }
 }
 

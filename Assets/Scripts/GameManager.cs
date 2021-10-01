@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public float _minutes;
 
     public int _maxEnergy = 50;
-    private bool mIsFull = true;
+    private bool mIsFull = true; //A bool that 
 
     private void Start()
     {

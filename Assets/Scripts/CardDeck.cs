@@ -25,14 +25,16 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void DrawCard()
     {
+        // 1.Reduce the Energy.
         mGameManager._energy -= 1;
-        FindObjectOfType<CameraController>()._DrawButtonClicked = true;
-        //ZoomCameraToPlayArea();
-        //if(!_handPoints[clicks].isFilled)
-        //{
-            GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0,180f,0f));
-            //_handPoints[clicks].isFilled = true;
-            switch (card.tag)
+
+        // 2.Zoom to the gameplay location
+        Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
+
+        // 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
+        GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0,180f,0f));
+        //_handPoints[clicks].isFilled = true;
+        switch (card.tag)
             {
                 case "5K Coins":
                     mlevelManagerUI._fiveThousandCoinList.Add(card);
@@ -77,7 +79,6 @@ public class CardDeck : MonoBehaviour
                     break;
             }
         clicks += 1;
-        //}
     }
 
     private void Update()
