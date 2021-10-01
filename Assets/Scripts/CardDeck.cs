@@ -32,88 +32,17 @@ public class CardDeck : MonoBehaviour
         Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
 
         // 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
-        GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0,180f,0f));
-        //_handPoints[clicks].isFilled = true;
-        switch (card.tag)
-            {
-                case "5K Coins":
-                    mlevelManagerUI._fiveThousandCoinList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "25K Coins":
-                    mlevelManagerUI._twentyFiveThousandCoinList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "100K Coins":
-                    mlevelManagerUI._hunderThousandCoinList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "500K Coins":
-                    mlevelManagerUI._fiveHundredThousandCoinList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "1M Coins":
-                    mlevelManagerUI._OneMillionJackPotCardList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "10 EC":
-                    mlevelManagerUI._TenEnergyCardList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "25 EC":
-                    mlevelManagerUI._TwentyFiveEnergyCardList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "100 EC":
-                    mlevelManagerUI._HundredEnergyCardList.Add(card);
-                    //levelManagerUI.OverAllCards.Add(card);
-                    break;
-                case "Attack":
-                    mlevelManagerUI._AttackCardList.Add(card);
-                    break;
-                case "Shield":
-                    mlevelManagerUI._SheildCardList.Add(card);
-                    break;
-                case "Steal":
-                    mlevelManagerUI._StealCardList.Add(card);
-                    break;
-            }
-        clicks += 1;
+        // 3.1 We can use layout group and Horizontal padding to adjust sprites accordingly but how it affects rotation is still an unknown fact
+        // 1st & worst iteration can be putting a empty gameObject around with its own rotation and instatiate according to its rotation.
+        // #Problem 1 that can occur is: Finding the nearest neighbour or a point. Becuase few cards need to know if there are any other cards in that location.
+        // 2nd 
     }
 
     private void Update()
     {
         if (clicks == 8)
         {
-            //levelManagerUI.OverAllCards.Clear();
-            foreach (GameObject card in mlevelManagerUI._fiveThousandCoinList)
-            {
-                Destroy(card);
-                mlevelManagerUI._fiveThousandCoinList.Clear();
-            }
-            foreach (GameObject card in mlevelManagerUI._twentyFiveThousandCoinList)
-            {
-                Destroy(card);
-                mlevelManagerUI._twentyFiveThousandCoinList.Clear();
-            }
-            foreach (GameObject card in mlevelManagerUI._hunderThousandCoinList)
-            {
-                Destroy(card);
-                mlevelManagerUI._hunderThousandCoinList.Clear();
-            }
-            foreach (GameObject card in mlevelManagerUI._fiveHundredThousandCoinList)
-            {
-                Destroy(card);
-                mlevelManagerUI._fiveHundredThousandCoinList.Clear();
-            }
-            foreach (GameObject card in mlevelManagerUI._OneMillionJackPotCardList)
-            {
-                Destroy(card);
-                mlevelManagerUI._OneMillionJackPotCardList.Clear();
-            }
-
             clicks = 0;
-            return;
         }
     }
 
@@ -142,4 +71,52 @@ public class CardDeck : MonoBehaviour
 //        mCam.transform.position = mDeckCardCamPosition.position;
 //        mCam.transform.rotation = mDeckCardCamPosition.transform.rotation;
 //    }
+
+//GameObject card = Instantiate(mCards.boosterCards[Random.Range(0, mCards.boosterCards.Count)]._cardModel, _handPoints[clicks].transform.position, Quaternion.Euler(0, 180f, 0f));
+////_handPoints[clicks].isFilled = true;
+//switch (card.tag)
+//{
+//    case "5K Coins":
+//        mlevelManagerUI._fiveThousandCoinList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "25K Coins":
+//        mlevelManagerUI._twentyFiveThousandCoinList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "100K Coins":
+//        mlevelManagerUI._hunderThousandCoinList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "500K Coins":
+//        mlevelManagerUI._fiveHundredThousandCoinList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "1M Coins":
+//        mlevelManagerUI._OneMillionJackPotCardList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "10 EC":
+//        mlevelManagerUI._TenEnergyCardList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "25 EC":
+//        mlevelManagerUI._TwentyFiveEnergyCardList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "100 EC":
+//        mlevelManagerUI._HundredEnergyCardList.Add(card);
+//        //levelManagerUI.OverAllCards.Add(card);
+//        break;
+//    case "Attack":
+//        mlevelManagerUI._AttackCardList.Add(card);
+//        break;
+//    case "Shield":
+//        mlevelManagerUI._SheildCardList.Add(card);
+//        break;
+//    case "Steal":
+//        mlevelManagerUI._StealCardList.Add(card);
+//        break;
+//}
+//clicks += 1;
 //}
