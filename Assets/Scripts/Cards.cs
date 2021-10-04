@@ -19,7 +19,7 @@ public enum CardType
 
 public class Cards : MonoBehaviour
 {
-    public List<ScriptedCards> boosterCards;
+    
     void Start()
     {
         //mEnergy += mGameManager._energy;

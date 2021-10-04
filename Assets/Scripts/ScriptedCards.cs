@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptedCards", order = 1)]
 public class ScriptedCards : ScriptableObject
@@ -12,12 +13,3 @@ public class ScriptedCards : ScriptableObject
     [Space]
     [TextArea(10,14)] public string _description;
 }
-
-//void residue()
-//{
-//    enum cardType
-//    {
-//        Action, // Action for opening scene and all
-//        Booster //booster deals with increasing coins and energy / sheilds
-//    };
-//}
