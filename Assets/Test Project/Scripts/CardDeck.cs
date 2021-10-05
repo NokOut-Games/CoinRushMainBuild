@@ -8,9 +8,10 @@ public class CardDeck : MonoBehaviour
    
     [SerializeField] private GameManager mGameManager;
     private int clicks = 0;
-    [SerializeField] public List<ScriptedCards> mCards;
     [SerializeField] private GameObject mCanvasRef;
+    private int[] customSpawnOrder = new int[] { 3, 4, 2, 5, 1, 6, 0, 7 };
 
+    [SerializeField] public List<ScriptedCards> mCards;
     public List<HandPoints> _playerHandPoints;
 
     private void Start()
@@ -30,12 +31,8 @@ public class CardDeck : MonoBehaviour
         Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
 
         // 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
-        // 3.1 We can use layout group and Horizontal padding to adjust sprites accordingly but how it affects rotation is still an unknown fact
-        // 1st & worst iteration can be putting a empty gameObject around with its own rotation and instatiate according to its rotation.
-        // #Problem 1 that can occur is: Finding the nearest neighbour or a point. Becuase few cards need to know if there are any other cards in that location.
-
-        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel, _playerHandPoints[clicks].transform.position, Quaternion.identity);
-        card.transform.parent = mCanvasRef.transform;
+        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel, _playerHandPoints[customSpawnOrder[clicks]].transform.position, _playerHandPoints[customSpawnOrder[clicks]].transform.rotation);
+        card.transform.SetParent(mCanvasRef.transform);
         //Debug.Log(card);
         clicks += 1;
     }
