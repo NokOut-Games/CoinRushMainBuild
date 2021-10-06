@@ -1436,54 +1436,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254099730}
   m_Mesh: {fileID: -6590055069928923904, guid: ae9887ee5b29e6f4aba2959143a386e2, type: 3}
---- !u!1 &277359216
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 277359218}
-  - component: {fileID: 277359217}
-  m_Layer: 0
-  m_Name: Global Volume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &277359217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277359216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: e59cd77fa6443d040baf6af1aceebaa9, type: 2}
---- !u!4 &277359218
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277359216}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.198845, y: 1.2110862, z: -11.925133}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 602949862}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &289186631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2254,6 +2206,11 @@ MonoBehaviour:
   - {fileID: 1527213938}
   - {fileID: 1344647732}
   - {fileID: 412549}
+  _minDegree: 0
+  _maxDegree: 180
+  maxNumberOfCards: 12
+  spacingBetweenCards: 0
+  _segments: 0
 --- !u!4 &468857716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
@@ -2821,7 +2778,6 @@ Transform:
   - {fileID: 508205388}
   - {fileID: 2112903083}
   - {fileID: 1474503603}
-  - {fileID: 277359218}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7671,7 +7627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubes: []
 --- !u!114 &1632239266 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 126788257712592149, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}

@@ -13,28 +13,41 @@ public class CardDeck : MonoBehaviour
 
     [SerializeField] public List<ScriptedCards> mCards;
     public List<HandPoints> _playerHandPoints;
+    //public GameObject _playerHandPoints;
+
+    //try theta
+    public float _minDegree = 0;
+    public float _maxDegree = 180;
+    public int maxNumberOfCards;
+    public float spacingBetweenCards;
+    public float _segments;
 
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spacingBetweenCards = _minDegree + _maxDegree / maxNumberOfCards;
+        _segments = _minDegree + _maxDegree / spacingBetweenCards;
+        Debug.Log(_segments);
     }
 
     /// <summary>
     /// This function is responsible for the camera to zoom in to the playing space and the card draw functionality
+    /// 1.Reduce the Energy.
+    /// 2.Zoom to the gameplay location
+    /// 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
     /// </summary>
     public void DrawCard()
     {
-        // 1.Reduce the Energy.
         mGameManager._energy -= 1;
 
-        // 2.Zoom to the gameplay location
         Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
 
-        // 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
-        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel, _playerHandPoints[customSpawnOrder[clicks]].transform.position, _playerHandPoints[customSpawnOrder[clicks]].transform.rotation);
+        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel, _playerHandPoints[clicks].transform.position, _playerHandPoints[clicks].transform.rotation);
         card.transform.SetParent(mCanvasRef.transform);
-        //Debug.Log(card);
         clicks += 1;
+
+        //_segments += 22.5f;
+
     }
 
     private void Update()
