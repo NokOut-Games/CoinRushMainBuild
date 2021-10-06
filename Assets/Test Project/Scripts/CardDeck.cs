@@ -22,32 +22,32 @@ public class CardDeck : MonoBehaviour
     public float spacingBetweenCards;
     public float _segments;
 
+    public int numberOfCardsActive = 0;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         spacingBetweenCards = _minDegree + _maxDegree / maxNumberOfCards;
         _segments = _minDegree + _maxDegree / spacingBetweenCards;
-        Debug.Log(_segments);
     }
 
     /// <summary>
     /// This function is responsible for the camera to zoom in to the playing space and the card draw functionality
     /// 1.Reduce the Energy.
     /// 2.Zoom to the gameplay location
-    /// 3. Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
+    /// 3.Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
     /// </summary>
     public void DrawCard()
     {
         mGameManager._energy -= 1;
-
+        numberOfCardsActive += 1;
         Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
-
-        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel, _playerHandPoints[clicks].transform.position, _playerHandPoints[clicks].transform.rotation);
+        float rotationForCards = _minDegree + numberOfCardsActive * (_maxDegree / maxNumberOfCards);
+        GameObject card = Instantiate(mCards[Random.Range(0,mCards.Count)]._cardModel,_playerHandPoints[clicks].transform.position + new Vector3(_segments,0,0),  Quaternion.Euler(0,0,-rotationForCards));
         card.transform.SetParent(mCanvasRef.transform);
         clicks += 1;
-
+        spacingBetweenCards += 15f;
         //_segments += 22.5f;
-
     }
 
     private void Update()
