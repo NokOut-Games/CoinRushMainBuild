@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CardType
+{
+    ATTACK,
+    STEAL,
+    SHIELD,
+    JOKER,
+    ENERGY,
+    COINS
+}
+
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptedCards", order = 1)]
 public class ScriptedCards : ScriptableObject
 {
@@ -14,3 +24,4 @@ public class ScriptedCards : ScriptableObject
     [Space]
     [TextArea(10,14)] public string _description;
 }
+
