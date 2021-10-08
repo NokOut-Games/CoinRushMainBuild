@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.039965477, g: 0.2009832, b: 0.2623816, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1592,6 +1592,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
   m_PrefabInstance: {fileID: 325181062}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &343195021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 343195022}
+  m_Layer: 0
+  m_Name: CameraParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &343195022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343195021}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 20, z: -80}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1622744564}
+  m_Father: {fileID: 602949862}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &365061361
 GameObject:
   m_ObjectHideFlags: 0
@@ -2204,6 +2235,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
   - {fileID: 11400000, guid: 25dd4160bcc872b448a49f88d1a4931c, type: 2}
   - {fileID: 11400000, guid: b2aa8de7ce26d714397b70a3ac295b26, type: 2}
+  _CardList: []
   _playerHandPoints:
   - {fileID: 1632239266}
   - {fileID: 42056150}
@@ -2213,6 +2245,8 @@ MonoBehaviour:
   - {fileID: 1527213938}
   - {fileID: 1344647732}
   - {fileID: 412549}
+  _PositionList: []
+  _RotationList: []
 --- !u!4 &468857716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
@@ -2775,7 +2809,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1622744564}
+  - {fileID: 343195022}
   - {fileID: 2080978786}
   - {fileID: 508205388}
   - {fileID: 2112903083}
@@ -3721,6 +3755,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773916763}
   m_Mesh: {fileID: 5283197924642485434, guid: d3bf3db9b8309a1448ee4f3c146309c4, type: 3}
+--- !u!224 &785332397 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 4524371247633333945, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &799072164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 44f6813d0cb8f844bb18730a30380a13, type: 3}
@@ -6251,7 +6290,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315715442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.82, y: 10.03, z: -23.92}
+  m_LocalPosition: {x: 0.82, y: 10.03, z: 7.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7718,10 +7757,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622744561}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 20, z: -80}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 602949862}
+  m_Father: {fileID: 343195022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1622744565
@@ -7768,13 +7807,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de3974bee9bd5b04a8511d4d792c520e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _CameraParent: {fileID: 343195022}
   mTargetToRotateAround: {fileID: 1315715443}
-  mZoomSpeed: 10
+  mZoomSpeed: 15
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
   _transitionSpeed: 4
+  _DrawButtonRectTransform: {fileID: 785332397}
   _DrawButtonClicked: 0
+  _CameraFreeRoam: 1
+  _RotationLimit: 25
 --- !u!114 &1622744567
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,7 +16,7 @@ public class CardDeck : MonoBehaviour
     public List<HandPoints> _playerHandPoints;
     public List<Vector3> _PositionList = new List<Vector3>();
     public List<Quaternion> _RotationList = new List<Quaternion>();
-    public GameObject _CardHolderParent;
+  //  public GameObject _CardHolderParent;
 
     private void Start()
     {
@@ -35,9 +35,9 @@ public class CardDeck : MonoBehaviour
             return;
 
         mGameManager._energy -= 1;
-        
-        Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
-        
+
+        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+
         ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)]; 
 
         GameObject card = Instantiate(cards._cardModel,_playerHandPoints[clicks].transform.position, _playerHandPoints[clicks].transform.rotation);
