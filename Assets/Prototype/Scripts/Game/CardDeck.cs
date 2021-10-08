@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +11,13 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private GameObject mCanvasRef;
     private int clicks = 0;
 
-    public List<int> _CardList = new List<int>();
-    [SerializeField] public List<ScriptedCards> mScriptedCards; 
+    [SerializeField] public List<ScriptedCards> mScriptedCards;
+    public List<Cards> _CardList = new List<Cards>();
     public List<HandPoints> _playerHandPoints;
-    
+    public List<Vector3> _PositionList = new List<Vector3>();
+    public List<Quaternion> _RotationList = new List<Quaternion>();
+    public GameObject _CardHolderParent;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -27,6 +31,9 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void DrawCard()
     {
+        if (_CardList.Count >= 8)
+            return;
+
         mGameManager._energy -= 1;
         
         Camera.main.GetComponent<CameraController>()._DrawButtonClicked = true;
@@ -34,13 +41,17 @@ public class CardDeck : MonoBehaviour
         ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)]; 
 
         GameObject card = Instantiate(cards._cardModel,_playerHandPoints[clicks].transform.position, _playerHandPoints[clicks].transform.rotation);
-        card.GetComponent<Cards>()._cardType = cards._cardType;
-        card.GetComponent<Cards>()._cardID = cards._cardID;
+        Cards cardDetails = card.GetComponent<Cards>();
+
+        cardDetails._cardType = cards._cardType;
+        cardDetails._cardID = cards._cardID;
+        cardDetails._Position = card.transform.position;
 
         card.transform.SetParent(mCanvasRef.transform);
 
         clicks += 1;
-        AddNewCard(card.GetComponent<Cards>()._cardID);
+        AddNewCard(card.GetComponent<Cards>());
+        ReplacementOfCards();
     }
 
     private void Update()
@@ -54,13 +65,11 @@ public class CardDeck : MonoBehaviour
     /// <summary>
     /// 
     /// </This function is used to allign the picked cards in sorted order>
-    public void AddNewCard(int inNewCard)
+    public void AddNewCard(Cards inNewCard)
     {
-        _CardList.Sort();
-
         for (int i = 0; i < _CardList.Count; i++)
         {
-            if (_CardList[i] == inNewCard)
+            if (_CardList[i]._cardType == inNewCard._cardType)
             {
                 _CardList.Insert(i, inNewCard);
                 return;
@@ -69,7 +78,48 @@ public class CardDeck : MonoBehaviour
 
         _CardList.Add(inNewCard);
     }
+
+    public void ReplacementOfCards()
+    {
+        int medianIndex = _playerHandPoints.Count /2;
+        
+        int incrementValue = 0;
+        _PositionList.Clear();
+        _RotationList.Clear();
+
+        List<int> drawOrderArrange = new List<int>();
+
+        for (int i = 0; i < _CardList.Count; i++)
+        {
+            if (i % 2 == 0 || i == 0)
+            {
+                drawOrderArrange.Add(medianIndex + incrementValue);
+                incrementValue++;                
+            }
+            else
+            {
+                drawOrderArrange.Add(medianIndex - incrementValue);            
+            }
+        }
+
+        drawOrderArrange.Sort();
+
+        for (int i = 0; i < _CardList.Count; i++)
+        {
+             _PositionList.Add(_playerHandPoints[drawOrderArrange[i]].transform.position);
+             _RotationList.Add(_playerHandPoints[drawOrderArrange[i]].transform.rotation);
+        }
+
+        for (int i = 0; i < _CardList.Count; i++)
+        {
+            _CardList[i]._Position = _PositionList[i];
+            _CardList[i].transform.position = _PositionList[i];
+            _CardList[i].transform.rotation = _RotationList[i];
+            _CardList[i].transform.SetSiblingIndex (i + 1);
+        }
+    }
 }
+
 
 
 

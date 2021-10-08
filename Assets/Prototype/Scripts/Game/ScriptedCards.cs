@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum CardType
+/*public enum CardType
 {
     ATTACK,
     STEAL,
@@ -11,7 +11,7 @@ public enum CardType
     JOKER,
     ENERGY,
     COINS
-}
+} */
 
 [CreateAssetMenu(fileName = "Card", menuName = "ScriptedCards", order = 1)]
 public class ScriptedCards : ScriptableObject
