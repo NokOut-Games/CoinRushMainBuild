@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
 
-    [Header("Vertical Zomming")]
+    [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
     private float mCameraNearBound = -40;
     private float mCameraFarBound = -90;
@@ -149,8 +149,9 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// We get get the input position in y on click.
-    /// And keep updating the input.y position as save it to 
+    /// We get the input position in y on click.
+    /// And keep updating the input.y position as save it to mInitialPosition and keep taking count of whats the changed Position and see if its greater or lesser
+    /// and do action accordingly
     /// </summary>
     private void VerticalZooming()
     {
@@ -176,10 +177,10 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if (!Input.GetMouseButton(0))
-        {
-            PlayCameraBoundEffect();
-        }
+        //if (!Input.GetMouseButton(0))
+        //{
+        //    PlayCameraBoundEffect();
+        //}
     }
     /// <summary>
     /// Zoom Condition
@@ -200,25 +201,25 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// Reset the camera position when touch is released, to set it back to its closest bound, either far or near. 
     /// </summary>
-    public void PlayCameraBoundEffect()
-    {
-        Vector3 newCameraParentPos = Vector3.zero;
+    //public void PlayCameraBoundEffect()
+    //{
+    //    Vector3 newCameraParentPos = Vector3.zero;
 
-        if (_CameraParent.position.z > mCameraNearBound || _CameraParent.position.z < mCameraFarBound)
-        {
+    //    if (_CameraParent.position.z > mCameraNearBound || _CameraParent.position.z < mCameraFarBound)
+    //    {
 
-            if (Mathf.Abs(mCameraFarBound - _CameraParent.position.z) < Mathf.Abs(mCameraNearBound - _CameraParent.position.z))
-            {
-                newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound);
-            }
-            else
-            {
-                newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound);
-            }
+    //        if (Mathf.Abs(mCameraFarBound - _CameraParent.position.z) < Mathf.Abs(mCameraNearBound - _CameraParent.position.z))
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound);
+    //        }
+    //        else
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound);
+    //        }
 
-            _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
-        }
-    }
+    //        _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
+    //    }
+    //}
 }
 
 

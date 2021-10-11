@@ -8,7 +8,7 @@ public class CardDeck : MonoBehaviour
 {
    
     [SerializeField] private GameManager mGameManager;
-    [SerializeField] private GameObject mCanvasRef;
+    [SerializeField] private GameObject mCardHolderParent;
     private int clicks = 0;
 
     [SerializeField] public List<ScriptedCards> mScriptedCards;
@@ -16,7 +16,6 @@ public class CardDeck : MonoBehaviour
     public List<HandPoints> _playerHandPoints;
     public List<Vector3> _PositionList = new List<Vector3>();
     public List<Quaternion> _RotationList = new List<Quaternion>();
-  //  public GameObject _CardHolderParent;
 
     private void Start()
     {
@@ -47,7 +46,7 @@ public class CardDeck : MonoBehaviour
         cardDetails._cardID = cards._cardID;
         cardDetails._Position = card.transform.position;
 
-        card.transform.SetParent(mCanvasRef.transform);
+        card.transform.SetParent(mCardHolderParent.transform);
 
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>());

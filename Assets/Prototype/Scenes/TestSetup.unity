@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.039965477, g: 0.2009832, b: 0.2623816, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2227,7 +2227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mGameManager: {fileID: 1541244310}
-  mCanvasRef: {fileID: 1600671355}
+  mCardHolderParent: {fileID: 939563810}
   mScriptedCards:
   - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
   - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
@@ -7589,11 +7589,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575423036}
   m_Mesh: {fileID: 8462817279829431424, guid: ae9887ee5b29e6f4aba2959143a386e2, type: 3}
---- !u!1 &1600671355 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2270958498031145116, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-  m_PrefabInstance: {fileID: 412256753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1612051454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7686,7 +7681,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1622744564}
-  - component: {fileID: 1622744567}
   - component: {fileID: 1622744563}
   - component: {fileID: 1622744562}
   - component: {fileID: 1622744565}
@@ -7816,28 +7810,8 @@ MonoBehaviour:
   _transitionSpeed: 4
   _DrawButtonRectTransform: {fileID: 785332397}
   _DrawButtonClicked: 0
-  _CameraFreeRoam: 1
-  _RotationLimit: 25
---- !u!114 &1622744567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622744561}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startAngle: 0
-  endAngle: 0
-  segments: 0
-  radius: 0
-  arcPoints: []
-  cardModel: []
-  attachToCanvas: {fileID: 0}
-  fistCard: {fileID: 0}
+  _CameraFreeRoam: 0
+  _RotationLimit: 60
 --- !u!114 &1632239266 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 126788257712592149, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
