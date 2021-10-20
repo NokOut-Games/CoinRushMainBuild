@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandPoints : MonoBehaviour
+public class ChestValue : MonoBehaviour
 {
-    public bool isFilled = false;
+    public int _value;
 }

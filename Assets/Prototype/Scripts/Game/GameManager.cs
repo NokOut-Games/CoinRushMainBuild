@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_energy == _maxEnergy)
+        if (_energy == _maxEnergy)
         {
             mIsFull = false;
             return;
@@ -30,8 +29,23 @@ public class GameManager : MonoBehaviour
         {
             mIsFull = true;
         }
+
+        ///Changing From MainScene to the EnergyScene  
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SceneManager.LoadScene(1);
+        }
+        ///Changing From MainScene to the CoinScene  
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SceneManager.LoadScene(2);
+        }
+        //This is used Fot loading Spinwheel Scene
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(7);
+        }
     }
-    
     private IEnumerator AutomaticEnergyRefiller()
     {
         while (mIsFull)
@@ -51,4 +65,5 @@ public class GameManager : MonoBehaviour
         float seconds = inMinutes * 60;
         return seconds;
     }
+
 }

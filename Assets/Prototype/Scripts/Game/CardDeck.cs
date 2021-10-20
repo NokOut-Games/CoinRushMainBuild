@@ -1,21 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CardDeck : MonoBehaviour
 {
-   
+
     [SerializeField] private GameManager mGameManager;
     [SerializeField] private GameObject mCardHolderParent;
     private int clicks = 0;
+    int k;
 
     [SerializeField] public List<ScriptedCards> mScriptedCards;
     public List<Cards> _CardList = new List<Cards>();
-    public List<HandPoints> _playerHandPoints;
+    public List<Transform> _playerHandPoints;
     public List<Vector3> _PositionList = new List<Vector3>();
     public List<Quaternion> _RotationList = new List<Quaternion>();
+
 
     private void Start()
     {
@@ -37,27 +37,31 @@ public class CardDeck : MonoBehaviour
 
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();
 
-        ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)]; 
+        ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
 
-        GameObject card = Instantiate(cards._cardModel,_playerHandPoints[clicks].transform.position, _playerHandPoints[clicks].transform.rotation);
+        GameObject card = Instantiate(cards._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
         Cards cardDetails = card.GetComponent<Cards>();
 
         cardDetails._cardType = cards._cardType;
         cardDetails._cardID = cards._cardID;
         cardDetails._Position = card.transform.position;
 
-        card.transform.SetParent(mCardHolderParent.transform);
-
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>());
         ReplacementOfCards();
+       
     }
 
     private void Update()
     {
         if (clicks == 8)
         {
+          
             clicks = 0;
+        }
+        if (_CardList.Count != 0)
+        {
+            CardCheckingFunction();
         }
     }
 
@@ -80,8 +84,8 @@ public class CardDeck : MonoBehaviour
 
     public void ReplacementOfCards()
     {
-        int medianIndex = _playerHandPoints.Count /2;
-        
+        int medianIndex = _playerHandPoints.Count / 2;
+
         int incrementValue = 0;
         _PositionList.Clear();
         _RotationList.Clear();
@@ -93,11 +97,11 @@ public class CardDeck : MonoBehaviour
             if (i % 2 == 0 || i == 0)
             {
                 drawOrderArrange.Add(medianIndex + incrementValue);
-                incrementValue++;                
+                incrementValue++;
             }
             else
             {
-                drawOrderArrange.Add(medianIndex - incrementValue);            
+                drawOrderArrange.Add(medianIndex - incrementValue);
             }
         }
 
@@ -105,8 +109,8 @@ public class CardDeck : MonoBehaviour
 
         for (int i = 0; i < _CardList.Count; i++)
         {
-             _PositionList.Add(_playerHandPoints[drawOrderArrange[i]].transform.position);
-             _RotationList.Add(_playerHandPoints[drawOrderArrange[i]].transform.rotation);
+            _PositionList.Add(_playerHandPoints[drawOrderArrange[i]].transform.position);
+            _RotationList.Add(_playerHandPoints[drawOrderArrange[i]].transform.rotation);
         }
 
         for (int i = 0; i < _CardList.Count; i++)
@@ -114,9 +118,88 @@ public class CardDeck : MonoBehaviour
             _CardList[i]._Position = _PositionList[i];
             _CardList[i].transform.position = _PositionList[i];
             _CardList[i].transform.rotation = _RotationList[i];
-            _CardList[i].transform.SetSiblingIndex (i + 1);
+            _CardList[i].transform.SetSiblingIndex(i + 1);
         }
     }
+
+    /// <summary>
+    /// In this function Checking that any of  three cards are same then its name will be displayed
+    /// </summary>
+    void CardCheckingFunction()
+    {
+        if (_CardList[0]._cardID == _CardList[1]._cardID && _CardList[0]._cardID == _CardList[2]._cardID)
+        {
+            k = 1;
+            Invoke("CardTrigger", 1.5f);
+        }
+        if (_CardList[1]._cardID == _CardList[2]._cardID && _CardList[1]._cardID == _CardList[3]._cardID)
+        {
+            k = 2;
+            Invoke("CardTrigger", 1.5f);
+        }
+        if (_CardList[2]._cardID == _CardList[3]._cardID && _CardList[2]._cardID == _CardList[4]._cardID)
+        {
+            k = 3;
+            Invoke("CardTrigger", 1.5f);
+        }
+        if (_CardList[3]._cardID == _CardList[4]._cardID && _CardList[3]._cardID == _CardList[5]._cardID)
+        {
+            k = 4;
+            Invoke("CardTrigger", 1.5f);
+        }
+        if (_CardList[4]._cardID == _CardList[5]._cardID && _CardList[4]._cardID == _CardList[6]._cardID)
+        {
+            k = 5;
+            Invoke("CardTrigger", 1.5f);
+        }
+        if (_CardList[5]._cardID == _CardList[6]._cardID && _CardList[5]._cardID == _CardList[7]._cardID)
+        {
+            k = 6;
+            Invoke("CardTrigger", 1.5f);
+        }
+        //if(_CardList >= _CardList.Count)
+        //{
+        //    return;
+        //}
+    }
+    /// <summary>
+    /// This Function will Trigger the Scene if 3 Cards Matches
+    /// </summary>
+    void CardTrigger()
+    {
+
+        switch (_CardList[k]._cardType)
+        {
+            case CardType.ATTACK:
+                SceneManager.LoadScene(1);
+                break;
+            case CardType.STEAL:
+                SceneManager.LoadScene(2);
+                break;
+            case CardType.COINS:
+                SceneManager.LoadScene(3);
+                break;
+            case CardType.ENERGY:
+                SceneManager.LoadScene(4);
+                break;
+            case CardType.FORTUNEWHEEL:
+                SceneManager.LoadScene(5);
+                break;
+            case CardType.SLOTMACHINE:
+                SceneManager.LoadScene(6);
+                break;
+            case CardType.JOKER:
+                Debug.Log("Joker");
+                break;
+            case CardType.SHIELD:
+                Debug.Log("Shield + 1");
+                break;
+        }
+
+
+    }
+
+
 }
 
 

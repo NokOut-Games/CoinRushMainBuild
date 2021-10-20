@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 public enum CardType
 {
@@ -8,7 +6,9 @@ public enum CardType
     SHIELD,
     JOKER,
     ENERGY,
-    COINS
+    COINS,
+    FORTUNEWHEEL,
+    SLOTMACHINE
 }
 
 public class Cards : MonoBehaviour
