@@ -25,7 +25,7 @@ public class Reels : MonoBehaviour
     private Transform ReelsRollerParent;
 
     [SerializeField]
-    private int speed = 1200;
+    private int speed = 1200;  //Will use it later instead of 700 down in update function
     public bool mdisableRoll = false;
 
     private UnityAction<ReelElement> mOnReelRollEndEvent;
@@ -43,11 +43,11 @@ public class Reels : MonoBehaviour
             if (!mdisableRoll)
             {
                 for (int i = 0; i < _reelElements.Length; i++)
-                {
-                    _reelElements[i].SlotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * speed, Space.World);
-                    if (_reelElements[i].SlotElementGameObject.transform.position.y < 0)
+                {                                                                                                    //700 Down is the speed it needs to roll
+                    _reelElements[i].SlotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * 700, Space.World);
+                    if (_reelElements[i].SlotElementGameObject.transform.localPosition.y < -300)
                     {
-                        _reelElements[i].SlotElementGameObject.transform.position = new Vector3(_reelElements[i].SlotElementGameObject.transform.position.x, _reelElements[i].SlotElementGameObject.transform.position.y + 700, _reelElements[i].SlotElementGameObject.transform.position.z);
+                        _reelElements[i].SlotElementGameObject.transform.localPosition = new Vector3(_reelElements[i].SlotElementGameObject.transform.localPosition.x, _reelElements[i].SlotElementGameObject.transform.localPosition.y + 2100, _reelElements[i].SlotElementGameObject.transform.localPosition.z);
                     }
                 }
             }
@@ -103,13 +103,13 @@ public class Reels : MonoBehaviour
         mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
-
-        float TargetPosition = -(mReel.SlotElementGameObject.transform.localPosition.y) + 260;
+        
+        float TargetPosition = -(mReel.SlotElementGameObject.transform.localPosition.y) /*+ 1008*/;
 
         ReelsRollerParent.DOMoveY(TargetPosition, _reelRollDuration, true)
         .OnComplete(() =>
         {
-            roll = false; 
+            roll = false;
             if (mOnReelRollEndEvent != null)
             {
                 mOnReelRollEndEvent(mReel);
@@ -118,6 +118,17 @@ public class Reels : MonoBehaviour
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

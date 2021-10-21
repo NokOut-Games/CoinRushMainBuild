@@ -59,8 +59,8 @@ public class SpinWheel : MonoBehaviour
     //Wheel Piece Properties
     private Vector2 mPieceMinSize = new Vector2(81f, 146f);
     private Vector2 mPieceMaxSize = new Vector2(144f, 213f);
-    private int mPiecesMin = 2;
-    private int mPiecesMax = 16;
+    //private int mPiecesMin = 2;
+    //private int mPiecesMax = 16;
     public float mPieceAngle;
     public float mHalfPieceAngle;
     public float mHalfPieceAngleWithPaddings;
@@ -172,7 +172,6 @@ public class SpinWheel : MonoBehaviour
 
             int index = GetRandomPieceIndex();
             WheelPiece piece = _wheelPieces[index];
-            Debug.Log(index);
 
             if (piece._Chance == 0 && mNonZeroChancesIndices.Count != 0)
             {
@@ -185,10 +184,8 @@ public class SpinWheel : MonoBehaviour
             float rightOffset = (angle - mHalfPieceAngleWithPaddings) % 360; // (-240 -45) % 360 = -285
             float leftOffset = (angle + mHalfPieceAngleWithPaddings) % 360; // (-240 + 45) % 360 = -195
             float randomAngle = Random.Range(leftOffset, rightOffset);
-            Debug.Log(randomAngle);
 
             Vector3 targetRotation = Vector3.back  * (randomAngle + 2 * 360 * _spinDuration);
-            Debug.Log(targetRotation);
 
             float prevAngle, currentAngle;
             prevAngle = currentAngle = _spinnerParent.eulerAngles.z;
@@ -240,7 +237,6 @@ public class SpinWheel : MonoBehaviour
     private int GetRandomPieceIndex()
     {
         double r = rand.NextDouble() * mAccumulatedWeight;
-        Debug.Log(r);
         for (int i = 0; i < _wheelPieces.Length; i++)
         {
             if (_wheelPieces[i]._Weight >= r)

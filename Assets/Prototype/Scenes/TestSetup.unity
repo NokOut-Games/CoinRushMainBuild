@@ -371,6 +371,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28986805}
   m_Mesh: {fileID: 4864056309639282896, guid: c7223b7fd69cc1246bc143573e20d0dc, type: 3}
+--- !u!114 &30492497 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4524371248289695208, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &35913243 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
@@ -1418,6 +1429,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1624443051978636254, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
   m_PrefabInstance: {fileID: 412256753}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &285528741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4524371248214831255, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &286438807 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5846661752006508441, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
@@ -1881,7 +1903,15 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6869064703859770524, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 5765870741836314312, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 8806166038685119088, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 1158842141491674955, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 5485542791535426704, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 3984210529946183519, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 3943803707427329098, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+    - {fileID: 126788257712592149, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
 --- !u!224 &412256754 stripped
 RectTransform:
@@ -2250,10 +2280,8 @@ MonoBehaviour:
   mGameManager: {fileID: 1541244310}
   mCardHolderParent: {fileID: 939563810}
   mScriptedCards:
-  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
   - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
   - {fileID: 11400000, guid: 40daae7ed65653649a08e2626aaba052, type: 2}
-  - {fileID: 11400000, guid: b2aa8de7ce26d714397b70a3ac295b26, type: 2}
   - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   _CardList: []
@@ -2852,7 +2880,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 622655497}
-  - component: {fileID: 622655498}
   m_Layer: 0
   m_Name: OpenHandPoints
   m_TagString: Untagged
@@ -2874,18 +2901,6 @@ Transform:
   m_Father: {fileID: 392065994}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &622655498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622655496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &626994235 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
@@ -3067,7 +3082,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 710839956}
-  - component: {fileID: 710839957}
   m_Layer: 0
   m_Name: OpenHandPoints
   m_TagString: Untagged
@@ -3089,18 +3103,6 @@ Transform:
   m_Father: {fileID: 392065994}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &710839957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710839955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &715596285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3585,7 +3587,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 759680838}
-  - component: {fileID: 759680839}
   m_Layer: 0
   m_Name: OpenHandPoints
   m_TagString: Untagged
@@ -3607,18 +3608,6 @@ Transform:
   m_Father: {fileID: 392065994}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &759680839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 759680837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &773642543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6084,7 +6073,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1311430002}
-  - component: {fileID: 1311430003}
   m_Layer: 0
   m_Name: OpenHandPoints
   m_TagString: Untagged
@@ -6106,18 +6094,6 @@ Transform:
   m_Father: {fileID: 392065994}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1311430003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311430001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1315715442
 GameObject:
   m_ObjectHideFlags: 0
@@ -7411,11 +7387,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _minutes
-      value: 5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _maxEnergy
-      value: 999
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
@@ -8041,6 +8017,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coinText: {fileID: 30492497}
+  _energyText: {fileID: 285528741}
 --- !u!114 &1659584900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9477,7 +9455,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1925757604}
-  - component: {fileID: 1925757605}
   m_Layer: 0
   m_Name: OpenHandPoints
   m_TagString: Untagged
@@ -9499,18 +9476,6 @@ Transform:
   m_Father: {fileID: 392065994}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1925757605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925757603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af36dcb57a45d442bf10b78c19dadf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1927126496
 PrefabInstance:
   m_ObjectHideFlags: 0

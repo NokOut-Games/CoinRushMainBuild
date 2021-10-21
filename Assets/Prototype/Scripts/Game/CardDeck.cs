@@ -59,10 +59,10 @@ public class CardDeck : MonoBehaviour
           
             clicks = 0;
         }
-        if (_CardList.Count != 0)
-        {
+        //if (_CardList.Count != 0)
+        //{
             CardCheckingFunction();
-        }
+        //}
     }
 
     /// <summary>
@@ -132,27 +132,27 @@ public class CardDeck : MonoBehaviour
             k = 1;
             Invoke("CardTrigger", 1.5f);
         }
-        if (_CardList[1]._cardID == _CardList[2]._cardID && _CardList[1]._cardID == _CardList[3]._cardID)
+        else if (_CardList[1]._cardID == _CardList[2]._cardID && _CardList[1]._cardID == _CardList[3]._cardID)
         {
             k = 2;
             Invoke("CardTrigger", 1.5f);
         }
-        if (_CardList[2]._cardID == _CardList[3]._cardID && _CardList[2]._cardID == _CardList[4]._cardID)
+        else if (_CardList[2]._cardID == _CardList[3]._cardID && _CardList[2]._cardID == _CardList[4]._cardID)
         {
             k = 3;
             Invoke("CardTrigger", 1.5f);
         }
-        if (_CardList[3]._cardID == _CardList[4]._cardID && _CardList[3]._cardID == _CardList[5]._cardID)
+        else if (_CardList[3]._cardID == _CardList[4]._cardID && _CardList[3]._cardID == _CardList[5]._cardID)
         {
             k = 4;
             Invoke("CardTrigger", 1.5f);
         }
-        if (_CardList[4]._cardID == _CardList[5]._cardID && _CardList[4]._cardID == _CardList[6]._cardID)
+        else if (_CardList[4]._cardID == _CardList[5]._cardID && _CardList[4]._cardID == _CardList[6]._cardID)
         {
             k = 5;
             Invoke("CardTrigger", 1.5f);
         }
-        if (_CardList[5]._cardID == _CardList[6]._cardID && _CardList[5]._cardID == _CardList[7]._cardID)
+        else if (_CardList[5]._cardID == _CardList[6]._cardID && _CardList[5]._cardID == _CardList[7]._cardID)
         {
             k = 6;
             Invoke("CardTrigger", 1.5f);

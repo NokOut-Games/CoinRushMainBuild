@@ -4,17 +4,29 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     public int _coins;
     public int _energy = 25;
     public int _shield;
     public float _minutes;
 
     public int _maxEnergy = 50;
-    private bool mIsFull = true; 
+    private bool mIsFull = true;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this); //Singleton
+            return;
+        }
+        Destroy(this.gameObject);
+    }
 
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject); //Stays throughout the game
         StartCoroutine(AutomaticEnergyRefiller());
     }
 

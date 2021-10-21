@@ -50,7 +50,7 @@ public class ChestOpener : MonoBehaviour
                         }
                         mEnergyChests[i].GetComponent<ChestValue>()._value = mEnergyProbability._energies[i]._energyAmount;
                     }
-                    Invoke(nameof(BackToMainScene), 1.5f);
+                    Invoke(nameof(BackToMainScene), 1f);
                 }
                 if (raycastHit.transform.gameObject.tag == "CoinChestBox")
                 {
@@ -79,7 +79,7 @@ public class ChestOpener : MonoBehaviour
                         }
                         mCoinChests[i].GetComponent<ChestValue>()._value = mCoinProbability._coins[i]._coinAmount;
                     }
-                    Invoke(nameof(BackToMainScene), 1.5f);
+                    Invoke(nameof(BackToMainScene), 1f);
                 }
             }
         }

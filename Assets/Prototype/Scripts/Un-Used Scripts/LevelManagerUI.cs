@@ -8,7 +8,29 @@ using TMPro;
 
 public class LevelManagerUI : MonoBehaviour
 {
+    public TextMeshProUGUI _coinText;
+    public TextMeshProUGUI _energyText;
 
+    private GameManager mGameManager;
+
+    private void Start()
+    {
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    private void Update()
+    {
+        UpdateCoinAndEnergyTextFields();
+    }
+
+    /// <summary>
+    /// Keeps updating coin and energy text fields
+    /// </summary>
+    private void UpdateCoinAndEnergyTextFields()
+    {
+        _coinText.text = mGameManager._coins.ToString();
+        _energyText.text = mGameManager._energy.ToString();
+    }
 }
 
 
