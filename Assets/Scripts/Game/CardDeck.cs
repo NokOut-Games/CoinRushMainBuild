@@ -173,20 +173,17 @@ public class CardDeck : MonoBehaviour
             case CardType.ATTACK:
                 SceneManager.LoadScene(1);
                 break;
-            case CardType.STEAL:
+            case CardType.COINS:
                 SceneManager.LoadScene(2);
                 break;
-            case CardType.COINS:
+            case CardType.ENERGY:
                 SceneManager.LoadScene(3);
                 break;
-            case CardType.ENERGY:
+            case CardType.FORTUNEWHEEL:
                 SceneManager.LoadScene(4);
                 break;
-            case CardType.FORTUNEWHEEL:
-                SceneManager.LoadScene(5);
-                break;
             case CardType.SLOTMACHINE:
-                SceneManager.LoadScene(6);
+                SceneManager.LoadScene(5);
                 break;
             case CardType.JOKER:
                 Debug.Log("Joker");

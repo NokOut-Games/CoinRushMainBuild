@@ -1625,7 +1625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343195021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 20, z: -80}
+  m_LocalPosition: {x: 1, y: 20, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1622744564}
@@ -7883,9 +7883,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
   mTargetToRotateAround: {fileID: 1315715443}
+  mHorizontalPanSpeed: 0
   mZoomSpeed: 15
-  mCameraNearBound: -40
-  mCameraFarBound: -90
+  mCameraNearBound: 400
+  mCameraFarBound: -20
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}

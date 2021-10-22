@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
+    [SerializeField] float mHorizontalPanSpeed;
 
     [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
@@ -130,11 +131,11 @@ public class CameraController : MonoBehaviour
             float rotateDegrees = 0f;
             if (mChangedPositionX < mInitialPositionX)
             {
-                rotateDegrees += 50f * Time.deltaTime;
+                rotateDegrees -= mHorizontalPanSpeed * Time.deltaTime;
             }
             if (mChangedPositionX > mInitialPositionX)
             {
-                rotateDegrees -= 50f * Time.deltaTime;
+                rotateDegrees += mHorizontalPanSpeed * Time.deltaTime;
             }
             Vector3 currentVector = transform.position - mTargetToRotateAround.position;
             currentVector.y = 0;
@@ -177,10 +178,10 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        //if (!Input.GetMouseButton(0))
-        //{
-        //    PlayCameraBoundEffect();
-        //}
+        if (!Input.GetMouseButton(0))
+        {
+            PlayCameraBoundEffect();
+        }
     }
     /// <summary>
     /// Zoom Condition
