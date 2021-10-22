@@ -106,6 +106,7 @@ public class Reels : MonoBehaviour
         
         float TargetPosition = -(mReel.SlotElementGameObject.transform.localPosition.y) /*+ 1008*/;
 
+
         ReelsRollerParent.DOMoveY(TargetPosition, _reelRollDuration, true)
         .OnComplete(() =>
         {

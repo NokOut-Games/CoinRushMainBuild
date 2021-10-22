@@ -129,11 +129,11 @@ public class CameraController : MonoBehaviour
         {
             mChangedPositionX = Input.mousePosition.x;
             float rotateDegrees = 0f;
-            if (mChangedPositionX < mInitialPositionX)
+            if (mChangedPositionX < mInitialPositionX + 5f)
             {
                 rotateDegrees -= mHorizontalPanSpeed * Time.deltaTime;
             }
-            if (mChangedPositionX > mInitialPositionX)
+            if (mChangedPositionX > mInitialPositionX - 5f)
             {
                 rotateDegrees += mHorizontalPanSpeed * Time.deltaTime;
             }
@@ -168,13 +168,13 @@ public class CameraController : MonoBehaviour
             {
                 return;
             }
-            if (mChangedPositionY < mInitialPositionY)
-            {
-                Zoom(mZoomSpeed * -1f * Time.deltaTime);
-            }
-            if (mChangedPositionY > mInitialPositionY)
+            if (mChangedPositionY < mInitialPositionY - 100f) //Plus and -100 is to restrict the movement diagonally
             {
                 Zoom(mZoomSpeed * Time.deltaTime);
+            }
+            if (mChangedPositionY > mInitialPositionY + 100f)
+            {
+                Zoom(mZoomSpeed * -1f * Time.deltaTime);
             }
         }
 
@@ -193,7 +193,7 @@ public class CameraController : MonoBehaviour
     /// <param name="inZoomSpeed"></param>
     private void Zoom(float inZoomSpeed)
     {
-        if ((_CameraParent.position.z <= mCameraNearBound + 2 && inZoomSpeed > 0) || (_CameraParent.position.z >= mCameraFarBound - 2 && inZoomSpeed < 0))
+        if ((_CameraParent.position.z <= mCameraNearBound + 30 && inZoomSpeed > 0) || (_CameraParent.position.z >= mCameraFarBound - 30 && inZoomSpeed < 0))
         {
             _CameraParent.Translate(inZoomSpeed * _CameraParent.forward);
         }
