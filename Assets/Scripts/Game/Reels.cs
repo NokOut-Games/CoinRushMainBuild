@@ -7,6 +7,7 @@ public class ReelElement
 {
     public GameObject SlotElementGameObject;
     public string SlotElementsName;
+
     [Range(0, 100)] public float _chanceOfObtaining;
     [HideInInspector] public int _index;
     [HideInInspector] public double _toughnessMeter;
@@ -44,10 +45,10 @@ public class Reels : MonoBehaviour
             {
                 for (int i = 0; i < _reelElements.Length; i++)
                 {                                                                                                    //700 Down is the speed it needs to roll
-                    _reelElements[i].SlotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * 700, Space.World);
+                    _reelElements[i].SlotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * speed, Space.World);
                     if (_reelElements[i].SlotElementGameObject.transform.localPosition.y < -300)
                     {
-                        _reelElements[i].SlotElementGameObject.transform.localPosition = new Vector3(_reelElements[i].SlotElementGameObject.transform.localPosition.x, _reelElements[i].SlotElementGameObject.transform.localPosition.y + 2100, _reelElements[i].SlotElementGameObject.transform.localPosition.z);
+                        _reelElements[i].SlotElementGameObject.transform.localPosition = new Vector3(_reelElements[i].SlotElementGameObject.transform.localPosition.x, _reelElements[i].SlotElementGameObject.transform.localPosition.y + 2400, _reelElements[i].SlotElementGameObject.transform.localPosition.z);
                     }
                 }
             }
@@ -103,11 +104,9 @@ public class Reels : MonoBehaviour
         mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
-        
         float TargetPosition = -(mReel.SlotElementGameObject.transform.localPosition.y) /*+ 1008*/;
-
-
-        ReelsRollerParent.DOMoveY(TargetPosition, _reelRollDuration, true)
+        
+        ReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
         .OnComplete(() =>
         {
             roll = false;

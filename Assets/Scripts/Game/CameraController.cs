@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
     [SerializeField] float mHorizontalPanSpeed;
+    [SerializeField] float mCameraRightBound;
+    [SerializeField] float mCameraLeftBound;
 
     [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
@@ -120,7 +122,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void HorizontalPanningWithRotation()
     {
-        if (Input.GetMouseButtonDown(0) )
+        if (Input.GetMouseButtonDown(0))
         {
             mInitialPositionX = Input.mousePosition.x;
         }
@@ -146,7 +148,10 @@ public class CameraController : MonoBehaviour
             transform.RotateAround(mTargetToRotateAround.position, Vector3.up, rotateDegrees);
 
             mInitialPositionX = mChangedPositionX;
+
+
         }
+
     }
 
     /// <summary>
@@ -176,11 +181,6 @@ public class CameraController : MonoBehaviour
             {
                 Zoom(mZoomSpeed * -1f * Time.deltaTime);
             }
-        }
-
-        if (!Input.GetMouseButton(0))
-        {
-            PlayCameraBoundEffect();
         }
     }
     /// <summary>
@@ -223,5 +223,32 @@ public class CameraController : MonoBehaviour
     }
 }
 
+//void Panning()
+//    {
+//        //    if (mChangedPositionX == mInitialPositionX)
+//        //    {
+//        //        return;
+//        //    }
+//        //    if (mChangedPositionX < mInitialPositionX - 5f) //Plus and -100 is to restrict the movement diagonally
+//        //    {
+//        //        Pan(mHorizontalPanSpeed * -1f * Time.deltaTime);
+//        //    }
+//        //    if (mChangedPositionX > mInitialPositionX + 5f)
+//        //    {
+//        //        Pan(mHorizontalPanSpeed  * Time.deltaTime);
+//        //    }
 
+//        //}
+//        //if (!Input.GetMouseButton(0))
+//        //{
+//        //    PlayCameraBoundEffect();
+//        //}
 
+//        private void Pan(float inPanSpeed)
+//        {
+//            if ((_CameraParent.position.x <= mCameraRightBound + 30 && inPanSpeed > 0) || (_CameraParent.position.x >= mCameraLeftBound - 30 && inPanSpeed < 0))
+//            {
+//                _CameraParent.Translate(inPanSpeed * _CameraParent.right);
+//            }
+//        }
+//    }

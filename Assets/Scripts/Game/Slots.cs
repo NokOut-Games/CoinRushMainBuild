@@ -36,7 +36,7 @@ public class Slots : MonoBehaviour
             reel.roll = true;
             
             //Things to happen when roll ends and stops.                                                                                              
-            reel.OnReelRollEnd(reel => { elementNames.Add(reel.SlotElementsName); _uiSpinButton.interactable = true; _uiSpinButtonText.text = "Roll"; Invoke(nameof(MainSceneInvoke), 1f);/*ResultChecker();*/ });
+            reel.OnReelRollEnd(reel => { elementNames.Add(reel.SlotElementsName); _uiSpinButton.interactable = true; _uiSpinButtonText.text = "Roll"; /*Invoke(nameof(MainSceneInvoke), 1f);*/ ResultChecker(); });
             reel.mdisableRoll = false;
         }
         for (int i = 0; i < reels.Length; i++)
@@ -47,109 +47,105 @@ public class Slots : MonoBehaviour
         }
     }
 
-    //private void ResultChecker()
-    //{
-    //    if (elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins")
-    //    {
-    //        Debug.Log("3 are Diamonds");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+    private void ResultChecker()
+    {
+        #region All identical
+        if (elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins")
+        {
+            mGameManager._coins += 5000;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins")
+        {
+            mGameManager._coins += 25000;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins")
+        {
+            mGameManager._coins += 100000;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins")
+        {
+            mGameManager._coins += 500000;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "1M" && elementNames[1] == "1M" && elementNames[2] == "1M")
+        {
+            mGameManager._coins += 1000000;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "10Energy" && elementNames[1] == "10Energy" && elementNames[2] == "10Energy")
+        {
+            mGameManager._energy += 10;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "25Energy" && elementNames[1] == "25Energy" && elementNames[2] == "25Energy")
+        {
+            mGameManager._energy += 25;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if (elementNames[0] == "100Energy" && elementNames[1] == "100Energy" && elementNames[2] == "100Energy")
+        {
+            mGameManager._energy += 100;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        #endregion
+        #region Two Identical
+        else if ((elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins") || (elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins") || (elementNames[0] == "5KCoins" && elementNames[2] == "5KCoins"))
+        {
+            mGameManager._coins += 2500;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins")
-    //    {
-    //        Debug.Log("3 are Crowns");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins") || (elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins") || (elementNames[0] == "25KCoins" && elementNames[2] == "25KCoins"))
+        {
+            mGameManager._coins += 12500;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins")
-    //    {
-    //        Debug.Log("3 are Melons");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins") || (elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins") || (elementNames[0] == "100KCoins" && elementNames[2] == "100KCoins"))
+        {
+            mGameManager._coins += 50000;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins")
-    //    {
-    //        Debug.Log("3 are Bars");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins") || (elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins") || (elementNames[0] == "500KCoins" && elementNames[2] == "500KCoins"))
+        {
+            mGameManager._coins += 250000;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "1M" && elementNames[1] == "1M" && elementNames[2] == "1M")
-    //    {   
-    //        Debug.Log("3 are Sevens");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "1M" && elementNames[1] == "1M") || (elementNames[1] == "1M" && elementNames[2] == "1M") || (elementNames[0] == "1M" && elementNames[2] == "1M"))
+        {
+            mGameManager._coins += 500000;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "10Energy" && elementNames[1] == "10Energy" && elementNames[2] == "10Energy")
-    //    {
-    //        Debug.Log("3 are Cherries");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "10Energy" && elementNames[1] == "10Energy") || (elementNames[1] == "10Energy" && elementNames[2] == "10Energy") || (elementNames[0] == "10Energy" && elementNames[2] == "10Energy"))
+        {
+            mGameManager._energy += 5;
+            Invoke(nameof(MainSceneInvoke), 2f);
 
-    //    }
-    //    else if (elementNames[0] == "25Energy" && elementNames[1] == "25Energy" && elementNames[2] == "25Energy")
-    //    {
-    //        Debug.Log("3 are Lemons");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if (elementNames[0] == "100Energy" && elementNames[1] == "100Energy" && elementNames[2] == "100Energy")
-    //    {
-    //        Debug.Log("3 are Lemons");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins") || (elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins") || (elementNames[0] == "5KCoins" && elementNames[2] == "5KCoins"))
-    //    {
-    //        Debug.Log(" Diamond " + " Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins") || (elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins") || (elementNames[0] == "25KCoins" && elementNames[2] == "25KCoins"))
-    //    {
-    //        Debug.Log(" Crown " + " Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins") || (elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins") || (elementNames[0] == "100KCoins" && elementNames[2] == "100KCoins"))
-    //    {
-    //        Debug.Log(" Melon " + " Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins") || (elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins") || (elementNames[0] == "500KCoins" && elementNames[2] == "500KCoins"))
-    //    {
-    //        Debug.Log(" Bar " + " Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "1M" && elementNames[1] == "1M") || (elementNames[1] == "1M" && elementNames[2] == "1M") || (elementNames[0] == "1M" && elementNames[2] == "1M"))
-    //    {
-    //        Debug.Log(" Seven " + "Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "10Energy" && elementNames[1] == "10Energy") || (elementNames[1] == "10Energy" && elementNames[2] == "10Energy") || (elementNames[0] == "10Energy" && elementNames[2] == "10Energy"))
-    //    {
-    //        Debug.Log(" Cherry " + " Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //    else if ((elementNames[0] == "25Energy" && elementNames[1] == "25Energy") || (elementNames[1] == "25Energy" && elementNames[2] == "25Energy") || (elementNames[0] == "25Energy" && elementNames[2] == "25Energy"))
-    //    {
-    //        Debug.Log(" Lemon " + "Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-    //    }
-    //    else if ((elementNames[0] == "100Energy" && elementNames[1] == "100Energy") || (elementNames[1] == "100Energy" && elementNames[2] == "100Energy") || (elementNames[0] == "100Energy" && elementNames[2] == "100Energy"))
-    //    {
-    //        Debug.Log(" Lemon " + "Only Two are identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Dude Nothing is Identical");
-    //        Invoke(nameof(MainSceneInvoke), 2f);
-
-    //    }
-    //}
+        }
+        else if ((elementNames[0] == "25Energy" && elementNames[1] == "25Energy") || (elementNames[1] == "25Energy" && elementNames[2] == "25Energy") || (elementNames[0] == "25Energy" && elementNames[2] == "25Energy"))
+        {
+            mGameManager._energy += 12;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        else if ((elementNames[0] == "100Energy" && elementNames[1] == "100Energy") || (elementNames[1] == "100Energy" && elementNames[2] == "100Energy") || (elementNames[0] == "100Energy" && elementNames[2] == "100Energy"))
+        {
+            mGameManager._energy += 50;
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+        #endregion 
+        else
+        {
+            //Invoke A animation Better luck next time
+            Debug.Log("Dude Nothing is Identical");
+            Invoke(nameof(MainSceneInvoke), 2f);
+        }
+    }
 
     void MainSceneInvoke()
     {

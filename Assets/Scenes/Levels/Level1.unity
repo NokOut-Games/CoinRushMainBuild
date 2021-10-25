@@ -61976,6 +61976,8 @@ MonoBehaviour:
   _CameraParent: {fileID: 343195022}
   mTargetToRotateAround: {fileID: 1315715443}
   mHorizontalPanSpeed: 100
+  mCameraRightBound: 100
+  mCameraLeftBound: -100
   mZoomSpeed: 200
   mCameraNearBound: 370
   mCameraFarBound: -30
@@ -82234,6 +82236,14 @@ MonoBehaviour:
   - {fileID: 42502643}
   _PositionList: []
   _RotationList: []
+  AttackList: []
+  StealList: []
+  ShieldList: []
+  JokerList: []
+  EnergyList: []
+  CoinsList: []
+  FortuneList: []
+  SpinList: []
 --- !u!1 &860952998435359251
 GameObject:
   m_ObjectHideFlags: 0
@@ -82759,7 +82769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5606158368288920429}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -6.4000015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4700523112147568906}
@@ -83063,7 +83073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4044854270542976916
 GameObject:
   m_ObjectHideFlags: 0
@@ -83612,7 +83622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857858354632380886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6971871, y: -57.1, z: 391.06}
+  m_LocalPosition: {x: 0.6971871, y: -63.5, z: 391.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

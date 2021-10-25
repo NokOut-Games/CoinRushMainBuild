@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CardDeck : MonoBehaviour
 {
-
     [SerializeField] private GameManager mGameManager;
     [SerializeField] private GameObject mCardHolderParent;
     private int clicks = 0;
-    int k;
 
     [SerializeField] public List<ScriptedCards> mScriptedCards;
     public List<Cards> _CardList = new List<Cards>();
@@ -16,11 +15,26 @@ public class CardDeck : MonoBehaviour
     public List<Vector3> _PositionList = new List<Vector3>();
     public List<Quaternion> _RotationList = new List<Quaternion>();
 
+    #region CardMarch3 Version-1
+    public List<Cards> AttackList;
+    public List<Cards> StealList;
+    public List<Cards> ShieldList;
+    public List<Cards> JokerList;
+    public List<Cards> EnergyList;
+    public List<Cards> CoinsList;
+    public List<Cards> FortuneList;
+    public List<Cards> SpinList;
+    #endregion
+    
+  
 
     private void Start()
     {
+       
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+
+
 
     /// <summary>
     /// This function is responsible for the camera to zoom in to the playing space and the card draw functionality
@@ -30,6 +44,7 @@ public class CardDeck : MonoBehaviour
     /// </summary>
     public void DrawCard()
     {
+        //ChangeSprites();
         if (_CardList.Count >= 8)
             return;
 
@@ -49,20 +64,17 @@ public class CardDeck : MonoBehaviour
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>());
         ReplacementOfCards();
-       
+        //CardCheckingFunction();
+        CardMatchThreeChecker(card.GetComponent<Cards>());
     }
 
     private void Update()
     {
         if (clicks == 8)
         {
-          
             clicks = 0;
         }
-        //if (_CardList.Count != 0)
-        //{
-            CardCheckingFunction();
-        //}
+        //CardCheckingFunction();
     }
 
     /// <summary>
@@ -70,6 +82,29 @@ public class CardDeck : MonoBehaviour
     /// </This function is used to allign the picked cards in sorted order>
     public void AddNewCard(Cards inNewCard)
     {
+        #region CardMarch3 Version-1
+        switch (inNewCard._cardType)
+        {
+            case CardType.ATTACK: AttackList.Add(inNewCard);
+                break;
+            case CardType.STEAL: StealList.Add(inNewCard);
+                break;
+            case CardType.SHIELD: ShieldList.Add(inNewCard);
+                break;
+            case CardType.JOKER: JokerList.Add(inNewCard);
+                break;
+            case CardType.ENERGY: EnergyList.Add(inNewCard);
+                break;
+            case CardType.COINS: CoinsList.Add(inNewCard);
+                break;
+            case CardType.FORTUNEWHEEL: FortuneList.Add(inNewCard);
+                break;
+            case CardType.SLOTMACHINE: SpinList.Add(inNewCard);
+                break;
+            default:
+                break;
+        }
+        #endregion
         for (int i = 0; i < _CardList.Count; i++)
         {
             if (_CardList[i]._cardType == inNewCard._cardType)
@@ -121,82 +156,35 @@ public class CardDeck : MonoBehaviour
             _CardList[i].transform.SetSiblingIndex(i + 1);
         }
     }
-
-    /// <summary>
-    /// In this function Checking that any of  three cards are same then its name will be displayed
-    /// </summary>
-    void CardCheckingFunction()
+    void CardMatchThreeChecker(Cards inNewCard)
     {
-        if (_CardList[0]._cardID == _CardList[1]._cardID && _CardList[0]._cardID == _CardList[2]._cardID)
+        #region CardMarch3 Version-1
+        if (AttackList.Count == 3)
         {
-            k = 1;
-            Invoke("CardTrigger", 1.5f);
+            SceneManager.LoadScene(1);
         }
-        else if (_CardList[1]._cardID == _CardList[2]._cardID && _CardList[1]._cardID == _CardList[3]._cardID)
+        if(CoinsList.Count == 3)
         {
-            k = 2;
-            Invoke("CardTrigger", 1.5f);
+            SceneManager.LoadScene(2);
         }
-        else if (_CardList[2]._cardID == _CardList[3]._cardID && _CardList[2]._cardID == _CardList[4]._cardID)
+        if(EnergyList.Count == 3)
         {
-            k = 3;
-            Invoke("CardTrigger", 1.5f);
+            SceneManager.LoadScene(3);
         }
-        else if (_CardList[3]._cardID == _CardList[4]._cardID && _CardList[3]._cardID == _CardList[5]._cardID)
+        if(FortuneList.Count == 3)
         {
-            k = 4;
-            Invoke("CardTrigger", 1.5f);
+            SceneManager.LoadScene(4);
         }
-        else if (_CardList[4]._cardID == _CardList[5]._cardID && _CardList[4]._cardID == _CardList[6]._cardID)
+        if(SpinList.Count == 3)
         {
-            k = 5;
-            Invoke("CardTrigger", 1.5f);
+            SceneManager.LoadScene(5);
         }
-        else if (_CardList[5]._cardID == _CardList[6]._cardID && _CardList[5]._cardID == _CardList[7]._cardID)
+        #endregion
+        if(_CardList.Contains(inNewCard))
         {
-            k = 6;
-            Invoke("CardTrigger", 1.5f);
+            
         }
-        //if(_CardList >= _CardList.Count)
-        //{
-        //    return;
-        //}
     }
-    /// <summary>
-    /// This Function will Trigger the Scene if 3 Cards Matches
-    /// </summary>
-    void CardTrigger()
-    {
-
-        switch (_CardList[k]._cardType)
-        {
-            case CardType.ATTACK:
-                SceneManager.LoadScene(1);
-                break;
-            case CardType.COINS:
-                SceneManager.LoadScene(2);
-                break;
-            case CardType.ENERGY:
-                SceneManager.LoadScene(3);
-                break;
-            case CardType.FORTUNEWHEEL:
-                SceneManager.LoadScene(4);
-                break;
-            case CardType.SLOTMACHINE:
-                SceneManager.LoadScene(5);
-                break;
-            case CardType.JOKER:
-                Debug.Log("Joker");
-                break;
-            case CardType.SHIELD:
-                Debug.Log("Shield + 1");
-                break;
-        }
-
-
-    }
-
-
 }
 
 
@@ -208,7 +196,25 @@ public class CardDeck : MonoBehaviour
 
 
 
+//void drawButtonChange()
+//{
+//      public Image DrawButton;
+//public Sprite drawNormal, drawAutomatic;
 
+// //DrawButton.sprite = drawNormal;
+
+//    //void ChangeSprites()
+//    //{
+//    //    if (DrawButton.sprite == drawNormal)
+//    //    {
+//    //        DrawButton.sprite = drawAutomatic;
+//    //    }
+//    //    else if (DrawButton.sprite == drawAutomatic)
+//    //    {
+//    //        DrawButton.sprite = drawNormal;
+//    //    }
+//    //}
+//}
 
 
 
@@ -229,6 +235,83 @@ public class CardDeck : MonoBehaviour
 
 //void Residue()
 //{
+/// <summary>
+/// This Function will Trigger the Scene if 3 Cards Matches
+/// </summary>
+//void CardTrigger()
+//{
+//    switch (_CardList[mk]._cardType)
+//    {
+//        case CardType.ATTACK:
+//            SceneManager.LoadScene(1);
+//            break;
+//        case CardType.COINS:
+//            SceneManager.LoadScene(2);
+//            break;
+//        case CardType.ENERGY:
+//            SceneManager.LoadScene(3);
+//            break;
+//        case CardType.FORTUNEWHEEL:
+//            SceneManager.LoadScene(4);
+//            break;
+//        case CardType.SLOTMACHINE:
+//            SceneManager.LoadScene(5);
+//            break;
+//        case CardType.JOKER:
+//            Debug.Log("Joker");
+//            break;
+//        case CardType.SHIELD:
+//            Debug.Log("Shield + 1");
+//            break;
+//    }
+//}
+
+/// <summary>
+/// In this function Checking that any of  three cards are same then its name will be displayed
+/// </summary>
+//void CardCheckingFunction()
+//{
+//    if (_CardList[0]._cardID == _CardList[1]._cardID && _CardList[0]._cardID == _CardList[2]._cardID)
+//    {
+//        mk = 1;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    else if (_CardList[1]._cardID == _CardList[2]._cardID && _CardList[1]._cardID == _CardList[3]._cardID)
+//    {
+//        mk = 2;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    else if (_CardList[2]._cardID == _CardList[3]._cardID && _CardList[2]._cardID == _CardList[4]._cardID)
+//    {
+//        mk = 3;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    else if (_CardList[3]._cardID == _CardList[4]._cardID && _CardList[3]._cardID == _CardList[5]._cardID)
+//    {
+//        mk = 4;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    else if (_CardList[4]._cardID == _CardList[5]._cardID && _CardList[4]._cardID == _CardList[6]._cardID)
+//    {
+//        mk = 5;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    else if (_CardList[5]._cardID == _CardList[6]._cardID && _CardList[5]._cardID == _CardList[7]._cardID)
+//    {
+//        mk = 6;
+//        Invoke("CardTrigger", 1.5f);
+//    }
+//    //if(_CardList >= _CardList.Count)
+//    //{
+//    //    return;
+//    //}
+//}
+
+
+
+
+
+
 //[SerializeField] private GameObject mCam;
 //[SerializeField] private Transform mDeckCardCamPosition;
 //[SerializeField] private LevelManagerUI mlevelManagerUI;
