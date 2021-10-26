@@ -136,26 +136,26 @@ public class CardDeck : MonoBehaviour
     void CardCheckingFunction()
     {
         #region Try-1 "Gives Output And throws Error too"
-        if (_CardList.Count > 2)
+        //if (_CardList.Count > 2)
+        //{
+        for (int i = 0; i < _CardList.Count; i++) 
         {
-            for (int i = 0; i < _CardList.Count; i++) // 0 //3
+            int j = i; // 2
+            int k = i + 1; // 3
+            int l = i + 2; // 4
+            if(j > _CardList.Count || k > _CardList.Count || l > _CardList.Count)
             {
-                int j = i; //0
-                int k = i + 1; //1
-                int l = i + 2; //2
-                if(j > _CardList.Count || k > _CardList.Count || l > _CardList.Count)
-                {
-                    return;
-                }
-                if (_CardList[j]._cardType == _CardList[k]._cardType && _CardList[k]._cardType == _CardList[l]._cardType)
-                {
-                    SceneManager.LoadScene(_CardList[i]._cardType.ToString());
-                }
+                return;
+            }
+            if (_CardList[j]._cardType == _CardList[k]._cardType && _CardList[k]._cardType == _CardList[l]._cardType)
+            {
+                StartCoroutine(DelayedSceneLoader(_CardList[j]._cardType));
             }
         }
+        //}
         #endregion
 
-        //#region Try-2 "Took from internet but understood the code"
+        #region Try-2 "Took from internet but understood the code"
         //if (_CardList.Count > 2)
         //{
         //    CardType type = _CardList[0]._cardType;
@@ -178,13 +178,13 @@ public class CardDeck : MonoBehaviour
 
         //    }
         //}
-        //#endregion
+        #endregion
 
     }
 
     IEnumerator DelayedSceneLoader(CardType inType)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(inType.ToString());
     }
 }
