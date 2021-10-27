@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class CardDeck : MonoBehaviour
 {
+    public int _maxHoldTime = 5;
+    public RectTransform _drawButtonRectTransform;
     [SerializeField] private GameManager mGameManager;
+
     [SerializeField] private GameObject mCardHolderParent;
     private int clicks = 0;
-    private int mk;
 
     [SerializeField] public List<ScriptedCards> mScriptedCards;
     public List<Cards> _CardList = new List<Cards>();
@@ -17,39 +19,102 @@ public class CardDeck : MonoBehaviour
     [HideInInspector] public List<Vector3> _PositionList = new List<Vector3>();
     [HideInInspector] public List<Quaternion> _RotationList = new List<Quaternion>();
 
-    #region CardMarch3 Version-1
-    //public List<Cards> AttackList;
-    //public List<Cards> StealList;
-    //public List<Cards> ShieldList;
-    //public List<Cards> JokerList;
-    //public List<Cards> EnergyList;
-    //public List<Cards> CoinsList;
-    //public List<Cards> FortuneList;
-    //public List<Cards> SpinList;
-    #endregion
-    
-  
+    public float time = 0;
+
+    public bool autoCardDraw = false;
+    public bool automaticDrawModeOn = false;
+    public bool onceDone = false;
+
+    public Image DrawButton;
+    public Sprite drawNormal, drawAutomatic;
 
     private void Start()
     {
-       
+        DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
+    private void Update()
+    {
+        if (clicks == 8)
+        {
+            clicks = 0;
+        }
 
+        //time = Mathf.Clamp(time,0f,5f);
+        Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
 
-    /// <summary>
-    /// This function is responsible for the camera to zoom in to the playing space and the card draw functionality
-    /// 1.Reduce the Energy.
-    /// 2.Zoom to the gameplay location
-    /// 3.Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
-    /// </summary>
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            {
+                if (automaticDrawModeOn)
+                {
+                    BackToNormalState();
+                }
+                else
+                {
+                    time = 0;
+                    DrawCard();
+                }
+            }
+        }
+
+        if (!onceDone)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                {
+                    time += Time.fixedDeltaTime;
+                    if (time >= _maxHoldTime)
+                    {
+                        onceDone = true;
+                        automaticDrawModeOn = true;
+                        autoCardDraw = true;
+                        ChangeSprites();
+                        StartCoroutine(AutomaticCardDrawing());
+                    }
+                }
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            {
+                time = 0;
+            }
+        }
+    }
+
+    public void BackToNormalState()
+    {
+        automaticDrawModeOn = false;
+        ChangeSprites();
+        onceDone = false;
+        autoCardDraw = false;
+        StopCoroutine(AutomaticCardDrawing());
+    }
+
+    void ChangeSprites()
+    {
+        if (DrawButton.sprite == drawNormal)
+        {
+            DrawButton.sprite = drawAutomatic;
+        }
+        else if (DrawButton.sprite == drawAutomatic)
+        {
+            DrawButton.sprite = drawNormal;
+        }
+    }
+
     public void DrawCard()
     {
-        //ChangeSprites();
         if (_CardList.Count >= 8)
+        {
             return;
-
+        }
         mGameManager._energy -= 1;
 
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();
@@ -69,17 +134,15 @@ public class CardDeck : MonoBehaviour
         CardCheckingFunction();
     }
 
-    private void Update()
+    IEnumerator AutomaticCardDrawing()
     {
-        if (clicks == 8)
+        while (autoCardDraw)
         {
-            clicks = 0;
+            DrawCard();
+            yield return new WaitForSeconds(5);
         }
     }
 
-    /// <summary>
-    /// 
-    /// </This function is used to allign the picked cards in sorted order>
     public void AddNewCard(Cards inNewCard)
     {
         for (int i = 0; i < _CardList.Count; i++)
@@ -135,51 +198,13 @@ public class CardDeck : MonoBehaviour
 
     void CardCheckingFunction()
     {
-        #region Try-1 "Gives Output And throws Error too"
-        //if (_CardList.Count > 2)
-        //{
-        for (int i = 0; i < _CardList.Count; i++) 
+        for (int i = 0; i < _CardList.Count - 2; i++)
         {
-            int j = i; // 2
-            int k = i + 1; // 3
-            int l = i + 2; // 4
-            if(j > _CardList.Count || k > _CardList.Count || l > _CardList.Count)
+            if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
-                return;
-            }
-            if (_CardList[j]._cardType == _CardList[k]._cardType && _CardList[k]._cardType == _CardList[l]._cardType)
-            {
-                StartCoroutine(DelayedSceneLoader(_CardList[j]._cardType));
+                StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
             }
         }
-        //}
-        #endregion
-
-        #region Try-2 "Took from internet but understood the code"
-        //if (_CardList.Count > 2)
-        //{
-        //    CardType type = _CardList[0]._cardType;
-        //    int count = 1;
-        //    for (int i = 1; i < _CardList.Count; i++)
-        //    {
-        //        if (_CardList[i]._cardType == type)
-        //        {
-        //            count++;
-        //            if (count == 3) 
-        //            {
-        //                StartCoroutine(DelayedSceneLoader(type));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            type = _CardList[i]._cardType;
-        //            count = 1;
-        //        }
-
-        //    }
-        //}
-        #endregion
-
     }
 
     IEnumerator DelayedSceneLoader(CardType inType)
@@ -195,6 +220,152 @@ public class CardDeck : MonoBehaviour
 
 
 
+//void OldVersion()
+//{
+//    [SerializeField] private GameManager mGameManager;
+//    [SerializeField] private GameObject mCardHolderParent;
+//    private int clicks = 0;
+//private int mk;
+
+//[SerializeField] public List<ScriptedCards> mScriptedCards;
+//public List<Cards> _CardList = new List<Cards>();
+//public List<Transform> _playerHandPoints;
+//[HideInInspector] public List<Vector3> _PositionList = new List<Vector3>();
+//[HideInInspector] public List<Quaternion> _RotationList = new List<Quaternion>();
+
+//#region CardMarch3 Version-1
+////public List<Cards> AttackList;
+////public List<Cards> StealList;
+////public List<Cards> ShieldList;
+////public List<Cards> JokerList;
+////public List<Cards> EnergyList;
+////public List<Cards> CoinsList;
+////public List<Cards> FortuneList;
+////public List<Cards> SpinList;
+//#endregion
+
+
+
+//private void Start()
+//{
+//    mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+//}
+
+
+
+///// <summary>
+///// This function is responsible for the camera to zoom in to the playing space and the card draw functionality
+///// 1.Reduce the Energy.
+///// 2.Zoom to the gameplay location
+///// 3.Have a way to access the card location and spawn card at their respective positions in an inverted U-Shape
+///// </summary>
+//public void DrawCard()
+//{
+//    //ChangeSprites();
+//    if (_CardList.Count >= 8)
+//        return;
+
+//    mGameManager._energy -= 1;
+
+//    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+
+//    ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
+
+//    GameObject card = Instantiate(cards._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+//    Cards cardDetails = card.GetComponent<Cards>();
+
+//    cardDetails._cardType = cards._cardType;
+//    cardDetails._cardID = cards._cardID;
+//    cardDetails._Position = card.transform.position;
+
+//    clicks += 1;
+//    AddNewCard(card.GetComponent<Cards>());
+//    ReplacementOfCards();
+//    CardCheckingFunction();
+//}
+
+//private void Update()
+//{
+//    if (clicks == 8)
+//    {
+//        clicks = 0;
+//    }
+//}
+
+///// <summary>
+///// </This function is used to allign the picked cards in sorted order>
+//public void AddNewCard(Cards inNewCard)
+//{
+//    for (int i = 0; i < _CardList.Count; i++)
+//    {
+//        if (_CardList[i]._cardType == inNewCard._cardType)
+//        {
+//            _CardList.Insert(i, inNewCard);
+//            return;
+//        }
+//    }
+//    _CardList.Add(inNewCard);
+//}
+
+//public void ReplacementOfCards()
+//{
+//    int medianIndex = _playerHandPoints.Count / 2;
+
+//    int incrementValue = 0;
+//    _PositionList.Clear();
+//    _RotationList.Clear();
+
+//    List<int> drawOrderArrange = new List<int>();
+
+//    for (int i = 0; i < _CardList.Count; i++)
+//    {
+//        if (i % 2 == 0 || i == 0)
+//        {
+//            drawOrderArrange.Add(medianIndex + incrementValue);
+//            incrementValue++;
+//        }
+//        else
+//        {
+//            drawOrderArrange.Add(medianIndex - incrementValue);
+//        }
+//    }
+
+//    drawOrderArrange.Sort();
+
+//    for (int i = 0; i < _CardList.Count; i++)
+//    {
+//        _PositionList.Add(_playerHandPoints[drawOrderArrange[i]].transform.position);
+//        _RotationList.Add(_playerHandPoints[drawOrderArrange[i]].transform.rotation);
+//    }
+
+//    for (int i = 0; i < _CardList.Count; i++)
+//    {
+//        _CardList[i]._Position = _PositionList[i];
+//        _CardList[i].transform.position = _PositionList[i];
+//        _CardList[i].transform.rotation = _RotationList[i];
+//        _CardList[i].transform.SetSiblingIndex(i + 1);
+//    }
+//}
+
+//void CardCheckingFunction()
+//{
+//    for (int i = 0; i < _CardList.Count - 2; i++)
+//    {
+//        if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
+//        {
+//            StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
+//        }
+//    }
+//}
+
+//IEnumerator DelayedSceneLoader(CardType inType)
+//{
+//    yield return new WaitForSeconds(2);
+//    SceneManager.LoadScene(inType.ToString());
+//}
+//}
+
+
 
 // Algorithm for auto draw
 // Method - 1
@@ -206,7 +377,7 @@ public class CardDeck : MonoBehaviour
 //void drawButtonChange()
 //{
 //      public Image DrawButton;
-//public Sprite drawNormal, drawAutomatic;
+//      public Sprite drawNormal, drawAutomatic;
 
 // //DrawButton.sprite = drawNormal;
 
@@ -271,6 +442,38 @@ public class CardDeck : MonoBehaviour
 //            Debug.Log("Shield + 1");
 //            break;
 //    }
+//}
+
+//#region Try-2 "Understood the code. Seems a better choice(Code Took from Internet)"
+//if (_CardList.Count > 2)
+//{
+//    CardType type = _CardList[0]._cardType;
+//    int count = 1;
+//    for (int i = 1; i < _CardList.Count; i++)
+//    {
+//        if (_CardList[i]._cardType == type)
+//        {
+//            count++;
+//            if (count == 3)
+//            {
+//                StartCoroutine(DelayedSceneLoader(type));
+//            }
+//        }
+//        else
+//        {
+//            type = _CardList[i]._cardType;
+//            count = 1;
+//        }
+//     }
+//}
+//#endregion
+
+//int j = i;
+//int k = i + 1;
+//int l = i + 2;
+//if (j >= _CardList.Count || k >= _CardList.Count || l >= _CardList.Count)
+//{
+//    return;
 //}
 
 //#region CardMarch3 Version-1
