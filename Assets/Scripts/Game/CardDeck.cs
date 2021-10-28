@@ -6,27 +6,31 @@ using UnityEngine.UI;
 
 public class CardDeck : MonoBehaviour
 {
-    public int _maxHoldTime = 5;
-    public RectTransform _drawButtonRectTransform;
+    [Header ("Grabing Other GameObject References")]
     [SerializeField] private GameManager mGameManager;
-
     [SerializeField] private GameObject mCardHolderParent;
+    [SerializeField] private List<ScriptedCards> mScriptedCards;
+    [SerializeField] private List<GameObject> mCardListGameObject;
+    [SerializeField] private int mMaxHoldTime = 5;
+    [SerializeField] private float time = 0;
+    [SerializeField] private Image DrawButton;
+    [SerializeField] private Sprite drawNormal, drawAutomatic;
+    [SerializeField] private RectTransform _drawButtonRectTransform;
+    [SerializeField] private float timeForCardAnimation = 2f;
+
+    private List<Vector3> _PositionList = new List<Vector3>();
+    private List<Quaternion> _RotationList = new List<Quaternion>();
+    private bool mAutoCardDraw = false;
+    private bool mAutomaticDrawModeOn = false;
+    private bool mOnceDone = false;
     private int clicks = 0;
 
-    [SerializeField] public List<ScriptedCards> mScriptedCards;
     public List<Cards> _CardList = new List<Cards>();
     public List<Transform> _playerHandPoints;
-    [HideInInspector] public List<Vector3> _PositionList = new List<Vector3>();
-    [HideInInspector] public List<Quaternion> _RotationList = new List<Quaternion>();
 
-    public float time = 0;
 
-    public bool autoCardDraw = false;
-    public bool automaticDrawModeOn = false;
-    public bool onceDone = false;
 
-    public Image DrawButton;
-    public Sprite drawNormal, drawAutomatic;
+
 
     private void Start()
     {
@@ -39,39 +43,39 @@ public class CardDeck : MonoBehaviour
         if (clicks == 8)
         {
             clicks = 0;
+            foreach (GameObject card in mCardListGameObject)
+            {
+                Destroy(card);
+            }
+            _CardList.Clear();
+            mCardListGameObject.Clear();
         }
 
-        //time = Mathf.Clamp(time,0f,5f);
+        time = Mathf.Clamp(time,0f,5f);
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
 
         if (Input.GetMouseButtonDown(0))
         {
             if (_drawButtonRectTransform.rect.Contains(localMousePosition))
             {
-                if (automaticDrawModeOn)
-                {
-                    BackToNormalState();
-                }
-                else
-                {
-                    time = 0;
-                    DrawCard();
-                }
+                BackToNormalState();
+                time = 0;
+                DrawCard();
             }
         }
 
-        if (!onceDone)
+        if (!mOnceDone)
         {
             if (Input.GetMouseButton(0))
             {
                 if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                 {
                     time += Time.fixedDeltaTime;
-                    if (time >= _maxHoldTime)
+                    if (time >= mMaxHoldTime)
                     {
-                        onceDone = true;
-                        automaticDrawModeOn = true;
-                        autoCardDraw = true;
+                        mOnceDone = true;
+                        mAutomaticDrawModeOn = true;
+                        mAutoCardDraw = true;
                         ChangeSprites();
                         StartCoroutine(AutomaticCardDrawing());
                     }
@@ -90,14 +94,17 @@ public class CardDeck : MonoBehaviour
 
     public void BackToNormalState()
     {
-        automaticDrawModeOn = false;
-        ChangeSprites();
-        onceDone = false;
-        autoCardDraw = false;
-        StopCoroutine(AutomaticCardDrawing());
+        if (mAutomaticDrawModeOn)
+        {
+            mAutomaticDrawModeOn = false;
+            ChangeSprites();
+            mOnceDone = false;
+            mAutoCardDraw = false;
+            StopCoroutine(AutomaticCardDrawing());
+        }
     }
 
-    void ChangeSprites()
+    private void ChangeSprites()
     {
         if (DrawButton.sprite == drawNormal)
         {
@@ -109,7 +116,7 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    public void DrawCard()
+    private void DrawCard()
     {
         if (_CardList.Count >= 8)
         {
@@ -129,22 +136,23 @@ public class CardDeck : MonoBehaviour
         cardDetails._Position = card.transform.position;
 
         clicks += 1;
-        AddNewCard(card.GetComponent<Cards>());
+        AddNewCard(card.GetComponent<Cards>(),card);
         ReplacementOfCards();
-        CardCheckingFunction();
+        //CardCheckingFunction();
     }
 
-    IEnumerator AutomaticCardDrawing()
+    private IEnumerator AutomaticCardDrawing()
     {
-        while (autoCardDraw)
+        while (mAutoCardDraw)
         {
             DrawCard();
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(timeForCardAnimation);
         }
     }
 
-    public void AddNewCard(Cards inNewCard)
+    private void AddNewCard(Cards inNewCard , GameObject inCard)
     {
+        mCardListGameObject.Add(inCard);
         for (int i = 0; i < _CardList.Count; i++)
         {
             if (_CardList[i]._cardType == inNewCard._cardType)
@@ -156,7 +164,7 @@ public class CardDeck : MonoBehaviour
         _CardList.Add(inNewCard);
     }
 
-    public void ReplacementOfCards()
+    private void ReplacementOfCards()
     {
         int medianIndex = _playerHandPoints.Count / 2;
 
@@ -196,7 +204,7 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    void CardCheckingFunction()
+    private void CardCheckingFunction()
     {
         for (int i = 0; i < _CardList.Count - 2; i++)
         {
@@ -207,7 +215,7 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedSceneLoader(CardType inType)
+    private IEnumerator DelayedSceneLoader(CardType inType)
     {
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(inType.ToString());
@@ -234,14 +242,14 @@ public class CardDeck : MonoBehaviour
 //[HideInInspector] public List<Quaternion> _RotationList = new List<Quaternion>();
 
 //#region CardMarch3 Version-1
-////public List<Cards> AttackList;
-////public List<Cards> StealList;
-////public List<Cards> ShieldList;
-////public List<Cards> JokerList;
-////public List<Cards> EnergyList;
-////public List<Cards> CoinsList;
-////public List<Cards> FortuneList;
-////public List<Cards> SpinList;
+//public List<Cards> AttackList;
+//public List<Cards> StealList;
+//public List<Cards> ShieldList;
+//public List<Cards> JokerList;
+//public List<Cards> EnergyList;
+//public List<Cards> CoinsList;
+//public List<Cards> FortuneList;
+//public List<Cards> SpinList;
 //#endregion
 
 

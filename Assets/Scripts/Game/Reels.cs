@@ -5,9 +5,8 @@ using DG.Tweening;
 [System.Serializable]
 public class ReelElement
 {
-    public GameObject SlotElementGameObject;
-    public string SlotElementsName;
-
+    public GameObject _slotElementGameObject;
+    
     [Range(0, 100)] public float _chanceOfObtaining;
     [HideInInspector] public int _index;
     [HideInInspector] public double _toughnessMeter;
@@ -17,38 +16,38 @@ public class Reels : MonoBehaviour
 {
     public ReelElement[] _reelElements; 
     [Range(1,20)] public int _reelRollDuration = 4;
-    public bool roll = false;  
+    public bool _roll = false;  
 
     private double mTotalToughnessMeter;
     private System.Random mRandomValue = new System.Random();
     
     [SerializeField] 
-    private Transform ReelsRollerParent;
+    private Transform mReelsRollerParent;
 
     [SerializeField]
-    private int speed = 1200;  //Will use it later instead of 700 down in update function
+    private int mSpeed = 5000;  //Will use it later instead of 700 down in update function
     public bool mdisableRoll = false;
 
     private UnityAction<ReelElement> mOnReelRollEndEvent;
     
     private void Start()
     {
-        speed = Random.Range(700, 1200);
+        //speed = Random.Range(700, 1200);
         CalculateIndexAndTotalToughness();
     }
     void Update()
     {
         //Takes care of looping the reel elements to give the feel of it rolling
-        if (roll)
+        if (_roll)
         {
             if (!mdisableRoll)
             {
                 for (int i = 0; i < _reelElements.Length; i++)
                 {                                                                                                    //700 Down is the speed it needs to roll
-                    _reelElements[i].SlotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * speed, Space.World);
-                    if (_reelElements[i].SlotElementGameObject.transform.localPosition.y < -300)
+                    _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
+                    if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
                     {
-                        _reelElements[i].SlotElementGameObject.transform.localPosition = new Vector3(_reelElements[i].SlotElementGameObject.transform.localPosition.x, _reelElements[i].SlotElementGameObject.transform.localPosition.y + 2400, _reelElements[i].SlotElementGameObject.transform.localPosition.z);
+                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
                     }
                 }
             }
@@ -104,12 +103,12 @@ public class Reels : MonoBehaviour
         mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
-        float TargetPosition = -(mReel.SlotElementGameObject.transform.localPosition.y) /*+ 1008*/;
+        float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
         
-        ReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
+        mReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
         .OnComplete(() =>
         {
-            roll = false;
+            _roll = false;
             if (mOnReelRollEndEvent != null)
             {
                 mOnReelRollEndEvent(mReel);

@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class Slots : MonoBehaviour
 {
-    public Reels[] reels;
+    public Reels[] _reels;
     public Button _uiSpinButton;
     public Text _uiSpinButtonText;
 
     private GameManager mGameManager;
 
-    public List<string> elementNames;
+    public List<ReelElement> _elementsName;
     
     private void Start()
     {
@@ -21,7 +21,7 @@ public class Slots : MonoBehaviour
         {
             _uiSpinButton.interactable = false; _uiSpinButtonText.text = "Rolled";
             StartCoroutine(DelayedSpin());
-            elementNames.Clear();
+            _elementsName.Clear();
         });
     }
 
@@ -29,125 +29,103 @@ public class Slots : MonoBehaviour
     /// Function for spin button to work that contains an IEnumerator / Invoke Method for a Delayed start of Reels Spinning creating a moment of suspension.
     /// </summary>
     /// 
-    IEnumerator DelayedSpin()
+    private IEnumerator DelayedSpin()
     {
-        foreach (Reels reel in reels)
+        foreach (Reels reel in _reels)
         {
-            reel.roll = true;
+            reel._roll = true;
             
             //Things to happen when roll ends and stops.                                                                                              
-            reel.OnReelRollEnd(reel => { elementNames.Add(reel.SlotElementsName); _uiSpinButton.interactable = true; _uiSpinButtonText.text = "Roll"; /*Invoke(nameof(MainSceneInvoke), 1f);*/ ResultChecker(); });
+            reel.OnReelRollEnd(reel => { _elementsName.Add(reel); _uiSpinButton.interactable = true; _uiSpinButtonText.text = "Roll"; /*Invoke(nameof(MainSceneInvoke), 1f);*/ ResultChecker(); });
             reel.mdisableRoll = false;
         }
-        for (int i = 0; i < reels.Length; i++)
+        for (int i = 0; i < _reels.Length; i++)
         {
             //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them
-            yield return new WaitForSeconds(Random.Range(2, 5));
-            reels[i].Spin();
+            yield return new WaitForSeconds(Random.Range(3, 5));
+            _reels[i].Spin();
         }
     }
 
     private void ResultChecker()
     {
-        #region All identical
-        if (elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins")
+        for (int i = 0; i < _elementsName.Count - 2; i++)
         {
-            mGameManager._coins += 5000;
-            Invoke(nameof(MainSceneInvoke), 2f);
+            if(_elementsName[i]._slotElementGameObject.name == _elementsName[i+1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            {
+                switch (_elementsName[i]._slotElementGameObject.name)
+                {
+                    case "TradingCards": Debug.Log("Trading Card Pack");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "FreeSpin": Debug.Log("5 Free Spins");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Coins": mGameManager._coins += 5000;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Energy": mGameManager._energy += 10;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name || _elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            {
+                switch (_elementsName[i]._slotElementGameObject.name)
+                {
+                    case "TradingCards": Debug.Log("Gets Nothing");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "FreeSpin": Debug.Log("3 Free Spins");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Coins": mGameManager._coins += 3000;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Energy": mGameManager._energy += 5;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else if( _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            {
+                switch (_elementsName[i]._slotElementGameObject.name)
+                {
+                    case "TradingCards":
+                        Debug.Log("Gets Nothing");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "FreeSpin":
+                        Debug.Log("3 Free Spins");
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Coins":
+                        mGameManager._coins += 3000;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    case "Energy":
+                        mGameManager._energy += 5;
+                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                //Invoke A animation Better luck next time
+                Debug.Log("Nothing is Identical");
+                Invoke(nameof(ActiveLevelInvoke), 2f);
+            }
         }
-        else if (elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins")
-        {
-            mGameManager._coins += 25000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins")
-        {
-            mGameManager._coins += 100000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins")
-        {
-            mGameManager._coins += 500000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "1M" && elementNames[1] == "1M" && elementNames[2] == "1M")
-        {
-            mGameManager._coins += 1000000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "10Energy" && elementNames[1] == "10Energy" && elementNames[2] == "10Energy")
-        {
-            mGameManager._energy += 10;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "25Energy" && elementNames[1] == "25Energy" && elementNames[2] == "25Energy")
-        {
-            mGameManager._energy += 25;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if (elementNames[0] == "100Energy" && elementNames[1] == "100Energy" && elementNames[2] == "100Energy")
-        {
-            mGameManager._energy += 100;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        #endregion
-        #region Two Identical
-        else if ((elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins") || (elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins") || (elementNames[0] == "5KCoins" && elementNames[2] == "5KCoins"))
-        {
-            mGameManager._coins += 2500;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins") || (elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins") || (elementNames[0] == "25KCoins" && elementNames[2] == "25KCoins"))
-        {
-            mGameManager._coins += 12500;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins") || (elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins") || (elementNames[0] == "100KCoins" && elementNames[2] == "100KCoins"))
-        {
-            mGameManager._coins += 50000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins") || (elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins") || (elementNames[0] == "500KCoins" && elementNames[2] == "500KCoins"))
-        {
-            mGameManager._coins += 250000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "1M" && elementNames[1] == "1M") || (elementNames[1] == "1M" && elementNames[2] == "1M") || (elementNames[0] == "1M" && elementNames[2] == "1M"))
-        {
-            mGameManager._coins += 500000;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "10Energy" && elementNames[1] == "10Energy") || (elementNames[1] == "10Energy" && elementNames[2] == "10Energy") || (elementNames[0] == "10Energy" && elementNames[2] == "10Energy"))
-        {
-            mGameManager._energy += 5;
-            Invoke(nameof(MainSceneInvoke), 2f);
-
-        }
-        else if ((elementNames[0] == "25Energy" && elementNames[1] == "25Energy") || (elementNames[1] == "25Energy" && elementNames[2] == "25Energy") || (elementNames[0] == "25Energy" && elementNames[2] == "25Energy"))
-        {
-            mGameManager._energy += 12;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        else if ((elementNames[0] == "100Energy" && elementNames[1] == "100Energy") || (elementNames[1] == "100Energy" && elementNames[2] == "100Energy") || (elementNames[0] == "100Energy" && elementNames[2] == "100Energy"))
-        {
-            mGameManager._energy += 50;
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
-        #endregion 
-        else
-        {
-            //Invoke A animation Better luck next time
-            Debug.Log("Dude Nothing is Identical");
-            Invoke(nameof(MainSceneInvoke), 2f);
-        }
+        
     }
 
-    void MainSceneInvoke()
+    private void ActiveLevelInvoke()
     {
         SceneManager.LoadScene(0);
     }
@@ -164,7 +142,96 @@ public class Slots : MonoBehaviour
 
 
 
+//#region All identical
+//if (elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins")
+//{
+//    mGameManager._coins += 5000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins")
+//{
+//    mGameManager._coins += 25000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins")
+//{
+//    mGameManager._coins += 100000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins")
+//{
+//    mGameManager._coins += 500000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "1M" && elementNames[1] == "1M" && elementNames[2] == "1M")
+//{
+//    mGameManager._coins += 1000000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "10Energy" && elementNames[1] == "10Energy" && elementNames[2] == "10Energy")
+//{
+//    mGameManager._energy += 10;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "25Energy" && elementNames[1] == "25Energy" && elementNames[2] == "25Energy")
+//{
+//    mGameManager._energy += 25;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if (elementNames[0] == "100Energy" && elementNames[1] == "100Energy" && elementNames[2] == "100Energy")
+//{
+//    mGameManager._energy += 100;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//#endregion
+//#region Two Identical
+//else if ((elementNames[0] == "5KCoins" && elementNames[1] == "5KCoins") || (elementNames[1] == "5KCoins" && elementNames[2] == "5KCoins") || (elementNames[0] == "5KCoins" && elementNames[2] == "5KCoins"))
+//{
+//    mGameManager._coins += 2500;
+//    Invoke(nameof(MainSceneInvoke), 2f);
 
+//}
+//else if ((elementNames[0] == "25KCoins" && elementNames[1] == "25KCoins") || (elementNames[1] == "25KCoins" && elementNames[2] == "25KCoins") || (elementNames[0] == "25KCoins" && elementNames[2] == "25KCoins"))
+//{
+//    mGameManager._coins += 12500;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+
+//}
+//else if ((elementNames[0] == "100KCoins" && elementNames[1] == "100KCoins") || (elementNames[1] == "100KCoins" && elementNames[2] == "100KCoins") || (elementNames[0] == "100KCoins" && elementNames[2] == "100KCoins"))
+//{
+//    mGameManager._coins += 50000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+
+//}
+//else if ((elementNames[0] == "500KCoins" && elementNames[1] == "500KCoins") || (elementNames[1] == "500KCoins" && elementNames[2] == "500KCoins") || (elementNames[0] == "500KCoins" && elementNames[2] == "500KCoins"))
+//{
+//    mGameManager._coins += 250000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+
+//}
+//else if ((elementNames[0] == "1M" && elementNames[1] == "1M") || (elementNames[1] == "1M" && elementNames[2] == "1M") || (elementNames[0] == "1M" && elementNames[2] == "1M"))
+//{
+//    mGameManager._coins += 500000;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+
+//}
+//else if ((elementNames[0] == "10Energy" && elementNames[1] == "10Energy") || (elementNames[1] == "10Energy" && elementNames[2] == "10Energy") || (elementNames[0] == "10Energy" && elementNames[2] == "10Energy"))
+//{
+//    mGameManager._energy += 5;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+
+//}
+//else if ((elementNames[0] == "25Energy" && elementNames[1] == "25Energy") || (elementNames[1] == "25Energy" && elementNames[2] == "25Energy") || (elementNames[0] == "25Energy" && elementNames[2] == "25Energy"))
+//{
+//    mGameManager._energy += 12;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//else if ((elementNames[0] == "100Energy" && elementNames[1] == "100Energy") || (elementNames[1] == "100Energy" && elementNames[2] == "100Energy") || (elementNames[0] == "100Energy" && elementNames[2] == "100Energy"))
+//{
+//    mGameManager._energy += 50;
+//    Invoke(nameof(MainSceneInvoke), 2f);
+//}
+//#endregion
 
 
 

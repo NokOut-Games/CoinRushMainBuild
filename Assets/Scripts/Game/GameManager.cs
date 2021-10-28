@@ -41,22 +41,6 @@ public class GameManager : MonoBehaviour
         {
             mIsFull = true;
         }
-
-        ///Changing From MainScene to the EnergyScene  
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SceneManager.LoadScene(1);
-        }
-        ///Changing From MainScene to the CoinScene  
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SceneManager.LoadScene(2);
-        }
-        //This is used Fot loading Spinwheel Scene
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(7);
-        }
     }
     private IEnumerator AutomaticEnergyRefiller()
     {

@@ -13,14 +13,14 @@ public class CameraController : MonoBehaviour
 
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
-    [SerializeField] float mHorizontalPanSpeed;
-    [SerializeField] float mCameraRightBound;
-    [SerializeField] float mCameraLeftBound;
+    [SerializeField] private float mHorizontalPanSpeed;
+    [SerializeField] private float mCameraRightBound;
+    [SerializeField] private float mCameraLeftBound;
 
     [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
-    [SerializeField] float mCameraNearBound;
-    [SerializeField] float mCameraFarBound;
+    [SerializeField] private float mCameraNearBound;
+    [SerializeField] private float mCameraFarBound;
 
 
     [Header("Camera Views")]
@@ -38,8 +38,12 @@ public class CameraController : MonoBehaviour
 
     public int _RotationLimit = 30;
 
+    private CardDeck mCardDeck;
+
     private void Start()
     {
+        mCardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
+
         _CameraParent = transform.parent;
 
         if (mTargetToRotateAround != null)
@@ -72,7 +76,7 @@ public class CameraController : MonoBehaviour
             {
                 _DrawButtonClicked = false;
                 Invoke("SetCameraFreeRoam", 0.11f);
-                FindObjectOfType<CardDeck>().BackToNormalState();
+                mCardDeck.BackToNormalState();
             }
         }
 

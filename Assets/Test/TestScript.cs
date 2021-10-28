@@ -87,6 +87,7 @@ public class TestScript : MonoBehaviour
                 time = 0;
             }
         }
+
     }
 
     public void BackToNormalState()

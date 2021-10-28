@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class ChestOpener : MonoBehaviour
 {
-    [SerializeField] EnergyProbability mEnergyProbability;
-    [SerializeField] CoinProbability mCoinProbability;
-    [SerializeField] List<GameObject> mEnergyChests;
-    [SerializeField] List<GameObject> mCoinChests;
-
-    [SerializeField] GameManager mGameManager;
+    [SerializeField] private EnergyProbability mEnergyProbability;
+    [SerializeField] private CoinProbability mCoinProbability;
+    [SerializeField] private List<GameObject> mEnergyChests;
+    [SerializeField] private List<GameObject> mCoinChests;
+    [SerializeField] private GameManager mGameManager;
 
     private void Start()
     {
@@ -85,14 +84,21 @@ public class ChestOpener : MonoBehaviour
         }
     }
 
-    void BackToMainScene()
+    /// <summary>
+    /// Loads back to active level
+    /// </summary>
+    private void BackToMainScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 
-    //Just To make it look natural. We Shuffle the lists so sometimes the highest amount look like its near the Chest Player Clicked
-    #region Extras For Natural Looking purposes
-    void EnergyListShuffle(List<Energy> inEnergyList)
+    
+    /// <summary>
+    /// Below both the methods are done for natural looking purposes after clicking it shuffles the list randomly which sometimes makes the higher values to be beside what
+    /// we clicked creating the anticipation factor.
+    /// </summary>
+    /// <param name="inEnergyList"></param>
+    private void EnergyListShuffle(List<Energy> inEnergyList)
     {
         for (int i = 0; i < inEnergyList.Count; i++)
         {
@@ -102,8 +108,7 @@ public class ChestOpener : MonoBehaviour
             inEnergyList[randomIndex] = temp;
         }
     }
-
-    void CoinListShuffle(List<Coins> inCoinList)
+    private void CoinListShuffle(List<Coins> inCoinList)
     {
         for (int i = 0; i < inCoinList.Count; i++)
         {
@@ -113,5 +118,4 @@ public class ChestOpener : MonoBehaviour
             inCoinList[randomIndex] = temp;
         }
     }
-    #endregion
 }
