@@ -28,11 +28,28 @@ public class TestScript : MonoBehaviour
 
     public Image DrawButton;
     public Sprite drawNormal, drawAutomatic;
+
+    public List<GameObject> _CardListGameObject;
     
     private void Start()
     {
         DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        for (int i = 0; i < mScriptedCards.Count; i++)
+        {
+            GameObject card = Instantiate(mScriptedCards[i]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+            Cards cardDetails = card.GetComponent<Cards>();
+
+            cardDetails._cardType = mScriptedCards[i]._cardType;
+            cardDetails._cardID = mScriptedCards[i]._cardID;
+            cardDetails._Position = card.transform.position;
+
+            clicks += 1;
+            AddNewCard(card.GetComponent<Cards>(),card);
+            ReplacementOfCards();
+            //CardCheckingFunction();
+        }
     }
 
     private void Update()
@@ -42,111 +59,146 @@ public class TestScript : MonoBehaviour
             clicks = 0;
         }
 
-        //time = Mathf.Clamp(time,0f,5f);
-        Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
-
-        if (Input.GetMouseButtonDown(0))
+        #region "Nearly Working Joker (Manually Fixed a Situation)"
+        for (int i = 0; i < _CardList.Count; i++)
         {
-            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            if (_CardList[i]._cardType == CardType.JOKER)
             {
-                if (automaticDrawModeOn)
+                if (_CardList.Count > 2)
                 {
-                    BackToNormalState();
-                }
-                else
-                {
-                    time = 0;
-                    DrawCard();
-                }
-            }
-        }
-
-        if (!onceDone)
-        {
-            if (Input.GetMouseButton(0))
-            {
-                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-                {
-                    time += Time.fixedDeltaTime;
-                    if (time >= _maxHoldTime)
+                    CardType type = _CardList[0]._cardType;
+                    int count = 1;
+                    for (int j = 1; j < _CardList.Count; j++)
                     {
-                        onceDone = true;
-                        automaticDrawModeOn = true;
-                        autoCardDraw = true;
-                        ChangeSprites();
-                        StartCoroutine(AutomaticCardDrawing());
+                        if (_CardList[j]._cardType == type)
+                        {
+                            count++;
+                            if (count == 2)
+                            {
+                                _CardList[i]._cardType = _CardList[j]._cardType;
+                                CardCheckingFunction();
+                            }
+                        }
+                        else
+                        {
+                            type = _CardList[i]._cardType;
+                            count = 1;
+                        }
                     }
                 }
+                return;
             }
         }
+        #endregion
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-            {
-                time = 0;
-            }
-        }
 
+        #region "Commented"
+        ////time = Mathf.Clamp(time,0f,5f);
+        //Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+        //    {
+        //        if (automaticDrawModeOn)
+        //        {
+        //            BackToNormalState();
+        //        }
+        //        else
+        //        {
+        //            time = 0;
+        //            DrawCard();
+        //        }
+        //    }
+        //}
+
+        //if (!onceDone)
+        //{
+        //    if (Input.GetMouseButton(0))
+        //    {
+        //        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+        //        {
+        //            time += Time.fixedDeltaTime;
+        //            if (time >= _maxHoldTime)
+        //            {
+        //                onceDone = true;
+        //                automaticDrawModeOn = true;
+        //                autoCardDraw = true;
+        //                ChangeSprites();
+        //                StartCoroutine(AutomaticCardDrawing());
+        //            }
+        //        }
+        //    }
+        //}
+
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+        //    {
+        //        time = 0;
+        //    }
+        //}
+        #endregion
     }
 
-    public void BackToNormalState()
+    //public void BackToNormalState()
+    //{
+    //    automaticDrawModeOn = false;
+    //    ChangeSprites();
+    //    onceDone = false;
+    //    autoCardDraw = false;
+    //    StopCoroutine(AutomaticCardDrawing());
+    //}
+
+    //void ChangeSprites()
+    //{
+    //    if (DrawButton.sprite == drawNormal)
+    //    {
+    //        DrawButton.sprite = drawAutomatic;
+    //    }
+    //    else if (DrawButton.sprite == drawAutomatic)
+    //    {
+    //        DrawButton.sprite = drawNormal;
+    //    }
+    //}
+
+    //public void DrawCard()
+    //{
+    //    if (_CardList.Count >= 8)
+    //    {
+    //        return;
+    //    }
+    //    mGameManager._energy -= 1;
+
+    //    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+
+    //    ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
+
+    //    GameObject card = Instantiate(cards._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+    //    Cards cardDetails = card.GetComponent<Cards>();
+
+    //    cardDetails._cardType = cards._cardType;
+    //    cardDetails._cardID = cards._cardID;
+    //    cardDetails._Position = card.transform.position;
+
+    //    clicks += 1;
+    //    AddNewCard(card.GetComponent<Cards>());
+    //    ReplacementOfCards();
+    //    CardCheckingFunction();
+    //}
+
+    //IEnumerator AutomaticCardDrawing()
+    //{
+    //    while(autoCardDraw)
+    //    {
+    //        DrawCard();
+    //        yield return new WaitForSeconds(5);
+    //    }
+    //}
+
+    public void AddNewCard(Cards inNewCard , GameObject card)
     {
-        automaticDrawModeOn = false;
-        ChangeSprites();
-        onceDone = false;
-        autoCardDraw = false;
-        StopCoroutine(AutomaticCardDrawing());
-    }
-
-    void ChangeSprites()
-    {
-        if (DrawButton.sprite == drawNormal)
-        {
-            DrawButton.sprite = drawAutomatic;
-        }
-        else if (DrawButton.sprite == drawAutomatic)
-        {
-            DrawButton.sprite = drawNormal;
-        }
-    }
-
-    public void DrawCard()
-    {
-        if (_CardList.Count >= 8)
-        {
-            return;
-        }
-        mGameManager._energy -= 1;
-
-        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-
-        ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
-
-        GameObject card = Instantiate(cards._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
-        Cards cardDetails = card.GetComponent<Cards>();
-
-        cardDetails._cardType = cards._cardType;
-        cardDetails._cardID = cards._cardID;
-        cardDetails._Position = card.transform.position;
-
-        clicks += 1;
-        AddNewCard(card.GetComponent<Cards>());
-        ReplacementOfCards();
-        CardCheckingFunction();
-    }
-
-    IEnumerator AutomaticCardDrawing()
-    {
-        while(autoCardDraw)
-        {
-            DrawCard();
-            yield return new WaitForSeconds(5);
-        }
-    }
-    
-    public void AddNewCard(Cards inNewCard)
-    {
+        _CardListGameObject.Add(card);
         for (int i = 0; i < _CardList.Count; i++)
         {
             if (_CardList[i]._cardType == inNewCard._cardType)
@@ -202,6 +254,9 @@ public class TestScript : MonoBehaviour
     {
         for (int i = 0; i < _CardList.Count - 2; i++)
         {
+            Debug.Log("1." + _CardList[i]._cardType);
+            Debug.Log("2." + _CardList[i + 1]._cardType);
+            Debug.Log("3." + _CardList[i + 2]._cardType);
             if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
                 StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
