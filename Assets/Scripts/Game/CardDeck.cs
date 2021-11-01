@@ -25,7 +25,7 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private Image DrawButton;
     [SerializeField] private Sprite drawNormal, drawAutomatic;
     [SerializeField] private RectTransform _drawButtonRectTransform;
-    [Space]
+    [Space(10)]
     [SerializeField] private int mMaxHoldTime = 5;
     [SerializeField] private float timeForCardAnimation = 2f;
     private float time = 0;

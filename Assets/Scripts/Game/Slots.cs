@@ -8,7 +8,6 @@ public class Slots : MonoBehaviour
 {
     public Reels[] _reels;
     public Button _uiSpinButton;
-    public Text _uiSpinButtonText;
 
     private GameManager mGameManager;
 
@@ -19,7 +18,7 @@ public class Slots : MonoBehaviour
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
-            _uiSpinButton.interactable = false; _uiSpinButtonText.text = "Rolled";
+            _uiSpinButton.interactable = false;
             StartCoroutine(DelayedSpin());
             _elementsName.Clear();
         });
@@ -36,7 +35,8 @@ public class Slots : MonoBehaviour
             reel._roll = true;
             
             //Things to happen when roll ends and stops.                                                                                              
-            reel.OnReelRollEnd(reel => { _elementsName.Add(reel); _uiSpinButton.interactable = true; _uiSpinButtonText.text = "Roll"; /*Invoke(nameof(MainSceneInvoke), 1f);*/ ResultChecker(); });
+            reel.OnReelRollEnd(reel => { _elementsName.Add(reel); _uiSpinButton.interactable = true;
+                ResultChecker(); });
             reel.mdisableRoll = false;
         }
         for (int i = 0; i < _reels.Length; i++)
