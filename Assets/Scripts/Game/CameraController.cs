@@ -14,9 +14,7 @@ public class CameraController : MonoBehaviour
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
     [SerializeField] private float mHorizontalPanSpeed;
-    [SerializeField] private float mCameraRightBound;
-    [SerializeField] private float mCameraLeftBound;
-
+    
     [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
     [SerializeField] private float mCameraNearBound;
@@ -190,7 +188,6 @@ public class CameraController : MonoBehaviour
     }
     /// <summary>
     /// Zoom Condition
-    /// 
     /// check for camera near and far bounds, check conditions independently
     /// Give a small buffer value to bring in rubber band effect for the camera
     /// Buffervalue being 2
@@ -230,17 +227,21 @@ public class CameraController : MonoBehaviour
 
 //void Panning()
 //    {
+
+//[SerializeField] private float mCameraRightBound;
+//[SerializeField] private float mCameraLeftBound;
+
 //        //    if (mChangedPositionX == mInitialPositionX)
 //        //    {
 //        //        return;
 //        //    }
-//        //    if (mChangedPositionX < mInitialPositionX - 5f) //Plus and -100 is to restrict the movement diagonally
-//        //    {
-//        //        Pan(mHorizontalPanSpeed * -1f * Time.deltaTime);
-//        //    }
-//        //    if (mChangedPositionX > mInitialPositionX + 5f)
+//        //    if (mChangedPositionX < mInitialPositionX - 100f) //Plus and -100 is to restrict the movement diagonally
 //        //    {
 //        //        Pan(mHorizontalPanSpeed  * Time.deltaTime);
+//        //    }
+//        //    if (mChangedPositionX > mInitialPositionX + 100f)
+//        //    {
+//        //        Pan(mHorizontalPanSpeed  * -1f * Time.deltaTime);
 //        //    }
 
 //        //}

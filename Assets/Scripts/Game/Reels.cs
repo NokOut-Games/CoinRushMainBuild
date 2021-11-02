@@ -100,10 +100,10 @@ public class Reels : MonoBehaviour
     /// </summary>
     public void Spin()
     {
-        mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
         float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+        mdisableRoll = true;
         
         mReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
         .OnComplete(() =>

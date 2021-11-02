@@ -17,11 +17,11 @@ public class SpinWheelSpin : MonoBehaviour {
    private GameManager mGameManager;
    private void Start ()
    {
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _uiSpinButton.onClick.AddListener (() => {
          _uiSpinButton.interactable = false;
-         _uiSpinButtonText.text = "Spinning";
+         //_uiSpinButtonText.text = "Spinning";
 
         spinWheel.OnSpinEnd (wheelPiece => {
          _uiReturnToGame.SetActive(true);
@@ -42,7 +42,7 @@ public class SpinWheelSpin : MonoBehaviour {
              }
  
             _uiSpinButton.interactable = true ;
-            _uiSpinButtonText.text = "Spin" ;
+            //_uiSpinButtonText.text = "Spin" ;
          }) ;
           spinWheel.Spin();
 

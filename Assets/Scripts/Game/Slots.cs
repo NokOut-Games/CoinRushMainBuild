@@ -35,8 +35,12 @@ public class Slots : MonoBehaviour
             reel._roll = true;
             
             //Things to happen when roll ends and stops.                                                                                              
-            reel.OnReelRollEnd(reel => { _elementsName.Add(reel); _uiSpinButton.interactable = true;
-                ResultChecker(); });
+            reel.OnReelRollEnd(reel => 
+            {   
+                _elementsName.Add(reel); 
+                //_uiSpinButton.interactable = true;
+                ResultChecker(); 
+            });
             reel.mdisableRoll = false;
         }
         for (int i = 0; i < _reels.Length; i++)
@@ -58,7 +62,7 @@ public class Slots : MonoBehaviour
                     case "TradingCards": Debug.Log("Trading Card Pack");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "FreeSpin": Debug.Log("5 Free Spins");
+                    case "FreeSpins": Debug.Log("5 Free Spins");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins": mGameManager._coins += 5000;
@@ -78,7 +82,7 @@ public class Slots : MonoBehaviour
                     case "TradingCards": Debug.Log("Gets Nothing");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "FreeSpin": Debug.Log("3 Free Spins");
+                    case "FreeSpins": Debug.Log("3 Free Spins");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins": mGameManager._coins += 3000;
@@ -99,7 +103,7 @@ public class Slots : MonoBehaviour
                         Debug.Log("Gets Nothing");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "FreeSpin":
+                    case "FreeSpins":
                         Debug.Log("3 Free Spins");
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;

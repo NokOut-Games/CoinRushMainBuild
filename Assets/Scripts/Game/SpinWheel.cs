@@ -113,14 +113,22 @@ public class SpinWheel : MonoBehaviour
             WheelPiece piece = _wheelPieces[i];
             Transform pieceTrns = wheelPiece.transform.GetChild(0);
 
-            pieceTrns.GetChild(0).GetComponent<Image>().sprite = piece._Icon;
-            pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
-            pieceTrns.GetChild(2).GetComponent<Text>().text = piece._Amount.ToString();
+            if(i % 2 == 0 || i == 0)
+            {
+                pieceTrns.GetChild(0).GetComponent<Text>().text = piece._Label;
+            }
+            else
+            {
+                pieceTrns.GetChild(0).GetComponent<Text>().text = piece._Label;
+                pieceTrns.GetChild(0).GetComponent<Text>().color = Color.yellow;
+            }
+            pieceTrns.GetChild(1).GetComponent<Image>().sprite = piece._Icon;
+            //pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
 
             ResizePiece(pieceTrns);
             //Line
-            Transform lineTrns = Instantiate(_linePrefab, _linesParent.position, Quaternion.identity, _linesParent).transform;
-            lineTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, (mPieceAngle * i) + mHalfPieceAngle);
+            //Transform lineTrns = Instantiate(_linePrefab, _linesParent.position, Quaternion.identity, _linesParent).transform;
+            //lineTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, (mPieceAngle * i) + mHalfPieceAngle);
 
             pieceTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, mPieceAngle * i);
         }
