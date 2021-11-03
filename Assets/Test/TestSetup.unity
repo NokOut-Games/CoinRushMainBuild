@@ -2442,6 +2442,8 @@ MonoBehaviour:
   timeForCardAnimation: 2
   _jokerList: []
   onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
 --- !u!4 &468857716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
@@ -7708,6 +7710,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
   _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 1270463490}
@@ -8418,8 +8422,8 @@ MonoBehaviour:
   _CameraParent: {fileID: 343195022}
   mTargetToRotateAround: {fileID: 1315715443}
   mHorizontalPanSpeed: 0
-  mCameraRightBound: 0
-  mCameraLeftBound: 0
+  _CameraLeftBound: 0
+  _CameraRightBound: 0
   mZoomSpeed: 15
   mCameraNearBound: -40
   mCameraFarBound: -90
