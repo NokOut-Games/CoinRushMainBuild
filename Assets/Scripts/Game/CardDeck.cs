@@ -298,6 +298,7 @@ public class CardDeck : MonoBehaviour
     private bool mAutoCardDraw = false;
     private bool mAutomaticDrawModeOn = false;
     private bool mOnceDone = false;
+    private bool canClick = true;
     //public Image _buttonFillerImage;
 
 
@@ -313,6 +314,7 @@ public class CardDeck : MonoBehaviour
     private void Start()
     {
         onceDonee = false;
+        canClick = true;
         DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -331,59 +333,67 @@ public class CardDeck : MonoBehaviour
         //}
     }
 
+    private void DestroyCardList()
+    {
+        foreach (GameObject card in mCardListGameObject)
+        {
+            Destroy(card);
+        }
+        _CardList.Clear();
+        _jokerList.Clear();
+        mCardListGameObject.Clear();
+    }
+
     private void Update()
     {
         if (clicks == 8)
         {
             clicks = 0;
-            foreach (GameObject card in mCardListGameObject)
-            {
-                Destroy(card);
-            }
-            _CardList.Clear();
-            _jokerList.Clear();
-            mCardListGameObject.Clear();
+            Invoke(nameof(DestroyCardList),2f);
         }
         #region Button Function
         time = Mathf.Clamp(time, 0f, 5f);
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
 
-        if (Input.GetMouseButtonDown(0))
+        if (canClick == true)
         {
-            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-            {
-                BackToNormalState();
-                time = 0;
-                DrawCard();
-            }
-        }
-
-        if (!mOnceDone)
-        {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                 {
-                    time += Time.fixedDeltaTime;
-                    //float lerpSpeed = 100f * Time.deltaTime;
-                    //_buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time / maxTime, lerpSpeed);
-                    if (time >= mMaxHoldTime)
+                    BackToNormalState();
+                    time = 0;
+                    DrawCard();
+                }
+            }
+
+            if (!mOnceDone)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                     {
-                        mOnceDone = true;
-                        mAutomaticDrawModeOn = true;
-                        mAutoCardDraw = true;
-                        ChangeSprites();
-                        StartCoroutine(AutomaticCardDrawing());
+                        time += Time.fixedDeltaTime;
+                        //float lerpSpeed = 100f * Time.deltaTime;
+                        //_buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time / maxTime, lerpSpeed);
+                        if (time >= mMaxHoldTime)
+                        {
+                            mOnceDone = true;
+                            mAutomaticDrawModeOn = true;
+                            mAutoCardDraw = true;
+                            ChangeSprites();
+                            StartCoroutine(AutomaticCardDrawing());
+                        }
                     }
                 }
             }
-        }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            if (Input.GetMouseButtonUp(0))
             {
-                time = 0;
+                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                {
+                    time = 0;
+                }
             }
         }
         #endregion
@@ -446,18 +456,18 @@ public class CardDeck : MonoBehaviour
                 twosets[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = twosets[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
                 break;
             #region "Future Case"
-            //case 3:
-            //    Cards[] threesets = new Cards[inHowManySets];
-            //    int k = 0;
-            //    for (int i = 0; i < _jokerCheckerList.Count; i++, k += 300)
-            //    {
-            //        threesets[i] = Instantiate(_jokerCheckerList[i], _playerHandPoints[0].position + new Vector3(k, 500, 0), Quaternion.identity, mCardHolderParent.transform);
-            //        threesets[i].transform.gameObject.AddComponent<Button>();
-            //    }
-            //    threesets[0].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[0]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    threesets[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    threesets[2].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[2]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    break;
+            case 3:
+                Cards[] threesets = new Cards[inHowManyCardSets];
+                int k = 0;
+                for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, k += 300)
+                {
+                    threesets[i] = Instantiate(_cardsThatCanBeReplacedByJoker[i], _playerHandPoints[0].position + new Vector3(k, 500, 0), Quaternion.identity, mCardHolderParent.transform);
+                    threesets[i].transform.gameObject.AddComponent<Button>();
+                }
+                threesets[0].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[0]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
+                threesets[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
+                threesets[2].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[2]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
+                break;
 
             //case 4:
             //    int l = 0;
@@ -619,6 +629,7 @@ public class CardDeck : MonoBehaviour
         {
             if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
+                canClick = false;
                 StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
             }
         }

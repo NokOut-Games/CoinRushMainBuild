@@ -14,7 +14,9 @@ public class CameraController : MonoBehaviour
     [Header("Horizontal Panning")]
     [SerializeField] private Transform mTargetToRotateAround;
     [SerializeField] private float mHorizontalPanSpeed;
-    
+    public float _CameraLeftBound = 0;
+    public float _CameraRightBound = 0;
+
     [Header("Vertical Zooming")]
     [SerializeField] private float mZoomSpeed;
     [SerializeField] private float mCameraNearBound;
@@ -111,8 +113,8 @@ public class CameraController : MonoBehaviour
                 _CameraParent.eulerAngles = currentAngle;
             }
 
-
-            HorizontalPanningWithRotation();
+            HorizontalPanning();
+            //HorizontalPanningWithRotation();
             VerticalZooming();
         }
     }
@@ -123,8 +125,44 @@ public class CameraController : MonoBehaviour
     /// 2. With mouseButtonDown being true we keep tracking the mouseposition and store it to newPosition and then we take the initial/previous position
     /// and check the differnce and store it in as direction as it says which direction are we moving
     /// </summary>
-    private void HorizontalPanningWithRotation()
+    //private void HorizontalPanningWithRotation()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        mInitialPositionX = Input.mousePosition.x;
+    //    }
+
+    //    if (_CameraFreeRoam)
+    //    {
+    //        mChangedPositionX = Input.mousePosition.x;
+    //        float rotateDegrees = 0f;
+    //        if (mChangedPositionX < mInitialPositionX + 5f)
+    //        {
+    //            rotateDegrees -= mHorizontalPanSpeed * Time.deltaTime;
+    //        }
+    //        if (mChangedPositionX > mInitialPositionX - 5f)
+    //        {
+    //            rotateDegrees += mHorizontalPanSpeed * Time.deltaTime;
+    //        }
+    //        Vector3 currentVector = transform.position - mTargetToRotateAround.position;
+    //        currentVector.y = 0;
+    //        float angleBetween = Vector3.Angle(initialVector, currentVector) * (Vector3.Cross(initialVector, currentVector).y > 0 ? 1 : -1);
+    //        float newAngle = Mathf.Clamp(angleBetween + rotateDegrees, -_RotationLimit, _RotationLimit);
+    //        rotateDegrees = newAngle - angleBetween;
+
+    //        transform.RotateAround(mTargetToRotateAround.position, Vector3.up, rotateDegrees);
+
+    //        mInitialPositionX = mChangedPositionX;
+
+
+    //    }
+
+    //}
+
+    public void HorizontalPanning()
     {
+        float panSpeed = 0;
+
         if (Input.GetMouseButtonDown(0))
         {
             mInitialPositionX = Input.mousePosition.x;
@@ -133,29 +171,44 @@ public class CameraController : MonoBehaviour
         if (_CameraFreeRoam)
         {
             mChangedPositionX = Input.mousePosition.x;
-            float rotateDegrees = 0f;
-            if (mChangedPositionX < mInitialPositionX + 5f)
+
+            if (mChangedPositionX == mInitialPositionX)
             {
-                rotateDegrees -= mHorizontalPanSpeed * Time.deltaTime;
+                return;
             }
-            if (mChangedPositionX > mInitialPositionX - 5f)
+            if (mChangedPositionX < mInitialPositionX - 100f)
             {
-                rotateDegrees += mHorizontalPanSpeed * Time.deltaTime;
+                //panSpeed = mZoomSpeed * -1f * Time.deltaTime;
+                Pan(mHorizontalPanSpeed * Time.deltaTime);
             }
-            Vector3 currentVector = transform.position - mTargetToRotateAround.position;
-            currentVector.y = 0;
-            float angleBetween = Vector3.Angle(initialVector, currentVector) * (Vector3.Cross(initialVector, currentVector).y > 0 ? 1 : -1);
-            float newAngle = Mathf.Clamp(angleBetween + rotateDegrees, -_RotationLimit, _RotationLimit);
-            rotateDegrees = newAngle - angleBetween;
-
-            transform.RotateAround(mTargetToRotateAround.position, Vector3.up, rotateDegrees);
-
-            mInitialPositionX = mChangedPositionX;
-
-
+            if (mChangedPositionX > mInitialPositionX + 100f)
+            {
+                //panSpeed = mZoomSpeed * Time.deltaTime;
+                Pan(mHorizontalPanSpeed * -1f * Time.deltaTime);
+            }
         }
 
+        if (!Input.GetMouseButton(0))
+        {
+            //PlayCameraBoundEffectX();
+            PlayCameraBoundEffect(_CameraParent.position.x, _CameraRightBound, _CameraLeftBound, new Vector3(_CameraLeftBound, _CameraParent.position.y, _CameraParent.position.z), new Vector3(_CameraRightBound, _CameraParent.position.y, _CameraParent.position.z));
+        }
+
+        //if ((transform.position.x <= _CameraRightBound + 30 && panSpeed > 0) || (transform.position.x >= _CameraLeftBound - 2 && panSpeed < 0))
+        //{
+        //    transform.Translate(panSpeed * transform.right);
+        //}
+
     }
+
+    private void Pan(float inPanSpeed)
+    {
+        if ((_CameraParent.position.x <= _CameraRightBound + 30 && inPanSpeed > 0) || (_CameraParent.position.x >= _CameraLeftBound - 30 && inPanSpeed < 0))
+        {
+            _CameraParent.Translate(inPanSpeed * _CameraParent.right);
+        }
+    }
+
 
     /// <summary>
     /// We get the input position in y on click.
@@ -164,7 +217,8 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void VerticalZooming()
     {
-        if (Input.GetMouseButtonDown(0))        {
+        if (Input.GetMouseButtonDown(0))        
+        {
             mInitialPositionY = Input.mousePosition.y;
         }
 
@@ -185,6 +239,12 @@ public class CameraController : MonoBehaviour
                 Zoom(mZoomSpeed * -1f * Time.deltaTime);
             }
         }
+
+        if (!Input.GetMouseButton(0))
+        {
+            //PlayCameraBoundEffectZ();
+            PlayCameraBoundEffect(_CameraParent.position.z, mCameraNearBound, mCameraFarBound, new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound), new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound));
+        }
     }
     /// <summary>
     /// Zoom Condition
@@ -204,20 +264,64 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// Reset the camera position when touch is released, to set it back to its closest bound, either far or near. 
     /// </summary>
-    public void PlayCameraBoundEffect()
+    //public void PlayCameraBoundEffectZ()
+    //{
+    //    Vector3 newCameraParentPos = Vector3.zero;
+
+
+    //    if (_CameraParent.position.z > mCameraNearBound || _CameraParent.position.z < mCameraFarBound)
+    //    {
+
+    //        if (Mathf.Abs(mCameraFarBound - _CameraParent.position.z) < Mathf.Abs(mCameraNearBound - _CameraParent.position.z))
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound);
+    //        }
+    //        else
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound);
+    //        }
+
+    //        _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
+    //    }
+    //}
+
+    //public void PlayCameraBoundEffectX()
+    //{
+    //    Vector3 newCameraParentPos = Vector3.zero;
+
+
+    //    if (_CameraParent.position.x > _CameraRightBound || _CameraParent.position.x < _CameraLeftBound)
+    //    {
+
+    //        if (Mathf.Abs(_CameraLeftBound - _CameraParent.position.x) < Mathf.Abs(_CameraRightBound - _CameraParent.position.x))
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraLeftBound, _CameraParent.position.y, _CameraParent.position.z);
+    //        }
+    //        else
+    //        {
+    //            newCameraParentPos = new Vector3(_CameraRightBound, _CameraParent.position.y, _CameraParent.position.z);
+    //        }
+
+    //        _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
+    //    }
+    //}
+
+                                                                //+              //-
+    public void PlayCameraBoundEffect(float inCameraDirection , float inBound1 , float inBound2 , Vector3 inCameraBound1 , Vector3 inCameraBound2)
     {
         Vector3 newCameraParentPos = Vector3.zero;
 
-        if (_CameraParent.position.z > mCameraNearBound || _CameraParent.position.z < mCameraFarBound)
+
+        if (inCameraDirection > inBound1|| inCameraDirection < inBound2)
         {
 
-            if (Mathf.Abs(mCameraFarBound - _CameraParent.position.z) < Mathf.Abs(mCameraNearBound - _CameraParent.position.z))
+            if (Mathf.Abs(inBound2 - inCameraDirection) < Mathf.Abs(inBound1 - inCameraDirection))
             {
-                newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound);
+                newCameraParentPos = inCameraBound1;
             }
             else
             {
-                newCameraParentPos = new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound);
+                newCameraParentPos = inCameraBound2;
             }
 
             _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
