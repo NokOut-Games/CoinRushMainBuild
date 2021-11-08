@@ -35,9 +35,11 @@ public class Reels : MonoBehaviour
         //speed = Random.Range(700, 1200);
         CalculateIndexAndTotalToughness();
     }
+
     void Update()
     {
-        //Takes care of looping the reel elements to give the feel of it rolling
+        
+
         if (_roll)
         {
             if (!mdisableRoll)
@@ -49,6 +51,7 @@ public class Reels : MonoBehaviour
                     {
                         _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
                     }
+                    
                 }
             }
         }
@@ -100,14 +103,21 @@ public class Reels : MonoBehaviour
     /// </summary>
     public void Spin()
     {
+        mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
         float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
-        mdisableRoll = true;
-        
+
         mReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
-        .OnComplete(() =>
+        .OnComplete(() => 
         {
+            for (int i = 0; i < _reelElements.Length; i++)
+            {
+                if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -305)
+                {
+                    _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                }
+            }
             _roll = false;
             if (mOnReelRollEndEvent != null)
             {
@@ -115,6 +125,9 @@ public class Reels : MonoBehaviour
             }
             mOnReelRollEndEvent = null;
         });
+
+        //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
+        //another roll and chose the probability again
     }
 }
 

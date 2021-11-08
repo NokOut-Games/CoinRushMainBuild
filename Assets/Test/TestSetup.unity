@@ -1758,14 +1758,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343195021}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.09844216, y: -0, z: -0, w: 0.9951428}
   m_LocalPosition: {x: 1, y: 20, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1622744564}
   m_Father: {fileID: 602949862}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.299, y: 0, z: 0}
 --- !u!224 &352214583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2052700306356643607, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
@@ -2427,11 +2427,11 @@ MonoBehaviour:
   - {fileID: 262260865}
   - {fileID: 352214583}
   mScriptedCards:
-  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
-  - {fileID: 11400000, guid: 40daae7ed65653649a08e2626aaba052, type: 2}
-  - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
-  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 1270463490}
@@ -7428,13 +7428,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474503602}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.09844216, y: -0, z: -0, w: 0.9951428}
   m_LocalPosition: {x: 1, y: 20, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 602949862}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.299, y: 0, z: 0}
 --- !u!1001 &1494778225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7705,13 +7705,11 @@ MonoBehaviour:
   - {fileID: 262260865}
   - {fileID: 352214583}
   mScriptedCards:
-  - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
-  - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
-  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
-  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
   - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
-  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 1270463490}
@@ -8420,10 +8418,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mTargetToRotateAround: {fileID: 1315715443}
   mHorizontalPanSpeed: 0
-  _CameraLeftBound: 0
-  _CameraRightBound: 0
+  _CameraLeftBound: 917.8
+  _CameraRightBound: -290.4
+  _CameraUpBound: 106.86
+  _CameraDownBound: -104.34
   mZoomSpeed: 15
   mCameraNearBound: -40
   mCameraFarBound: -90

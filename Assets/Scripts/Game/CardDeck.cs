@@ -301,7 +301,6 @@ public class CardDeck : MonoBehaviour
     private bool canClick = true;
     //public Image _buttonFillerImage;
 
-
     [Space(10)]
     [Header("Joker and related things")]
     public List<Cards> _jokerList;
@@ -449,18 +448,15 @@ public class CardDeck : MonoBehaviour
                 }
                 break;
             #region FutureCase
-            //case 4:
-            //    int l = 0;
-            //    for (int i = 0; i < _jokerCheckerList.Count; i++, l += 300)
-            //    {
-            //        bla[i] = Instantiate(_jokerCheckerList[i], _playerHandPoints[1].position + new Vector3(l, 400, 0), Quaternion.identity, mCardHolderParent.transform);
-            //        bla[i].transform.gameObject.AddComponent<Button>();
-            //    }
-            //    bla[0].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = bla[0]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    bla[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = bla[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    bla[2].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = bla[2]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    bla[3].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = bla[3]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-            //    break;
+            case 4:
+                int l = 0;
+                for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, l += 300)
+                {
+                    Cards fourSets = Instantiate(_cardsThatCanBeReplacedByJoker[i], _playerHandPoints[1].position + new Vector3(l, 400, 0), Quaternion.identity, mCardHolderParent.transform);
+                    fourSets.transform.gameObject.AddComponent<Button>();
+                    fourSets.transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = fourSets._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
+                }
+                break;
             #endregion
             default:
                 break;

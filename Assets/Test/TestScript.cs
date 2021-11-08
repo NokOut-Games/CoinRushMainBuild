@@ -51,19 +51,19 @@ public class TestScript : MonoBehaviour
         DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        for (int i = 0; i < mScriptedCards.Count; i++)
-        {
-            GameObject card = Instantiate(mScriptedCards[i]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
-            Cards cardDetails = card.GetComponent<Cards>();
+        //for (int i = 0; i < mScriptedCards.Count; i++)
+        //{
+        //    GameObject card = Instantiate(mScriptedCards[i]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+        //    Cards cardDetails = card.GetComponent<Cards>();
 
-            cardDetails._cardType = mScriptedCards[i]._cardType;
-            cardDetails._cardID = mScriptedCards[i]._cardID;
-            cardDetails._Position = card.transform.position;
+        //    cardDetails._cardType = mScriptedCards[i]._cardType;
+        //    cardDetails._cardID = mScriptedCards[i]._cardID;
+        //    cardDetails._Position = card.transform.position;
 
-            AddNewCard(card.GetComponent<Cards>(), card);
-            ReplacementOfCards();
-            //CardCheckingFunction();
-        }
+        //    AddNewCard(card.GetComponent<Cards>(), card);
+        //    ReplacementOfCards();
+        //    CardCheckingFunction();
+        //}
     }
 
     private void Update()
@@ -79,47 +79,47 @@ public class TestScript : MonoBehaviour
             mCardListGameObject.Clear();
         }
         #region Button Function
-        //time = Mathf.Clamp(time, 0f, 5f);
-        //Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
+        time = Mathf.Clamp(time, 0f, 5f);
+        Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
 
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-        //    {
-        //        BackToNormalState();
-        //        time = 0;
-        //        DrawCard();
-        //    }
-        //}
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            {
+                BackToNormalState();
+                time = 0;
+                DrawCard();
+            }
+        }
 
-        //if (!mOnceDone)
-        //{
-        //    if (Input.GetMouseButton(0))
-        //    {
-        //        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-        //        {
-        //            time += Time.fixedDeltaTime;
-        //            float lerpSpeed = 100f * Time.deltaTime;
-        //            _buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time/maxTime, lerpSpeed);
-        //            if (time >= mMaxHoldTime)
-        //            {
-        //                mOnceDone = true;
-        //                mAutomaticDrawModeOn = true;
-        //                mAutoCardDraw = true;
-        //                ChangeSprites();
-        //                StartCoroutine(AutomaticCardDrawing());
-        //            }
-        //        }
-        //    }
-        //}
+        if (!mOnceDone)
+        {
+            if (Input.GetMouseButton(0))
+            {
+                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                {
+                    time += Time.fixedDeltaTime;
+                    float lerpSpeed = 100f * Time.deltaTime;
+                    _buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time / maxTime, lerpSpeed);
+                    if (time >= mMaxHoldTime)
+                    {
+                        mOnceDone = true;
+                        mAutomaticDrawModeOn = true;
+                        mAutoCardDraw = true;
+                        ChangeSprites();
+                        StartCoroutine(AutomaticCardDrawing());
+                    }
+                }
+            }
+        }
 
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-        //    {
-        //        time = 0;
-        //    }
-        //}
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+            {
+                time = 0;
+            }
+        }
         #endregion
 
         #region Joker

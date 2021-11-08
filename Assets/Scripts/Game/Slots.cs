@@ -46,7 +46,7 @@ public class Slots : MonoBehaviour
         for (int i = 0; i < _reels.Length; i++)
         {
             //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them
-            yield return new WaitForSeconds(Random.Range(3, 5));
+            yield return new WaitForSeconds(3f);
             _reels[i].Spin();
         }
     }
@@ -55,7 +55,7 @@ public class Slots : MonoBehaviour
     {
         for (int i = 0; i < _elementsName.Count - 2; i++)
         {
-            if(_elementsName[i]._slotElementGameObject.name == _elementsName[i+1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
             {
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
@@ -131,7 +131,7 @@ public class Slots : MonoBehaviour
 
     private void ActiveLevelInvoke()
     {
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
     }
 }
 
