@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TestScript : MonoBehaviour
 {
@@ -34,7 +33,7 @@ public class TestScript : MonoBehaviour
     private bool mAutomaticDrawModeOn = false;
     private bool mOnceDone = false;
     public Image _buttonFillerImage;
-    
+
 
     [Space(10)]
     [Header("Joker and related things")]
@@ -62,7 +61,7 @@ public class TestScript : MonoBehaviour
 
         //    AddNewCard(card.GetComponent<Cards>(), card);
         //    ReplacementOfCards();
-        //    CardCheckingFunction();
+        //    //CardCheckingFunction();
         //}
     }
 
@@ -86,9 +85,20 @@ public class TestScript : MonoBehaviour
         {
             if (_drawButtonRectTransform.rect.Contains(localMousePosition))
             {
-                BackToNormalState();
-                time = 0;
-                DrawCard();
+                GameObject card = Instantiate(mScriptedCards[clicks]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+                clicks += 1;
+                Cards cardDetails = card.GetComponent<Cards>();
+
+                cardDetails._cardType = mScriptedCards[clicks]._cardType;
+                cardDetails._cardID = mScriptedCards[clicks]._cardID;
+                cardDetails._Position = card.transform.position;
+
+                AddNewCard(card.GetComponent<Cards>(), card);
+                ReplacementOfCards();
+
+                //BackToNormalState();
+                //time = 0;
+                //DrawCard();
             }
         }
 
@@ -96,6 +106,8 @@ public class TestScript : MonoBehaviour
         {
             if (Input.GetMouseButton(0))
             {
+                
+
                 if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                 {
                     time += Time.fixedDeltaTime;
@@ -162,10 +174,21 @@ public class TestScript : MonoBehaviour
             case 1: //If Only One Set of similar Cards at that time
                 for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++)
                 {
-                    _jokerList[0]._cardType = _cardsThatCanBeReplacedByJoker[0]._cardType;
-                    AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);
-                    ReplacementOfCards();
-                    CardCheckingFunction();
+                    //if(_CardList[0]._cardType == CardType.JOKER)
+                    //{
+                    //    _jokerList[0]._cardType = _cardsThatCanBeReplacedByJoker[0]._cardType;
+                    //    _CardList.RemoveAt(0);
+                    //    AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);
+                    //    ReplacementOfCards();
+                    //    CardCheckingFunction();
+                    //}
+                    //else
+                    //{
+                        _jokerList[0]._cardType = _cardsThatCanBeReplacedByJoker[0]._cardType;
+                        AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);
+                        ReplacementOfCards();
+                        CardCheckingFunction();
+                    //}
                 }
                 break;
             case 2: //If Two Sets of Similar Card are active at that time
@@ -240,7 +263,7 @@ public class TestScript : MonoBehaviour
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>(), card);
         ReplacementOfCards();
-        CardCheckingFunction();
+        //CardCheckingFunction();
     }
 
     #region Automatic Card Drawing And related Things Like Bringing Button back to its normal state And Changing sprites
@@ -273,7 +296,7 @@ public class TestScript : MonoBehaviour
             DrawButton.sprite = drawNormal;
         }
     }
-    
+
     /// <summary>
     /// Automates the Card Drawing
     /// </summary>
@@ -291,6 +314,7 @@ public class TestScript : MonoBehaviour
     #region "Add , Replace , Check And Open New Scene Based On Cards"
     private void AddNewCard(Cards inNewCard, GameObject inCard)
     {
+        Debug.Log("How its been called in: " + inNewCard._cardType);
         mCardListGameObject.Add(inCard);
         for (int i = 0; i < _CardList.Count; i++)
         {
@@ -345,7 +369,7 @@ public class TestScript : MonoBehaviour
             _CardList[i].transform.rotation = _RotationList[i];
             _CardList[i].transform.SetSiblingIndex(i + 1);
         }
-        
+
     }
 
     private void CardCheckingFunction()

@@ -3434,6 +3434,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 919945655}
     m_Modifications:
+    - target: {fileID: 1087715074348774220, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 93ae69df06af66e4a94c3219bbb9995a, type: 3}
     - target: {fileID: 2270958498031145116, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -3562,6 +3566,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5251218447719623760, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e4913a77a116d134798058670c1c1966, type: 3}
     - target: {fileID: 9163738164028224674, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11694,10 +11702,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mTargetToRotateAround: {fileID: 1315715443}
   mHorizontalPanSpeed: 150
   _CameraLeftBound: -220
   _CameraRightBound: 220
+  _CameraUpBound: 0
+  _CameraDownBound: 0
   mZoomSpeed: 200
   mCameraNearBound: 485
   mCameraFarBound: -130

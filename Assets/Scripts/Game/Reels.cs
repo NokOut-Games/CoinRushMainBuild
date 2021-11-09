@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Events;
 using DG.Tweening;
 
@@ -38,8 +39,6 @@ public class Reels : MonoBehaviour
 
     void Update()
     {
-        
-
         if (_roll)
         {
             if (!mdisableRoll)
@@ -98,22 +97,77 @@ public class Reels : MonoBehaviour
         return 0;
     }
 
+    #region "Original Spin Code"
+    //public void Spin()
+    //{
+    //    int index = GetRandomEnergyIndexBasedOnProbability();
+    //    ReelElement mReel = _reelElements[index];
+    //    float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+    //    mdisableRoll = true;
+    //    mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
+    //    .OnComplete(() =>
+    //    {
+    //        for (int i = 0; i < _reelElements.Length; i++) //New Addition
+    //        {
+    //            if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -305)
+    //            {
+    //                _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+    //            }
+    //        }
+    //        _roll = false;
+    //        if (mOnReelRollEndEvent != null)
+    //        {
+    //            mOnReelRollEndEvent(mReel);
+    //        }
+    //        mOnReelRollEndEvent = null;
+    //    });
+    //    //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
+    //    //another roll and chose the probability again
+    //}
+
+    #endregion
+
+    #region Spin Trying to Fix the Slotmachine
     /// <summary>
     /// All spin functions for the reel to do when roll button is clicked
     /// </summary>
     public void Spin()
     {
-        mdisableRoll = true;
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
-        float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
 
-        mReelsRollerParent.DOLocalMoveY(TargetPosition,_reelRollDuration,false)
-        .OnComplete(() => 
+        if (mReel._slotElementGameObject.transform.localPosition.y < -305)
+        {
+            Debug.Log("Continue The Roll");
+            StartCoroutine(MoveToTargetPosition(mReel, 5f));
+        }
+        else
+        {
+            //MoveToTargetPosition(mReel, 0f);
+            StartCoroutine(MoveToTargetPosition(mReel, 0f));
+        }
+
+        //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
+        //another roll and chose the probability again
+    }
+
+    /// <summary>
+    /// Just an Enumerator to mimic invoke function but with parameters
+    /// </summary>
+    /// <param name="mReel"></param>
+    /// <param name="delayTime"></param>
+    /// <returns></returns>
+    IEnumerator MoveToTargetPosition(ReelElement mReel , float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+        mdisableRoll = true;
+        float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+        mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
+        .OnComplete(() =>
         {
             for (int i = 0; i < _reelElements.Length; i++)
             {
-                if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -305)
+                if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -400)
                 {
                     _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
                 }
@@ -125,10 +179,8 @@ public class Reels : MonoBehaviour
             }
             mOnReelRollEndEvent = null;
         });
-
-        //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
-        //another roll and chose the probability again
     }
+    #endregion
 }
 
 

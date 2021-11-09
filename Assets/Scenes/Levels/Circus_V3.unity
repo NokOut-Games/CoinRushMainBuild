@@ -8568,6 +8568,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 919945655}
     m_Modifications:
+    - target: {fileID: 1087715074348774220, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 93ae69df06af66e4a94c3219bbb9995a, type: 3}
     - target: {fileID: 2270958498031145116, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -8692,6 +8696,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5251218447719623760, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e4913a77a116d134798058670c1c1966, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
 --- !u!224 &412256754 stripped
@@ -26967,14 +26975,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startAngle: 0
-  endAngle: 0
-  segments: 0
-  radius: 0
-  arcPoints: []
-  cardModel: []
-  attachToCanvas: {fileID: 0}
-  fistCard: {fileID: 0}
+  mGameManager: {fileID: 0}
+  mCardHolderParent: {fileID: 0}
+  _playerHandPoints: []
+  mScriptedCards: []
+  _CardList: []
+  mCardListGameObject: []
+  DrawButton: {fileID: 0}
+  drawNormal: {fileID: 0}
+  drawAutomatic: {fileID: 0}
+  _drawButtonRectTransform: {fileID: 0}
+  mMaxHoldTime: 5
+  timeForCardAnimation: 2
+  _buttonFillerImage: {fileID: 0}
+  _jokerList: []
+  onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
 --- !u!4 &1190993576
 Transform:
   m_ObjectHideFlags: 0
@@ -26987,7 +27004,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 412256754}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &1190993577
 LineRenderer:
@@ -37509,10 +37526,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mTargetToRotateAround: {fileID: 1315715443}
-  mZoomSpeed: 70
+  mHorizontalPanSpeed: 0
   _CameraLeftBound: 0
   _CameraRightBound: 0
+  _CameraUpBound: 0
+  _CameraDownBound: 0
+  mZoomSpeed: 70
+  mCameraNearBound: 0
+  mCameraFarBound: 0
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
@@ -38044,6 +38065,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _coinText: {fileID: 0}
+  _energyText: {fileID: 0}
 --- !u!1 &1662770319
 GameObject:
   m_ObjectHideFlags: 0
@@ -40863,13 +40886,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGameManager: {fileID: 1541244310}
   mCardHolderParent: {fileID: 0}
+  _playerHandPoints: []
   mScriptedCards: []
   _CardList: []
-  _playerHandPoints: []
-  _PositionList: []
-  _RotationList: []
-  posi: {fileID: 0}
-  targ: {fileID: 0}
+  mCardListGameObject: []
+  DrawButton: {fileID: 0}
+  drawNormal: {fileID: 0}
+  drawAutomatic: {fileID: 0}
+  _drawButtonRectTransform: {fileID: 0}
+  mMaxHoldTime: 5
+  timeForCardAnimation: 2
+  _jokerList: []
+  onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0

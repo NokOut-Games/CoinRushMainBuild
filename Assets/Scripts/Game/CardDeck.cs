@@ -334,7 +334,7 @@ public class CardDeck : MonoBehaviour
         if (clicks == 8)
         {
             clicks = 0;
-            Invoke(nameof(DestroyCardList),2f);
+            Invoke(nameof(DestroyCardList), 2f);
         }
         #region Button Function
         time = Mathf.Clamp(time, 0f, 5f);
@@ -438,7 +438,7 @@ public class CardDeck : MonoBehaviour
                     twoSets.transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = twoSets._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
                 }
                 break;
-            case 3:
+            case 3: //If Three Sets of Similar CardType are Active at that time
                 int k = 0;
                 for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, k += 300)
                 {

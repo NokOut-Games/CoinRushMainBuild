@@ -131,7 +131,7 @@ public class Slots : MonoBehaviour
 
     private void ActiveLevelInvoke()
     {
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 }
 
