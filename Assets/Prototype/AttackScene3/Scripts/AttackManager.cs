@@ -88,7 +88,6 @@ public class AttackManager : MonoBehaviour
         {
             GameObject go = Instantiate(_TargetPrefab, mGameManager._TargetMarkPost[i], Quaternion.identity);
             go.name = i.ToString();
-            Debug.Log(i);
             _spawnedTargetPoints.Add(go);
         }
     }
