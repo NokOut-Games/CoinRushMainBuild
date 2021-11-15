@@ -9,6 +9,8 @@ public class Slots : MonoBehaviour
     public Reels[] _reels;
     public Button _uiSpinButton;
 
+    public float spin = 1;
+
     private GameManager mGameManager;
 
     public List<ReelElement> _elementsName;
@@ -18,12 +20,28 @@ public class Slots : MonoBehaviour
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
-            _uiSpinButton.interactable = false;
-            StartCoroutine(DelayedSpin());
-            _elementsName.Clear();
+            //if (spin > 0)
+            //{
+                spin--;
+                _uiSpinButton.interactable = false;
+                StartCoroutine(DelayedSpin());
+                _elementsName.Clear();
+            //}
         });
     }
 
+    private void Update()
+    {
+        if(_reels[2].mSpinOver == true)
+        {
+            _uiSpinButton.interactable = true;
+        }
+        //if(spin == 0)
+        //{
+        //    _uiSpinButton.interactable = false;
+        //}
+    }
+    
     /// <summary>
     /// Function for spin button to work that contains an IEnumerator / Invoke Method for a Delayed start of Reels Spinning creating a moment of suspension.
     /// </summary>
@@ -33,13 +51,19 @@ public class Slots : MonoBehaviour
         foreach (Reels reel in _reels)
         {
             reel._roll = true;
-            
             //Things to happen when roll ends and stops.                                                                                              
             reel.OnReelRollEnd(reel => 
             {   
-                _elementsName.Add(reel); 
-                //_uiSpinButton.interactable = true;
-                ResultChecker(); 
+                _elementsName.Add(reel);
+                
+                //ResultChecker(); 
+                //if(spin != 0)
+                //{
+                //}
+                //else
+                //{
+                //    return;
+                //}
             });
             reel.mdisableRoll = false;
         }
@@ -63,6 +87,7 @@ public class Slots : MonoBehaviour
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "FreeSpins": Debug.Log("5 Free Spins");
+                        spin += 5;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins": mGameManager._coins += 5000;
@@ -83,7 +108,12 @@ public class Slots : MonoBehaviour
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "FreeSpins": Debug.Log("3 Free Spins");
-                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        Debug.Log("Spin");
+                        spin += 3;
+                        //if (spin == 0)
+                        //{
+                            Invoke(nameof(ActiveLevelInvoke), 2f);
+                        //}
                         break;
                     case "Coins": mGameManager._coins += 3000;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
@@ -105,7 +135,10 @@ public class Slots : MonoBehaviour
                         break;
                     case "FreeSpins":
                         Debug.Log("3 Free Spins");
-                        Invoke(nameof(ActiveLevelInvoke), 2f);
+                        //if (spin == 0)
+                        //{
+                            Invoke(nameof(ActiveLevelInvoke), 2f);
+                        //}
                         break;
                     case "Coins":
                         mGameManager._coins += 3000;
@@ -128,10 +161,9 @@ public class Slots : MonoBehaviour
         }
         
     }
-
     private void ActiveLevelInvoke()
     {
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
     }
 }
 

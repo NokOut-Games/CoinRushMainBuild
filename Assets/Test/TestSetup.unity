@@ -710,6 +710,91 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 394daaa2be98053419595910a546be1c, type: 3}
   m_PrefabInstance: {fileID: 2137230450}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &115643720 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8804dc81ac652f64091d7c6bc5d413fd, type: 3}
+  m_PrefabInstance: {fileID: 1469008616}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &115643724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115643720}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mGameManager: {fileID: 1541244310}
+  mCardHolderParent: {fileID: 939563810}
+  _playerHandPoints:
+  - {fileID: 790520727}
+  - {fileID: 809490489}
+  - {fileID: 2144784683}
+  - {fileID: 433933084}
+  - {fileID: 1994168805}
+  - {fileID: 2069290344}
+  - {fileID: 262260865}
+  - {fileID: 352214583}
+  mScriptedCards:
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  _CardList: []
+  mCardListGameObject: []
+  DrawButton: {fileID: 1270463490}
+  drawNormal: {fileID: 21300000, guid: 12bbc0ea23864224bba6751e844e355e, type: 3}
+  drawAutomatic: {fileID: 21300000, guid: e7f62403b61c08840b7e44d91d2cf67b, type: 3}
+  _drawButtonRectTransform: {fileID: 785332397}
+  mMaxHoldTime: 5
+  timeForCardAnimation: 2
+  _jokerList: []
+  onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
+--- !u!114 &115643725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115643720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mGameManager: {fileID: 1541244310}
+  mCardHolderParent: {fileID: 939563810}
+  _playerHandPoints:
+  - {fileID: 790520727}
+  - {fileID: 809490489}
+  - {fileID: 2144784683}
+  - {fileID: 433933084}
+  - {fileID: 1994168805}
+  - {fileID: 2069290344}
+  - {fileID: 262260865}
+  - {fileID: 352214583}
+  mScriptedCards:
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  _CardList: []
+  mCardListGameObject: []
+  DrawButton: {fileID: 1270463490}
+  drawNormal: {fileID: 21300000, guid: 12bbc0ea23864224bba6751e844e355e, type: 3}
+  drawAutomatic: {fileID: 21300000, guid: e7f62403b61c08840b7e44d91d2cf67b, type: 3}
+  _drawButtonRectTransform: {fileID: 785332397}
+  mMaxHoldTime: 5
+  timeForCardAnimation: 2
+  _jokerList: []
+  onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
 --- !u!1001 &133526425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7642,7 +7727,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1527080000}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
   m_Name: 
@@ -7662,7 +7747,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
-  - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
   _CardList: []
   mCardListGameObject: []
@@ -7672,7 +7756,6 @@ MonoBehaviour:
   _drawButtonRectTransform: {fileID: 785332397}
   mMaxHoldTime: 5
   timeForCardAnimation: 2
-  _buttonFillerImage: {fileID: 1604628919}
   _jokerList: []
   onceDonee: 0
   mHowManyCardSetsAreActive: 0

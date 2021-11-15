@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TestScript : MonoBehaviour
 {
-    #region All variables
+    #region "Declared Variables"
     [Header("Grabbing Other GameObject References:")]
     [SerializeField] private GameManager mGameManager;
     [SerializeField] private GameObject mCardHolderParent;
@@ -33,8 +33,8 @@ public class TestScript : MonoBehaviour
     private bool mAutoCardDraw = false;
     private bool mAutomaticDrawModeOn = false;
     private bool mOnceDone = false;
-    public Image _buttonFillerImage;
-
+    private bool canClick = true;
+    //public Image _buttonFillerImage;
 
     [Space(10)]
     [Header("Joker and related things")]
@@ -48,22 +48,34 @@ public class TestScript : MonoBehaviour
     private void Start()
     {
         onceDonee = false;
+        canClick = true;
         DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        //for (int i = 0; i < mScriptedCards.Count; i++)
-        //{
-        //    GameObject card = Instantiate(mScriptedCards[i]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
-        //    Cards cardDetails = card.GetComponent<Cards>();
+        for (int i = 0; i < mScriptedCards.Count; i++)
+        {
+            GameObject card = Instantiate(mScriptedCards[i]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+            Cards cardDetails = card.GetComponent<Cards>();
 
-        //    cardDetails._cardType = mScriptedCards[i]._cardType;
-        //    cardDetails._cardID = mScriptedCards[i]._cardID;
-        //    cardDetails._Position = card.transform.position;
+            cardDetails._cardType = mScriptedCards[i]._cardType;
+            cardDetails._cardID = mScriptedCards[i]._cardID;
+            cardDetails._Position = card.transform.position;
 
-        //    AddNewCard(card.GetComponent<Cards>(), card);
-        //    ReplacementOfCards();
-        //    CardCheckingFunction();
-        //}
+            AddNewCard(card.GetComponent<Cards>(), card);
+            ReplacementOfCards();
+            //CardCheckingFunction();
+        }
+    }
+
+    private void DestroyCardList()
+    {
+        foreach (GameObject card in mCardListGameObject)
+        {
+            Destroy(card);
+        }
+        _CardList.Clear();
+        _jokerList.Clear();
+        mCardListGameObject.Clear();
     }
 
     private void Update()
@@ -71,74 +83,59 @@ public class TestScript : MonoBehaviour
         if (clicks == 8)
         {
             clicks = 0;
-            foreach (GameObject card in mCardListGameObject)
-            {
-                Destroy(card);
-            }
-            _CardList.Clear();
-            mCardListGameObject.Clear();
+            Invoke(nameof(DestroyCardList), 2f);
         }
-
         #region Button Function
-        time = Mathf.Clamp(time, 0f, 5f);
-        Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
+        //time = Mathf.Clamp(time, 0f, 5f);
+        //Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log(clicks);
-            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
-            {
-                GameObject card = Instantiate(mScriptedCards[clicks]._cardModel, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
-                Cards cardDetails = card.GetComponent<Cards>();
-
-                cardDetails._cardType = mScriptedCards[clicks]._cardType;
-                cardDetails._cardID = mScriptedCards[clicks]._cardID;
-                cardDetails._Position = card.transform.position;
-
-                AddNewCard(card.GetComponent<Cards>(), card);
-                ReplacementOfCards();
-                CardCheckingFunction();
-                clicks += 1;
-
-                //BackToNormalState();
-                //time = 0;
-                //DrawCard();
-            }
-        }
-
-        //if (!mOnceDone)
+        //if (canClick == true)
         //{
-        //    if (Input.GetMouseButton(0))
+        //    if (Input.GetMouseButtonDown(0))
         //    {
         //        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
         //        {
-        //            time += Time.fixedDeltaTime;
-        //            float lerpSpeed = 100f * Time.deltaTime;
-        //            _buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time / maxTime, lerpSpeed);
-        //            if (time >= mMaxHoldTime)
+        //            BackToNormalState();
+        //            time = 0;
+        //            DrawCard();
+        //        }
+        //    }
+
+        //    if (!mOnceDone)
+        //    {
+        //        if (Input.GetMouseButton(0))
+        //        {
+        //            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
         //            {
-        //                mOnceDone = true;
-        //                mAutomaticDrawModeOn = true;
-        //                mAutoCardDraw = true;
-        //                ChangeSprites();
-        //                StartCoroutine(AutomaticCardDrawing());
+        //                time += Time.fixedDeltaTime;
+        //                //float lerpSpeed = 100f * Time.deltaTime;
+        //                //_buttonFillerImage.fillAmount = Mathf.Lerp(_buttonFillerImage.fillAmount, time / maxTime, lerpSpeed);
+        //                if (time >= mMaxHoldTime)
+        //                {
+        //                    mOnceDone = true;
+        //                    mAutomaticDrawModeOn = true;
+        //                    mAutoCardDraw = true;
+        //                    ChangeSprites();
+        //                    StartCoroutine(AutomaticCardDrawing());
+        //                }
         //            }
         //        }
         //    }
-        //}
 
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+        //    if (Input.GetMouseButtonUp(0))
         //    {
-        //        time = 0;
+        //        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+        //        {
+        //            time = 0;
+        //        }
         //    }
         //}
         #endregion
 
         #region Joker
-        if (_jokerList.Count >= 1)
+        if (_jokerList.Count == 1)
         {
+            //mScriptedCards.RemoveAt(5);
             if (onceDonee == true)
             {
                 return;
@@ -178,14 +175,19 @@ public class TestScript : MonoBehaviour
                 {
                     _jokerList[0]._cardType = _cardsThatCanBeReplacedByJoker[0]._cardType;
                     //AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);
+                    for (int q = 0; q < _CardList.Count; q++)
+                    {
+                        if (_CardList[i]._cardType == _jokerList[0]._cardType)
+                        {
+                            _CardList.Insert(i, _jokerList[0]);
+                            return;
+                        }
+                    }
                     ReplacementOfCards();
                     CardCheckingFunction();
                 }
-                //}
-
                 break;
             case 2: //If Two Sets of Similar Card are active at that time
-                //Cards[] twosets = new Cards[inHowManyCardSets];
                 int j = 0;
                 for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, j += 400)
                 {
@@ -193,11 +195,8 @@ public class TestScript : MonoBehaviour
                     twoSets.transform.gameObject.AddComponent<Button>();
                     twoSets.transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = twoSets._cardType; /*AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);*/ ReplacementOfCards(); CardCheckingFunction(); });
                 }
-                //twosets[0].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = twosets[0]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-                //twosets[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = twosets[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
                 break;
-            case 3:
-                //Cards[] threesets = new Cards[inHowManyCardSets];
+            case 3: //If Three Sets of Similar CardType are Active at that time
                 int k = 0;
                 for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, k += 300)
                 {
@@ -205,15 +204,24 @@ public class TestScript : MonoBehaviour
                     threeSets.transform.gameObject.AddComponent<Button>();
                     threeSets.transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threeSets._cardType; /*AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject);*/ ReplacementOfCards(); CardCheckingFunction(); });
                 }
-                //threesets[0].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[0]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-                //threesets[1].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[1]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
-                //threesets[2].transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = threesets[2]._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
                 break;
+            #region FutureCase
+            //case 4:
+            //    int l = 0;
+            //    for (int i = 0; i < _cardsThatCanBeReplacedByJoker.Count; i++, l += 300)
+            //    {
+            //        Cards fourSets = Instantiate(_cardsThatCanBeReplacedByJoker[i], _playerHandPoints[1].position + new Vector3(l, 400, 0), Quaternion.identity, mCardHolderParent.transform);
+            //        fourSets.transform.gameObject.AddComponent<Button>();
+            //        fourSets.transform.gameObject.GetComponent<Button>().onClick.AddListener(() => { _jokerList[0]._cardType = fourSets._cardType; AddNewCard(_jokerList[0].transform.GetComponent<Cards>(), _jokerList[0].transform.gameObject); ReplacementOfCards(); CardCheckingFunction(); });
+            //    }
+            //    break;
+            #endregion
             default:
                 break;
         }
     }
     #endregion
+
 
     /// <summary>
     /// Card Drawing Function
@@ -241,11 +249,10 @@ public class TestScript : MonoBehaviour
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>(), card);
         ReplacementOfCards();
-        //CardCheckingFunction();
+        CardCheckingFunction();
     }
 
     #region Automatic Card Drawing And related Things Like Bringing Button back to its normal state And Changing sprites
-
     /// <summary>
     /// Brings Back Draw Button To Normal State from Automatic State
     /// </summary>
@@ -356,11 +363,12 @@ public class TestScript : MonoBehaviour
         {
             if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
+                canClick = false;
                 StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
             }
         }
     }
-    
+
     private IEnumerator DelayedSceneLoader(CardType inType)
     {
         yield return new WaitForSeconds(2);

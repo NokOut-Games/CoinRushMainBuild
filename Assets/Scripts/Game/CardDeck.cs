@@ -386,7 +386,6 @@ public class CardDeck : MonoBehaviour
         #region Joker
         if (_jokerList.Count == 1)
         {
-            //mScriptedCards.RemoveAt(5);
             if (onceDonee == true)
             {
                 return;

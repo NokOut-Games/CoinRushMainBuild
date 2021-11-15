@@ -79,7 +79,7 @@ public class CameraController : MonoBehaviour
             {
                 _DrawButtonClicked = false;
                 Invoke("SetCameraFreeRoam", 0.11f);
-                mCardDeck.BackToNormalState();
+                mCardDeck.BackToNormalState();  
             }
         }
 
