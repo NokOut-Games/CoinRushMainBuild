@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -47,18 +46,24 @@ public class Reels : MonoBehaviour
         {
             if (!mdisableRoll)
             {
-                for (int i = 0; i < _reelElements.Length; i++)
-                {                                                                                                     //700 Down is the speed it needs to roll
-                    _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
-                    if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
+                for (int i = _reelElements.Length - 1; i >= 0; i--)
+                {
+                    if (_reelElements[i]._slotElementGameObject.transform.localPosition.y >= -600 && _reelElements[i]._slotElementGameObject.transform.localPosition.y <= 900)
                     {
-                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                        Time.timeScale = 0.1f;
+                        //700 Down is the speed it needs to roll
+                        _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
+                        if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
+                        {
+                            _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, /*_reelElements[i]._slotElementGameObject.transform.localPosition.y*/ +900, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                        }
                     }
                 }
             }
         }
     }
 
+    #region Probabilizer
     /// <summary>
     /// Event Function
     /// </summary>
@@ -99,6 +104,7 @@ public class Reels : MonoBehaviour
         }
         return 0;
     }
+    #endregion  
 
     #region "Original Spin Code"
     //public void Spin()
@@ -142,7 +148,16 @@ public class Reels : MonoBehaviour
         if (mReel._slotElementGameObject.transform.localPosition.y < 0)
         {
             Debug.Log("Continue The Roll");
-            StartCoroutine(MoveToTargetPosition(mReel, 2f));
+            if (mReel._slotElementGameObject.transform.localPosition.y < 0)
+            {
+                StartCoroutine(MoveToTargetPosition(mReel, 2f));
+            }
+            else
+            {
+                int index1 = GetRandomEnergyIndexBasedOnProbability();
+                ReelElement mReel1 = _reelElements[index1];
+                StartCoroutine(MoveToTargetPosition(mReel1, 0f));
+            }
         }
         else
         {
@@ -165,38 +180,10 @@ public class Reels : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         mdisableRoll = true;
         float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+
         mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
         .OnComplete(() =>
         {
-            for (int i = 0; i < _reelElements.Length; i++)
-            {                                                                                                     //700 Down is the speed it needs to roll
-                _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
-                if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
-                {
-                    _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
-                }
-            }
-
-            //List<int> parts = new List<int>();
-
-            ////Add All Of The Values For The Original Y Postions
-            //parts.Add(900);
-            //parts.Add(600);
-            //parts.Add(300);
-            //parts.Add(0);
-            //parts.Add(-300);
-
-
-            //foreach (Transform image in transform)
-            //{
-            //    int rand = Random.Range(0, parts.Count);
-
-            //    //The "transform.parent.GetComponent<RectTransform>().transform.position.y" Allows It To Adjust To The Canvas Y Position
-            //    image.transform.position = new Vector3(image.transform.position.x, parts[rand] + transform.parent.GetComponent<RectTransform>().transform.position.y, image.transform.position.z);
-
-            //    parts.RemoveAt(rand);
-            //}
-
             _roll = false;
             if (mOnReelRollEndEvent != null)
             {
@@ -205,6 +192,17 @@ public class Reels : MonoBehaviour
             mSpinOver = true;
             mOnReelRollEndEvent = null;
         });
+        //.OnStepComplete(() =>
+        //{
+        //    for (int i = _reelElements.Length - 1; i >= 0; i--)
+        //    {
+        //        if (_reelElements[i]._slotElementGameObject.transform.position.y < -300)
+        //        {
+        //            _reelElements[i]._slotElementGameObject.transform.position = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.position.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+        //        }
+        //    }
+        //});
+
     }
     #endregion
 }
@@ -212,9 +210,133 @@ public class Reels : MonoBehaviour
 
 
 
+//for (int i = 0; i < _reelElements.Length; i++)
+//{
+//    Debug.Log(_reelElements[0]._slotElementGameObject.name + " " + _reelElements[1]._slotElementGameObject.name + " " + _reelElements[2]._slotElementGameObject.name + " " + _reelElements[3]._slotElementGameObject.name);
+//    Time.timeScale = 0.1f;
+//    //700 Down is the speed it needs to roll
+//    _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
+//    if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
+//    {
+//        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+//    }
+//}
+
+//void refernce()
+//{
+//    using System.Collections;
+//    using System.Collections.Generic;
+//    using UnityEngine;
+
+//public class Reel : MonoBehaviour
+//{
+
+//    //This Variable Will Be Changed By The "Slots" Class To Control When The Reel Spins  
+//    public bool spin;
+
+//    //Speed That Reel Will Spin
+//    int speed;
+
+//    // Use this for initialization
+//    void Start()
+//    {
+//        spin = false;
+//        speed = 1500;
+//    }
+
+//    // Update is called once per frame
+//    void Update()
+//    {
+//        if (spin)
+//        {
+//            foreach (Transform image in transform)//This Targets All Children Objects Of The Main Parent Object
+//            {
+//                //Direction And Speed Of Movement
+//                image.transform.Translate(Vector3.down * Time.smoothDeltaTime * speed, Space.World);
+
+//                //Once The Image Moves Below A Certain Point, Reset Its Position To The Top 
+//                if (image.transform.position.y <= 0) { image.transform.position = new Vector3(image.transform.position.x, image.transform.position.y + 600, image.transform.position.z); }
+//            }
+//        }
+//    }
+
+//    //Once The Reel Finishes Spinning The Images Will Be Placed In A Random Position
+//    public void RandomPosition()
+//    {
+//        List<int> parts = new List<int>();
+
+//        //Add All Of The Values For The Original Y Postions  
+//        parts.Add(200);
+//        parts.Add(100);
+//        parts.Add(0);
+//        parts.Add(-100);
+//        parts.Add(-200);
+//        parts.Add(-300);
 
 
+//        foreach (Transform image in transform)
+//        {
+//            int rand = Random.Range(0, parts.Count);
 
+//            //The "transform.parent.GetComponent<RectTransform>().transform.position.y" Allows It To Adjust To The Canvas Y Position
+//            image.transform.position = new Vector3(image.transform.position.x, parts[rand] + transform.parent.GetComponent<RectTransform>().transform.position.y, image.transform.position.z);
+
+//            parts.RemoveAt(rand);
+//        }
+//    }
+//}
+
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+
+//public class Slots : MonoBehaviour
+//{
+
+//    public Reel[] reel;
+//    bool startSpin;
+
+//    // Use this for initialization
+//    void Start()
+//    {
+//        startSpin = false;
+//    }
+
+//    // Update is called once per frame
+//    void Update()
+//    {
+//        if (!startSpin)//Prevents Interference If The Reels Are Still Spinning
+//        {
+//            if (Input.GetKeyDown(KeyCode.K))//The Input That Starts The Slot Machine 
+//            {
+//                startSpin = true;
+//                StartCoroutine(Spinning());
+//            }
+//        }
+//    }
+
+//    IEnumerator Spinning()
+//    {
+//        foreach (Reel spinner in reel)
+//        {
+//            //Tells Each Reel To Start Spnning
+//            spinner.spin = true;
+//        }
+
+//        for (int i = 0; i < reel.Length; i++)
+//        {
+//            //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them
+//            yield return new WaitForSeconds(Random.Range(1, 3));
+//            reel[i].spin = false;
+//
+//            
+//        }
+
+//        //Allows The Machine To Be Started Again 
+//        startSpin = false;
+//    }
+//}
+//}
 
 
 

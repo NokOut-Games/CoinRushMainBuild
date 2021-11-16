@@ -32,7 +32,7 @@ public class Slots : MonoBehaviour
 
     private void Update()
     {
-        if(_reels[2].mSpinOver == true)
+        if (_reels[2].mSpinOver == true)
         {
             _uiSpinButton.interactable = true;
         }
