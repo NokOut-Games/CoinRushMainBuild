@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Slots : MonoBehaviour
 {
     public Reels[] _reels;
     public Button _uiSpinButton;
+    public TextMeshProUGUI _SlotDisplayHeadText;
 
     public float spin = 1;
 
@@ -20,13 +22,14 @@ public class Slots : MonoBehaviour
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
-            //if (spin > 0)
-            //{
+            if (spin > 0)
+            {
                 spin--;
                 _uiSpinButton.interactable = false;
+                _SlotDisplayHeadText.text = "Slot Spinning";
                 StartCoroutine(DelayedSpin());
                 _elementsName.Clear();
-            //}
+            }
         });
     }
 
@@ -36,10 +39,10 @@ public class Slots : MonoBehaviour
         {
             _uiSpinButton.interactable = true;
         }
-        //if(spin == 0)
-        //{
-        //    _uiSpinButton.interactable = false;
-        //}
+        if (spin == 0)
+        {
+            _uiSpinButton.interactable = false;
+        }
     }
     
     /// <summary>
@@ -56,7 +59,7 @@ public class Slots : MonoBehaviour
             {   
                 _elementsName.Add(reel);
                 
-                //ResultChecker(); 
+                ResultChecker(); 
                 //if(spin != 0)
                 //{
                 //}
@@ -83,17 +86,27 @@ public class Slots : MonoBehaviour
             {
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
-                    case "TradingCards": Debug.Log("Trading Card Pack");
+                    case "TradingCards": 
+                        _SlotDisplayHeadText.text =  "Trading Card Pack";
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "FreeSpins": Debug.Log("5 Free Spins");
+                    case "FreeSpins":
+                        _SlotDisplayHeadText.text = "5 Spins";
                         spin += 5;
+                        if (spin == 0)
+                        {
+                            Invoke(nameof(ActiveLevelInvoke), 2f);
+                        }
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "Coins": mGameManager._coins += 5000;
+                    case "Coins":
+                        _SlotDisplayHeadText.text = "5000 Coins";
+                        mGameManager._coins += 5000;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "Energy": mGameManager._energy += 10;
+                    case "Energy":
+                        _SlotDisplayHeadText.text = "10 Energy";
+                        mGameManager._energy += 10;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     default:
@@ -104,21 +117,27 @@ public class Slots : MonoBehaviour
             {
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
-                    case "TradingCards": Debug.Log("Gets Nothing");
+                    case "TradingCards":
+                        _SlotDisplayHeadText.text = "Oops Try Again";
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "FreeSpins": Debug.Log("3 Free Spins");
+                    case "FreeSpins":
+                        _SlotDisplayHeadText.text = "3 Free Spins";
                         Debug.Log("Spin");
                         spin += 3;
-                        //if (spin == 0)
-                        //{
+                        if (spin == 0)
+                        {
                             Invoke(nameof(ActiveLevelInvoke), 2f);
-                        //}
+                        }
                         break;
-                    case "Coins": mGameManager._coins += 3000;
+                    case "Coins":
+                        _SlotDisplayHeadText.text = "3000 Coins";
+                        mGameManager._coins += 3000;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
-                    case "Energy": mGameManager._energy += 5;
+                    case "Energy":
+                        _SlotDisplayHeadText.text = "5 Energy";
+                        mGameManager._energy += 5;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     default:
@@ -130,21 +149,23 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        Debug.Log("Gets Nothing");
+                        _SlotDisplayHeadText.text = "Oops Try Again";
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        Debug.Log("3 Free Spins");
-                        //if (spin == 0)
-                        //{
+                        _SlotDisplayHeadText.text = "3 Free Spins";
+                        if (spin == 0)
+                        {
                             Invoke(nameof(ActiveLevelInvoke), 2f);
-                        //}
+                        }
                         break;
                     case "Coins":
+                        _SlotDisplayHeadText.text = "3000 Coins";
                         mGameManager._coins += 3000;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Energy":
+                        _SlotDisplayHeadText.text = "5 Energy";
                         mGameManager._energy += 5;
                         Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
@@ -155,7 +176,7 @@ public class Slots : MonoBehaviour
             else
             {
                 //Invoke A animation Better luck next time
-                Debug.Log("Nothing is Identical");
+                _SlotDisplayHeadText.text = "Oopsie Nothing is Identical";
                 Invoke(nameof(ActiveLevelInvoke), 2f);
             }
         }
@@ -163,7 +184,7 @@ public class Slots : MonoBehaviour
     }
     private void ActiveLevelInvoke()
     {
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 }
 
