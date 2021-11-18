@@ -38,10 +38,10 @@ public class Slots : MonoBehaviour
 
     private void Update()
     {
-        if (_reels[2].mSpinOver == true)
-        {
-            _uiSpinButton.interactable = true;
-        }
+        //if (_reels[2].mSpinOver == true)
+        //{
+        //    _uiSpinButton.interactable = true;
+        //}
         //if (spin == 0 && _reels[2].mSpinOver == true)
         //{
         //    _uiSpinButton.interactable = false;
@@ -78,7 +78,7 @@ public class Slots : MonoBehaviour
         {
             //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them
             yield return new WaitForSeconds(3f);
-            _reels[i].Spin();
+            _reels[i].Spin(); // Probability finds and stops at selected game Object
         }
     }
 

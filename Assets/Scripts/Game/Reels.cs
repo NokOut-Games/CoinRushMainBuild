@@ -54,14 +54,12 @@ public class Reels : MonoBehaviour
             {
                 for (int i = _reelElements.Length - 1; i >= 0; i--)
                 {
-                    //Time.timeScale = 0.1f;
-                                                                                                                      //700 Down is the speed it needs to roll
+                    //Time.timeScale = 0.1f;                                                                          //700 Down is the speed it needs to roll
                     _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
                     if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
                     {
                         _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + accumalatedY, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
                     }
-
                 }
             }
         }
