@@ -20,13 +20,14 @@ public class Reels : MonoBehaviour
     public bool _roll = false;
 
     public bool mSpinOver = false;
-    public bool mSpinStart = false;
+    public float accumalatedY;
 
     private double mTotalToughnessMeter;
     private System.Random mRandomValue = new System.Random();
 
     [SerializeField]
     private Transform mReelsRollerParent;
+
 
     [SerializeField]
     private int mSpeed = 5000;  //Will use it later instead of 700 down in update function
@@ -38,6 +39,10 @@ public class Reels : MonoBehaviour
     private void Start()
     {
         mSpeed = Random.Range(2000, 4000);
+        for (int i = 0; i < _reelElements.Length; i++)
+        {
+            accumalatedY += _reelElements[i]._slotElementGameObject.GetComponent<RectTransform>().sizeDelta.y;
+        }
         CalculateIndexAndTotalToughness();
     }
 
@@ -50,11 +55,11 @@ public class Reels : MonoBehaviour
                 for (int i = _reelElements.Length - 1; i >= 0; i--)
                 {
                     //Time.timeScale = 0.1f;
-                    //700 Down is the speed it needs to roll
+                                                                                                                      //700 Down is the speed it needs to roll
                     _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
                     if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
                     {
-                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + accumalatedY, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
                     }
 
                 }
@@ -136,31 +141,10 @@ public class Reels : MonoBehaviour
     /// </summary>
     public void Spin()
     {
-        mSpinStart = true;
+        //Chooses the Probability
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
-        if (mReel._slotElementGameObject.transform.localPosition.y < 0)
-        {
-            StartCoroutine(MoveToTargetPosition(mReel, 2f));
-        }
-        else
-        {
-            StartCoroutine(MoveToTargetPosition(mReel, 0f));
-        }
 
-        //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
-        //another roll and chose the probability again
-    }
-
-    /// <summary>
-    /// Just an Enumerator to mimic invoke function but with parameters
-    /// </summary>
-    /// <param name="mReel"></param>
-    /// <param name="delayTime"></param>
-    /// <returns></returns>
-    IEnumerator MoveToTargetPosition(ReelElement mReel, float delayTime)
-    {
-        yield return new WaitForSeconds(delayTime);
         mdisableRoll = true;
         float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
 
@@ -192,7 +176,38 @@ public class Reels : MonoBehaviour
             mSpinOver = true;
             mOnReelRollEndEvent = null;
         });
+
+
+        //If selected Gameobject is below zero then continue roll
+        //if (mReel._slotElementGameObject.transform.localPosition.y < 0)
+        //{
+            
+            //if (mReel._slotElementGameObject.transform.localPosition.y > 0)
+            //{
+                
+                //StartCoroutine(MoveToTargetPosition(mReel, 1f));
+            //}
+        //}
+        //else
+       // {
+            //StartCoroutine(MoveToTargetPosition(mReel, 0f));
+       // }
+
+        //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
+        //another roll and chose the probability again
     }
+
+    /// <summary>
+    /// Just an Enumerator to mimic invoke function but with parameters
+    /// </summary>
+    /// <param name="mReel"></param>
+    /// <param name="delayTime"></param>
+    /// <returns></returns>
+    //IEnumerator MoveToTargetPosition(ReelElement mReel, float delayTime)
+    //{
+    //    yield return new WaitForSeconds(delayTime);
+        
+    //}
 }
 
 
