@@ -1,5 +1,4 @@
 using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,8 +26,7 @@ public class Reels : MonoBehaviour
 
     [SerializeField]
     private Transform mReelsRollerParent;
-
-
+    
     [SerializeField]
     private int mSpeed = 5000;  //Will use it later instead of 700 down in update function
     public bool mdisableRoll = false;
@@ -54,11 +52,12 @@ public class Reels : MonoBehaviour
             {
                 for (int i = _reelElements.Length - 1; i >= 0; i--)
                 {
-                    //Time.timeScale = 0.1f;                                                                          //700 Down is the speed it needs to roll
+                    //Time.timeScale = 0.01f;                                                                          //700 Down is the speed it needs to roll
                     _reelElements[i]._slotElementGameObject.transform.Translate(Vector3.down * Time.smoothDeltaTime * mSpeed, Space.World);
                     if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
                     {
                         _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + accumalatedY, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                        _reelElements[i]._slotElementGameObject.transform.SetSiblingIndex(i);
                     }
                 }
             }
@@ -106,34 +105,6 @@ public class Reels : MonoBehaviour
         return 0;
     }
 
-    //public void Spin()
-    //{
-    //    int index = GetRandomEnergyIndexBasedOnProbability();
-    //    ReelElement mReel = _reelElements[index];
-    //    float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
-    //    mdisableRoll = true;
-    //    mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
-    //    .OnComplete(() =>
-    //    {
-    //        for (int i = 0; i < _reelElements.Length; i++) //New Addition
-    //        {
-    //            if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -305)
-    //            {
-    //                _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
-    //            }
-    //        }
-    //        _roll = false;
-    //        if (mOnReelRollEndEvent != null)
-    //        {
-    //            mOnReelRollEndEvent(mReel);
-    //        }
-    //        mOnReelRollEndEvent = null;
-    //    });
-    //    //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
-    //    //another roll and chose the probability again
-    //}
-
-
     /// <summary>
     /// Finds a Gameobject based on probability and stop the reel at appropriate spot 
     /// </summary>
@@ -144,51 +115,89 @@ public class Reels : MonoBehaviour
         ReelElement mReel = _reelElements[index];
 
         mdisableRoll = true;
-        float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+        if (mReel._slotElementGameObject.transform.localPosition.y > 0)
+        {
+            float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
 
-        mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
-        .OnUpdate(() =>
-        {
-            int j = 0;
-            for (int i = 0; i < _reelElements.Length; i++, j += 1) // i = 3 , j = 2
+            mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
+            .OnUpdate(() =>
             {
-                if (_reelElements[i]._slotElementGameObject.name != mReel._slotElementGameObject.name)
+                int j = 0;
+                for (int i = 0; i < _reelElements.Length; i++, j += 1) // i = 3 , j = 2
                 {
-                    _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _imageFillPosition[j] + mReel._slotElementGameObject.transform.localPosition.y, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                    if (_reelElements[i]._slotElementGameObject.name != mReel._slotElementGameObject.name)
+                    {
+                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _imageFillPosition[j] + mReel._slotElementGameObject.transform.localPosition.y, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                    }
+                    else
+                    {
+                        j -= 1;
+                        continue;
+                    }
                 }
-                else
-                {
-                    j -= 1;
-                    continue;
-                }
-            }
-        })
-        .OnComplete(() =>
-        {
-            _roll = false;  
-            if (mOnReelRollEndEvent != null)
+            })
+            .OnComplete(() =>
             {
-                mOnReelRollEndEvent(mReel);
-            }
-            mSpinOver = true;
-            mOnReelRollEndEvent = null;
-        });
+                _roll = false;
+                if (mOnReelRollEndEvent != null)
+                {
+                    mOnReelRollEndEvent(mReel);
+                }
+                mSpinOver = true;
+                mOnReelRollEndEvent = null;
+            });
+        }
+        else
+        {
+            mReel._slotElementGameObject.transform.localPosition = new Vector3(mReel._slotElementGameObject.transform.localPosition.x, accumalatedY, mReel._slotElementGameObject.transform.localPosition.z);
+            var newPosition = mReel._slotElementGameObject.transform.localPosition;
+            float TargetPosition = -(newPosition.y);
+
+            mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
+            .OnUpdate(() =>
+            {
+                int j = 0;
+                for (int i = 0; i < _reelElements.Length; i++, j += 1) // i = 3 , j = 2
+                {
+                    if (_reelElements[i]._slotElementGameObject.name != mReel._slotElementGameObject.name)
+                    {
+                        _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _imageFillPosition[j] + mReel._slotElementGameObject.transform.localPosition.y, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+                    }
+                    else
+                    {
+                        j -= 1;
+                        continue;
+                    }
+                }
+            })
+            .OnComplete(() =>
+            {
+                _roll = false;
+                if (mOnReelRollEndEvent != null)
+                {
+                    mOnReelRollEndEvent(mReel);
+                }
+                mSpinOver = true;
+                mOnReelRollEndEvent = null;
+            });
+        }
+
 
 
         //If selected Gameobject is below zero then continue roll
         //if (mReel._slotElementGameObject.transform.localPosition.y < 0)
         //{
-            
-            //if (mReel._slotElementGameObject.transform.localPosition.y > 0)
-            //{
-                
-                //StartCoroutine(MoveToTargetPosition(mReel, 1f));
-            //}
+
+        //if (mReel._slotElementGameObject.transform.localPosition.y > 0)
+        //{
+
+        //StartCoroutine(MoveToTargetPosition(mReel, 1f));
+        //}
         //}
         //else
-       // {
-            //StartCoroutine(MoveToTargetPosition(mReel, 0f));
-       // }
+        // {
+        //StartCoroutine(MoveToTargetPosition(mReel, 0f));
+        // }
 
         //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
         //another roll and chose the probability again
@@ -203,12 +212,40 @@ public class Reels : MonoBehaviour
     //IEnumerator MoveToTargetPosition(ReelElement mReel, float delayTime)
     //{
     //    yield return new WaitForSeconds(delayTime);
-        
+
     //}
 }
 
 
 
+
+
+//public void Spin()
+//{
+//    int index = GetRandomEnergyIndexBasedOnProbability();
+//    ReelElement mReel = _reelElements[index];
+//    float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
+//    mdisableRoll = true;
+//    mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
+//    .OnComplete(() =>
+//    {
+//        for (int i = 0; i < _reelElements.Length; i++) //New Addition
+//        {
+//            if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -305)
+//            {
+//                _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + 1200, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
+//            }
+//        }
+//        _roll = false;
+//        if (mOnReelRollEndEvent != null)
+//        {
+//            mOnReelRollEndEvent(mReel);
+//        }
+//        mOnReelRollEndEvent = null;
+//    });
+//    //Should put another condition where if the selected element goes below a certain position in y while being chose by probability we need to make it to do 
+//    //another roll and chose the probability again
+//}
 
 //for (int i = 0; i < _reelElements.Length; i++)
 //{
