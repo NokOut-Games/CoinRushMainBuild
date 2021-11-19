@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ChestOpener : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class ChestOpener : MonoBehaviour
     [SerializeField] private List<GameObject> mEnergyChests;
     [SerializeField] private List<GameObject> mCoinChests;
     [SerializeField] private GameManager mGameManager;
+
+    [SerializeField] private TextMeshProUGUI rewardText;
+    [SerializeField] private GameObject RewardDisplayPanel;
 
     private void Start()
     {
@@ -26,6 +30,8 @@ public class ChestOpener : MonoBehaviour
                 {
                     //Get the Energy value of probability
                     int energyValue = mEnergyProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
+                    rewardText.text = energyValue.ToString();
+                    RewardDisplayPanel.SetActive(true);
 
                     //Changing the Energy value in Gamemanager
                     mGameManager._energy += energyValue;
@@ -49,12 +55,14 @@ public class ChestOpener : MonoBehaviour
                         }
                         mEnergyChests[i].GetComponent<ChestValue>()._value = mEnergyProbability._energies[i]._energyAmount;
                     }
-                    Invoke(nameof(BackToMainScene), 1f);
+                    //Invoke(nameof(BackToMainScene), 1f);
                 }
                 if (raycastHit.transform.gameObject.tag == "CoinChestBox")
                 {
                     //Get the Coin value of probability
                     int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
+                    rewardText.text = coinValue.ToString();
+                    RewardDisplayPanel.SetActive(true);
 
                     //Changing the Coinvalue
                     mGameManager._coins += coinValue;
@@ -78,7 +86,7 @@ public class ChestOpener : MonoBehaviour
                         }
                         mCoinChests[i].GetComponent<ChestValue>()._value = mCoinProbability._coins[i]._coinAmount;
                     }
-                    Invoke(nameof(BackToMainScene), 1f);
+                    //Invoke(nameof(BackToMainScene), 1f);
                 }
             }
         }
@@ -87,7 +95,7 @@ public class ChestOpener : MonoBehaviour
     /// <summary>
     /// Loads back to active level
     /// </summary>
-    private void BackToMainScene()
+    public void BackToMainScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }

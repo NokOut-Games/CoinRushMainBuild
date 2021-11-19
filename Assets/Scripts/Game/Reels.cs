@@ -135,7 +135,7 @@ public class Reels : MonoBehaviour
 
 
     /// <summary>
-    /// All spin functions for the reel to do when roll button is clicked
+    /// Finds a Gameobject based on probability and stop the reel at appropriate spot 
     /// </summary>
     public void Spin()
     {
@@ -165,8 +165,7 @@ public class Reels : MonoBehaviour
         })
         .OnComplete(() =>
         {
-            _roll = false;
-
+            _roll = false;  
             if (mOnReelRollEndEvent != null)
             {
                 mOnReelRollEndEvent(mReel);

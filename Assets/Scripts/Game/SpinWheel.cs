@@ -21,11 +21,6 @@ public class WheelPiece
 public class SpinWheel : MonoBehaviour
 {
     [Header("References :")]
-    //Line requirements
-    public GameObject _linePrefab;
-    public Transform _linesParent;
-
-    [Space]
     //WheelPiece requirements
     public Transform _spinWheelTransform;
     public Transform _spinnerParent;
@@ -126,10 +121,6 @@ public class SpinWheel : MonoBehaviour
             //pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
 
             ResizePiece(pieceTrns);
-            //Line
-            //Transform lineTrns = Instantiate(_linePrefab, _linesParent.position, Quaternion.identity, _linesParent).transform;
-            //lineTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, (mPieceAngle * i) + mHalfPieceAngle);
-
             pieceTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, mPieceAngle * i);
         }
     }
@@ -176,6 +167,15 @@ public class SpinWheel : MonoBehaviour
     {
         if (mIsSpinning == false)
         {
+            if (FindObjectOfType<SpinWheelSpin>().FreeSpins <= 0)
+            {
+                FindObjectOfType<SpinWheelSpin>().DoFreeSpins = false;
+            }
+            else
+            {
+                FindObjectOfType<SpinWheelSpin>().DoFreeSpins = true;
+                FindObjectOfType<SpinWheelSpin>().FreeSpins -= 1;
+            }
             mIsSpinning = true;
 
             int index = GetRandomPieceIndex();

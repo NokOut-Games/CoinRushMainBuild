@@ -38,15 +38,15 @@ public class Slots : MonoBehaviour
 
     private void Update()
     {
-        //if (_reels[2].mSpinOver == true)
-        //{
-        //    _uiSpinButton.interactable = true;
-        //}
-        //if (spin == 0 && _reels[2].mSpinOver == true)
-        //{
-        //    _uiSpinButton.interactable = false;
-        //    _rewardPanel.SetActive(true);
-        //}
+        if (_reels[2].mSpinOver == true)
+        {
+            _uiSpinButton.interactable = true;
+        }
+        if (spin == 0 && _reels[2].mSpinOver == true)
+        {
+            _uiSpinButton.interactable = false;
+            _rewardPanel.SetActive(true);
+        }
     }
     
     /// <summary>
@@ -62,23 +62,15 @@ public class Slots : MonoBehaviour
             reel.OnReelRollEnd(reel => 
             {   
                 _elementsName.Add(reel);
-                
                 ResultChecker(); 
-                //if(spin != 0)
-                //{
-                //}
-                //else
-                //{
-                //    return;
-                //}
             });
             reel.mdisableRoll = false;
         }
         for (int i = 0; i < _reels.Length; i++)
         {
-            //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them
-            yield return new WaitForSeconds(3f);
-            _reels[i].Spin(); // Probability finds and stops at selected game Object
+            //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them using the spin function
+            yield return new WaitForSeconds(Random.Range(4f,6f));
+            _reels[i].Spin(); // Finds a Gameobject based on probability and stop the reel at appropriate spot
         }
     }
 
@@ -158,7 +150,7 @@ public class Slots : MonoBehaviour
             }
             else if( _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
             {
-                switch (_elementsName[i]._slotElementGameObject.name)
+                switch (_elementsName[i + 1]._slotElementGameObject.name)
                 {
                     case "TradingCards":
                         _SlotDisplayHeadText.text = "Oops Try Again";
@@ -168,6 +160,7 @@ public class Slots : MonoBehaviour
                     case "FreeSpins":
                         _SlotDisplayHeadText.text = "3 Free Spins";
                         _rewardText.text = "3 Free Spins";
+                        spin += 3;
                         //if (spin == 0)
                         //{
                         //    Invoke(nameof(ActiveLevelInvoke), 2f);
