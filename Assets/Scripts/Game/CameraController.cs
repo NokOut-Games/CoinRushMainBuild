@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -35,9 +33,11 @@ public class CameraController : MonoBehaviour
     public Transform[] _views;
     public float _transitionSpeed;
     public RectTransform _DrawButtonRectTransform;
+    public RectTransform _CardDeckPlatform;
 
     public bool _DrawButtonClicked = false;
     public bool _CameraFreeRoam = true;
+    public bool _isCameraInGamePlayView;
 
     public int _RotationLimit = 30;
 
@@ -75,21 +75,45 @@ public class CameraController : MonoBehaviour
         {
             _MouseDownPosition = Input.mousePosition;
             Vector2 localMousePosition = _DrawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
+            Vector3 localMousePosition2 = _CardDeckPlatform.InverseTransformPoint(Input.mousePosition);
             if (!_DrawButtonRectTransform.rect.Contains(localMousePosition))
             {
                 _DrawButtonClicked = false;
+                _isCameraInGamePlayView = false;
                 Invoke("SetCameraFreeRoam", 0.11f);
-                mCardDeck.BackToNormalState();  
+                mCardDeck.BackToNormalState();
+            }
+            if(_CardDeckPlatform.GetComponent<RectTransform>().rect.Contains(localMousePosition2))
+            {
+                Debug.Log("Mouse Is Inside");
+            }
+            else
+            {
+                Debug.Log("Mouse Is OutSide");
             }
         }
 
-        if ( _CameraFreeRoam && !Input.GetMouseButton(0))
+        if(Input.GetMouseButtonDown(1))
+        {
+            RaycastHit raycastHit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray,out raycastHit))
+            {
+                
+                {
+
+                }
+            }
+        }
+
+        if (_CameraFreeRoam && !Input.GetMouseButton(0))
         {
             _CameraFreeRoam = false;
         }
 
         if (_DrawButtonClicked)
         {
+            _isCameraInGamePlayView = true;
             _currentView = _views[1];
 
             _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);
@@ -101,9 +125,10 @@ public class CameraController : MonoBehaviour
 
             _CameraParent.eulerAngles = currentAngle;
         }
-        else 
+        else
         {
-            if(!_CameraFreeRoam) //New Addition
+            
+            if (!_CameraFreeRoam) 
             {
                 if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
                 {
@@ -222,7 +247,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void VerticalZooming()
     {
-        if (Input.GetMouseButtonDown(0))        
+        if (Input.GetMouseButtonDown(0))
         {
             mInitialPositionY = Input.mousePosition.y;
         }
@@ -263,7 +288,7 @@ public class CameraController : MonoBehaviour
     {                                                                                //New Change
         if ((_CameraParent.position.z <= mCameraNearBound + 30 && inZoomSpeed > 0 && _CameraParent.position.y <= _CameraUpBound + 30) || (_CameraParent.position.z >= mCameraFarBound - 30 && inZoomSpeed < 0 && _CameraParent.position.y >= _CameraDownBound - 30))
         {
-            _CameraParent.Translate(inZoomSpeed * _CameraParent.forward , Space.World);
+            _CameraParent.Translate(inZoomSpeed * _CameraParent.forward, Space.World);
         }
     }
 
@@ -312,11 +337,11 @@ public class CameraController : MonoBehaviour
     //    }
     //}
 
-                                                                //+              //-
-    public void PlayCameraBoundEffect(float inCameraDirection , float inBound1 , float inBound2 , Vector3 inCameraBound1 , Vector3 inCameraBound2) //Function Modification
+    //+              //-
+    public void PlayCameraBoundEffect(float inCameraDirection, float inBound1, float inBound2, Vector3 inCameraBound1, Vector3 inCameraBound2) //Function Modification
     {
         Vector3 newCameraParentPos = Vector3.zero;
-        if (inCameraDirection > inBound1|| inCameraDirection < inBound2)
+        if (inCameraDirection > inBound1 || inCameraDirection < inBound2)
         {
 
             if (Mathf.Abs(inBound2 - inCameraDirection) < Mathf.Abs(inBound1 - inCameraDirection))
