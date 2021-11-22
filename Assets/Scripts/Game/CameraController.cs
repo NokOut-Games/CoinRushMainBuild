@@ -33,11 +33,12 @@ public class CameraController : MonoBehaviour
     public Transform[] _views;
     public float _transitionSpeed;
     public RectTransform _DrawButtonRectTransform;
-    public RectTransform _CardDeckPlatform;
+    public RectTransform _OpenHandRectTransform;
 
     public bool _DrawButtonClicked = false;
     public bool _CameraFreeRoam = true;
     public bool _isCameraInGamePlayView;
+    public GameObject OpenCardRegion;
 
     public int _RotationLimit = 30;
 
@@ -75,36 +76,29 @@ public class CameraController : MonoBehaviour
         {
             _MouseDownPosition = Input.mousePosition;
             Vector2 localMousePosition = _DrawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
-            Vector3 localMousePosition2 = _CardDeckPlatform.InverseTransformPoint(Input.mousePosition);
-            if (!_DrawButtonRectTransform.rect.Contains(localMousePosition))
+            Vector2 localMousePosition1 = _OpenHandRectTransform.InverseTransformPoint(Input.mousePosition); //New Addition
+            if (_isCameraInGamePlayView) //New Addition
             {
-                _DrawButtonClicked = false;
-                _isCameraInGamePlayView = false;
-                Invoke("SetCameraFreeRoam", 0.11f);
-                mCardDeck.BackToNormalState();
-            }
-            if(_CardDeckPlatform.GetComponent<RectTransform>().rect.Contains(localMousePosition2))
-            {
-                Debug.Log("Mouse Is Inside");
+                if (!_DrawButtonRectTransform.rect.Contains(localMousePosition) && !_OpenHandRectTransform.rect.Contains(localMousePosition1))
+                {
+                    _DrawButtonClicked = false;
+                    _isCameraInGamePlayView = false;
+                    Invoke("SetCameraFreeRoam", 0.11f);
+                    mCardDeck.BackToNormalState();
+                }
             }
             else
             {
-                Debug.Log("Mouse Is OutSide");
-            }
-        }
-
-        if(Input.GetMouseButtonDown(1))
-        {
-            RaycastHit raycastHit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray,out raycastHit))
-            {
-                
+                if (!_DrawButtonRectTransform.rect.Contains(localMousePosition))
                 {
-
+                    _DrawButtonClicked = false;
+                    _isCameraInGamePlayView = false;
+                    Invoke("SetCameraFreeRoam", 0.11f);
+                    mCardDeck.BackToNormalState();
                 }
             }
         }
+
 
         if (_CameraFreeRoam && !Input.GetMouseButton(0))
         {
@@ -114,6 +108,8 @@ public class CameraController : MonoBehaviour
         if (_DrawButtonClicked)
         {
             _isCameraInGamePlayView = true;
+            OpenCardRegion.SetActive(true);
+
             _currentView = _views[1];
 
             _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);
@@ -130,6 +126,7 @@ public class CameraController : MonoBehaviour
             
             if (!_CameraFreeRoam) 
             {
+                OpenCardRegion.SetActive(false);
                 if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
                 {
                     _currentView = _views[0];

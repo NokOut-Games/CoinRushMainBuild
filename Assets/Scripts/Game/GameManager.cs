@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
     public List<bool> _BuildingShield;
     public List<Vector3> _TargetMarkPost;
 
+    public Transform[] OpenHandCardsPositions;
+    /*(or)*/
+    public Vector3[] OpenHandCardsVectorPositions;
+
     public int _maxEnergy = 50;
     private bool mIsFull = true;
 

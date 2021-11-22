@@ -616,6 +616,21 @@ public class CardDeck : MonoBehaviour
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(inType.ToString());
     }
+
+    public void OpenCardAdder(GameObject inOpenHandCard)
+    {
+        GameObject card = Instantiate(inOpenHandCard.transform.gameObject, _playerHandPoints[clicks].localPosition, _playerHandPoints[clicks].localRotation, mCardHolderParent.transform);
+        Cards cardDetails = card.GetComponent<Cards>();
+
+        cardDetails._cardType = inOpenHandCard.transform.GetComponent<Cards>()._cardType;
+        cardDetails._cardID = inOpenHandCard.transform.GetComponent<Cards>()._cardID;
+        cardDetails._Position = card.transform.position;
+
+        clicks += 1;
+        AddNewCard(card.GetComponent<Cards>(), card);
+        ReplacementOfCards();
+        CardCheckingFunction();
+    }
     #endregion
 }
 
