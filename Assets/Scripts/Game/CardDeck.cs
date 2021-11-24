@@ -301,7 +301,6 @@ public class CardDeck : MonoBehaviour
         }
         _CardList.Add(inNewCard);
     }
-
     private void ReplacementOfCards()
     {
         int medianIndex = _playerHandPoints.Count / 2;
@@ -342,7 +341,6 @@ public class CardDeck : MonoBehaviour
         }
 
     }
-
     private void CardCheckingFunction()
     {
         for (int i = 0; i < _CardList.Count - 2; i++)
@@ -367,23 +365,17 @@ public class CardDeck : MonoBehaviour
         {
             return;
         }
-        //ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
-        Debug.Log(positionNumber);
-        Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], mGameManager.OpenHandCardsPositions[positionNumber].position, mGameManager.OpenHandCardsPositions[positionNumber].rotation, mCardHolderParent.transform);
-        mGameManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled = true;
-        positionNumber += 1;
-        //Cards cardDetails = card.GetComponent<Cards>();
-
-        //cardDetails._cardType = cards._cardType;
-        //cardDetails._cardID = cards._cardID;
-        //cardDetails._Position = card.transform.position;
-
         
-        //clicks += 1;
-        //AddNewCard(card.GetComponent<Cards>(), card);
-        //ReplacementOfCards();
-        //CardCheckingFunction();
-        //mGameManager.OpenHandCardsPositions;
+        for(int i = 0; i < mGameManager.OpenHandCardsPositions.Length;i++)
+        {
+            if(mGameManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
+            {
+                Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], mGameManager.OpenHandCardsPositions[positionNumber].position, mGameManager.OpenHandCardsPositions[positionNumber].rotation, mGameManager.OpenHandCardsPositions[positionNumber]);
+                break;
+            }
+        }
+        
+        positionNumber += 1;
     }
 }
 

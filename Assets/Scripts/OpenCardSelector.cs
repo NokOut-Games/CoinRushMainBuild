@@ -8,12 +8,19 @@ public class OpenCardSelector : MonoBehaviour
     [SerializeField]
     private CameraController mcameraController;
 
+    private void Start()
+    {
+        mcardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
+        mcameraController = Camera.main.GetComponent<CameraController>();
+    }
+
     public void OnMouseDown()
     {
         if (mcameraController._isCameraInGamePlayView)
         {
-            ScriptedCards card = Resources.Load(this.gameObject.name) as ScriptedCards;
-            //Debug.Log(card._cardModel);
+            string cardName = this.gameObject.name;
+            cardName = cardName.Remove(cardName.Length - 7);
+            ScriptedCards card = Resources.Load(cardName) as ScriptedCards;
             mcardDeck.InstantiateCard(card);
             Destroy(this.gameObject,.5f);
         }

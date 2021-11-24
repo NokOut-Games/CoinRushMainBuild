@@ -13,6 +13,14 @@ public class OpenCardFilled : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (this.transform.childCount > 0)
+        {
+            isOpenCardSlotFilled = true;
+        }
+        else
+        {
+            isOpenCardSlotFilled = false;
+        }
+
     }
 }
