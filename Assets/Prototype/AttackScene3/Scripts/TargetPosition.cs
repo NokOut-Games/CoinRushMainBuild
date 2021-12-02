@@ -13,9 +13,9 @@ public class TargetPosition : MonoBehaviour
 
     public void OnMouseDown()
     {
-        GameObject _RevengeButton = GameObject.Find("RevengeButton");
-        _RevengeButton.SetActive(false);
+      /*  GameObject _RevengeButton = GameObject.Find("RevengeButton");
+        _RevengeButton.SetActive(false); */
         GameObject _AttackManager = GameObject.Find("AttackManager");
         _AttackManager.GetComponent<AttackManager>().AssignTarget(this.gameObject.transform);
-    }
+    } 
 }
