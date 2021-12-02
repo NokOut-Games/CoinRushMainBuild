@@ -8,7 +8,7 @@ public class BackgroundScrolling : MonoBehaviour
     private GameObject[] mImages;
 
     [SerializeField]
-    private float mScrollSpeed;
+    public float mScrollSpeed;
 
     public float rePositionSpot;
 
