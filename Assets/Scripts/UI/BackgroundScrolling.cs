@@ -14,10 +14,6 @@ public class BackgroundScrolling : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < mImages.Length; i++)
-        {
-            rePositionSpot += this.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
-        }
     }
 
     
@@ -26,9 +22,9 @@ public class BackgroundScrolling : MonoBehaviour
         for (int i = 0; i < mImages.Length; i++)
         {
             mImages[i].transform.Translate(Vector3.up * Time.smoothDeltaTime * mScrollSpeed, Space.World);
-            if(mImages[i].transform.localPosition.y > 2160f)
+            if(mImages[i].transform.localPosition.y > 1500f)
             {
-                mImages[i].transform.localPosition = new Vector3(mImages[i].transform.localPosition.x, mImages[i].transform.localPosition.y - rePositionSpot, mImages[i].transform.localPosition.z);
+                mImages[i].transform.position = new Vector3(mImages[i].transform.position.x, mImages[i].transform.position.y - 1000, mImages[i].transform.position.z);
             }
             //if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
             //{

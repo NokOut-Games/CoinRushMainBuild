@@ -11,28 +11,37 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private GameObject EnergyCanSmall;
     [SerializeField] private GameObject EnergyCanMedium;
     [SerializeField] private GameObject EnergyCanLarge;
-
+    public GameObject kinetest;
     private GameObject canSpawnLocation;
 
-    ChestOpener Opener;
+    EnergySelector energySelector;
 
     [SerializeField] private float RewardDisplayInvokeTime;
 
     private void Start()
     {
-        Opener = Camera.main.GetComponent<ChestOpener>();
+        
     }
     private void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.tag == "EnergyChestBox")
+        //kinetest = other;
+        if (other.gameObject.tag == "EnergyChestBox")
         {
+            //kinetest.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            energySelector = other.gameObject.GetComponent<EnergySelector>();
+
+            Debug.Log("I Have Entered");
             //Camera.main.GetComponent<ChestOpener>().EnergyFalling = false;
             //Stopping Coroutine Just in Case
-            //StopCoroutine(Opener.EnergyFallingCoroutine);
+            energySelector.EnergyFalling = false;
+
+            
 
             //Disabling the particle Effect
             //Destroy(other.gameObject.transform.Find("WindTrialEffect").gameObject);
-            other.transform.GetChild(other.transform.childCount - 2).gameObject.SetActive(false);
+            other.transform.GetChild(8).gameObject.SetActive(false);
+
+            Debug.Log("I Have Entered" + other.transform.GetChild(8).gameObject.name);
 
             //Getting the can spawn location to spawn the can
             //canSpawnLocation = other.transform.GetChild(other.transform.childCount - 3).gameObject;
@@ -53,13 +62,15 @@ public class BoxReactor : MonoBehaviour
                     rewardText.text = crateValueRef._value.ToString() + " Energies";
                     break;
                 case 25:
-                    Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
+                    GameObject can2 = Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
                     crateAnimRef.SetTrigger("isBreaking?");
+                    //can2.GetComponent<Rigidbody>().isKinematic = true;
                     rewardText.text = crateValueRef._value.ToString() + " Energies";
                     break;
                 case 100:
-                    Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
+                    GameObject can3 = Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
                     crateAnimRef.SetTrigger("isBreaking?");
+                    //can3.GetComponent<Rigidbody>().isKinematic = true;
                     rewardText.text = crateValueRef._value.ToString() + " Energies";
                     break;
             }
