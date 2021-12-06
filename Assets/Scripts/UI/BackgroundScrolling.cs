@@ -22,15 +22,10 @@ public class BackgroundScrolling : MonoBehaviour
         for (int i = 0; i < mImages.Length; i++)
         {
             mImages[i].transform.Translate(Vector3.up * Time.smoothDeltaTime * mScrollSpeed, Space.World);
-            if(mImages[i].transform.localPosition.y > 1500f)
+            if(mImages[i].transform.localPosition.y > 2000f)
             {
-                mImages[i].transform.position = new Vector3(mImages[i].transform.position.x, mImages[i].transform.position.y - 1000, mImages[i].transform.position.z);
+                mImages[i].transform.position = new Vector3(mImages[i].transform.position.x, mImages[i].transform.position.y - 1500, mImages[i].transform.position.z);
             }
-            //if (_reelElements[i]._slotElementGameObject.transform.localPosition.y < -600)
-            //{
-            //    _reelElements[i]._slotElementGameObject.transform.localPosition = new Vector3(_reelElements[i]._slotElementGameObject.transform.localPosition.x, _reelElements[i]._slotElementGameObject.transform.localPosition.y + accumalatedY, _reelElements[i]._slotElementGameObject.transform.localPosition.z);
-            //    _reelElements[i]._slotElementGameObject.transform.SetSiblingIndex(i);
-            //}
         }
     }
 }

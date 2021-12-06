@@ -10,18 +10,18 @@ public class EnergySelector : MonoBehaviour
     [SerializeField] private float CameraFocusSpeed;
     [SerializeField] private float dropSpeed;
 
-    [SerializeField] private GameObject EnergyCanSmall;
-    [SerializeField] private GameObject EnergyCanMedium;
-    [SerializeField] private GameObject EnergyCanLarge;
-
     [SerializeField] private GameObject BackgroundParentRef;
     [SerializeField] private GameObject CloudRef;
     public bool EnergyFalling = true;
+
+    [Header("Other References: ")]
+    [SerializeField] private GameManager mGameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         EnergyFalling = true;
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -35,35 +35,11 @@ public class EnergySelector : MonoBehaviour
         int energyValue = mEnergyProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
 
         //Changing the Energy value in Gamemanager
-        //mGameManager._energy += energyValue;
+        mGameManager._energy += energyValue;
 
         //Assign it to chest which player clicks on and pass the values
         GameObject Chest = this.gameObject;
         Chest.GetComponent<ChestValue>()._value = energyValue;
-
-        GameObject canSpawnLocation = Chest.transform.GetChild(Chest.transform.childCount - 4).gameObject;
-
-        switch (Chest.GetComponent<ChestValue>()._value)
-        {
-            case 10:
-                Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
-                //can.GetComponent<Rigidbody>().isKinematic = true;
-                //crateAnimRef.SetTrigger("isBreaking?");
-                //rewardText.text = crateValueRef._value.ToString() + " Energies";
-                break;
-            case 25:
-                Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
-                //crateAnimRef.SetTrigger("isBreaking?");
-                //can2.GetComponent<Rigidbody>().isKinematic = true;
-                //rewardText.text = crateValueRef._value.ToString() + " Energies";
-                break;
-            case 100:
-                Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
-                //crateAnimRef.SetTrigger("isBreaking?");
-                //can3.GetComponent<Rigidbody>().isKinematic = true;
-                //rewardText.text = crateValueRef._value.ToString() + " Energies";
-                break;
-        }
 
         StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
@@ -72,7 +48,6 @@ public class EnergySelector : MonoBehaviour
         {
             if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
             {
-                //mEnergyChests[i].GetComponent<BoxCollider>().enabled = false;
                 Destroy(mEnergyChests[i].transform.gameObject, 2f);
             }
             else
@@ -89,28 +64,28 @@ public class EnergySelector : MonoBehaviour
             //Make the chest rotation to zero
             inChest.transform.rotation = Quaternion.identity;
 
-            //Make the camera to zoom-in
-            Vector3 targetPosition = new Vector3(inChest.transform.position.x, inChest.transform.position.y + 10, inChest.transform.position.z - 50);
-            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, CameraFocusSpeed * Time.deltaTime);
-            Camera.main.transform.SetParent(inChest.transform);
-
-
 
             if (EnergyFalling)
             {
+                //Make the camera to zoom-in
+                Vector3 targetPosition = new Vector3(inChest.transform.position.x, inChest.transform.position.y + 10, inChest.transform.position.z - 50);
+                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, CameraFocusSpeed * Time.deltaTime);
+                Camera.main.transform.SetParent(inChest.transform);
+                
                 //Change the Animator
                 inChest.transform.parent.GetComponent<Animator>().SetTrigger("isFalling?");
 
                 //Make the camera fall down
-                inChest.transform.position += Vector3.down * dropSpeed * Time.fixedDeltaTime;
+                //inChest.transform.position += Vector3.down * dropSpeed * Time.fixedDeltaTime;
+                inChest.GetComponent<Rigidbody>().AddForce(Vector3.down * dropSpeed * Time.fixedDeltaTime);
 
                 //Play the falling particle Effect
                 inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);
             }
 
             //Change the Scrolling Speed to make it look faster
-            BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
-            CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
+            //BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
+            CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 200;
 
             yield return null;
         }
