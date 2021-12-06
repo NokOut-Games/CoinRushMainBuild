@@ -119,7 +119,7 @@ public class BoxReactor : MonoBehaviour
         Camera.main.transform.DOMove(cameraTargetPosition, mCameraMoveDuration, false);
 
         // Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, 2 * Time.deltaTime);
-        Invoke("ActiveRewardPanel", 3f);
+        Invoke("ActiveRewardPanel", 2.5f);
 
         yield return null;
         //}

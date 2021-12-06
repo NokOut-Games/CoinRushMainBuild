@@ -6,13 +6,15 @@ public class EnergySelector : MonoBehaviour
 {
     [Header("Energy Attributes: ")]
     [SerializeField] private EnergyProbability mEnergyProbability;
-    [SerializeField] private List<GameObject> mEnergyChests;
+    [SerializeField] private GameObject[] mEnergyChests;
     [SerializeField] private float CameraFocusSpeed;
+    [SerializeField] private float gainedAcceleration;
     [SerializeField] private float dropSpeed;
 
     [SerializeField] private GameObject BackgroundParentRef;
     [SerializeField] private GameObject CloudRef;
     public bool EnergyFalling = true;
+
 
     [Header("Other References: ")]
     [SerializeField] private GameManager mGameManager;
@@ -44,7 +46,7 @@ public class EnergySelector : MonoBehaviour
         StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
         //Destroy other chests except the ones clicked
-        for (int i = 0; i < mEnergyChests.Count; i++)
+        for (int i = 0; i < mEnergyChests.Length; i++)
         {
             if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
             {
@@ -77,6 +79,7 @@ public class EnergySelector : MonoBehaviour
 
                 //Make the camera fall down
                 //inChest.transform.position += Vector3.down * dropSpeed * Time.fixedDeltaTime;
+                dropSpeed += gainedAcceleration * Time.fixedDeltaTime ;
                 inChest.GetComponent<Rigidbody>().AddForce(Vector3.down * dropSpeed * Time.fixedDeltaTime);
 
                 //Play the falling particle Effect
