@@ -10,6 +10,9 @@ public class EnergySelector : MonoBehaviour
     [SerializeField] private float CameraFocusSpeed;
     [SerializeField] private float dropSpeed;
 
+    [SerializeField] private GameObject EnergyCanSmall;
+    [SerializeField] private GameObject EnergyCanMedium;
+    [SerializeField] private GameObject EnergyCanLarge;
 
     [SerializeField] private GameObject BackgroundParentRef;
     [SerializeField] private GameObject CloudRef;
@@ -38,7 +41,30 @@ public class EnergySelector : MonoBehaviour
         GameObject Chest = this.gameObject;
         Chest.GetComponent<ChestValue>()._value = energyValue;
 
-        
+        GameObject canSpawnLocation = Chest.transform.GetChild(Chest.transform.childCount - 4).gameObject;
+
+        switch (Chest.GetComponent<ChestValue>()._value)
+        {
+            case 10:
+                Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
+                //can.GetComponent<Rigidbody>().isKinematic = true;
+                //crateAnimRef.SetTrigger("isBreaking?");
+                //rewardText.text = crateValueRef._value.ToString() + " Energies";
+                break;
+            case 25:
+                Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
+                //crateAnimRef.SetTrigger("isBreaking?");
+                //can2.GetComponent<Rigidbody>().isKinematic = true;
+                //rewardText.text = crateValueRef._value.ToString() + " Energies";
+                break;
+            case 100:
+                Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity, Chest.transform);
+                //crateAnimRef.SetTrigger("isBreaking?");
+                //can3.GetComponent<Rigidbody>().isKinematic = true;
+                //rewardText.text = crateValueRef._value.ToString() + " Energies";
+                break;
+        }
+
         StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
         //Destroy other chests except the ones clicked
@@ -76,7 +102,7 @@ public class EnergySelector : MonoBehaviour
                 inChest.transform.parent.GetComponent<Animator>().SetTrigger("isFalling?");
 
                 //Make the camera fall down
-                inChest.transform.position += Vector3.down * dropSpeed * Time.deltaTime;
+                inChest.transform.position += Vector3.down * dropSpeed * Time.fixedDeltaTime;
 
                 //Play the falling particle Effect
                 inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);

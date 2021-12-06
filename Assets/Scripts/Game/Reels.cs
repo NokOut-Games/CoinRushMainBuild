@@ -139,6 +139,7 @@ public class Reels : MonoBehaviour
         mReelsRollerParent.DOLocalMoveY(TargetPosition, _reelRollDuration, false)
         .OnComplete(() =>
         {
+            mSpinOver = true;
             _roll = false;
             if (mOnReelRollEndEvent != null)
             {

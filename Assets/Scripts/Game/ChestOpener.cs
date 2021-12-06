@@ -156,10 +156,10 @@ public class ChestOpener : MonoBehaviour
     {
         while (true)
         {
-            Vector3 targetPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 1.5f, Camera.main.transform.position.z + 5);
+            Vector3 targetPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y + 15f, Camera.main.transform.position.z + 5);
             inChest.transform.position = Vector3.Lerp(inChest.transform.position, targetPosition, ItemFocusSpeed * Time.deltaTime);
 
-            transparentBackgroundPlane.GetComponent<Renderer>().material.SetFloat("_alpha", 0.8f);
+            transparentBackgroundPlane.GetComponent<Renderer>().material.SetFloat("_alpha", Mathf.SmoothStep(0,0.8f, 1 * Time.deltaTime));
             
             yield return null;
         }

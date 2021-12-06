@@ -23,9 +23,12 @@ public class SpinWheelSpin : MonoBehaviour
     public bool DoFreeSpins = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
+
+    public TextMeshProUGUI SpinCount;
+
     private void Start()
     {
-        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _uiSpinButton.onClick.AddListener(() => {
             _uiSpinButton.interactable = false;
@@ -90,15 +93,7 @@ public class SpinWheelSpin : MonoBehaviour
                         }
                         break;
                 }
-
-
-
-
-
-
-
-
-
+                
                 //if (DoFreeSpins==false)
                 //{
 
@@ -120,6 +115,10 @@ public class SpinWheelSpin : MonoBehaviour
         });
     }
 
+    private void Update()
+    {
+        SpinCount.text = FreeSpins.ToString();
+    }
     void BackToSpinWheel()
     {
         _uiReturnToGame.SetActive(false);
