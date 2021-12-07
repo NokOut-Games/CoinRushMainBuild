@@ -38,10 +38,24 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private float mCanMoveDuration;
     [SerializeField] private float mCameraMoveDuration;
 
+    [SerializeField] private GameObject HitSmokeEffect;
+    [SerializeField] private GameObject HitSmokeRingEffect;
+
     private void Start()
     {
         isCollided = false; 
         isCanInstantiated = false;
+    }
+
+    void PlayParticleEffects(GameObject inChest)
+    {
+        Transform CollisionSmokeSpawnPoint = inChest.transform.Find("CollisionSmokeSpawner").transform;
+        Transform HitSmokeSpreadLocation = inChest.transform.Find("HitSmokeSpread").transform;
+
+        GameObject Particle1 = Instantiate(HitSmokeEffect, CollisionSmokeSpawnPoint.position,Quaternion.identity);
+        GameObject Particle2 = Instantiate(HitSmokeRingEffect, HitSmokeSpreadLocation.position, Quaternion.identity);
+        Destroy(Particle1, 1f);
+        Destroy(Particle2, 1f);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -52,20 +66,25 @@ public class BoxReactor : MonoBehaviour
             {
                 isCollided = true;
                 //Destroy(other.gameObject.GetComponent<BoxCollider>());
+                
+
+                PlayParticleEffects(other.gameObject);
+
+                energySelector = other.gameObject.GetComponent<EnergySelector>();
+                //Stopping Coroutine Just in Case
+                energySelector.EnergyFalling = false;
                 Camera.main.DOShakePosition(mDuration, mStrength, mVibration, mRandomness, true);
 
                 //kinetest.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                energySelector = other.gameObject.GetComponent<EnergySelector>();
 
-                //Stopping Coroutine Just in Case
-                energySelector.EnergyFalling = false;
+                other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
 
                 //Disabling the particle Effect
-                //Destroy(other.gameObject.transform.Find("WindTrialEffect").gameObject);
-                other.transform.GetChild(8).gameObject.SetActive(false);
+                other.transform.Find("Wind_Effect").gameObject.SetActive(false);
 
                 //Getting the can spawn location to spawn the can
-                canSpawnLocation = other.transform.GetChild(other.transform.childCount - 4).gameObject;
+                canSpawnLocation = other.transform.Find("CanSpawnLocation").gameObject;
 
                 //Getting references
                 Animator crateAnimRef = other.transform.parent.gameObject.GetComponent<Animator>();

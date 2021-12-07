@@ -13,7 +13,8 @@ public class TestScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            cube.GetComponent<Rigidbody>().AddForce(Vector3.up * 750);
+            GameObject refgO = this.gameObject.transform.Find("Crate_Top").gameObject;
+            Debug.Log(refgO);
         }
     }
 }

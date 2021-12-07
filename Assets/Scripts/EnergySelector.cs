@@ -61,6 +61,8 @@ public class EnergySelector : MonoBehaviour
 
     public IEnumerator CameraZoomAndFollowEnergy(GameObject inChest)
     {
+        //Destroy the parachute
+        Destroy(inChest.transform.Find("Parachut").gameObject , 1f);
         while (true)
         {
             //Make the chest rotation to zero
@@ -82,8 +84,9 @@ public class EnergySelector : MonoBehaviour
                 dropSpeed += gainedAcceleration * Time.fixedDeltaTime ;
                 inChest.GetComponent<Rigidbody>().AddForce(Vector3.down * dropSpeed * Time.fixedDeltaTime);
 
+
                 //Play the falling particle Effect
-                inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);
+                inChest.transform.Find("Wind_Effect").gameObject.SetActive(true);
             }
 
             //Change the Scrolling Speed to make it look faster
