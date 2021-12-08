@@ -6,13 +6,13 @@ public class EnergySelector : MonoBehaviour
 {
     [Header("Energy Attributes: ")]
     [SerializeField] private EnergyProbability mEnergyProbability;
-    [SerializeField] private GameObject[] mEnergyChests;
+    //[SerializeField] private GameObject[] mEnergyChests;
     [SerializeField] private float CameraFocusSpeed;
     [SerializeField] private float gainedAcceleration;
     [SerializeField] private float dropSpeed;
 
-    [SerializeField] private GameObject BackgroundParentRef;
-    [SerializeField] private GameObject CloudRef;
+    [SerializeField] private GameObject CloudBackRef;
+    [SerializeField] private GameObject CloudFrontRef;
     public bool EnergyFalling = true;
 
 
@@ -46,17 +46,17 @@ public class EnergySelector : MonoBehaviour
         StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
         //Destroy other chests except the ones clicked
-        for (int i = 0; i < mEnergyChests.Length; i++)
-        {
-            if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
-            {
-                Destroy(mEnergyChests[i].transform.gameObject, 2f);
-            }
-            else
-            {
-                continue;
-            }
-        }
+        //for (int i = 0; i < mEnergyChests.Length; i++)
+        //{
+        //    if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
+        //    {
+        //        Destroy(mEnergyChests[i].transform.gameObject, 2f);
+        //    }
+        //    else
+        //    {
+        //        continue;
+        //    }
+        //}
     }
 
     public IEnumerator CameraZoomAndFollowEnergy(GameObject inChest)
@@ -91,7 +91,8 @@ public class EnergySelector : MonoBehaviour
 
             //Change the Scrolling Speed to make it look faster
             //BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
-            CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 200;
+            CloudBackRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
+            CloudFrontRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 200;
 
             yield return null;
         }

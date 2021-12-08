@@ -75,10 +75,7 @@ public class BoxReactor : MonoBehaviour
                 energySelector.EnergyFalling = false;
                 Camera.main.DOShakePosition(mDuration, mStrength, mVibration, mRandomness, true);
 
-                //kinetest.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
                 other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
 
                 //Disabling the particle Effect
                 other.transform.Find("Wind_Effect").gameObject.SetActive(false);
@@ -126,19 +123,20 @@ public class BoxReactor : MonoBehaviour
 
     IEnumerator CanGameObjectZoomIn(GameObject inCan)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         //while (true)
         //{
         Vector3 canHeightTargetPosition = new Vector3(inCan.transform.position.x, inCan.transform.position.y + mCanYHeight, inCan.transform.position.z);
         Vector3 cameraTargetPosition = new Vector3(inCan.transform.position.x, inCan.transform.position.y + mCameraYHeight, inCan.transform.position.z - mCameraZoomAmount);
         //inCan.transform.position = Vector3.Lerp(inCan.transform.position, canHeightTargetPosition, 1 * Time.deltaTime);
-        inCan.transform.DOMove(canHeightTargetPosition, mCanMoveDuration, false);
-        yield return new WaitForSeconds(1f);
+        inCan.transform.DOMove(canHeightTargetPosition, mCanMoveDuration, false)/*.OnUpdate(()=> can.transform.GetChild(0).gameObject.SetActive(true))*/.OnComplete(() => can.transform.GetChild(0).gameObject.SetActive(true));
+
+        yield return new WaitForSeconds(.3f);
         inCan.transform.DOScale(mEndGameCanScaleValue, 1);
         Camera.main.transform.DOMove(cameraTargetPosition, mCameraMoveDuration, false);
 
         // Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, 2 * Time.deltaTime);
-        Invoke("ActiveRewardPanel", 2.5f);
+        Invoke("ActiveRewardPanel", 2f);
 
         yield return null;
         //}
