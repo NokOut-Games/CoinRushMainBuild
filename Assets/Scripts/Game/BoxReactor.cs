@@ -41,6 +41,11 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private GameObject HitSmokeEffect;
     [SerializeField] private GameObject HitSmokeRingEffect;
 
+    private void Awake()
+    {
+        //Application.targetFrameRate = 60;
+    }
+
     private void Start()
     {
         isCollided = false; 

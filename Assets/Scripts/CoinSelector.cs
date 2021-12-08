@@ -49,10 +49,18 @@ public class CoinSelector : MonoBehaviour
         transparentBackgroundPlane.GetComponent<Renderer>().material.DOFloat(0.8f, "_alpha", 3);
         inChest.transform.DOMove(targetPosition, 1, false).OnComplete(()=> Instantiate(HammerPrefab, HammerSpawnPoint.position, HammerPrefab.transform.rotation));
         
-        //Hammer.GetComponent<Animator>().
+        //To Prevent Clicking Other Pigs in the background
+        transparentBackgroundPlane.GetComponent<BoxCollider>().enabled = true;
 
         yield return new WaitForSeconds(1);  //Yield to Wait for the Hammer
         inChest.GetComponent<Animator>().SetTrigger("isBreaking?");
+
+        //Spawn ParticleEffect
+    }
+
+    void PlayParticleEffectsAndOpenRewardPanel()
+    {
+        //Play the particles
     }
 
     void DisplayRewardAndInvokeScene()

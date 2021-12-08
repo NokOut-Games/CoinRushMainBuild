@@ -6,7 +6,7 @@ public class EnergySelector : MonoBehaviour
 {
     [Header("Energy Attributes: ")]
     [SerializeField] private EnergyProbability mEnergyProbability;
-    //[SerializeField] private GameObject[] mEnergyChests;
+    [SerializeField] private GameObject[] mEnergyChests;
     [SerializeField] private float CameraFocusSpeed;
     [SerializeField] private float gainedAcceleration;
     [SerializeField] private float dropSpeed;
@@ -20,6 +20,10 @@ public class EnergySelector : MonoBehaviour
     [SerializeField] private GameManager mGameManager;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        //Application.targetFrameRate = 60;
+    }
     void Start()
     {
         EnergyFalling = true;
@@ -45,18 +49,14 @@ public class EnergySelector : MonoBehaviour
 
         StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
-        //Destroy other chests except the ones clicked
-        //for (int i = 0; i < mEnergyChests.Length; i++)
-        //{
-        //    if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
-        //    {
-        //        Destroy(mEnergyChests[i].transform.gameObject, 2f);
-        //    }
-        //    else
-        //    {
-        //        continue;
-        //    }
-        //}
+        //Destroy other chests Colliders except the ones clicked
+        for (int i = 0; i < mEnergyChests.Length; i++)
+        {
+            if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
+            {
+                Destroy(mEnergyChests[i].transform.GetComponentInChildren<BoxCollider>());
+            }
+        }
     }
 
     public IEnumerator CameraZoomAndFollowEnergy(GameObject inChest)
