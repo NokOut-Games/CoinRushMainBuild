@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &11840550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11840551}
+  m_Layer: 0
+  m_Name: CoinShowerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11840551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11840550}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 384144977}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &136235532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1638,15 +1668,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
-  mCoinChests: []
-  ItemFocusSpeed: 3
+  mCoinChests:
+  - {fileID: 1877534913}
+  - {fileID: 1252261530}
+  - {fileID: 384144972}
+  - {fileID: 815108680}
+  - {fileID: 136235533}
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 467147532}
-  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  mFadeTime: 3
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 2
+  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  HammerSpawnPoint: {fileID: 467147532}
+  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
+  mHowMiddleToCameraY: 20
+  mHowFarFromCameraZ: 90
+  mTimeBetweenHammerSpawnAndBreakAnimation: 1
+  mTimeBetweenPigBreakAndCoinShower: 0.5
+  GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
+  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
 --- !u!114 &136235537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1660,6 +1703,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 0
+--- !u!4 &136235538 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
+  m_PrefabInstance: {fileID: 136235532}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &138361552
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138361553}
+  m_Layer: 0
+  m_Name: HammerHitParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &138361553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138361552}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1252261535}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &162967256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162967257}
+  m_Layer: 0
+  m_Name: CoinShowerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162967257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162967256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 136235538}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &213957532
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,14 +1892,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
   mCoinChests: []
-  ItemFocusSpeed: 3
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 0}
-  HammerPrefab: {fileID: 0}
+  mFadeTime: 0
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 0
+  HammerPrefab: {fileID: 0}
+  HammerSpawnPoint: {fileID: 0}
+  HammerHitPigParticle: {fileID: 0}
+  HammerSpawnParticle: {fileID: 0}
+  mHowMiddleToCameraY: 0
+  mHowFarFromCameraZ: 0
+  mTimeBetweenHammerSpawnAndBreakAnimation: 0
+  mTimeBetweenPigBreakAndCoinShower: 0
+  GodRaysParticleSystem: {fileID: 0}
+  CoinShowerParticleEffect: {fileID: 0}
 --- !u!1 &216888625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,6 +1989,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216888625}
   m_Mesh: {fileID: -9189612823058448048, guid: f7a45caffaa45fe49baeff4d4a0e7f8c, type: 3}
+--- !u!1 &233040873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233040874}
+  m_Layer: 0
+  m_Name: GodRaysParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &233040874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233040873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.9, y: 0, z: -16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 815108685}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &287521938 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 863568282198050770, guid: 1037cb587e337514c880b1c1fdcece2e, type: 3}
@@ -2008,14 +2154,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
   mCoinChests: []
-  ItemFocusSpeed: 3
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 0}
-  HammerPrefab: {fileID: 0}
+  mFadeTime: 0
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 0
+  HammerPrefab: {fileID: 0}
+  HammerSpawnPoint: {fileID: 0}
+  HammerHitPigParticle: {fileID: 0}
+  HammerSpawnParticle: {fileID: 0}
+  mHowMiddleToCameraY: 0
+  mHowFarFromCameraZ: 0
+  mTimeBetweenHammerSpawnAndBreakAnimation: 0
+  mTimeBetweenPigBreakAndCoinShower: 0
+  GodRaysParticleSystem: {fileID: 0}
+  CoinShowerParticleEffect: {fileID: 0}
 --- !u!1 &360335627
 GameObject:
   m_ObjectHideFlags: 0
@@ -3631,15 +3785,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
-  mCoinChests: []
-  ItemFocusSpeed: 3
+  mCoinChests:
+  - {fileID: 1877534913}
+  - {fileID: 1252261530}
+  - {fileID: 384144972}
+  - {fileID: 815108680}
+  - {fileID: 136235533}
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 467147532}
-  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  mFadeTime: 3
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 2
+  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  HammerSpawnPoint: {fileID: 467147532}
+  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
+  mHowMiddleToCameraY: 20
+  mHowFarFromCameraZ: 90
+  mTimeBetweenHammerSpawnAndBreakAnimation: 1
+  mTimeBetweenPigBreakAndCoinShower: 0.5
+  GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
+  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
 --- !u!114 &384144976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3653,6 +3820,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 0
+--- !u!4 &384144977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
+  m_PrefabInstance: {fileID: 384144971}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &440090751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3722,7 +3894,7 @@ GameObject:
   m_Layer: 0
   m_Name: HammerSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -3734,7 +3906,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467147531}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 35, y: 70, z: 40}
+  m_LocalPosition: {x: 18, y: 70, z: 40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3835,6 +4007,96 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &617316349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617316350}
+  m_Layer: 0
+  m_Name: HammerHitParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &617316350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617316349}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 815108685}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &661786095
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 661786096}
+  m_Layer: 0
+  m_Name: GodRaysParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &661786096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661786095}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.5, y: 0, z: -16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1877534917}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &667975442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667975443}
+  m_Layer: 0
+  m_Name: GodRaysParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667975443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667975442}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.2, y: 0, z: -16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 136235538}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &678489971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3953,6 +4215,36 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 863568281799759859, guid: 1037cb587e337514c880b1c1fdcece2e, type: 3}
   m_PrefabInstance: {fileID: 678489971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &708935486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 708935487}
+  m_Layer: 0
+  m_Name: CoinShowerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &708935487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708935486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 815108685}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &815108679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5900,15 +6192,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
-  mCoinChests: []
-  ItemFocusSpeed: 3
+  mCoinChests:
+  - {fileID: 1877534913}
+  - {fileID: 1252261530}
+  - {fileID: 384144972}
+  - {fileID: 815108680}
+  - {fileID: 136235533}
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 467147532}
-  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  mFadeTime: 3
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 2
+  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  HammerSpawnPoint: {fileID: 467147532}
+  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
+  mHowMiddleToCameraY: 20
+  mHowFarFromCameraZ: 90
+  mTimeBetweenHammerSpawnAndBreakAnimation: 1
+  mTimeBetweenPigBreakAndCoinShower: 0.5
+  GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
+  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
 --- !u!114 &815108684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5922,6 +6227,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 0
+--- !u!4 &815108685 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
+  m_PrefabInstance: {fileID: 815108679}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &864680902
 GameObject:
   m_ObjectHideFlags: 0
@@ -6038,6 +6348,66 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &925449355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 925449356}
+  m_Layer: 0
+  m_Name: GodRaysParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &925449356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925449355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.6, y: 0, z: -16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 384144977}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &959697081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959697082}
+  m_Layer: 0
+  m_Name: HammerHitParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &959697082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959697081}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 136235538}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1042646615
 GameObject:
   m_ObjectHideFlags: 0
@@ -6162,14 +6532,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
   mCoinChests: []
-  ItemFocusSpeed: 3
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 0}
-  HammerPrefab: {fileID: 0}
+  mFadeTime: 0
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 0
+  HammerPrefab: {fileID: 0}
+  HammerSpawnPoint: {fileID: 0}
+  HammerHitPigParticle: {fileID: 0}
+  HammerSpawnParticle: {fileID: 0}
+  mHowMiddleToCameraY: 0
+  mHowFarFromCameraZ: 0
+  mTimeBetweenHammerSpawnAndBreakAnimation: 0
+  mTimeBetweenPigBreakAndCoinShower: 0
+  GodRaysParticleSystem: {fileID: 0}
+  CoinShowerParticleEffect: {fileID: 0}
 --- !u!1 &1138445739
 GameObject:
   m_ObjectHideFlags: 0
@@ -6217,6 +6595,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1183114902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1183114903}
+  m_Layer: 0
+  m_Name: GodRaysParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1183114903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183114902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0, z: -16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1252261535}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1198144005
 GameObject:
@@ -7777,15 +8185,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
-  mCoinChests: []
-  ItemFocusSpeed: 3
+  mCoinChests:
+  - {fileID: 1877534913}
+  - {fileID: 1252261530}
+  - {fileID: 384144972}
+  - {fileID: 815108680}
+  - {fileID: 136235533}
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 467147532}
-  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  mFadeTime: 3
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 2
+  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  HammerSpawnPoint: {fileID: 467147532}
+  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
+  mHowMiddleToCameraY: 20
+  mHowFarFromCameraZ: 90
+  mTimeBetweenHammerSpawnAndBreakAnimation: 1
+  mTimeBetweenPigBreakAndCoinShower: 0.5
+  GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
+  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
 --- !u!114 &1252261534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7799,6 +8220,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _value: 0
+--- !u!4 &1252261535 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
+  m_PrefabInstance: {fileID: 1252261529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1270923860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7872,6 +8298,66 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 445287f3db16366479d4ae9048bd57e8, type: 3}
+--- !u!1 &1293828269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1293828270}
+  m_Layer: 0
+  m_Name: HammerHitParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1293828270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293828269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 384144977}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1381407297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381407298}
+  m_Layer: 0
+  m_Name: CoinShowerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1381407298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381407297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1252261535}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1496149878
 GameObject:
   m_ObjectHideFlags: 0
@@ -8034,6 +8520,36 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526062561}
   m_Mesh: {fileID: -9189612823058448048, guid: f7a45caffaa45fe49baeff4d4a0e7f8c, type: 3}
+--- !u!1 &1554414734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1554414735}
+  m_Layer: 0
+  m_Name: HammerHitParticleEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1554414735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554414734}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1877534917}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621461803
 GameObject:
   m_ObjectHideFlags: 0
@@ -8310,14 +8826,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
   mCoinChests: []
-  ItemFocusSpeed: 3
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 0}
-  HammerPrefab: {fileID: 0}
+  mFadeTime: 0
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 0
+  HammerPrefab: {fileID: 0}
+  HammerSpawnPoint: {fileID: 0}
+  HammerHitPigParticle: {fileID: 0}
+  HammerSpawnParticle: {fileID: 0}
+  mHowMiddleToCameraY: 0
+  mHowFarFromCameraZ: 0
+  mTimeBetweenHammerSpawnAndBreakAnimation: 0
+  mTimeBetweenPigBreakAndCoinShower: 0
+  GodRaysParticleSystem: {fileID: 0}
+  CoinShowerParticleEffect: {fileID: 0}
 --- !u!1001 &1877534912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10141,15 +10665,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
-  mCoinChests: []
-  ItemFocusSpeed: 3
+  mCoinChests:
+  - {fileID: 1877534913}
+  - {fileID: 1252261530}
+  - {fileID: 384144972}
+  - {fileID: 815108680}
+  - {fileID: 136235533}
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 467147532}
-  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  mFadeTime: 3
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 10
+  mTimeToOpenRewardPanel: 2
+  HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
+  HammerSpawnPoint: {fileID: 467147532}
+  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
+  mHowMiddleToCameraY: 20
+  mHowFarFromCameraZ: 90
+  mTimeBetweenHammerSpawnAndBreakAnimation: 1
+  mTimeBetweenPigBreakAndCoinShower: 0.5
+  GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
+  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+--- !u!4 &1877534917 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
+  m_PrefabInstance: {fileID: 1877534912}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1877534918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10222,6 +10764,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hammer_ANI
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5c6da6d2af8c6d64ab93a43799322830, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3875063037938561293, guid: 5c6da6d2af8c6d64ab93a43799322830, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2.798147
@@ -10276,6 +10822,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1962976071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1962976072}
+  m_Layer: 0
+  m_Name: CoinShowerSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1962976072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962976071}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1877534917}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984778956
 GameObject:
   m_ObjectHideFlags: 0
@@ -10574,14 +11150,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mCoinProbability: {fileID: 1198144007}
   mCoinChests: []
-  ItemFocusSpeed: 3
   transparentBackgroundPlane: {fileID: 544067498}
-  HammerSpawnPoint: {fileID: 0}
-  HammerPrefab: {fileID: 0}
+  mFadeTime: 0
   mGameManager: {fileID: 0}
   rewardText: {fileID: 287521938}
   RewardDisplayPanel: {fileID: 1711524139}
-  easing: 1
+  mTimeToOpenRewardPanel: 0
+  HammerPrefab: {fileID: 0}
+  HammerSpawnPoint: {fileID: 0}
+  HammerHitPigParticle: {fileID: 0}
+  HammerSpawnParticle: {fileID: 0}
+  mHowMiddleToCameraY: 0
+  mHowFarFromCameraZ: 0
+  mTimeBetweenHammerSpawnAndBreakAnimation: 0
+  mTimeBetweenPigBreakAndCoinShower: 0
+  GodRaysParticleSystem: {fileID: 0}
+  CoinShowerParticleEffect: {fileID: 0}
 --- !u!33 &995583202250687164
 MeshFilter:
   m_ObjectHideFlags: 0
