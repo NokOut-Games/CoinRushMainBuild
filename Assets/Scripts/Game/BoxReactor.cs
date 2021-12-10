@@ -152,6 +152,11 @@ public class BoxReactor : MonoBehaviour
     {
         RewardDisplayPanel.SetActive(true);
     }
+
+    public void BackToMainScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+    }
 }
 
 

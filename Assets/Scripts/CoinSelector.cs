@@ -116,6 +116,11 @@ public class CoinSelector : MonoBehaviour
         RewardDisplayPanel.SetActive(true);
         //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+
+    public void BackToMainScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+    }
 }
 
 
