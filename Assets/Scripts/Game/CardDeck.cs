@@ -78,20 +78,19 @@ public class CardDeck : MonoBehaviour
         
         time = Mathf.Clamp(time, 0f, mMaxHoldTime);
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
-        
+
         //if(Input.GetKeyDown(KeyCode.Space))
         //{
-            
+
         //}
 
         if (canClick == true)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                DrawButton.transform.GetComponent<Animator>().SetTrigger("Pressed");
                 if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                 {
-                    BackToNormalState();
+                    //BackToNormalState();
                     time = 0;
                     DrawCard();
                 }
@@ -107,16 +106,17 @@ public class CardDeck : MonoBehaviour
                         {
                             DrawButton.color = new Color32(200, 200, 200, 255);
                         }
+
                         time += Time.deltaTime;
-                        
+                        var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
                         //CircleOutlineFiller();
-                        _drawButtonFillerImage.fillAmount = Mathf.Lerp(_drawButtonFillerImage.fillAmount, 1, 3f * Time.fixedDeltaTime);
-                        
-    
+                        _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
+
+
                         if (time >= mMaxHoldTime)
                         {
                             ChangeSprites();
-                            
+
                             mOnceDone = true;
                             mAutomaticDrawModeOn = true;
                             mAutoCardDraw = true;
@@ -129,20 +129,21 @@ public class CardDeck : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 _drawButtonFillerImage.fillAmount = 0;
+                DrawButton.color = new Color32(255, 255, 255, 255);
                 if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                 {
-                    DrawButton.color = new Color32(255, 255, 255, 255);
                     time = 0;
                 }
 
             }
         }
+        //}
     }
 
-    //void CircleOutlineFiller()
-    //{
-    //    _drawButtonFillerImage.DOFillAmount(1, 3);
-    //}
+    void CircleOutlineFiller()
+    {
+        _drawButtonFillerImage.DOFillAmount(1, 3);
+    }
 
     /// <summary>
     /// Brings Back Draw Button To Normal State from Automatic State
@@ -160,13 +161,14 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Changes the sprite of Draw Button
-    /// </summary>
+    ///// <summary>
+    ///// Changes the sprite of Draw Button
+    ///// </summary>
     private void ChangeSprites()
     {
         if (DrawButton.sprite == drawNormal)
         {
+            DrawButton.color = new Color32(255, 255, 255, 255);
             DrawButton.sprite = drawAutomatic;
         }
         else if (DrawButton.sprite == drawAutomatic)
@@ -230,7 +232,7 @@ public class CardDeck : MonoBehaviour
         clicks += 1;
         AddNewCard(card.GetComponent<Cards>(), card);
         ReplacementOfCards();
-        //CardCheckingFunction();
+        CardCheckingFunction();
     }
     private void AddNewCard(Cards inNewCard, GameObject inCard)
     {
@@ -289,17 +291,17 @@ public class CardDeck : MonoBehaviour
         }
 
     }
-    //private void CardCheckingFunction()
-    //{
-    //    for (int i = 0; i < _CardList.Count - 2; i++)
-    //    {
-    //        if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
-    //        {
-    //            canClick = false;
-    //            StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
-    //        }
-    //    }
-    //}
+    private void CardCheckingFunction()
+    {
+        for (int i = 0; i < _CardList.Count - 2; i++)
+        {
+            if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
+            {
+                canClick = false;
+                StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
+            }
+        }
+    }
 
     private IEnumerator DelayedSceneLoader(CardType inType)
     {

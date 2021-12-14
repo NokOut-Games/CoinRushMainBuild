@@ -28,7 +28,7 @@ public class SpinWheelSpin : MonoBehaviour
 
     private void Start()
     {
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+       // mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _uiSpinButton.onClick.AddListener(() => {
             _uiSpinButton.interactable = false;

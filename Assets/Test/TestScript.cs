@@ -1,20 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using DG.Tweening;
 
-[ExecuteAlways]
 public class TestScript : MonoBehaviour
 {
-    public GameObject cube;
+    [SerializeField] Transform GotoPoint;
+    public Quaternion rotateTo;
 
-    private void Update()
+    private void OnMouseDown()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject refgO = this.gameObject.transform.Find("Crate_Top").gameObject;
-            Debug.Log(refgO);
-        }
+        Func();
+    }
+
+    void Func()
+    {
+        this.gameObject.transform.DOMove(GotoPoint.position, 1, false)
+            .OnUpdate(() =>
+            {
+                //Time.timeScale = 0.1f;
+                this.gameObject.transform.DOScale(.5f, 1);
+                this.gameObject.GetComponent<Animator>().SetTrigger("showcase");
+
+                this.gameObject.transform.DORotateQuaternion(rotateTo, 1);
+                
+            })
+            .OnComplete(() =>
+            {
+                Debug.Log("I Have Completed");
+            });
     }
 }
+
+
+
+
+
+
+//private void OnCollisionEnter2D(Collision2D collision)
+//{
+//    this.transform.GetComponent<Animator>().SetTrigger("isColliding?");
+//    Debug.Log("Ouch!!!");
+//}
