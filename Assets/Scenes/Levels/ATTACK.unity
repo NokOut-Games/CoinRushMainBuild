@@ -9715,13 +9715,10 @@ MonoBehaviour:
   _drawButtonRectTransform: {fileID: 0}
   mMaxHoldTime: 5
   timeForCardAnimation: 2
-  _buttonFillerImage: {fileID: 0}
   _jokerList: []
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
-  count: 0
-  chk: []
 --- !u!4 &1190993576
 Transform:
   m_ObjectHideFlags: 0
@@ -10095,7 +10092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4258279162477888205, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -127.99988
+      value: -127.999756
       objectReference: {fileID: 0}
     - target: {fileID: 4258279162477888205, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10111,7 +10108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4258279162680275510, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -105
+      value: -105.00003
       objectReference: {fileID: 0}
     - target: {fileID: 4258279162680275511, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
       propertyPath: m_IsActive
@@ -11033,7 +11030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1412255681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11050,7 +11047,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
 --- !u!114 &1412255682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19632,8 +19629,7 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
-  count: 0
-  chk: []
+  dummyCards: []
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0
