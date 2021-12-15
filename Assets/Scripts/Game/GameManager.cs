@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public enum BuildingTypes
 {
@@ -15,6 +16,9 @@ public enum BuildingTypes
 
 public class GameManager : MonoBehaviour
 {
+    
+    
+
     public static GameManager Instance;
 
     public int _coins;
@@ -57,6 +61,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (_energy == _maxEnergy)
         {
             mIsFull = false;
