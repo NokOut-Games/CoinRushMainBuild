@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SpinWheelSpin : MonoBehaviour
 {
     public Button _uiSpinButton;
-    public Text _uiSpinButtonText;
     public GameObject _uiReturnToGame;
     public TextMeshProUGUI _uiCoinValue;
     public TextMeshProUGUI _uiFreeSpinValue;
@@ -25,14 +24,14 @@ public class SpinWheelSpin : MonoBehaviour
     private GameManager mGameManager;
     private void Start()
     {
-        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        _uiSpinButton.onClick.AddListener(() => {
+        _uiSpinButton.onClick.AddListener(() =>
+        {
             _uiSpinButton.interactable = false;
-            //_uiSpinButtonText.text = "Spinning";
 
-            spinWheel.OnSpinEnd(wheelPiece => {
-
+            spinWheel.OnSpinEnd(wheelPiece =>
+            {
                 if (FreeSpins == 0)
                 {
                     DoFreeSpins = false;
@@ -46,16 +45,16 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiCoinReward.SetActive(true);
-                            //coin += wheelPiece._Amount;
-                            mGameManager._coins += wheelPiece._Amount;
+                            coin += wheelPiece._Amount;
+                            mGameManager._coins += coin;
                             _uiCoinValue.text = wheelPiece._Amount.ToString();
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiEnergyReward.SetActive(true);
-                            //Energy += wheelPiece._Amount;
-                            mGameManager._energy += wheelPiece._Amount;
+                            Energy += wheelPiece._Amount;
+                            mGameManager._energy += Energy;
                             _uiEnergyValue.text = wheelPiece._Amount.ToString();
                         }
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
@@ -73,14 +72,14 @@ public class SpinWheelSpin : MonoBehaviour
                         _uiSpinButton.interactable = true;
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
-                            //coin += wheelPiece._Amount;
-                            mGameManager._coins += wheelPiece._Amount;
+                            coin += wheelPiece._Amount;
+                            mGameManager._coins += coin;
                             _uiCoinValue.text = wheelPiece._Amount.ToString();
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
-                            //Energy += wheelPiece._Amount;
-                            mGameManager._energy += wheelPiece._Amount;
+                            Energy += wheelPiece._Amount;
+                            mGameManager._energy += Energy;
                             _uiEnergyValue.text = wheelPiece._Amount.ToString();
                         }
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
@@ -91,35 +90,12 @@ public class SpinWheelSpin : MonoBehaviour
                         break;
                 }
 
-
-
-
-
-
-
-
-
-                //if (DoFreeSpins==false)
-                //{
-
-                //}
-
-                //else
-                //{
-
-
-                //}
-
-
-
                 _uiSpinButton.interactable = true;
-                //_uiSpinButtonText.text = "Spin";
             });
             spinWheel.Spin();
 
         });
     }
-
     void BackToSpinWheel()
     {
         _uiReturnToGame.SetActive(false);
@@ -128,6 +104,6 @@ public class SpinWheelSpin : MonoBehaviour
 
     public void BackToGameScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Level1");
     }
 }
