@@ -214,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 360084469}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 5, z: 50}
+  m_LocalScale: {x: 500, y: 5, z: 500}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -244,7 +244,7 @@ Transform:
   m_GameObject: {fileID: 487379193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.64372456, y: 0.64372456, z: 0.64372456}
   m_Children:
   - {fileID: 1951027754}
   - {fileID: 792384804}
@@ -474,7 +474,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792384803}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -834,7 +834,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1619510269}
         m_TargetAssemblyTypeName: BuildingManager, Assembly-CSharp
-        m_MethodName: CubeUpgrade
+        m_MethodName: Building1Upgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1194,35 +1194,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a041b9bf7718b4f9e724de62bd2b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _building:
-  - _buildingMesh: {fileID: -5495902117074765545, guid: 22463366f3183294190504beba388c33, type: 3}
+  _buildingData:
+  - _buildingName: Building1
+    _buildingLevel: 0
+    _buildingMaxLevel: 6
+    _buildingSpawnPoint: {fileID: 1951027754}
+    _initialBuildingGameObject: {fileID: 249560932071304441, guid: ae61c666bb802e447a50e2db5d5c6696, type: 3}
     UpgradeLevels:
-    - {fileID: -5495902117074765545, guid: 2cd068d814228a046b6efc430e53af69, type: 3}
-    - {fileID: -5495902117074765545, guid: 0a86e62684d01194b9e714eb9288329c, type: 3}
-    - {fileID: -5495902117074765545, guid: 0b09558a2ecde114bb8a5bd707db43a4, type: 3}
-    _name: Cube
-    _materialCount: 0
-    _material: {fileID: 2100000, guid: 7ca3893695c0df54c8ddb97e7a1b65c1, type: 2}
-    transformPoint: {fileID: 1951027754}
-  - _buildingMesh: {fileID: -5495902117074765545, guid: 22463366f3183294190504beba388c33, type: 3}
-    UpgradeLevels:
-    - {fileID: 2534964839176971238, guid: c648db468380919429a75ae7095d3216, type: 3}
-    - {fileID: 2534964839176971238, guid: 15381315c10b52541884bf75b4c78034, type: 3}
-    - {fileID: 2534964839176971238, guid: 7a94d70e927773d4b8a1a4df87747520, type: 3}
-    _name: Cylinder
-    _materialCount: 0
-    _material: {fileID: 2100000, guid: 7ca3893695c0df54c8ddb97e7a1b65c1, type: 2}
-    transformPoint: {fileID: 792384804}
-  - _buildingMesh: {fileID: -5495902117074765545, guid: 22463366f3183294190504beba388c33, type: 3}
-    UpgradeLevels:
-    - {fileID: 4711208715938537054, guid: f52b8fdf7672ce34796185e558ed82d9, type: 3}
-    - {fileID: 4711208715938537054, guid: 438daff4d6cbd664d9f7deff9796e576, type: 3}
-    - {fileID: 4711208715938537054, guid: 47abe36df4535f944bbe8d76b07d2997, type: 3}
-    _name: Circle
-    _materialCount: 0
-    _material: {fileID: 2100000, guid: 7ca3893695c0df54c8ddb97e7a1b65c1, type: 2}
-    transformPoint: {fileID: 955439897}
-  _buildings: []
+    - {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    - {fileID: 887092867047964203, guid: f5415536360f87c468bd01999208a987, type: 3}
+    - {fileID: 5226804990313542191, guid: aa42f451249c9a64d82fd7aa89e98154, type: 3}
+    - {fileID: 6209903399478523757, guid: ba3da8485af5a7143bb1a752691b3954, type: 3}
+    - {fileID: 7358654037941428163, guid: ba57bcfe189b47d4586526d8cdc9d2b2, type: 3}
+    - {fileID: 7897538748625636439, guid: fa5e9a4eb95efa145b7dc01699953c0c, type: 3}
+    destroyedVersions: []
+    isBuildingSpawnedAndActive: 0
+    isBuildingDamaged: 0
+    didBuildingReachMaxLevel: 0
+  _buildingsList: []
 --- !u!1 &1636037367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,7 +1322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636037367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 11.71, z: -35.67}
+  m_LocalPosition: {x: 0, y: 166, z: -711}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1496,10 +1485,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951027753}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.9510566, z: 0, w: -0.30901685}
+  m_LocalPosition: {x: -300, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 487379194}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -216, z: 0}
