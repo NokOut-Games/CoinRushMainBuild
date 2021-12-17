@@ -1,24 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.UI;
 
 //Trying this
 [System.Serializable]
 public class BuildingData
 {
-    [Header ("Building Name And Level: ")]
+    [Header("Building Name And Level: ")]
     public string _buildingName;
     public int _buildingLevel = 0;
     public int _buildingMaxLevel;
     public Transform _buildingSpawnPoint;
-    
-    [Header ("Building's GameObject: ")]
+
+    [Header("Building's GameObject: ")]
     public GameObject _initialBuildingGameObject;
+    public GameObject currentLevelGameObject;
+    public Sprite[] NextUpgradeImages; //Future
     public GameObject[] UpgradeLevels;
     public GameObject[] destroyedVersions; //Just in Case for Future
 
-    [Header ("State Checkers: ")]
+    [Header("State Checkers: ")]
     public bool isBuildingSpawnedAndActive; //Just in case for Attack
     public bool isBuildingDamaged; //Just in case to check if building is damaged or not.
     public bool didBuildingReachMaxLevel;
@@ -28,18 +30,43 @@ public class BuildingManager : MonoBehaviour
 {
     public BuildingData[] _buildingData;
     public List<GameObject> _buildingsList;
-    
+
+    public delegate void BuildingMethod();
+
+    public List<BuildingMethod> _buildingMethod = new List<BuildingMethod>();
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < _buildingData.Length; i++)
         {
-            GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-            GORef.name = _buildingData[i]._buildingName;
+            if (!_buildingData[i].isBuildingSpawnedAndActive)
+            {
+                GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                GORef.name = _buildingData[i]._buildingName;
+                _buildingData[i].isBuildingSpawnedAndActive = true;
 
-            _buildingsList.Add(GORef);
+                _buildingsList.Add(GORef);
+            }
+            else
+            {
+                //Do a loading probably
+            }
         }
+
+        //CreateMethodList();
     }
+
+    //public void CreateMethodList()
+    //{
+    //    _buildingMethod.Add(Building1Upgrade);
+    //    _buildingMethod.Add(Building2Upgrade);
+    //    _buildingMethod.Add(Building3Upgrade);
+    //    _buildingMethod.Add(Building4Upgrade);
+    //    _buildingMethod.Add(Building5Upgrade);
+    //    _buildingMethod.Add(Building6Upgrade);
+    //    _buildingMethod.Add(Building7Upgrade);
+    //    _buildingMethod.Add(Building8Upgrade);
+    //}
 
     /// <summary>
     /// Upgrades the building by finding its appropriate name
@@ -48,130 +75,109 @@ public class BuildingManager : MonoBehaviour
     /// <param name="inBuildingNumber"></param>
     /// <param name="inLevel"></param>
     /// <param name="inCurrentLevelsMesh"></param>
-    public void UpgradeBuilding(string name , int inBuildingNumber , int inLevel , GameObject inCurrentLevelsMesh)
+    public void UpgradeBuilding(string name, int inBuildingNumber, int inLevel, GameObject inCurrentLevelsMesh)
     {
         GameObject goRef = GameObject.Find(name);
-        Debug.Log(goRef);
         Destroy(goRef);
-        //if (inLevel != 0)
-        //{
-        //    GameObject oldMesh = inCurrentLevelsMesh;
-        //    Destroy(oldMesh);   
-        //}
+
         GameObject newGoRef = Instantiate(_buildingData[inBuildingNumber].UpgradeLevels[inLevel], _buildingData[inBuildingNumber]._buildingSpawnPoint.position, _buildingData[inBuildingNumber]._buildingSpawnPoint.rotation);
         newGoRef.name = _buildingData[inBuildingNumber]._buildingName;
+
+        _buildingData[inBuildingNumber].currentLevelGameObject = inCurrentLevelsMesh;
+
+        //Just in case if these data's are required
         newGoRef.AddComponent<BuildingDetails>();
         BuildingDetails buildingDetailRef = newGoRef.GetComponent<BuildingDetails>();
         buildingDetailRef._buildingLevel = inLevel;
         buildingDetailRef._buildMeshBasedOnCurrentLevel = inCurrentLevelsMesh;
+        //yield return null;
     }
 
+    public void GrabElementNumberBasedOnButtonClick(int inElementNumber)
+    {
+        if (_buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber].UpgradeLevels.Length && _buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber]._buildingMaxLevel)
+        {
+            UpgradeBuilding(_buildingData[inElementNumber]._buildingName, inElementNumber, _buildingData[inElementNumber]._buildingLevel, _buildingData[inElementNumber].UpgradeLevels[_buildingData[inElementNumber]._buildingLevel]);
+            _buildingData[inElementNumber]._buildingLevel += 1;
+        }
+        if (_buildingData[inElementNumber]._buildingLevel == _buildingData[inElementNumber]._buildingMaxLevel)
+        {
+            _buildingData[inElementNumber].didBuildingReachMaxLevel = true;
+        }
+    }
+
+    /// <summary>
+    /// Function for Button-1
+    /// </summary>
     public void Building1Upgrade()
     {
-        if (_buildingData[0]._buildingLevel < _buildingData[0].UpgradeLevels.Length && _buildingData[0]._buildingLevel < _buildingData[0]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[0]._buildingName, 0, _buildingData[0]._buildingLevel,_buildingData[0].UpgradeLevels[_buildingData[0]._buildingLevel]);
-            _buildingData[0]._buildingLevel += 1;
-        }                                   
-        else
-        {
-            _buildingData[0].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(0);
     }
 
+    /// <summary>
+    /// Function for Button-2
+    /// </summary>
     public void Building2Upgrade()
     {
-        if (_buildingData[1]._buildingLevel < _buildingData[1].UpgradeLevels.Length && _buildingData[1]._buildingLevel < _buildingData[1]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[1]._buildingName, 1, _buildingData[1]._buildingLevel, _buildingData[1].UpgradeLevels[_buildingData[1]._buildingLevel]);
-            _buildingData[1]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[1].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(1);
     }
 
+    /// <summary>
+    /// Function for Button-3
+    /// </summary>
     public void Building3Upgrade()
     {
-        if (_buildingData[2]._buildingLevel < _buildingData[2].UpgradeLevels.Length && _buildingData[2]._buildingLevel < _buildingData[2]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[2]._buildingName, 2, _buildingData[2]._buildingLevel, _buildingData[2].UpgradeLevels[_buildingData[2]._buildingLevel]);
-            _buildingData[2]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[2].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(2);
     }
 
+    /// <summary>
+    /// Function for Button-4
+    /// </summary>
     public void Building4Upgrade()
     {
-        if (_buildingData[3]._buildingLevel < _buildingData[3].UpgradeLevels.Length && _buildingData[3]._buildingLevel < _buildingData[3]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[3]._buildingName, 3, _buildingData[3]._buildingLevel, _buildingData[3].UpgradeLevels[_buildingData[3]._buildingLevel]);
-            _buildingData[3]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[3].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(3);
     }
 
+    /// <summary>
+    /// Function for Button-5
+    /// </summary>
     public void Building5Upgrade()
     {
-        if (_buildingData[4]._buildingLevel < _buildingData[4].UpgradeLevels.Length && _buildingData[4]._buildingLevel < _buildingData[4]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[4]._buildingName, 4, _buildingData[4]._buildingLevel, _buildingData[4].UpgradeLevels[_buildingData[4]._buildingLevel]);
-            _buildingData[4]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[4].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(4);
     }
 
+    /// <summary>
+    /// Function for Button-6
+    /// </summary>
     public void Building6Upgrade()
     {
-        if (_buildingData[5]._buildingLevel < _buildingData[5].UpgradeLevels.Length && _buildingData[5]._buildingLevel < _buildingData[5]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[5]._buildingName, 5, _buildingData[5]._buildingLevel, _buildingData[5].UpgradeLevels[_buildingData[5]._buildingLevel]);
-            _buildingData[5]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[5].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(5);
     }
 
+    /// <summary>
+    /// Function for Button-7
+    /// </summary>
     public void Building7Upgrade()
     {
-        if (_buildingData[6]._buildingLevel < _buildingData[6].UpgradeLevels.Length && _buildingData[6]._buildingLevel < _buildingData[6]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[6]._buildingName, 6, _buildingData[6]._buildingLevel, _buildingData[6].UpgradeLevels[_buildingData[6]._buildingLevel]);
-            _buildingData[6]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[6].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(6);
     }
 
+    /// <summary>
+    /// Function for Button-8
+    /// </summary>
     public void Building8Upgrade()
     {
-        if (_buildingData[7]._buildingLevel < _buildingData[7].UpgradeLevels.Length && _buildingData[7]._buildingLevel < _buildingData[7]._buildingMaxLevel)
-        {
-            UpgradeBuilding(_buildingData[7]._buildingName, 7, _buildingData[7]._buildingLevel, _buildingData[7].UpgradeLevels[_buildingData[7]._buildingLevel]);
-            _buildingData[7]._buildingLevel += 1;
-        }
-        else
-        {
-            _buildingData[7].didBuildingReachMaxLevel = true;
-        }
+        GrabElementNumberBasedOnButtonClick(7);
     }
 }
 
 
+
+//if (inLevel != 0)
+//{
+//    GameObject oldMesh = inCurrentLevelsMesh;
+//    Destroy(oldMesh);   
+//}
 
 //void residue()
 //{
@@ -228,3 +234,5 @@ public class BuildingManager : MonoBehaviour
 //    UpgradeBuilding("Circle", 2, k);
 //    k++;
 //}
+
+

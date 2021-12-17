@@ -88,7 +88,7 @@ public class CardDeck : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                if (_drawButtonRectTransform.rect.Contains(localMousePosition) && DrawButton.gameObject.activeInHierarchy == true)
                 {
                     //BackToNormalState();
                     time = 0;
