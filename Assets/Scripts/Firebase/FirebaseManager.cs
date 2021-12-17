@@ -16,7 +16,7 @@ public class FirebaseManager : MonoBehaviour
 
     // FirebaseAuth auth;
     GuestLogin mGuestLogin;
-   // public Text  _playerIDDataText, _coinDataText, _energyDataText;
+    bool canWrite=false;
     private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData;
     private GameManager mGameManager;
    
@@ -33,9 +33,7 @@ public class FirebaseManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject); //Singleton
             return;
-        }
-        //DontDestroyOnLoad(this.gameObject);
-        //DontDestroyOnLoad(_LoginPanel.gameObject);       
+        }     
     }
     private void Start()
     {
@@ -86,8 +84,12 @@ public class FirebaseManager : MonoBehaviour
         {
             ReadDataForGuest();
             mGuestLogin.fetchDetails = false;
+            canWrite = true;         
         }
-        Invoke("WriteDataToDatabase", 5f);
+        if(canWrite)
+        {
+            Invoke("WriteDataToDatabase", 3f);
+        }     
     }
  
     void WriteDataToDatabase()
