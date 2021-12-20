@@ -6,31 +6,61 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class LevelManagerUI : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     public TextMeshProUGUI _coinText;
     public TextMeshProUGUI _energyText;
 
     private GameManager mGameManager;
 
+    public BuildingManager buildingManagerRef;
+    public LevelLoadManager _levelLoadManagerRef;
+
+    public bool _loadNextLevel = true;
+
     private void Start()
     {
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _loadNextLevel = true;
+        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _levelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
     }
 
     private void Update()
     {
-        UpdateCoinAndEnergyTextFields();
+        for (int i = 0; i < buildingManagerRef._buildingData.Count; i++)
+        {
+            if (buildingManagerRef._buildingData[i].didBuildingReachMaxLevel != true)
+            {
+                _loadNextLevel = false;
+                break;
+            }
+            else
+            {
+                _loadNextLevel = true;
+            }
+        }
+
+        if (_loadNextLevel)
+        {
+            Invoke(nameof(DelaySceneLoad), 2f);
+        }
+        
+        //UpdateCoinAndEnergyTextFields();
+    }
+
+    void DelaySceneLoad()
+    {
+        _levelLoadManagerRef.LoadNextLevel();
     }
 
     /// <summary>
     /// Keeps updating coin and energy text fields
     /// </summary>
-    private void UpdateCoinAndEnergyTextFields()
-    {
-        _coinText.text = mGameManager._coins.ToString();
-        _energyText.text = mGameManager._energy.ToString();
-    }
+    //private void UpdateCoinAndEnergyTextFields()
+    //{
+    //    _coinText.text = mGameManager._coins.ToString();
+    //    _energyText.text = mGameManager._energy.ToString();
+    //}
 }
 
 

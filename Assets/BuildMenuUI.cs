@@ -21,11 +21,13 @@ public class BuildMenuUI : MonoBehaviour
     void Start()
     {
         BuildingItemTemplate = ContentView.GetChild(0).gameObject;
-        for (int i = 0; i <  buildingManagerRef._buildingData.Length; i++)
+        for (int i = 0; i <  buildingManagerRef._buildingData.Count; i++)
         {
             GameObject buildingTemplateRef = Instantiate(BuildingItemTemplate, ContentView);
             ButtonTemplatesHolder.Add(buildingTemplateRef);
-            //buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.BuildingUpgrade(i); });
+            int BuildingUpgradeNumber = i;
+            //Debug.Log(i);
+            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber); });
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
             buildingTemplateRef.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[i].NextUpgradeImages[buildingManagerRef._buildingData[i]._buildingLevel];
         }

@@ -420,6 +420,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7334236d4da37864aad23791dbefe7f0, type: 3}
   m_PrefabInstance: {fileID: 1821105445}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &28438723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4524371248289695208, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &31087942
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -891,6 +902,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &58270676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4524371248214831255, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &64927934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14485,20 +14507,8 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 919945655}
     m_Modifications:
-    - target: {fileID: 269164525472241154, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1202162031}
-    - target: {fileID: 1338611909775286180, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1202162031}
-    - target: {fileID: 1395976552054801315, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1202162031}
-    - target: {fileID: 1823917205434688126, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+    - target: {fileID: 4316013464354854173, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: buildingManagerRef
       value: 
       objectReference: {fileID: 1202162031}
     - target: {fileID: 4524371248474605908, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
@@ -14589,10 +14599,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4920255453621514405, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1202162031}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
 --- !u!224 &412256754 stripped
@@ -24020,11 +24026,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!224 &785332397 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4524371247633333945, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-  m_PrefabInstance: {fileID: 412256753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &786106933
 GameObject:
   m_ObjectHideFlags: 0
@@ -32951,9 +32952,12 @@ MonoBehaviour:
   _buildingData:
   - _buildingName: Boat
     _buildingLevel: 0
-    _buildingMaxLevel: 6
+    _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 4617061}
     _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    currentLevelGameObject: {fileID: 0}
+    NextUpgradeImages:
+    - {fileID: 21300000, guid: b7d14388a0ab36c4e848e2ea02fb9a6a, type: 3}
     UpgradeLevels:
     - {fileID: 519261999101172670, guid: e657135d536eff04b9a63d9e8692148e, type: 3}
     - {fileID: 8974932042267151674, guid: 07f04f2d081abdb4597bb664b16a6479, type: 3}
@@ -32966,9 +32970,12 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
   - _buildingName: BurgerShop
     _buildingLevel: 0
-    _buildingMaxLevel: 6
+    _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 2094446335}
     _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    currentLevelGameObject: {fileID: 0}
+    NextUpgradeImages:
+    - {fileID: 21300000, guid: dd128a90d7610c84e8652adeb46ae3d0, type: 3}
     UpgradeLevels:
     - {fileID: 6887764619986328305, guid: 40b13b73769837248b0ef39aaa39efc6, type: 3}
     - {fileID: 9182611281561041796, guid: 671d894cd13c9d5418650dcd4efb6b24, type: 3}
@@ -32981,9 +32988,16 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
   - _buildingName: MainDock
     _buildingLevel: 0
-    _buildingMaxLevel: 6
+    _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 566168008}
     _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    currentLevelGameObject: {fileID: 0}
+    NextUpgradeImages:
+    - {fileID: 21300000, guid: 2859819304158d84799b84ec7d287156, type: 3}
+    - {fileID: 21300000, guid: 82937c7c52b77dd43b7771d9b9808f85, type: 3}
+    - {fileID: 21300000, guid: 4758b549f2133fd4098b631eef57f90c, type: 3}
+    - {fileID: 21300000, guid: 59b9a781066353c4ea9836c4bb9d547e, type: 3}
+    - {fileID: 21300000, guid: f52fa19ac5728554e8de3c332f548edc, type: 3}
     UpgradeLevels:
     - {fileID: 8127674520507740157, guid: ac2f8817c56a2904e81e9a051b92c046, type: 3}
     - {fileID: 8532757334741488397, guid: 5c895cd7b81b1e34e85006bc00e321b3, type: 3}
@@ -32996,9 +33010,12 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
   - _buildingName: LightHouse
     _buildingLevel: 0
-    _buildingMaxLevel: 6
+    _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 624935980}
     _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    currentLevelGameObject: {fileID: 0}
+    NextUpgradeImages:
+    - {fileID: 21300000, guid: c2e217749045bca48b65461a96f17624, type: 3}
     UpgradeLevels:
     - {fileID: 7121439295355560782, guid: f3ff25c9813a92b41bbb03f3478b9a42, type: 3}
     - {fileID: 7325936070910873715, guid: 82537456b55847b4ba90dfe0b7cdb6ba, type: 3}
@@ -33011,9 +33028,12 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
   - _buildingName: Crane
     _buildingLevel: 0
-    _buildingMaxLevel: 6
+    _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1032299022}
     _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    currentLevelGameObject: {fileID: 0}
+    NextUpgradeImages:
+    - {fileID: 21300000, guid: d9367fe8e1cde8045824433f979ee4f9, type: 3}
     UpgradeLevels:
     - {fileID: 8637498205141718441, guid: 3e93de62cf3c5914983ffdab08a364f8, type: 3}
     - {fileID: 4906848396401891457, guid: 3ed2b35129915a745b85617e12928ee1, type: 3}
@@ -42593,7 +42613,7 @@ MonoBehaviour:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
   _transitionSpeed: 4
-  _DrawButtonRectTransform: {fileID: 785332397}
+  _DrawButtonRectTransform: {fileID: 1298872325}
   _OpenHandRectTransform: {fileID: 340822432}
   _DrawButtonClicked: 0
   _CameraFreeRoam: 1
@@ -42891,6 +42911,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coinText: {fileID: 0}
   _energyText: {fileID: 0}
+  buildingManagerRef: {fileID: 0}
+  _levelLoadManagerRef: {fileID: 0}
+  _loadNextLevel: 1
 --- !u!1001 &1660539784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54396,6 +54419,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &612471264418221674
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: _coinText
+      value: 
+      objectReference: {fileID: 28438723}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: _energyText
+      value: 
+      objectReference: {fileID: 58270676}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: buildingManagerRef
+      value: 
+      objectReference: {fileID: 1202162031}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210485, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: m_Name
+      value: LevelManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
 --- !u!1 &622527039581432335
 GameObject:
   m_ObjectHideFlags: 0

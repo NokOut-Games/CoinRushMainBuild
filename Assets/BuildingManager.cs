@@ -28,7 +28,7 @@ public class BuildingData
 
 public class BuildingManager : MonoBehaviour
 {
-    public BuildingData[] _buildingData;
+    public List<BuildingData> _buildingData;
     public List<GameObject> _buildingsList;
 
     public delegate void BuildingMethod();
@@ -37,7 +37,7 @@ public class BuildingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < _buildingData.Length; i++)
+        for (int i = 0; i < _buildingData.Count; i++)
         {
             if (!_buildingData[i].isBuildingSpawnedAndActive)
             {
@@ -52,21 +52,7 @@ public class BuildingManager : MonoBehaviour
                 //Do a loading probably
             }
         }
-
-        //CreateMethodList();
     }
-
-    //public void CreateMethodList()
-    //{
-    //    _buildingMethod.Add(Building1Upgrade);
-    //    _buildingMethod.Add(Building2Upgrade);
-    //    _buildingMethod.Add(Building3Upgrade);
-    //    _buildingMethod.Add(Building4Upgrade);
-    //    _buildingMethod.Add(Building5Upgrade);
-    //    _buildingMethod.Add(Building6Upgrade);
-    //    _buildingMethod.Add(Building7Upgrade);
-    //    _buildingMethod.Add(Building8Upgrade);
-    //}
 
     /// <summary>
     /// Upgrades the building by finding its appropriate name
@@ -95,7 +81,7 @@ public class BuildingManager : MonoBehaviour
 
     public void GrabElementNumberBasedOnButtonClick(int inElementNumber)
     {
-        if (_buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber].UpgradeLevels.Length && _buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber]._buildingMaxLevel)
+        if (_buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber]._buildingMaxLevel)
         {
             UpgradeBuilding(_buildingData[inElementNumber]._buildingName, inElementNumber, _buildingData[inElementNumber]._buildingLevel, _buildingData[inElementNumber].UpgradeLevels[_buildingData[inElementNumber]._buildingLevel]);
             _buildingData[inElementNumber]._buildingLevel += 1;
@@ -106,6 +92,7 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
+    #region Manual Button Functions
     /// <summary>
     /// Function for Button-1
     /// </summary>
@@ -169,6 +156,8 @@ public class BuildingManager : MonoBehaviour
     {
         GrabElementNumberBasedOnButtonClick(7);
     }
+
+    #endregion
 }
 
 
@@ -178,6 +167,8 @@ public class BuildingManager : MonoBehaviour
 //    GameObject oldMesh = inCurrentLevelsMesh;
 //    Destroy(oldMesh);   
 //}
+
+/*_buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber].UpgradeLevels.Length &&*/
 
 //void residue()
 //{
