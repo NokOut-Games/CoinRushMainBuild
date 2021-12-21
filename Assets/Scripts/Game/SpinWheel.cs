@@ -72,6 +72,7 @@ public class SpinWheel : MonoBehaviour
     //SpinWheel Needle Animation
     public Animator mNeedleAnim;
 
+    public Animator mLightAnimator;
 
     private void Start()
     {
@@ -207,6 +208,8 @@ public class SpinWheel : MonoBehaviour
 
             mNeedleAnim.SetBool("Spin", true);
             Invoke("StopNeedleAnimation", _spinDuration - 0.8f);
+
+            mLightAnimator.SetBool("Spin", true);
 
             _spinnerParent.DORotate(targetRotation, _spinDuration)
             //.SetEase(Ease.InOutQuart)

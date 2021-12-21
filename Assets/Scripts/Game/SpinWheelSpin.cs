@@ -25,6 +25,7 @@ public class SpinWheelSpin : MonoBehaviour
     public bool disablePanel = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
+    public Animator mLightAnimator;
     private void Start()
     {
          mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -35,6 +36,8 @@ public class SpinWheelSpin : MonoBehaviour
 
             spinWheel.OnSpinEnd(wheelPiece =>
             {
+                mLightAnimator.SetBool("Spin",false);
+
                 if (FreeSpins == 0)
                 {
                     DoFreeSpins = false;
@@ -123,16 +126,14 @@ public class SpinWheelSpin : MonoBehaviour
         _backButton.SetActive(true);
         Debug.Log("Goback togame");
     }
-
     public void BackToGameScene()
     {
         SceneManager.LoadScene("Level1");
     }
-
     private void Update()
     {    if(FreeSpins<10)
         {
-            _uiFreeSpinCountValue.text = "0"+FreeSpins.ToString();
+            _uiFreeSpinCountValue.text = FreeSpins.ToString();
         }
         else
         {
