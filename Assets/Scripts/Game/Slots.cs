@@ -68,7 +68,11 @@ public class Slots : MonoBehaviour
         for (int i = 0; i < _reels.Length; i++)
         {
             //Allow The Reels To Spin For A Random Amout Of Time Then Stop Them using the spin function
-            yield return new WaitForSeconds(Random.Range(4f,6f));
+            yield return new WaitForSeconds(Random.Range(1f,2.5f));
+            if(i==2)
+            {
+                yield return new WaitForSeconds(1.5f);
+            }
             _reels[i].Spin(); // Finds a Gameobject based on probability and stop the reel at appropriate spot
         }
     }
