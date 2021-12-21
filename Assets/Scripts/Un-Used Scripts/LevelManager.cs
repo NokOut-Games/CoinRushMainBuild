@@ -8,11 +8,6 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    public TextMeshProUGUI _coinText;
-    public TextMeshProUGUI _energyText;
-
-    private GameManager mGameManager;
-
     public BuildingManager buildingManagerRef;
     public LevelLoadManager _levelLoadManagerRef;
 
@@ -21,7 +16,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         _loadNextLevel = true;
-        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //
         _levelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
     }
 

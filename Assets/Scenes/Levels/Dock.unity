@@ -14510,7 +14510,7 @@ PrefabInstance:
     - target: {fileID: 4316013464354854173, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: buildingManagerRef
       value: 
-      objectReference: {fileID: 1202162031}
+      objectReference: {fileID: 1640761560}
     - target: {fileID: 4524371248474605908, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Name
       value: GameCanvas
@@ -32920,145 +32920,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0596ed2f85582444ab51441be0528e09, type: 3}
   m_PrefabInstance: {fileID: 1934547501}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1202162030
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1202162032}
-  - component: {fileID: 1202162031}
-  m_Layer: 0
-  m_Name: BuildingManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1202162031
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202162030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10a041b9bf7718b4f9e724de62bd2b8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _buildingData:
-  - _buildingName: Boat
-    _buildingLevel: 0
-    _buildingMaxLevel: 5
-    _buildingSpawnPoint: {fileID: 4617061}
-    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-    currentLevelGameObject: {fileID: 0}
-    NextUpgradeImages:
-    - {fileID: 21300000, guid: b7d14388a0ab36c4e848e2ea02fb9a6a, type: 3}
-    UpgradeLevels:
-    - {fileID: 519261999101172670, guid: e657135d536eff04b9a63d9e8692148e, type: 3}
-    - {fileID: 8974932042267151674, guid: 07f04f2d081abdb4597bb664b16a6479, type: 3}
-    - {fileID: 6621400595767496347, guid: f2b16f82cf478844c9999321c5fa76bf, type: 3}
-    - {fileID: 7091313885015369040, guid: 8544878a399d6b349bd56a2920eb0abf, type: 3}
-    - {fileID: 2258989740596331332, guid: 7f3b9ee1bf27ce049a93a612df8b6894, type: 3}
-    destroyedVersions: []
-    isBuildingSpawnedAndActive: 0
-    isBuildingDamaged: 0
-    didBuildingReachMaxLevel: 0
-  - _buildingName: BurgerShop
-    _buildingLevel: 0
-    _buildingMaxLevel: 5
-    _buildingSpawnPoint: {fileID: 2094446335}
-    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-    currentLevelGameObject: {fileID: 0}
-    NextUpgradeImages:
-    - {fileID: 21300000, guid: dd128a90d7610c84e8652adeb46ae3d0, type: 3}
-    UpgradeLevels:
-    - {fileID: 6887764619986328305, guid: 40b13b73769837248b0ef39aaa39efc6, type: 3}
-    - {fileID: 9182611281561041796, guid: 671d894cd13c9d5418650dcd4efb6b24, type: 3}
-    - {fileID: 6445538030163808184, guid: 3c48a06c87ed5a646ba6e9f0f33f2e07, type: 3}
-    - {fileID: 8020522442288378315, guid: 91703677a474ccb4da76f67ab46a02cc, type: 3}
-    - {fileID: 4717822045123212610, guid: e9095f2dbd34dc64488aebe739266056, type: 3}
-    destroyedVersions: []
-    isBuildingSpawnedAndActive: 0
-    isBuildingDamaged: 0
-    didBuildingReachMaxLevel: 0
-  - _buildingName: MainDock
-    _buildingLevel: 0
-    _buildingMaxLevel: 5
-    _buildingSpawnPoint: {fileID: 566168008}
-    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-    currentLevelGameObject: {fileID: 0}
-    NextUpgradeImages:
-    - {fileID: 21300000, guid: 2859819304158d84799b84ec7d287156, type: 3}
-    - {fileID: 21300000, guid: 82937c7c52b77dd43b7771d9b9808f85, type: 3}
-    - {fileID: 21300000, guid: 4758b549f2133fd4098b631eef57f90c, type: 3}
-    - {fileID: 21300000, guid: 59b9a781066353c4ea9836c4bb9d547e, type: 3}
-    - {fileID: 21300000, guid: f52fa19ac5728554e8de3c332f548edc, type: 3}
-    UpgradeLevels:
-    - {fileID: 8127674520507740157, guid: ac2f8817c56a2904e81e9a051b92c046, type: 3}
-    - {fileID: 8532757334741488397, guid: 5c895cd7b81b1e34e85006bc00e321b3, type: 3}
-    - {fileID: 1451903004274019668, guid: 7c881d7ef0a3de740abc2bc065dec6ab, type: 3}
-    - {fileID: 9048735282911497242, guid: 2a329e00c8a37be47bae3a1e4c38e43f, type: 3}
-    - {fileID: 4401129791936697537, guid: 51831368b409543428ad90102c099d34, type: 3}
-    destroyedVersions: []
-    isBuildingSpawnedAndActive: 0
-    isBuildingDamaged: 0
-    didBuildingReachMaxLevel: 0
-  - _buildingName: LightHouse
-    _buildingLevel: 0
-    _buildingMaxLevel: 5
-    _buildingSpawnPoint: {fileID: 624935980}
-    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-    currentLevelGameObject: {fileID: 0}
-    NextUpgradeImages:
-    - {fileID: 21300000, guid: c2e217749045bca48b65461a96f17624, type: 3}
-    UpgradeLevels:
-    - {fileID: 7121439295355560782, guid: f3ff25c9813a92b41bbb03f3478b9a42, type: 3}
-    - {fileID: 7325936070910873715, guid: 82537456b55847b4ba90dfe0b7cdb6ba, type: 3}
-    - {fileID: 3455170245678775595, guid: cd8f9520aea8f8b4fba32744841ef5d3, type: 3}
-    - {fileID: 3802613206214767210, guid: 0312fc8efc837014bb01c1d361dec26d, type: 3}
-    - {fileID: 7629867532611714270, guid: 5f8861cd2c823cb4d84bb3b819421c09, type: 3}
-    destroyedVersions: []
-    isBuildingSpawnedAndActive: 0
-    isBuildingDamaged: 0
-    didBuildingReachMaxLevel: 0
-  - _buildingName: Crane
-    _buildingLevel: 0
-    _buildingMaxLevel: 5
-    _buildingSpawnPoint: {fileID: 1032299022}
-    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-    currentLevelGameObject: {fileID: 0}
-    NextUpgradeImages:
-    - {fileID: 21300000, guid: d9367fe8e1cde8045824433f979ee4f9, type: 3}
-    UpgradeLevels:
-    - {fileID: 8637498205141718441, guid: 3e93de62cf3c5914983ffdab08a364f8, type: 3}
-    - {fileID: 4906848396401891457, guid: 3ed2b35129915a745b85617e12928ee1, type: 3}
-    - {fileID: 288879729934737318, guid: ede1ba2ae8d289745bd6dd058fdc2ec6, type: 3}
-    - {fileID: 2517195958122670540, guid: d915cdaba390b7448821b57adf661438, type: 3}
-    - {fileID: 1348709368777614771, guid: cf06a140de11cf4449f0a36cc5a38a54, type: 3}
-    destroyedVersions: []
-    isBuildingSpawnedAndActive: 0
-    isBuildingDamaged: 0
-    didBuildingReachMaxLevel: 0
-  _buildingsList: []
---- !u!4 &1202162032
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202162030}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1222602136
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42771,6 +42632,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7c8ec86d1fd537647976151dc464a56f, type: 3}
   m_PrefabInstance: {fileID: 1386727129}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1640761560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+  m_PrefabInstance: {fileID: 1740935757}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a041b9bf7718b4f9e724de62bd2b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649182014
 GameObject:
   m_ObjectHideFlags: 0
@@ -42953,8 +42825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinText: {fileID: 0}
-  _energyText: {fileID: 0}
   buildingManagerRef: {fileID: 0}
   _levelLoadManagerRef: {fileID: 0}
   _loadNextLevel: 1
@@ -44056,6 +43926,319 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7334236d4da37864aad23791dbefe7f0, type: 3}
+--- !u!1001 &1740935757
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627041, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0]._buildingName
+      value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1]._buildingName
+      value: BurgerShop
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2]._buildingName
+      value: MainDock
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3]._buildingName
+      value: LightHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4]._buildingName
+      value: Crane
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0]._buildingMaxLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1]._buildingMaxLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2]._buildingMaxLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3]._buildingMaxLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4]._buildingMaxLevel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0]._buildingSpawnPoint
+      value: 
+      objectReference: {fileID: 4617061}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1]._buildingSpawnPoint
+      value: 
+      objectReference: {fileID: 2094446335}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2]._buildingSpawnPoint
+      value: 
+      objectReference: {fileID: 566168008}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3]._buildingSpawnPoint
+      value: 
+      objectReference: {fileID: 624935980}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4]._buildingSpawnPoint
+      value: 
+      objectReference: {fileID: 1032299022}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0]._initialBuildingGameObject
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1]._initialBuildingGameObject
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2]._initialBuildingGameObject
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3]._initialBuildingGameObject
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4]._initialBuildingGameObject
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 519261999101172670, guid: e657135d536eff04b9a63d9e8692148e, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[1]
+      value: 
+      objectReference: {fileID: 8974932042267151674, guid: 07f04f2d081abdb4597bb664b16a6479, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 6621400595767496347, guid: f2b16f82cf478844c9999321c5fa76bf, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[3]
+      value: 
+      objectReference: {fileID: 7091313885015369040, guid: 8544878a399d6b349bd56a2920eb0abf, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[4]
+      value: 
+      objectReference: {fileID: 2258989740596331332, guid: 7f3b9ee1bf27ce049a93a612df8b6894, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 6887764619986328305, guid: 40b13b73769837248b0ef39aaa39efc6, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.data[1]
+      value: 
+      objectReference: {fileID: 9182611281561041796, guid: 671d894cd13c9d5418650dcd4efb6b24, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 6445538030163808184, guid: 3c48a06c87ed5a646ba6e9f0f33f2e07, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.data[3]
+      value: 
+      objectReference: {fileID: 8020522442288378315, guid: 91703677a474ccb4da76f67ab46a02cc, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeLevels.Array.data[4]
+      value: 
+      objectReference: {fileID: 4717822045123212610, guid: e9095f2dbd34dc64488aebe739266056, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 8127674520507740157, guid: ac2f8817c56a2904e81e9a051b92c046, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.data[1]
+      value: 
+      objectReference: {fileID: 8532757334741488397, guid: 5c895cd7b81b1e34e85006bc00e321b3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 1451903004274019668, guid: 7c881d7ef0a3de740abc2bc065dec6ab, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.data[3]
+      value: 
+      objectReference: {fileID: 9048735282911497242, guid: 2a329e00c8a37be47bae3a1e4c38e43f, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeLevels.Array.data[4]
+      value: 
+      objectReference: {fileID: 4401129791936697537, guid: 51831368b409543428ad90102c099d34, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 7121439295355560782, guid: f3ff25c9813a92b41bbb03f3478b9a42, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[1]
+      value: 
+      objectReference: {fileID: 7325936070910873715, guid: 82537456b55847b4ba90dfe0b7cdb6ba, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 3455170245678775595, guid: cd8f9520aea8f8b4fba32744841ef5d3, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[3]
+      value: 
+      objectReference: {fileID: 3802613206214767210, guid: 0312fc8efc837014bb01c1d361dec26d, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[4]
+      value: 
+      objectReference: {fileID: 7629867532611714270, guid: 5f8861cd2c823cb4d84bb3b819421c09, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.data[0]
+      value: 
+      objectReference: {fileID: 8637498205141718441, guid: 3e93de62cf3c5914983ffdab08a364f8, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.data[1]
+      value: 
+      objectReference: {fileID: 4906848396401891457, guid: 3ed2b35129915a745b85617e12928ee1, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.data[2]
+      value: 
+      objectReference: {fileID: 288879729934737318, guid: ede1ba2ae8d289745bd6dd058fdc2ec6, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.data[3]
+      value: 
+      objectReference: {fileID: 2517195958122670540, guid: d915cdaba390b7448821b57adf661438, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.data[4]
+      value: 
+      objectReference: {fileID: 1348709368777614771, guid: cf06a140de11cf4449f0a36cc5a38a54, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].NextUpgradeImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].NextUpgradeImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].NextUpgradeImages.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: b7d14388a0ab36c4e848e2ea02fb9a6a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].NextUpgradeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: dd128a90d7610c84e8652adeb46ae3d0, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 2859819304158d84799b84ec7d287156, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 82937c7c52b77dd43b7771d9b9808f85, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 4758b549f2133fd4098b631eef57f90c, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 59b9a781066353c4ea9836c4bb9d547e, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].NextUpgradeImages.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: f52fa19ac5728554e8de3c332f548edc, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].NextUpgradeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: c2e217749045bca48b65461a96f17624, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].NextUpgradeImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: d9367fe8e1cde8045824433f979ee4f9, type: 3}
+    - target: {fileID: 4207419319861627071, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: m_Name
+      value: BuildingManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
 --- !u!1001 &1741118283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54049,7 +54232,7 @@ Transform:
   - {fileID: 624935980}
   - {fileID: 1032299022}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2134494859
 PrefabInstance:
@@ -54481,10 +54664,10 @@ PrefabInstance:
     - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
       propertyPath: buildingManagerRef
       value: 
-      objectReference: {fileID: 1202162031}
+      objectReference: {fileID: 1640761560}
     - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
       propertyPath: m_LocalPosition.x

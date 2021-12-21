@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MenuUI : MonoBehaviour
 {
@@ -8,9 +9,14 @@ public class MenuUI : MonoBehaviour
     public GameObject screenItemsUIPanel;
     public GameObject DrawButtonPanelUI;
 
+    public TextMeshProUGUI _coinText;
+    public TextMeshProUGUI _energyText;
+
+    private GameManager mGameManager;
+
     void Start()
     {
-        
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void Update()
@@ -20,6 +26,7 @@ public class MenuUI : MonoBehaviour
         //    //To restrict the camera moving when build panel is on
         //    Camera.main.GetComponent<CameraController>()._CameraFreeRoam = false;
         //}
+        UpdateCoinAndEnergyTextFields();
     }
 
     public void BuildButton()
@@ -34,5 +41,11 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
+    }
+
+    private void UpdateCoinAndEnergyTextFields()
+    {
+        _coinText.text = mGameManager._coins.ToString();
+        _energyText.text = mGameManager._energy.ToString();
     }
 }

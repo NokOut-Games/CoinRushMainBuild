@@ -23,6 +23,7 @@ public class LevelLoadManager : MonoBehaviour
     {
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         nextSceneIndex = currentSceneIndex + 1;
+        PlayerPrefs.SetInt("SavedScene", nextSceneIndex);
         SceneManager.LoadScene(nextSceneIndex);
     }
 }

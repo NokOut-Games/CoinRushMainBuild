@@ -10,6 +10,11 @@ public class EnergyBarFillerUI : MonoBehaviour
     private float mEnergy, mMaxEnergy;
     private float lerpSpeed;
 
+    private void Start()
+    {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
     private void Update()
     {
         mEnergy = _gameManager._energy;

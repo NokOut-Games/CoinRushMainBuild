@@ -41,9 +41,11 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private GameObject HitSmokeEffect;
     [SerializeField] private GameObject HitSmokeRingEffect;
 
+    private LevelLoadManager mLevelLoadManagerRef;
 
     private void Start()
     {
+        mLevelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
         isCollided = false; 
         isCanInstantiated = false;
     }
@@ -155,7 +157,7 @@ public class BoxReactor : MonoBehaviour
 
     public void BackToMainScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }
 
