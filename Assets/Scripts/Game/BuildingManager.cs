@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,25 +32,32 @@ public class BuildingManager : MonoBehaviour
     public List<BuildingData> _buildingData;
     public List<GameObject> _buildingsList;
 
-    public delegate void BuildingMethod();
+    GameManager mGameManager;
+    private void Awake()
+    {
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
-    public List<BuildingMethod> _buildingMethod = new List<BuildingMethod>();
-    // Start is called before the first frame update
+
     void Start()
     {
         for (int i = 0; i < _buildingData.Count; i++)
         {
+            // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
+            
             if (!_buildingData[i].isBuildingSpawnedAndActive)
             {
-                GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
                 GORef.name = _buildingData[i]._buildingName;
                 _buildingData[i].isBuildingSpawnedAndActive = true;
 
                 _buildingsList.Add(GORef);
             }
-            else
+            else  // But if there are buildings already spawned and active the grab the information from Game Manager
             {
-                //Do a loading probably
+                
+                //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                //GORef.name = _buildingData[i]._buildingName;
             }
         }
     }
@@ -93,69 +101,69 @@ public class BuildingManager : MonoBehaviour
     }
 
     #region Manual Button Functions
-    /// <summary>
-    /// Function for Button-1
-    /// </summary>
-    public void Building1Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(0);
-    }
+    ///// <summary>
+    ///// Function for Button-1
+    ///// </summary>
+    //public void Building1Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(0);
+    //}
 
-    /// <summary>
-    /// Function for Button-2
-    /// </summary>
-    public void Building2Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(1);
-    }
+    ///// <summary>
+    ///// Function for Button-2
+    ///// </summary>
+    //public void Building2Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(1);
+    //}
 
-    /// <summary>
-    /// Function for Button-3
-    /// </summary>
-    public void Building3Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(2);
-    }
+    ///// <summary>
+    ///// Function for Button-3
+    ///// </summary>
+    //public void Building3Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(2);
+    //}
 
-    /// <summary>
-    /// Function for Button-4
-    /// </summary>
-    public void Building4Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(3);
-    }
+    ///// <summary>
+    ///// Function for Button-4
+    ///// </summary>
+    //public void Building4Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(3);
+    //}
 
-    /// <summary>
-    /// Function for Button-5
-    /// </summary>
-    public void Building5Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(4);
-    }
+    ///// <summary>
+    ///// Function for Button-5
+    ///// </summary>
+    //public void Building5Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(4);
+    //}
 
-    /// <summary>
-    /// Function for Button-6
-    /// </summary>
-    public void Building6Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(5);
-    }
+    ///// <summary>
+    ///// Function for Button-6
+    ///// </summary>
+    //public void Building6Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(5);
+    //}
 
-    /// <summary>
-    /// Function for Button-7
-    /// </summary>
-    public void Building7Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(6);
-    }
+    ///// <summary>
+    ///// Function for Button-7
+    ///// </summary>
+    //public void Building7Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(6);
+    //}
 
-    /// <summary>
-    /// Function for Button-8
-    /// </summary>
-    public void Building8Upgrade()
-    {
-        GrabElementNumberBasedOnButtonClick(7);
-    }
+    ///// <summary>
+    ///// Function for Button-8
+    ///// </summary>
+    //public void Building8Upgrade()
+    //{
+    //    GrabElementNumberBasedOnButtonClick(7);
+    //}
 
     #endregion
 }

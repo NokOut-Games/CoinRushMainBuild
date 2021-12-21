@@ -32931,7 +32931,7 @@ GameObject:
   - component: {fileID: 1202162032}
   - component: {fileID: 1202162031}
   m_Layer: 0
-  m_Name: Building Manager
+  m_Name: BuildingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32954,7 +32954,7 @@ MonoBehaviour:
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 4617061}
-    _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: b7d14388a0ab36c4e848e2ea02fb9a6a, type: 3}
@@ -32972,7 +32972,7 @@ MonoBehaviour:
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 2094446335}
-    _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: dd128a90d7610c84e8652adeb46ae3d0, type: 3}
@@ -32990,7 +32990,7 @@ MonoBehaviour:
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 566168008}
-    _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: 2859819304158d84799b84ec7d287156, type: 3}
@@ -33012,7 +33012,7 @@ MonoBehaviour:
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 624935980}
-    _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: c2e217749045bca48b65461a96f17624, type: 3}
@@ -33030,7 +33030,7 @@ MonoBehaviour:
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1032299022}
-    _initialBuildingGameObject: {fileID: 4402506716501163025, guid: 816d563c55a5a5e4a975fcf52bc554ce, type: 3}
+    _initialBuildingGameObject: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: d9367fe8e1cde8045824433f979ee4f9, type: 3}
@@ -41312,6 +41312,50 @@ PrefabInstance:
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _minutes
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[0]._buildingName
+      value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingName
+      value: BurgerShop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingName
+      value: MainDock
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingName
+      value: LightHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingName
+      value: Crane
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[0]._buildingCurrentLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingCurrentLevel
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingCurrentLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingCurrentLevel
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingCurrentLevel
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name

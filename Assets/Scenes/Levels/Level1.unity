@@ -15694,11 +15694,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 527f1b1453989854ca263eea2edadfd0, type: 3}
   m_PrefabInstance: {fileID: 364173690}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &367774497 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5299673784263547524, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-  m_PrefabInstance: {fileID: 412256753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &368284445
 GameObject:
   m_ObjectHideFlags: 0
@@ -28162,11 +28157,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675878153}
   m_Mesh: {fileID: 5283197924642485434, guid: 89d62f5e3465f1f4491d868dc7f4c0e6, type: 3}
---- !u!1 &677217600 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4546269045787691386, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
-  m_PrefabInstance: {fileID: 412256753}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &678566498
 GameObject:
   m_ObjectHideFlags: 0
@@ -39091,9 +39081,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49674b39525b6f47b78d1e413e71de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildPanelGameObject: {fileID: 367774497}
-  screenItemsUIPanel: {fileID: 677217600}
-  drawButtonUI: {fileID: 0}
+  ContentView: {fileID: 0}
+  buildingManagerRef: {fileID: 0}
+  ButtonTemplatesHolder: []
 --- !u!4 &1005765439
 Transform:
   m_ObjectHideFlags: 0
@@ -63449,6 +63439,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coinText: {fileID: 949764130}
   _energyText: {fileID: 570942801}
+  buildingManagerRef: {fileID: 0}
+  _levelLoadManagerRef: {fileID: 0}
+  _loadNextLevel: 1
 --- !u!1 &1660025116
 GameObject:
   m_ObjectHideFlags: 0
@@ -76521,16 +76514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a041b9bf7718b4f9e724de62bd2b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buildings:
-  - _buildingMesh: {fileID: 0}
-    _materialCount: 0
-    _material: []
-  - _buildingMesh: {fileID: 0}
-    _materialCount: 0
-    _material: []
-  - _buildingMesh: {fileID: 0}
-    _materialCount: 0
-    _material: []
+  _buildingData: []
+  _buildingsList: []
 --- !u!4 &2027371080
 Transform:
   m_ObjectHideFlags: 0
