@@ -330,6 +330,6 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Dock");
     }
 }
