@@ -18,7 +18,7 @@ public class CannonShotController : MonoBehaviour
     public bool ishalfwayreached = true;
     float CannonTargetDistance;
     float BulletSpeed = 0f;
-    float deceleration = 1f;
+    float deceleration = 125f;
     public GameObject shieldPref;
 
 
@@ -36,13 +36,13 @@ public class CannonShotController : MonoBehaviour
         if (fixCameraRot)
         {
             Camera.main.transform.LookAt(_TargetTransform);
-            if (Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .75))
+            if (Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .85))
             {
                 Debug.Log("Quaterway reached");
                 Debug.Log(CannonTargetDistance / 3);
 
                 Camera.main.transform.position += Time.deltaTime * BulletSpeed * Vector3.back;
-                BulletSpeed += deceleration;
+                BulletSpeed += deceleration * Time.deltaTime;
                 Debug.Log(" Speed " + BulletSpeed);
 
                 ////  fixCameraRot = false;
@@ -55,7 +55,7 @@ public class CannonShotController : MonoBehaviour
                 //}
 
             }
-            if ((Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .5)) && ishalfwayreached == true)
+            if ((Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .65)) && ishalfwayreached == true)
             {
                 Debug.Log("halfway region entered");
                 Halfwayreached = false;

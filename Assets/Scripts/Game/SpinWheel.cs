@@ -12,9 +12,9 @@ public class WheelPiece
     public string _Label;
     public int _Amount;
     [Range(0f, 100f)] public float _Chance;
-    /*[HideInInspector]*/
+    [HideInInspector]
     public int _Index;
-    /*[HideInInspector]*/
+    [HideInInspector]
     public double _Weight;
 }
 
@@ -68,6 +68,11 @@ public class SpinWheel : MonoBehaviour
 
     //List for NonZeroChancesIndices
     private List<int> mNonZeroChancesIndices = new List<int>();
+
+    //SpinWheel Needle Animation
+    public Animator mNeedleAnim;
+
+    public Animator mLightAnimator;
 
     private void Start()
     {
@@ -174,6 +179,7 @@ public class SpinWheel : MonoBehaviour
             else
             {
                 FindObjectOfType<SpinWheelSpin>().DoFreeSpins = true;
+              
                 FindObjectOfType<SpinWheelSpin>().FreeSpins -= 1;
             }
             mIsSpinning = true;
@@ -200,8 +206,13 @@ public class SpinWheel : MonoBehaviour
 
             bool isIndicatorOnTheLine = false;
 
+            mNeedleAnim.SetBool("Spin", true);
+            Invoke("StopNeedleAnimation", _spinDuration - 0.8f);
+
+            mLightAnimator.SetBool("Spin", true);
+
             _spinnerParent.DORotate(targetRotation, _spinDuration)
-            .SetEase(Ease.InOutQuart)
+            //.SetEase(Ease.InOutQuart)
             .OnUpdate(() =>
             { //for increasing audio pitch when indicatior needle touching on the line prefab 
 
@@ -228,6 +239,10 @@ public class SpinWheel : MonoBehaviour
             });
         }
     }
+    void StopNeedleAnimation()
+    {
+        mNeedleAnim.SetBool("Spin", false);
+    }
 
     /// <summary>
     /// Event Declaration
@@ -253,5 +268,9 @@ public class SpinWheel : MonoBehaviour
             }
         }
         return 0;
+    }
+    private void Update()
+    {
+       
     }
 }

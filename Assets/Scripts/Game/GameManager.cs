@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public int _coins;
     public int _energy = 25;
     public int _shield;
+    public int _playerCurrentLevel=1;
     public float _minutes;
 
     public List<GameObject> _BuildingDetails;

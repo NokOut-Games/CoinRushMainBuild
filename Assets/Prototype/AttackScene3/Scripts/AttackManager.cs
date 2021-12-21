@@ -288,6 +288,7 @@ public class AttackManager : MonoBehaviour
           _ScoreTextThree.text = "Your Score Are - " + RewardValue;  */
 
         int RewardValue = mGameManager._BuildingCost[TargetObjectIndex];
+        mGameManager._coins = mGameManager._coins + mGameManager._BuildingCost[TargetObjectIndex];
         _ScoreTextOne.text = "Building Cost - " + RewardValue;
 
         yield return new WaitForSeconds(7);
@@ -329,6 +330,6 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
     }
 }
