@@ -2,50 +2,43 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Sirenix.OdinInspector;
 
 public class ChestOpener : MonoBehaviour
 {
-    [BoxGroup("Energy Properties")]
+    [Header("Energy Attributes: ")]
     [SerializeField] private EnergyProbability mEnergyProbability;
-    [BoxGroup("Energy Properties")]
     [SerializeField] private List<GameObject> mEnergyChests;
-    [BoxGroup("Energy Properties")]
     [SerializeField] private float CameraFocusSpeed;
-    [BoxGroup("Energy Properties")]
     [SerializeField] private float dropSpeed;
+    
 
-    [BoxGroup("Coin Properties")]
+    [SerializeField] private GameObject BackgroundParentRef;
+    [SerializeField] private GameObject CloudRef;
+    public bool EnergyFalling = true;
+
+    [Header("Coin Attributes: ")]
     [SerializeField] private CoinProbability mCoinProbability;
-    [BoxGroup("Coin Properties")]
     [SerializeField] private List<GameObject> mCoinChests;
-    [BoxGroup("Coin Properties")]
     [SerializeField] private float ItemFocusSpeed;
-    [BoxGroup("Coin Properties")]
     [SerializeField] private GameObject transparentBackgroundPlane;
 
-    [BoxGroup("Other References")]
+
+    [Header("Other References: ")]
     [SerializeField] private GameManager mGameManager;
-    [BoxGroup("Other References")]
     [SerializeField] private TextMeshProUGUI rewardText;
-    [BoxGroup("Other References")]
     [SerializeField] private GameObject RewardDisplayPanel;
-    [BoxGroup("Other References")]
-    [SerializeField] private GameObject BackgroundParentRef;
-    [BoxGroup("Other References")]
-    [SerializeField] private GameObject CloudRef;
-
-    public Coroutine EnergyFallingCoroutine;
-    public bool EnergyFalling;
-
 
     private void Start()
     {
+        EnergyFalling = true;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
+
     private void Update()
     {
+        
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit raycastHit;
@@ -70,13 +63,15 @@ public class ChestOpener : MonoBehaviour
                     //EnergyListShuffle(mEnergyProbability._energies);
                     //Chest.transform.Find("WindTrialEffect").gameObject.SetActive(true);
                     StartCoroutine(CameraZoomAndFollowEnergy(Chest));
+                    //CameraFocusEnergyCrate(Chest);
                     
                     //Destroy other chests except the ones clicked
                     for (int i = 0; i < mEnergyChests.Count; i++)
                     {
                         if (mEnergyChests[i].transform.GetChild(0).name != Chest.name)
                         {
-                            Destroy(mEnergyChests[i].transform.gameObject);
+                            //mEnergyChests[i].GetComponent<BoxCollider>().enabled = false;
+                            Destroy(mEnergyChests[i].transform.gameObject , 2f);
                         }
                         else
                         {
@@ -106,21 +101,53 @@ public class ChestOpener : MonoBehaviour
         }
     }
 
+    //void CameraFocusEnergyCrate(GameObject inChest)
+    //{
+    //    inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);
+    //    inChest.transform.rotation = Quaternion.identity;
+    //    //BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
+    //    //CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
+    //    inChest.transform.parent.GetComponent<Animator>().SetTrigger("isFalling?");
+    //    Vector3 targetPosition = new Vector3(inChest.transform.position.x, inChest.transform.position.y + 10, inChest.transform.position.z - 50);
+    //    Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, CameraFocusSpeed * Time.deltaTime);
+    //    Camera.main.transform.SetParent(inChest.transform);
+    //    inChest.GetComponent<Rigidbody>().velocity = new Vector3(0, -(dropSpeed) * Time.deltaTime, 0);
+    //}
+
     public IEnumerator CameraZoomAndFollowEnergy(GameObject inChest)
     {
         while (true)
         {
-            //Destroy(inChest.transform.parent.GetComponent<Animator>());
-            inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);
+            //Make the chest rotation to zero
             inChest.transform.rotation = Quaternion.identity;
-            BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
-            CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
-            inChest.transform.parent.GetComponent<Animator>().SetTrigger("isFalling?");
+            
+            //Make the camera to zoom-in
             Vector3 targetPosition = new Vector3(inChest.transform.position.x, inChest.transform.position.y + 10, inChest.transform.position.z - 50);
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, CameraFocusSpeed * Time.deltaTime);
             Camera.main.transform.SetParent(inChest.transform);
-            inChest.GetComponent<Rigidbody>().velocity = new Vector3(0,-(dropSpeed),0);
+
             
+
+            if (EnergyFalling)
+            {
+                //Change the Animator
+                inChest.transform.parent.GetComponent<Animator>().SetTrigger("isFalling?");
+
+                //Make the camera fall down
+                inChest.GetComponent<Rigidbody>().velocity = new Vector3(0, -(dropSpeed), 0);
+
+                //Play the falling particle Effect
+                inChest.transform.GetChild(inChest.transform.childCount - 2).gameObject.SetActive(true);
+            }
+
+
+
+            //Change the Scrolling Speed to make it look faster
+            BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
+            CloudRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
+
+
+
             yield return null;
         }
     }
@@ -129,10 +156,10 @@ public class ChestOpener : MonoBehaviour
     {
         while (true)
         {
-            Vector3 targetPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - 1.5f, Camera.main.transform.position.z + 5);
+            Vector3 targetPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y + 15f, Camera.main.transform.position.z + 5);
             inChest.transform.position = Vector3.Lerp(inChest.transform.position, targetPosition, ItemFocusSpeed * Time.deltaTime);
 
-            transparentBackgroundPlane.GetComponent<Renderer>().material.SetFloat("_alpha", 0.8f);
+            transparentBackgroundPlane.GetComponent<Renderer>().material.SetFloat("_alpha", Mathf.SmoothStep(0,0.8f, 1 * Time.deltaTime));
             
             yield return null;
         }

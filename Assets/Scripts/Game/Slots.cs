@@ -25,11 +25,14 @@ public class Slots : MonoBehaviour
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
+            for (int i = 0; i < _reels.Length; i++)
+            {
+                _reels[i].mSpinOver = false;
+            }
             if (spin > 0)
             {
                 spin--;
                 _uiSpinButton.interactable = false;
-                _SlotDisplayHeadText.text = "Slot Spinning";
                 StartCoroutine(DelayedSpin());
                 _elementsName.Clear();
             }
@@ -38,7 +41,8 @@ public class Slots : MonoBehaviour
 
     private void Update()
     {
-        if (_reels[2].mSpinOver == true)
+        _SlotDisplayHeadText.text = spin.ToString();
+        if (_reels[2].mSpinOver == true && spin != 0)
         {
             _uiSpinButton.interactable = true;
         }
@@ -78,12 +82,10 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards": 
-                        _SlotDisplayHeadText.text =  "Trading Card Pack";
                         _rewardText.text = "Trading Card Pack";
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        _SlotDisplayHeadText.text = "5 Spins";
                         _rewardText.text = "5 Spins";
                         spin += 5;
                         if (spin == 0)
@@ -93,13 +95,11 @@ public class Slots : MonoBehaviour
                         //Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins":
-                        _SlotDisplayHeadText.text = "5000 Coins";
                         _rewardText.text = "5000 Coins";
                         mGameManager._coins += 5000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        _SlotDisplayHeadText.text = "10 Energy";
                         _rewardText.text = "10 Energy";
                         mGameManager._energy += 10;
                         Invoke(nameof(RewardPanelInvoke), 2f);
@@ -113,12 +113,10 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        _SlotDisplayHeadText.text = "Oops Try Again";
                         _rewardText.text = "Oops Try Again";
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        _SlotDisplayHeadText.text = "3 Free Spins";
                         _rewardText.text = "3 Free Spins";
                         //Debug.Log("Spin");
                         spin += 3;
@@ -128,13 +126,11 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        _SlotDisplayHeadText.text = "3000 Coins";
                         _rewardText.text = "3000 Coins";
                         mGameManager._coins += 3000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        _SlotDisplayHeadText.text = "5 Energy";
                         _rewardText.text = "5 Energy";
                         mGameManager._energy += 5;
                         Invoke(nameof(RewardPanelInvoke), 2f);
@@ -148,12 +144,10 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i + 1]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        _SlotDisplayHeadText.text = "Oops Try Again";
                         _rewardText.text = "Oops Try Again";
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        _SlotDisplayHeadText.text = "3 Free Spins";
                         _rewardText.text = "3 Free Spins";
                         spin += 3;
                         if (spin == 0)
@@ -162,13 +156,11 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        _SlotDisplayHeadText.text = "3000 Coins";
                         _rewardText.text = "3000 Coins";
                         mGameManager._coins += 3000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        _SlotDisplayHeadText.text = "5 Energy";
                         _rewardText.text = "5 Energy";
                         mGameManager._energy += 5;
                         Invoke(nameof(RewardPanelInvoke), 2f);
@@ -179,7 +171,6 @@ public class Slots : MonoBehaviour
             }
             else
             {
-                _SlotDisplayHeadText.text = "Oopsie Nothing is Identical";
                 _rewardText.text = "Oopsie Nothing is Identical";
                 Invoke(nameof(RewardPanelInvoke), 2f);
             }

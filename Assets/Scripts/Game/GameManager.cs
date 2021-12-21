@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public enum BuildingTypes
 {
@@ -12,6 +13,12 @@ public enum BuildingTypes
     House
 }
 
+[System.Serializable]
+public class GameManagerBuildingData
+{
+    public string _buildingName;
+    public int _buildingCurrentLevel;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -36,11 +43,18 @@ public class GameManager : MonoBehaviour
     /*(or)*/
     public Vector3[] OpenHandCardsVectorPositions;
 
+    public List<GameManagerBuildingData> _buildingGameManagerDataRef;
+    public BuildingManager _buildingManagerRef;
+    public int _buildingCount;
+
     public int _maxEnergy = 50;
     private bool mIsFull = true;
 
     private void Awake()
     {
+        Application.targetFrameRate = 30;
+        
+        
         if (Instance == null)
         {
             Instance = this;
@@ -52,11 +66,28 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+        _buildingCount = _buildingManagerRef._buildingData.Count;
+        //_buildingGameManagerDataRef = new List<GameManagerBuildingData>(new GameManagerBuildingData[_buildingCount]);
         StartCoroutine(AutomaticEnergyRefiller());
+        //GetBuildingManagerDetails();
     }
 
+    public void GetBuildingManagerDetails()
+    {
+        for (int i = 0; i < _buildingCount; i++)
+        {
+            _buildingGameManagerDataRef[i]._buildingName = _buildingManagerRef._buildingData[i]._buildingName;
+            _buildingGameManagerDataRef[i]._buildingCurrentLevel = _buildingManagerRef._buildingData[i]._buildingLevel;
+        }
+    }
     private void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (_energy == _maxEnergy)
         {
             mIsFull = false;
