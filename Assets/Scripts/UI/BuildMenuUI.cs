@@ -28,7 +28,13 @@ public class BuildMenuUI : MonoBehaviour
             ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             //Debug.Log(i);
-            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber); /*UpdateBuildingImage(buildingTemplateRef,BuildingUpgradeNumber);*/ });
+            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
+            {
+                buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
+                
+                UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
+                
+            });
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
             buildingTemplateRef.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[i].NextUpgradeImages[buildingManagerRef._buildingData[i]._buildingLevel];
         }
@@ -39,7 +45,14 @@ public class BuildMenuUI : MonoBehaviour
 
     public void UpdateBuildingImage(GameObject inButton,int inElementNumber)
     {
-        inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
+        if (buildingManagerRef._buildingData[inElementNumber]._buildingLevel < buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
+        {
+            inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
+        }
+        if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
+        {
+            inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        }
     }
 
     void Update()
