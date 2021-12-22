@@ -24,10 +24,11 @@ public class BuildMenuUI : MonoBehaviour
         for (int i = 0; i <  buildingManagerRef._buildingData.Count; i++)
         {
             GameObject buildingTemplateRef = Instantiate(BuildingItemTemplate, ContentView);
+            buildingTemplateRef.name = buildingManagerRef._buildingData[i]._buildingName + " Button";
             ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             //Debug.Log(i);
-            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber); });
+            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber); /*UpdateBuildingImage(buildingTemplateRef,BuildingUpgradeNumber);*/ });
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
             buildingTemplateRef.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[i].NextUpgradeImages[buildingManagerRef._buildingData[i]._buildingLevel];
         }
@@ -36,13 +37,10 @@ public class BuildMenuUI : MonoBehaviour
         //AttachButton();
     }
 
-    //void AttachButton()
-    //{
-    //    for (int i = 0; i < ButtonTemplatesHolder.Count; i++)
-    //    {
-    //        ButtonTemplatesHolder[i].gameObject.AddComponent<Button>().onClick.AddListener(() => { buildingManagerRef.BuildingUpgrade(i); });
-    //    }
-    //}
+    public void UpdateBuildingImage(GameObject inButton,int inElementNumber)
+    {
+        inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
+    }
 
     void Update()
     {

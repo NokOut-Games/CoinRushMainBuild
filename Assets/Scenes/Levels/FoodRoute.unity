@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.28357968, g: 0.3922329, b: 0.3806094, a: 1}
+  m_IndirectSpecularColor: {r: 0.28368124, g: 0.39226234, b: 0.3806502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7852,7 +7852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[4].UpgradeLevels.Array.size
@@ -7941,23 +7941,23 @@ PrefabInstance:
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[0]
       value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      objectReference: {fileID: 8922448564703595272, guid: b989192a6b1f0ae448ad8c8b79f71c5b, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[1]
       value: 
-      objectReference: {fileID: 8922448564703595272, guid: b989192a6b1f0ae448ad8c8b79f71c5b, type: 3}
+      objectReference: {fileID: 5526799204077878505, guid: 2619f2ab4ac03274f8ba958e1ede33e0, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[2]
       value: 
-      objectReference: {fileID: 5526799204077878505, guid: 2619f2ab4ac03274f8ba958e1ede33e0, type: 3}
+      objectReference: {fileID: 7325648255359926518, guid: dbacfcbccd0f3da418ea6a3ec30662bc, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[3]
       value: 
-      objectReference: {fileID: 7325648255359926518, guid: dbacfcbccd0f3da418ea6a3ec30662bc, type: 3}
+      objectReference: {fileID: 614023140427726380, guid: 0cee67d3ad068a74ea103554e7327a0d, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[4]
       value: 
-      objectReference: {fileID: 614023140427726380, guid: 0cee67d3ad068a74ea103554e7327a0d, type: 3}
+      objectReference: {fileID: 3090190242112423010, guid: bf1a4196a8267b849b5fa8ee9cc99288, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[3].UpgradeLevels.Array.data[5]
       value: 
@@ -20120,6 +20120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Truck_2
       objectReference: {fileID: 0}
+    - target: {fileID: 786991959921215406, guid: 7fcd25473953f9c4983321581410bd29, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fcd25473953f9c4983321581410bd29, type: 3}
 --- !u!4 &447899845011864023
@@ -20220,8 +20224,8 @@ Transform:
   - {fileID: 136691085}
   - {fileID: 887196137}
   - {fileID: 149295489}
-  - {fileID: 1947402963}
   - {fileID: 7136442648521069383}
+  - {fileID: 1947402963}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21461,6 +21465,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_Truck_4
       objectReference: {fileID: 0}
+    - target: {fileID: 4422037720373543682, guid: f0248dbe3820b874ca44eedbf4b4da1f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0248dbe3820b874ca44eedbf4b4da1f, type: 3}
 --- !u!23 &3592012206011794182
@@ -22119,9 +22127,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 824224455}
     m_Modifications:
+    - target: {fileID: 1989751229391940639, guid: c42a1f09d431e9c4eae931722447a421, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 963f00f2a0e0d194490dde806affb011, type: 2}
     - target: {fileID: 4685046949456123443, guid: c42a1f09d431e9c4eae931722447a421, type: 3}
       propertyPath: m_Name
       value: Food_Truck_5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4685046949456123443, guid: c42a1f09d431e9c4eae931722447a421, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5354623604311739529, guid: c42a1f09d431e9c4eae931722447a421, type: 3}
       propertyPath: m_RootOrder
@@ -22777,7 +22793,7 @@ Transform:
   m_Children:
   - {fileID: 4804697903435231137}
   m_Father: {fileID: 543450652441238245}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7166545757918045400
 Transform:
@@ -22943,6 +22959,10 @@ PrefabInstance:
     - target: {fileID: 7235446022549342391, guid: 1a0f7212782c44a45827272b55279213, type: 3}
       propertyPath: m_Name
       value: Food_Truck_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7235446022549342391, guid: 1a0f7212782c44a45827272b55279213, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008147247413940749, guid: 1a0f7212782c44a45827272b55279213, type: 3}
       propertyPath: m_RootOrder
@@ -23300,6 +23320,10 @@ PrefabInstance:
     - target: {fileID: 9174722289899505196, guid: 692c34fd66e51334fb2f6c08c93a7f3b, type: 3}
       propertyPath: m_Name
       value: Food_Truck_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174722289899505196, guid: 692c34fd66e51334fb2f6c08c93a7f3b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 692c34fd66e51334fb2f6c08c93a7f3b, type: 3}
