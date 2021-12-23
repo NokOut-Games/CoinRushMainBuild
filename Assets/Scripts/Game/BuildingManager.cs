@@ -54,7 +54,6 @@ public class BuildingManager : MonoBehaviour
     {
         for (int i = 0; i < _buildingData.Count; i++)
         {
-
             GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive);
 
         }
@@ -167,9 +166,7 @@ public class BuildingManager : MonoBehaviour
 
     void LevelCompleted()
     {
-        GameManager.Instance._playerCurrentLevel++;
-        GameManager.Instance._IsBuildingFromFBase = false;
-        GameManager.Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(GameManager.Instance._playerCurrentLevel);
+        GameManager.Instance.CurrentLevelCompleted();
     }
 
 }

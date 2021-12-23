@@ -39,6 +39,8 @@ public class AttackManager : MonoBehaviour
     private int TargetObjectIndex;
     private float transitionDuration = 2.5f;
 
+
+
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -330,6 +332,7 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Dock");
+        /*UnityEngine.SceneManagement.SceneManager.LoadScene("Dock");*/
+        mGameManager.GetComponent<LevelLoadManager>().BacktoHome();
     }
 }

@@ -31,13 +31,13 @@ public class BuildMenuUI : MonoBehaviour
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
                 buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
-                UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
-                
+                //UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
+                SetButtonImages(buildingTemplateRef, BuildingUpgradeNumber);
             });
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
-            buildingTemplateRef.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[i].NextUpgradeImages[buildingManagerRef._buildingData[i]._buildingLevel];
-        }
 
+            SetButtonImages(buildingTemplateRef, BuildingUpgradeNumber);
+        }
         Destroy(BuildingItemTemplate);
         //AttachButton();
     }
@@ -54,22 +54,21 @@ public class BuildMenuUI : MonoBehaviour
         }
     }
 
-    void Update()
+
+
+
+
+    void SetButtonImages(GameObject inButton, int inElementNumber)
     {
-        
+        if (buildingManagerRef._buildingData[inElementNumber]._buildingLevel < buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
+        {
+            inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
+        }
+        else
+        {
+            inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel - 1];
+            inButton.transform.GetChild(1).gameObject.GetComponent<Button>().interactable = false;
+            inButton.transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+        }
     }
-
-    //public void BuildButton()
-    //{
-    //    buildPanelGameObject.SetActive(true);
-    //    screenItemsUIPanel.SetActive(false);
-    //    drawButtonUI.SetActive(false);
-    //}
-
-    //public void ReturnButton()
-    //{
-    //    buildPanelGameObject.SetActive(false);
-    //    screenItemsUIPanel.SetActive(true);
-    //    drawButtonUI.SetActive(true);
-    //}
 }

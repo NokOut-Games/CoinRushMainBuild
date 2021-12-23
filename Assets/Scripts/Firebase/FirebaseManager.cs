@@ -14,7 +14,6 @@ public class FirebaseManager : MonoBehaviour
 
     private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData;
 
-    private GameManager mGameManager;
     private LevelLoadManager mLevelLoadManager;
 
     [SerializeField] string mLevelPrefix = "Level";
@@ -22,13 +21,12 @@ public class FirebaseManager : MonoBehaviour
 
     string userTitle = "Guest Users";
 
-
+    bool mIsreceivedUserData;
 
     bool readUserData;
 
     private void Awake()
     {
-        mGameManager = FindObjectOfType<GameManager>();
         mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
         auth = FirebaseAuth.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
@@ -39,6 +37,7 @@ public class FirebaseManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject); //Singleton
             return;
         }
+        Destroy(this.gameObject);
 
     }
 
@@ -81,8 +80,9 @@ public class FirebaseManager : MonoBehaviour
                     BuildingDetails.Add(builddata);
 
                 }
-                mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
+                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
                 readUserData = true;
+                mIsreceivedUserData = true;
 
             }
         });
@@ -93,9 +93,9 @@ public class FirebaseManager : MonoBehaviour
     {
         Player playerDetails = new Player();
 
-        playerDetails._coins = mGameManager._coins;
-        playerDetails._energy = mGameManager._energy;
-        playerDetails._playerCurrentLevel = mGameManager._playerCurrentLevel;
+        playerDetails._coins = GameManager.Instance._coins;
+        playerDetails._energy = GameManager.Instance._energy;
+        playerDetails._playerCurrentLevel = GameManager.Instance._playerCurrentLevel;
         string json = JsonUtility.ToJson(playerDetails);
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>
         {
@@ -111,11 +111,11 @@ public class FirebaseManager : MonoBehaviour
     {
 
         int i = 0;
-        foreach (GameManagerBuildingData buildings in mGameManager._buildingGameManagerDataRef)
+        foreach (GameManagerBuildingData buildings in GameManager.Instance._buildingGameManagerDataRef)
         {
 
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("Buildings").Child(mLevelPrefix + mGameManager._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -137,6 +137,8 @@ public class FirebaseManager : MonoBehaviour
 
             ReadDataForGuest();
             // WriteBuildingData();
+           // WriteBuildingDataToFirebase();
+
         }
         else
         {
@@ -171,15 +173,10 @@ public class FirebaseManager : MonoBehaviour
     {
         if (readUserData)
         {
-            LoadToTheCurrentLevel(mGameManager._playerCurrentLevel);
+            LoadToTheCurrentLevel(GameManager.Instance._playerCurrentLevel);
 
         }
-        /* if (GameManager.Instance._NxtLvlInitiated)
-         {
-             WriteBuildingDataToFirebase();
-             WritePlayerDataToFirebase();
-             Debug.Log("One");
-         }*/
+
     }
 
 
@@ -194,10 +191,37 @@ public class FirebaseManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (mIsreceivedUserData)
+        {
+            WriteBuildingDataToFirebase();
+            WritePlayerDataToFirebase();
+        }
 
-        WriteBuildingDataToFirebase();
-        WritePlayerDataToFirebase();
     }
+
+
+
+#if PLATFORM_ANDROID
+
+   /* private void OnApplicationFocus(bool focus)
+    {
+        if (!focus&& mIsreceivedUserData)
+        {
+            
+                WriteBuildingDataToFirebase();
+                WritePlayerDataToFirebase();
+            
+        }
+    }
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause && mIsreceivedUserData)
+        {
+            WriteBuildingDataToFirebase();
+            WritePlayerDataToFirebase();
+        }
+    }*/
+#endif
 }
 
 

@@ -157,7 +157,8 @@ public class BoxReactor : MonoBehaviour
 
     public void BackToMainScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(1); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        GameManager.Instance.GetComponent<LevelLoadManager>().BacktoHome();
     }
 }
 

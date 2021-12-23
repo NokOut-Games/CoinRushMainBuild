@@ -419,6 +419,10 @@ PrefabInstance:
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _MaxLevelsInGame
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _BuildingCost.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -695,6 +699,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: OpenHandCardsVectorPositions.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -753,6 +761,58 @@ PrefabInstance:
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: OpenHandCardsVectorPositions.Array.data[4].z
       value: -420.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingNo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingNo
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingNo
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingNo
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[0]._buildingName
+      value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingName
+      value: BurgerShop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingName
+      value: MainDock
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingName
+      value: LightHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingName
+      value: Crane
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingCurrentLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingCurrentLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingCurrentLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingCurrentLevel
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
@@ -1080,12 +1140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82282ddd0398e9048a649fb24849d72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guestPlayerName: {fileID: 132054013}
-  LoginButton: {fileID: 1453258109}
-  CanSignIn: 0
-  fetchDetails: 0
-  _LoginPanel: {fileID: 814770061}
-  disableLoginPanel: 0
 --- !u!4 &1223172678
 Transform:
   m_ObjectHideFlags: 0
@@ -1129,7 +1183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95cec43474806d4bab2eafe4428a3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guestPlayerName: {fileID: 132054013}
+  mLevelPrefix: Level
 --- !u!4 &1266492673
 Transform:
   m_ObjectHideFlags: 0

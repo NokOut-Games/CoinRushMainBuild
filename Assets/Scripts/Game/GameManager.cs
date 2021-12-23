@@ -46,12 +46,15 @@ public class GameManager : MonoBehaviour
     public Vector3[] OpenHandCardsVectorPositions;
 
     public List<GameManagerBuildingData> _buildingGameManagerDataRef;
-    public BuildingManager _buildingManagerRef;
-    public int _buildingCount;
 
+   /* public BuildingManager _buildingManagerRef;
+    public int _buildingCount;
+*/
     public bool _IsRefreshNeeded;
 
     public bool _IsBuildingFromFBase = true;
+    public int _MaxLevelsInGame;
+
 
     public int _maxEnergy = 50;
     private bool mIsFull = true;
@@ -59,8 +62,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 30;
-        
-        
+
         if (Instance == null)
         {
             Instance = this;
@@ -72,25 +74,20 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
-            //_buildingCount = _buildingManagerRef._buildingData.Count;
-            Debug.Log("Get The Building Manager");
-        }
+       
         //_buildingGameManagerDataRef = new List<GameManagerBuildingData>(new GameManagerBuildingData[_buildingCount]);
         StartCoroutine(AutomaticEnergyRefiller());
         //GetBuildingManagerDetails();
     }
 
-    public void GetBuildingManagerDetails()
+    /*public void GetBuildingManagerDetails()
     {
         for (int i = 0; i < _buildingCount; i++)
         {
             _buildingGameManagerDataRef[i]._buildingName = _buildingManagerRef._buildingData[i]._buildingName;
             _buildingGameManagerDataRef[i]._buildingCurrentLevel = _buildingManagerRef._buildingData[i]._buildingLevel;
         }
-    }
+    }*/
     private void Update()
     {
         if(EventSystem.current.IsPointerOverGameObject())
@@ -144,9 +141,27 @@ public class GameManager : MonoBehaviour
         _coins = inCoinData;
         _energy = inEnergyData;
         _playerCurrentLevel = inCurrentLevel;
-
+        
         _IsRefreshNeeded = true;
-        _IsBuildingFromFBase = true;
+        _IsBuildingFromFBase = true;     
+    }
 
+
+
+    public void CurrentLevelCompleted()
+    {
+
+        if (_playerCurrentLevel<_MaxLevelsInGame)
+        {
+            _playerCurrentLevel++;
+            _IsBuildingFromFBase = false;
+            Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(_playerCurrentLevel);
+            FirebaseManager.Instance.WriteBuildingDataToFirebase();
+        }
+        else
+        {
+            Debug.Log("MaxLevel");
+        }
+       
     }
 }

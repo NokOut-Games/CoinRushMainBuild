@@ -128,7 +128,8 @@ public class SpinWheelSpin : MonoBehaviour
     }
     public void BackToGameScene()
     {
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        mGameManager.GetComponent<LevelLoadManager>().BacktoHome();
     }
     private void Update()
     {    if(FreeSpins<10)
