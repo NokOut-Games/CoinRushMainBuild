@@ -42825,9 +42825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingManagerRef: {fileID: 0}
-  _levelLoadManagerRef: {fileID: 0}
-  _loadNextLevel: 1
 --- !u!1001 &1660539784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44038,6 +44035,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1032299022}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -44058,25 +44075,105 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
-      propertyPath: _buildingData.Array.data[0]._initialBuildingGameObject
-      value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
-      propertyPath: _buildingData.Array.data[1]._initialBuildingGameObject
-      value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
-      propertyPath: _buildingData.Array.data[2]._initialBuildingGameObject
-      value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
-      propertyPath: _buildingData.Array.data[3]._initialBuildingGameObject
-      value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.data[3]
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
-      propertyPath: _buildingData.Array.data[4]._initialBuildingGameObject
-      value: 
-      objectReference: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
+      propertyPath: _buildingData.Array.data[0].UpgradeCosts.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.data[3]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[1].UpgradeCosts.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.data[3]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[2].UpgradeCosts.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.data[3]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[3].UpgradeCosts.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.data[0]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.data[2]
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.data[3]
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].UpgradeCosts.Array.data[4]
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].UpgradeLevels.Array.data[0]
       value: 

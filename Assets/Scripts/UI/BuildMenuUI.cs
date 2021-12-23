@@ -16,7 +16,7 @@ public class BuildMenuUI : MonoBehaviour
 
     private GameObject BuildingItemTemplate;
 
-    public List<GameObject> ButtonTemplatesHolder = new List<GameObject>();
+    //public List<GameObject> ButtonTemplatesHolder = new List<GameObject>();
 
     public void SetUpgradeButtons()
     {
@@ -25,9 +25,13 @@ public class BuildMenuUI : MonoBehaviour
         {
             GameObject buildingTemplateRef = Instantiate(BuildingItemTemplate, ContentView);
             buildingTemplateRef.name = buildingManagerRef._buildingData[i]._buildingName + " Button";
-            ButtonTemplatesHolder.Add(buildingTemplateRef);
+            //ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
-            //Debug.Log(i);
+            buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
+            if (buildingManagerRef._buildingData[i]._buildingLevel < buildingManagerRef._buildingData[i]._buildingMaxLevel)
+            {
+                buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
+            }
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
                 buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
@@ -46,12 +50,14 @@ public class BuildMenuUI : MonoBehaviour
     {
         if (buildingManagerRef._buildingData[inElementNumber]._buildingLevel < buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
         {
+            inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel].ToString();
+
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
         }
-        if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
-        {
-            inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
-        }
+        //if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
+        //{
+        //    inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+        //}
     }
 
     void Update()

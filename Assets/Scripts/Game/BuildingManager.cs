@@ -18,13 +18,21 @@ public class BuildingData
     public GameObject _initialBuildingGameObject;
     public GameObject currentLevelGameObject;
     public Sprite[] NextUpgradeImages; //Future
+    [Space]
     public GameObject[] UpgradeLevels;
+    public int[] UpgradeCosts;
+    [Space]
     public GameObject[] destroyedVersions; //Just in Case for Future
+
+    public GameObject _respectiveBuildingButtons;
 
     [Header("State Checkers: ")]
     public bool isBuildingSpawnedAndActive; //Just in case for Attack
     public bool isBuildingDamaged; //Just in case to check if building is damaged or not.
+    public bool isBuildingShielded;
     public bool didBuildingReachMaxLevel;
+
+
 }
 
 public class BuildingManager : MonoBehaviour

@@ -17,12 +17,14 @@ public class Slots : MonoBehaviour
     public float spin = 1;
 
     private GameManager mGameManager;
+    private LevelLoadManager mLevelLoadManager;
 
     public List<ReelElement> _elementsName;
-    
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mLevelLoadManager = mGameManager.gameObject.GetComponent<LevelLoadManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
             for (int i = 0; i < _reels.Length; i++)
@@ -192,7 +194,7 @@ public class Slots : MonoBehaviour
     }
     public void ActiveLevelInvoke()
     {
-        SceneManager.LoadScene(1);
+        mLevelLoadManager.BacktoHome();
     }
 }
 
