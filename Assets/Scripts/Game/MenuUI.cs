@@ -14,6 +14,8 @@ public class MenuUI : MonoBehaviour
 
     private GameManager mGameManager;
 
+    [SerializeField] BuildMenuUI mBuildMenuUI;
+
     void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -34,6 +36,8 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.SetActive(true);
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
+        mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+        mBuildMenuUI.SetUpgradeButtons();
     }
 
     public void ReturnButton()

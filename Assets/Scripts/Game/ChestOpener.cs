@@ -28,10 +28,13 @@ public class ChestOpener : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rewardText;
     [SerializeField] private GameObject RewardDisplayPanel;
 
+    private LevelLoadManager mlevelLoadManagerRef;
+
     private void Start()
     {
         EnergyFalling = true;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mlevelLoadManagerRef = mGameManager.gameObject.GetComponent<LevelLoadManager>();
     }
 
 
@@ -175,7 +178,7 @@ public class ChestOpener : MonoBehaviour
     /// </summary>
     public void BackToMainScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        mlevelLoadManagerRef.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }
 

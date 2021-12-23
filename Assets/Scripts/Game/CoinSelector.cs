@@ -36,9 +36,12 @@ public class CoinSelector : MonoBehaviour
     [SerializeField] private GameObject CoinShowerParticleEffect;
     private Transform CoinShowerSpawnPoint;
 
+    private LevelLoadManager mlevelLoadManagerRef;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mlevelLoadManagerRef = mGameManager.gameObject.GetComponent<LevelLoadManager>();
     }
 
     private void OnMouseDown()
@@ -119,7 +122,7 @@ public class CoinSelector : MonoBehaviour
 
     public void BackToMainScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        mlevelLoadManagerRef.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }
 

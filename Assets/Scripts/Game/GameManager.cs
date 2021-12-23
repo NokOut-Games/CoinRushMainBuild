@@ -17,7 +17,9 @@ public enum BuildingTypes
 public class GameManagerBuildingData
 {
     public string _buildingName;
+    public int _buildingNo;
     public int _buildingCurrentLevel;
+    public bool _isBuildingSpawned;
 }
 
 public class GameManager : MonoBehaviour
@@ -46,6 +48,10 @@ public class GameManager : MonoBehaviour
     public List<GameManagerBuildingData> _buildingGameManagerDataRef;
     public BuildingManager _buildingManagerRef;
     public int _buildingCount;
+
+    public bool _IsRefreshNeeded;
+
+    public bool _IsBuildingFromFBase = true;
 
     public int _maxEnergy = 50;
     private bool mIsFull = true;
@@ -122,4 +128,25 @@ public class GameManager : MonoBehaviour
         return seconds;
     }
 
+
+    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn)
+    {
+        _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
+        _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
+        _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
+        //FirebaseManager.Instance.WriteBuildingDataToFirebase();
+    }
+
+    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel)
+    {
+        _buildingGameManagerDataRef = inBuildingData;
+        _coins = inCoinData;
+        _energy = inEnergyData;
+        _playerCurrentLevel = inCurrentLevel;
+
+        _IsRefreshNeeded = true;
+        _IsBuildingFromFBase = true;
+
+    }
 }

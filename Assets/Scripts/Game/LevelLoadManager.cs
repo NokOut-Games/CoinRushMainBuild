@@ -7,23 +7,30 @@ public class LevelLoadManager : MonoBehaviour
 {
     public int currentSceneIndex;
     public int nextSceneIndex;
-
-    void Start()
-    {
-       
-    }
-
-    
-    void Update()
-    {
-        
-    }
+    string levelPrefix = "Level";
 
     public void LoadNextLevel()
     {
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         nextSceneIndex = currentSceneIndex + 1;
-        PlayerPrefs.SetInt("SavedScene", nextSceneIndex);
         SceneManager.LoadScene(nextSceneIndex);
     }
+
+
+
+    public void LoadLevelOf(int inLevelIndex)
+    {
+        SceneManager.LoadScene(levelPrefix + inLevelIndex);
+    }
+    public void LoadLevelASyncOf(int inLevelIndex)
+    {
+        SceneManager.LoadSceneAsync(levelPrefix + inLevelIndex);
+    }
+    public void BacktoHome()
+    {
+        SceneManager.LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel);
+        //Make the GameToLoad GameManager Data
+        GameManager.Instance._IsRefreshNeeded = true;
+    }
+
 }

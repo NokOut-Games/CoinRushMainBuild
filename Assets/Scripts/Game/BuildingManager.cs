@@ -38,14 +38,35 @@ public class BuildingManager : MonoBehaviour
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
+    void GetCurrentBuildingDetails()
+    {
 
-    void Start()
+        for (int i = 0; i < GameManager.Instance._buildingGameManagerDataRef.Count; i++)
+        {
+            _buildingData[i]._buildingName = GameManager.Instance._buildingGameManagerDataRef[i]._buildingName;
+            _buildingData[i]._buildingLevel = GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel;
+            _buildingData[i].isBuildingSpawnedAndActive = GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingSpawned;
+            //Debug.Log(mGameManager._buildingGameManagerDataRef[i]._isBuildingSpawned);
+        }
+    }
+
+    public void PutCurrentLevelBuildingdetails()
+    {
+        for (int i = 0; i < _buildingData.Count; i++)
+        {
+
+            GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive);
+
+        }
+    }
+
+    void SpawningBuilding()
     {
         for (int i = 0; i < _buildingData.Count; i++)
         {
             // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
-            
-            if (!_buildingData[i].isBuildingSpawnedAndActive)
+
+            if (_buildingData[i]._buildingLevel <= 0)
             {
                 GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
                 GORef.name = _buildingData[i]._buildingName;
@@ -55,13 +76,31 @@ public class BuildingManager : MonoBehaviour
             }
             else  // But if there are buildings already spawned and active the grab the information from Game Manager
             {
-                
+                GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                GORef.name = _buildingData[i]._buildingName;
+                if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
+                {
+                    _buildingData[i].didBuildingReachMaxLevel = true;
+                }
                 //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
                 //GORef.name = _buildingData[i]._buildingName;
             }
         }
     }
 
+    void Update()
+    {
+        if (GameManager.Instance._IsRefreshNeeded)
+        {
+            GameManager.Instance._IsRefreshNeeded = false;
+
+            GetCurrentBuildingDetails();
+            SpawningBuilding();
+        }
+
+
+
+    }
     /// <summary>
     /// Upgrades the building by finding its appropriate name
     /// </summary>
@@ -69,9 +108,9 @@ public class BuildingManager : MonoBehaviour
     /// <param name="inBuildingNumber"></param>
     /// <param name="inLevel"></param>
     /// <param name="inCurrentLevelsMesh"></param>
-    public void UpgradeBuilding(string name, int inBuildingNumber, int inLevel, GameObject inCurrentLevelsMesh)
+    public void UpgradeBuilding(string inBuildName, int inBuildingNumber, int inLevel, GameObject inCurrentLevelsMesh)
     {
-        GameObject goRef = GameObject.Find(name);
+        GameObject goRef = GameObject.Find(inBuildName);
         Destroy(goRef);
 
         GameObject newGoRef = Instantiate(_buildingData[inBuildingNumber].UpgradeLevels[inLevel], _buildingData[inBuildingNumber]._buildingSpawnPoint.position, _buildingData[inBuildingNumber]._buildingSpawnPoint.rotation);
@@ -84,6 +123,8 @@ public class BuildingManager : MonoBehaviour
         BuildingDetails buildingDetailRef = newGoRef.GetComponent<BuildingDetails>();
         buildingDetailRef._buildingLevel = inLevel;
         buildingDetailRef._buildMeshBasedOnCurrentLevel = inCurrentLevelsMesh;
+
+        GameManager.Instance.UpdateBuildingData(inBuildName, inBuildingNumber, inLevel + 1, true);
         //yield return null;
     }
 
@@ -97,10 +138,43 @@ public class BuildingManager : MonoBehaviour
         if (_buildingData[inElementNumber]._buildingLevel == _buildingData[inElementNumber]._buildingMaxLevel)
         {
             _buildingData[inElementNumber].didBuildingReachMaxLevel = true;
+            CheckForAllBuildingMax();
         }
     }
 
-    #region Manual Button Functions
+    void CheckForAllBuildingMax()
+    {
+        //Check for Maxing
+
+        for (int i = 0; i < _buildingData.Count; i++)
+        {
+            if (_buildingData[i].didBuildingReachMaxLevel != true)
+                return;
+        }
+        LevelCompleted();
+
+    }
+
+    private void Start()
+    {
+        if (!GameManager.Instance._IsBuildingFromFBase)
+        {
+            PutCurrentLevelBuildingdetails();
+            SpawningBuilding();
+
+        }
+    }
+
+    void LevelCompleted()
+    {
+        GameManager.Instance._playerCurrentLevel++;
+        GameManager.Instance._IsBuildingFromFBase = false;
+        GameManager.Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(GameManager.Instance._playerCurrentLevel);
+    }
+
+}
+
+#region Manual Button Functions
     ///// <summary>
     ///// Function for Button-1
     ///// </summary>
@@ -166,7 +240,7 @@ public class BuildingManager : MonoBehaviour
     //}
 
     #endregion
-}
+
 
 
 
@@ -233,5 +307,3 @@ public class BuildingManager : MonoBehaviour
 //    UpgradeBuilding("Circle", 2, k);
 //    k++;
 //}
-
-

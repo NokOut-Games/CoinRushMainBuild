@@ -8,45 +8,7 @@ using TMPro;
 
 public class LevelManager : MonoBehaviour
 {
-    public BuildingManager buildingManagerRef;
-    public LevelLoadManager _levelLoadManagerRef;
-
-    public bool _loadNextLevel = true;
-
-    private void Start()
-    {
-        _loadNextLevel = true;
-        //
-        _levelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
-    }
-
-    private void Update()
-    {
-        for (int i = 0; i < buildingManagerRef._buildingData.Count; i++)
-        {
-            if (buildingManagerRef._buildingData[i].didBuildingReachMaxLevel != true)
-            {
-                _loadNextLevel = false;
-                break;
-            }
-            else
-            {
-                _loadNextLevel = true;
-            }
-        }
-
-        if (_loadNextLevel)
-        {
-            Invoke(nameof(DelaySceneLoad), 2f);
-        }
-        
-        //UpdateCoinAndEnergyTextFields();
-    }
-
-    void DelaySceneLoad()
-    {
-        _levelLoadManagerRef.LoadNextLevel();
-    }
+    
 
     /// <summary>
     /// Keeps updating coin and energy text fields

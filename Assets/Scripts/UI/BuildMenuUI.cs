@@ -18,7 +18,7 @@ public class BuildMenuUI : MonoBehaviour
 
     public List<GameObject> ButtonTemplatesHolder = new List<GameObject>();
 
-    void Start()
+    public void SetUpgradeButtons()
     {
         BuildingItemTemplate = ContentView.GetChild(0).gameObject;
         for (int i = 0; i <  buildingManagerRef._buildingData.Count; i++)
@@ -31,7 +31,6 @@ public class BuildMenuUI : MonoBehaviour
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
                 buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
-                
                 UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
                 
             });
