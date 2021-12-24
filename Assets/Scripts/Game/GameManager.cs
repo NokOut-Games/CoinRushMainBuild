@@ -59,6 +59,10 @@ public class GameManager : MonoBehaviour
     public int _maxEnergy = 50;
     private bool mIsFull = true;
 
+
+
+    public List<ScriptedCards> _SavedCards = new List<ScriptedCards>();
+
     private void Awake()
     {
         Application.targetFrameRate = 30;
@@ -150,7 +154,6 @@ public class GameManager : MonoBehaviour
 
     public void CurrentLevelCompleted()
     {
-
         if (_playerCurrentLevel<_MaxLevelsInGame)
         {
             _playerCurrentLevel++;

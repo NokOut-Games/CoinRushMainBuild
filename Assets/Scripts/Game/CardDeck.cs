@@ -55,6 +55,15 @@ public class CardDeck : MonoBehaviour
         canClick = true;
         DrawButton.sprite = drawNormal;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        if (GameManager.Instance._SavedCards.Count>0)
+        {
+            foreach (ScriptedCards savedCard in GameManager.Instance._SavedCards)
+            {
+                InstantiateCard(savedCard);
+            }
+            GameManager.Instance._SavedCards.Clear();
+        }
     }
 
     private void DestroyCardList()
@@ -298,9 +307,59 @@ public class CardDeck : MonoBehaviour
             if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
                 canClick = false;
-                StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
+                CardType matchedCard = _CardList[i]._cardType;
+                _CardList.RemoveRange(i,3);//Remove the 3 MatchCard
+                SaveScriptedCardOfCardList();
+                StartCoroutine(DelayedSceneLoader(matchedCard));
             }
         }
+    }
+    // save Card Details to GameManager
+    private void SaveScriptedCardOfCardList()
+    {
+        List<ScriptedCards> newScriptedCardsToSave = new List<ScriptedCards>();
+        for (int i = 0; i < _CardList.Count; i++)
+        {
+            switch (_CardList[i]._cardType)
+            {
+                case CardType.ATTACK:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.ATTACK));
+                    break;
+                case CardType.STEAL:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.STEAL));
+                    break;
+                case CardType.SHIELD:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.SHIELD));
+                    break;
+                case CardType.JOKER:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.JOKER));
+                    break;
+                case CardType.ENERGY:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.ENERGY));
+                    break;
+                case CardType.COINS:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.COINS));
+                    break;
+                case CardType.FORTUNEWHEEL:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.FORTUNEWHEEL));
+                    break;
+                case CardType.SLOTMACHINE:
+                    newScriptedCardsToSave.Add(GetScriptedCardWithCardType(CardType.SLOTMACHINE));
+                    break;
+                default:
+                    break;
+            }
+        }
+        GameManager.Instance._SavedCards = newScriptedCardsToSave; //Save scripted Card to GameManager         
+    }
+
+    ScriptedCards GetScriptedCardWithCardType(CardType inCardType)
+    {
+        foreach (ScriptedCards scriptedCard in mScriptedCards)
+        {
+            if (scriptedCard._cardType == inCardType) return scriptedCard;
+        }
+        return null;
     }
 
     private IEnumerator DelayedSceneLoader(CardType inType)
