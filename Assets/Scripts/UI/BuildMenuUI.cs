@@ -16,6 +16,13 @@ public class BuildMenuUI : MonoBehaviour
 
     private GameObject BuildingItemTemplate;
 
+    private GameManager mGameManager;
+
+    private void Start()
+    {
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
     //public List<GameObject> ButtonTemplatesHolder = new List<GameObject>();
 
     public void SetUpgradeButtons()
@@ -28,18 +35,18 @@ public class BuildMenuUI : MonoBehaviour
             //ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
-            if (buildingManagerRef._buildingData[i]._buildingLevel < buildingManagerRef._buildingData[i]._buildingMaxLevel)
-            {
-                buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
-            }
+            
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
                 buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
+                mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
                 UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
                 
+                
             });
+            UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
-            buildingTemplateRef.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[i].NextUpgradeImages[buildingManagerRef._buildingData[i]._buildingLevel];
+            
         }
 
         Destroy(BuildingItemTemplate);
@@ -50,32 +57,26 @@ public class BuildMenuUI : MonoBehaviour
     {
         if (buildingManagerRef._buildingData[inElementNumber]._buildingLevel < buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
         {
+            for (int i = 0; i < buildingManagerRef._buildingData[inElementNumber]._buildingLevel; i++)
+            {
+                inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
+            }
             inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel].ToString();
-
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
         }
         //if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
-        //{
-        //    inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
-        //}
+        else {
+            //    inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Maxed";
+            inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
+//            mGameManager._coins -= buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
+
+            inButton.transform.GetChild(1).GetComponentInChildren<Button>().interactable = false;
+        }
     }
 
     void Update()
     {
         
     }
-
-    //public void BuildButton()
-    //{
-    //    buildPanelGameObject.SetActive(true);
-    //    screenItemsUIPanel.SetActive(false);
-    //    drawButtonUI.SetActive(false);
-    //}
-
-    //public void ReturnButton()
-    //{
-    //    buildPanelGameObject.SetActive(false);
-    //    screenItemsUIPanel.SetActive(true);
-    //    drawButtonUI.SetActive(true);
-    //}
 }

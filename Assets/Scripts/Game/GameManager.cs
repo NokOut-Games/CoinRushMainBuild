@@ -20,6 +20,8 @@ public class GameManagerBuildingData
     public int _buildingNo;
     public int _buildingCurrentLevel;
     public bool _isBuildingSpawned;
+    public bool _isBuildingShielded;
+    public bool _isBuildingDestroyed;
 }
 
 public class GameManager : MonoBehaviour
@@ -129,12 +131,14 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn)
+    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed , bool inIsBuildingShielded)
     {
         _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = inIsBuildingShielded;
         //FirebaseManager.Instance.WriteBuildingDataToFirebase();
     }
 

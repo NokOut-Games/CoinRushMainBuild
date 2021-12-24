@@ -137,6 +137,7 @@ public class FirebaseManager : MonoBehaviour
 
             ReadDataForGuest();
             // WriteBuildingData();
+            //WriteBuildingDataToFirebase();
         }
         else
         {
