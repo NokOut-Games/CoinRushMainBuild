@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 //Trying this
 [System.Serializable]
@@ -13,6 +14,7 @@ public class BuildingData
     public int _buildingLevel = 0;
     public int _buildingMaxLevel;
     public Transform _buildingSpawnPoint;
+    public Transform _cameraFocusPoint;
 
     [Header("Building's GameObject: ")]
     public GameObject _initialBuildingGameObject;
@@ -41,6 +43,10 @@ public class BuildingManager : MonoBehaviour
     public List<GameObject> _buildingsList;
 
     GameManager mGameManager;
+
+    [SerializeField] GameObject mCameraParentRef;
+    [SerializeField] float ConstructionTime;
+
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -102,43 +108,7 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        //Future Scenario
-        //for (int i = 0; i < _buildingData.Count; i++)
-        //{
-        //    // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
-        //    if (_buildingData[i]._buildingLevel <= 0)
-        //    {
-        //        //Instantitate the basic building (Plunk Card)
-        //        GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
-        //        GORef.name = _buildingData[i]._buildingName;
-        //        _buildingData[i].isBuildingSpawnedAndActive = true;
-
-        //        _buildingsList.Add(GORef);
-        //    }
-        //    else if (_buildingData[i].isBuildingDamaged)  // But if there are buildings already spawned and active the grab the information from Game Manager
-        //    {
-        //        //If the building is damaged spawn the damaged building
-        //        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        //        GORef.name = _buildingData[i]._buildingName;
-        //        //if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
-        //        //{
-        //        //    _buildingData[i].didBuildingReachMaxLevel = true;
-        //        //}
-        //        //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        //        //GORef.name = _buildingData[i]._buildingName;
-        //    }
-        //    else if (_buildingData[i].isBuildingShielded)
-        //    {
-        //        //spawn the shielded building
-        //        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        //        GORef.name = _buildingData[i]._buildingName;
-        //    }
-        //    else
-        //    {
-        //        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        //        GORef.name = _buildingData[i]._buildingName;
-        //    }
-        //}
+        
     }
 
     void Update()
@@ -161,10 +131,18 @@ public class BuildingManager : MonoBehaviour
     /// <param name="inBuildingNumber"></param>
     /// <param name="inLevel"></param>
     /// <param name="inCurrentLevelsMesh"></param>
-    public void UpgradeBuilding(string inBuildName, int inBuildingNumber, int inLevel, GameObject inCurrentLevelsMesh)
+    public IEnumerator UpgradeBuilding(string inBuildName, int inBuildingNumber, int inLevel, GameObject inCurrentLevelsMesh , Transform inCameraFocusPoint)
     {
         GameObject goRef = GameObject.Find(inBuildName);
         Destroy(goRef);
+        mCameraParentRef.transform.DOMove(inCameraFocusPoint.position,1,false).OnComplete(()=>
+        {
+            
+        });
+
+        yield return new WaitForSeconds(ConstructionTime + 1);
+        
+
 
         GameObject newGoRef = Instantiate(_buildingData[inBuildingNumber].UpgradeLevels[inLevel], _buildingData[inBuildingNumber]._buildingSpawnPoint.position, _buildingData[inBuildingNumber]._buildingSpawnPoint.rotation);
         newGoRef.name = _buildingData[inBuildingNumber]._buildingName;
@@ -179,19 +157,19 @@ public class BuildingManager : MonoBehaviour
 
         //Saves the data from building manager to game manager
         GameManager.Instance.UpdateBuildingData(inBuildName, inBuildingNumber, inLevel + 1, true,false,false);
-        //yield return null;
+        yield return null;
     }
 
     public void GrabElementNumberBasedOnButtonClick(int inElementNumber)
     {
         if (_buildingData[inElementNumber]._buildingLevel < _buildingData[inElementNumber]._buildingMaxLevel)
         {
-            UpgradeBuilding(_buildingData[inElementNumber]._buildingName, inElementNumber, _buildingData[inElementNumber]._buildingLevel, _buildingData[inElementNumber].UpgradeLevels[_buildingData[inElementNumber]._buildingLevel]);
+            StartCoroutine(UpgradeBuilding(_buildingData[inElementNumber]._buildingName, inElementNumber, _buildingData[inElementNumber]._buildingLevel, _buildingData[inElementNumber].UpgradeLevels[_buildingData[inElementNumber]._buildingLevel], _buildingData[inElementNumber]._cameraFocusPoint));
             _buildingData[inElementNumber]._buildingLevel += 1;
         }
         if (_buildingData[inElementNumber]._buildingLevel == _buildingData[inElementNumber]._buildingMaxLevel)
         {
-//            _buildingData[inElementNumber]._respectiveBuildingButtons.GetComponent<Button>().interactable = false;
+            _buildingData[inElementNumber]._respectiveBuildingButtons.GetComponent<Button>().interactable = false;
             _buildingData[inElementNumber].didBuildingReachMaxLevel = true;
             CheckForAllBuildingMax();
         }
@@ -217,72 +195,137 @@ public class BuildingManager : MonoBehaviour
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Future Scenario
+//for (int i = 0; i < _buildingData.Count; i++)
+//{
+//    // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
+//    if (_buildingData[i]._buildingLevel <= 0)
+//    {
+//        //Instantitate the basic building (Plunk Card)
+//        GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
+//        GORef.name = _buildingData[i]._buildingName;
+//        _buildingData[i].isBuildingSpawnedAndActive = true;
+
+//        _buildingsList.Add(GORef);
+//    }
+//    else if (_buildingData[i].isBuildingDamaged)  // But if there are buildings already spawned and active the grab the information from Game Manager
+//    {
+//        //If the building is damaged spawn the damaged building
+//        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+//        GORef.name = _buildingData[i]._buildingName;
+//        //if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
+//        //{
+//        //    _buildingData[i].didBuildingReachMaxLevel = true;
+//        //}
+//        //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+//        //GORef.name = _buildingData[i]._buildingName;
+//    }
+//    else if (_buildingData[i].isBuildingShielded)
+//    {
+//        //spawn the shielded building
+//        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+//        GORef.name = _buildingData[i]._buildingName;
+//    }
+//    else
+//    {
+//        GameObject GORef = Instantiate(_buildingData[i].destroyedVersions[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+//        GORef.name = _buildingData[i]._buildingName;
+//    }
+//}
+
 #region Manual Button Functions
-    ///// <summary>
-    ///// Function for Button-1
-    ///// </summary>
-    //public void Building1Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(0);
-    //}
+///// <summary>
+///// Function for Button-1
+///// </summary>
+//public void Building1Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(0);
+//}
 
-    ///// <summary>
-    ///// Function for Button-2
-    ///// </summary>
-    //public void Building2Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(1);
-    //}
+///// <summary>
+///// Function for Button-2
+///// </summary>
+//public void Building2Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(1);
+//}
 
-    ///// <summary>
-    ///// Function for Button-3
-    ///// </summary>
-    //public void Building3Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(2);
-    //}
+///// <summary>
+///// Function for Button-3
+///// </summary>
+//public void Building3Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(2);
+//}
 
-    ///// <summary>
-    ///// Function for Button-4
-    ///// </summary>
-    //public void Building4Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(3);
-    //}
+///// <summary>
+///// Function for Button-4
+///// </summary>
+//public void Building4Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(3);
+//}
 
-    ///// <summary>
-    ///// Function for Button-5
-    ///// </summary>
-    //public void Building5Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(4);
-    //}
+///// <summary>
+///// Function for Button-5
+///// </summary>
+//public void Building5Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(4);
+//}
 
-    ///// <summary>
-    ///// Function for Button-6
-    ///// </summary>
-    //public void Building6Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(5);
-    //}
+///// <summary>
+///// Function for Button-6
+///// </summary>
+//public void Building6Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(5);
+//}
 
-    ///// <summary>
-    ///// Function for Button-7
-    ///// </summary>
-    //public void Building7Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(6);
-    //}
+///// <summary>
+///// Function for Button-7
+///// </summary>
+//public void Building7Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(6);
+//}
 
-    ///// <summary>
-    ///// Function for Button-8
-    ///// </summary>
-    //public void Building8Upgrade()
-    //{
-    //    GrabElementNumberBasedOnButtonClick(7);
-    //}
+///// <summary>
+///// Function for Button-8
+///// </summary>
+//public void Building8Upgrade()
+//{
+//    GrabElementNumberBasedOnButtonClick(7);
+//}
 
-    #endregion
+#endregion
 
 
 

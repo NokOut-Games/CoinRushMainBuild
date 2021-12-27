@@ -16,9 +16,16 @@ public class MenuUI : MonoBehaviour
 
     [SerializeField] BuildMenuUI mBuildMenuUI;
 
+    public CameraController mCameraController;
+    public bool BuildModeOn;
+
+    public bool isButtonGenerated = false;
+
     void Start()
     {
+        isButtonGenerated = false;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mCameraController = Camera.main.GetComponent<CameraController>();
     }
 
     void Update()
@@ -34,10 +41,15 @@ public class MenuUI : MonoBehaviour
     public void BuildButton()
     {
         buildPanelGameObject.SetActive(true);
+        BuildModeOn = true;
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
-        mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
-        mBuildMenuUI.SetUpgradeButtons();
+        if (isButtonGenerated == false)
+        {
+            mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+            mBuildMenuUI.SetUpgradeButtons();
+            isButtonGenerated = true;
+        }
     }
 
     public void ReturnButton()

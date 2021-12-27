@@ -140,11 +140,6 @@ public class CardDeck : MonoBehaviour
         //}
     }
 
-    void CircleOutlineFiller()
-    {
-        _drawButtonFillerImage.DOFillAmount(1, 3);
-    }
-
     /// <summary>
     /// Brings Back Draw Button To Normal State from Automatic State
     /// </summary>

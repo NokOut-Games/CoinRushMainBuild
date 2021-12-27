@@ -34,6 +34,7 @@ public class CameraController : MonoBehaviour
     public float _transitionSpeed;
     public RectTransform _DrawButtonRectTransform;
     public RectTransform _OpenHandRectTransform;
+    public RectTransform _ScrollViewRectTransform;
 
     public bool _DrawButtonClicked = false;
     public bool _CameraFreeRoam = true;
@@ -44,9 +45,13 @@ public class CameraController : MonoBehaviour
 
     private CardDeck mCardDeck;
 
+    public bool _isCameraInConstructionView;
+    public MenuUI mMenuUI;
+
     private void Start()
     {
         mCardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
+        mMenuUI = GameObject.Find("GameCanvas").GetComponent<MenuUI>();
 
         _CameraParent = transform.parent;
 
@@ -75,11 +80,12 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _MouseDownPosition = Input.mousePosition;
-            Vector2 localMousePosition = _DrawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
-            Vector2 localMousePosition1 = _OpenHandRectTransform.InverseTransformPoint(Input.mousePosition); //New Addition
+            Vector2 drawButtonlocalMousePosition = _DrawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
+            Vector2 openHandLocalMousePosition = _OpenHandRectTransform.InverseTransformPoint(Input.mousePosition); //New Addition
+            Vector2 BuildingScrollViewLocalPosition = _ScrollViewRectTransform.InverseTransformPoint(Input.mousePosition);
             if (_isCameraInGamePlayView) //New Addition
             {
-                if (!_DrawButtonRectTransform.rect.Contains(localMousePosition) && !_OpenHandRectTransform.rect.Contains(localMousePosition1))
+                if (!_DrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition) && !_OpenHandRectTransform.rect.Contains(openHandLocalMousePosition))
                 {
                     _DrawButtonClicked = false;
                     _isCameraInGamePlayView = false;
@@ -89,12 +95,33 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (!_DrawButtonRectTransform.rect.Contains(localMousePosition))
+                if (!_DrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition))
                 {
                     _DrawButtonClicked = false;
                     _isCameraInGamePlayView = false;
                     Invoke("SetCameraFreeRoam", 0.11f);
                     mCardDeck.BackToNormalState();
+                }
+            }
+
+            if(_isCameraInConstructionView)
+            {
+                if(!_ScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
+                {
+                    _isCameraInConstructionView = false;
+                    mMenuUI.BuildModeOn = false;
+                    
+                    _currentView = _views[0];
+                    _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+
+                    Vector3 currentAngle = new Vector3(
+                        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+                        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+                        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+
+                    _CameraParent.eulerAngles = currentAngle;
+                    mMenuUI.ReturnButton();
+                    Invoke("SetCameraFreeRoam", 0.11f);
                 }
             }
         }
@@ -105,6 +132,23 @@ public class CameraController : MonoBehaviour
             _CameraFreeRoam = false;
         }
 
+        if (mMenuUI.BuildModeOn)
+        {
+            //_isCameraInGamePlayView = true;
+            //OpenCardRegion.SetActive(true);
+            _CameraFreeRoam = false;
+            _currentView = _views[2];
+            _isCameraInConstructionView = true;
+            _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);
+
+            Vector3 currentAngle = new Vector3(
+                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, 0.1f),// Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, 0.1f),//Time.deltaTime * _transitionSpeed),
+                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, 0.1f));//Time.deltaTime * _transitionSpeed));
+
+            _CameraParent.eulerAngles = currentAngle;
+        }
+        
         if (_DrawButtonClicked)
         {
             _isCameraInGamePlayView = true;
@@ -140,9 +184,9 @@ public class CameraController : MonoBehaviour
                     _CameraParent.eulerAngles = currentAngle;
                 }
             }
-            HorizontalPanning();
+            //HorizontalPanning();
             //HorizontalPanningWithRotation();
-            VerticalZooming();
+            //rticalZooming();
         }
     }
 

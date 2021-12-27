@@ -18,8 +18,11 @@ public class BuildMenuUI : MonoBehaviour
 
     private GameManager mGameManager;
 
+    
+
     private void Start()
     {
+       
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -28,28 +31,31 @@ public class BuildMenuUI : MonoBehaviour
     public void SetUpgradeButtons()
     {
         BuildingItemTemplate = ContentView.GetChild(0).gameObject;
-        for (int i = 0; i <  buildingManagerRef._buildingData.Count; i++)
+        for (int i = 0; i < buildingManagerRef._buildingData.Count; i++)
         {
             GameObject buildingTemplateRef = Instantiate(BuildingItemTemplate, ContentView);
             buildingTemplateRef.name = buildingManagerRef._buildingData[i]._buildingName + " Button";
             //ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
+
             
-            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
-            {
-                buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
-                mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
-                UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
-                
-                
-            });
+                buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
+                {
+                    buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
+                    mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
+                    UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
+
+
+                });
+            
             UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
-            
+
         }
 
         Destroy(BuildingItemTemplate);
+        
         //AttachButton();
     }
 
