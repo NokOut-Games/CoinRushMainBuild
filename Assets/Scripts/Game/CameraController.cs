@@ -206,6 +206,8 @@ public class CameraController : MonoBehaviour
                 HorizontalPanning();
                 VerticalZooming();
             }
+
+
         }
     }
 
@@ -339,7 +341,28 @@ public class CameraController : MonoBehaviour
 }
 
 
+//if (!_DrawButtonClicked || !_buildButtonClicked)
+//{
+//    if (!_CameraFreeRoam)
+//    {
+//        OpenCardRegion.SetActive(false);
+//        if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
+//        {
+//            _currentView = _views[0];
+//            _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
 
+//            Vector3 currentAngle = new Vector3(
+//                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+//                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+//                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+
+//            _CameraParent.eulerAngles = currentAngle;
+//        }
+//    }
+
+//    HorizontalPanning();
+//    VerticalZooming();
+//}
 
 
 

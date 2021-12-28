@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 //Trying this
 [System.Serializable]
@@ -49,6 +50,12 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] float ConstructionTime;
 
     [SerializeField] private GameObject BuildingConstructionVFX;
+    [Tooltip("Speed the building should be focused when the upgrade of that button is being clicked")]
+    [SerializeField] private float mCameraFocusSpeed;
+    [Tooltip("Delay time to spawn the next upgrade")]
+    [SerializeField] private float mBuildingSpawnTimeDelay;
+    [Tooltip("Lesser the value the faster it happens / Higher the value the slower it happens")]
+    [SerializeField] private float mBuildingShirnkAndEnlargeTime;
 
     private void Awake()
     {
@@ -155,7 +162,9 @@ public class BuildingManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Upgrades the building by finding its appropriate name
+    /// Order of progression
+    /// 1. Particle & Camera Zoom-In.
+    /// 2. 
     /// </summary>
     /// <param name="name"></param>
     /// <param name="inBuildingNumber"></param>
@@ -165,19 +174,20 @@ public class BuildingManager : MonoBehaviour
     {
         cameraControllerRef._inBetweenConstructionProcess = true;   //Button Click [3:06:0f]
         GameObject goRef = GameObject.Find(inBuildName);
-        //yield return new WaitForSeconds(0.45f);
+        
+        //Upgrading Scenario Starts Here
+
         GameObject smokeVFX = Instantiate(BuildingConstructionVFX, particleSpawnPoint.position, Quaternion.identity); //Particle Effect Start[3:06:45f]
-        //yield return new WaitForSeconds(0.45f);
-        mCameraParentRef.transform.DOMove(inCameraFocusPoint.position, 1, false); //Zoom-In[3:06:90f]
-        yield return new WaitForSeconds(0.40f);
-        goRef.transform.DOScaleY(0.75f,1); //Building Becomes Small [3:07:30]
-        yield return new WaitForSeconds(0.30f);
+        mCameraParentRef.transform.DOMove(inCameraFocusPoint.position, mCameraFocusSpeed , false); //Zoom-In[3:06:90f]
+        yield return new WaitForSeconds(0.50f);
+        //_buildingData[inLevel]._respectiveBuildingButtons
+        goRef.transform.DOScaleY(0.75f,mBuildingShirnkAndEnlargeTime); //Building Becomes Small [3:07:30]
+        yield return new WaitForSeconds(mBuildingSpawnTimeDelay);
         Destroy(goRef);
         GameObject newGoRef = Instantiate(_buildingData[inBuildingNumber].UpgradeLevels[inLevel], _buildingData[inBuildingNumber]._buildingSpawnPoint.position, _buildingData[inBuildingNumber]._buildingSpawnPoint.rotation);
         newGoRef.transform.localScale = new Vector3(1,0.75f,1); //Building Spawn [3:07:60]
         newGoRef.name = _buildingData[inBuildingNumber]._buildingName;
-        yield return new WaitForSeconds(0.30f);
-        newGoRef.transform.DOScaleY(1, 1); //Building Becoming Big[3:07:90]
+        newGoRef.transform.DOScaleY(1, mBuildingShirnkAndEnlargeTime); //Building Becoming Big[3:07:90]
         yield return new WaitForSeconds(0.20f);
         Destroy(smokeVFX); //Destroy particle [3:08:10]
         
@@ -216,6 +226,7 @@ public class BuildingManager : MonoBehaviour
         {
             StartCoroutine(UpgradeBuilding(_buildingData[inElementNumber]._buildingName, inElementNumber, _buildingData[inElementNumber]._buildingLevel, _buildingData[inElementNumber].UpgradeLevels[_buildingData[inElementNumber]._buildingLevel], _buildingData[inElementNumber]._cameraFocusPoint,_buildingData[inElementNumber]._buildingSpawnPoint));
             _buildingData[inElementNumber]._buildingLevel += 1;
+            _buildingData[inElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Building";
         }
         if (_buildingData[inElementNumber]._buildingLevel == _buildingData[inElementNumber]._buildingMaxLevel)
         {

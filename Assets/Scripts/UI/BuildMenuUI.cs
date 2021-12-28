@@ -38,16 +38,17 @@ public class BuildMenuUI : MonoBehaviour
             //ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
+            buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
 
-            
-                buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
-                {
+
+            buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
+            {
                     buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
                     mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
                     UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
 
 
-                });
+            });
             
             UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
             buildingTemplateRef.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i]._buildingName;
@@ -67,7 +68,7 @@ public class BuildMenuUI : MonoBehaviour
             {
                 inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
             }
-            inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel].ToString();
+            StartCoroutine(TempInvoke(inButton, inElementNumber));
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
         }
         //if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
@@ -89,8 +90,10 @@ public class BuildMenuUI : MonoBehaviour
         }
     }
 
-    void Update()
+    IEnumerator TempInvoke(GameObject Button, int ElementNumber)
     {
+        yield return new WaitForSeconds(1f);
+        Button.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[ElementNumber].UpgradeCosts[buildingManagerRef._buildingData[ElementNumber]._buildingLevel].ToString();
         
     }
 }

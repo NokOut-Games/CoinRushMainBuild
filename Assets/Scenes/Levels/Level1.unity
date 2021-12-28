@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.34620947, g: 0.48965842, b: 0.56876814, a: 1}
+  m_IndirectSpecularColor: {r: 0.34622434, g: 0.48989257, b: 0.56902647, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -44320,9 +44320,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: mCameraFocusSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: BuildingConstructionVFX
       value: 
       objectReference: {fileID: 7473104587106121702, guid: fb20ece43a4144530a620b8a819d303a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: mBuildingSpawnTimeDelay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: mBuildingShirnkAndEnlargeTime
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingName
       value: Boat
