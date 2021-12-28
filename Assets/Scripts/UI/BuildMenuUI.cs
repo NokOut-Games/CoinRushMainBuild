@@ -74,6 +74,14 @@ public class BuildMenuUI : MonoBehaviour
         else {
             //    inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
             inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Maxed";
+            for (int i = 0; i < buildingManagerRef._buildingData[inElementNumber]._buildingLevel; i++)
+            {
+                //if(inButton.transform.GetChild(4).GetChild(i).gameObject.activeInHierarchy)
+                //{
+                //    return;
+                //}
+                inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
+            }
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
 //            mGameManager._coins -= buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
 

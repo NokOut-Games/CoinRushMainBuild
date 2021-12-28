@@ -41,9 +41,10 @@ public class MenuUI : MonoBehaviour
     public void BuildButton()
     {
         buildPanelGameObject.SetActive(true);
-        BuildModeOn = true;
+        Camera.main.GetComponent<CameraController>().BuildButtonClicked();
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
+
         if (isButtonGenerated == false)
         {
             mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
@@ -52,7 +53,7 @@ public class MenuUI : MonoBehaviour
         }
     }
 
-    public void ReturnButton()
+    public void CloseBuildButton()
     {
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
