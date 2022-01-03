@@ -1682,14 +1682,14 @@ MonoBehaviour:
   mTimeToOpenRewardPanel: 2
   HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
   HammerSpawnPoint: {fileID: 467147532}
-  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerHitPigParticle: {fileID: 5182249186578932088, guid: 46a1aae9bb716884fa773473cdc9fcb4, type: 3}
   HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
   mHowMiddleToCameraY: 20
   mHowFarFromCameraZ: 90
   mTimeBetweenHammerSpawnAndBreakAnimation: 1
   mTimeBetweenPigBreakAndCoinShower: 0.5
   GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
-  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+  CoinShowerParticleEffect: {fileID: 6733552320682675888, guid: dbb1f54a376c2b94cbc1357ae0b4d022, type: 3}
 --- !u!114 &136235537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3799,14 +3799,14 @@ MonoBehaviour:
   mTimeToOpenRewardPanel: 2
   HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
   HammerSpawnPoint: {fileID: 467147532}
-  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerHitPigParticle: {fileID: 5182249186578932088, guid: 46a1aae9bb716884fa773473cdc9fcb4, type: 3}
   HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
   mHowMiddleToCameraY: 20
   mHowFarFromCameraZ: 90
   mTimeBetweenHammerSpawnAndBreakAnimation: 1
   mTimeBetweenPigBreakAndCoinShower: 0.5
   GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
-  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+  CoinShowerParticleEffect: {fileID: 6733552320682675888, guid: dbb1f54a376c2b94cbc1357ae0b4d022, type: 3}
 --- !u!114 &384144976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6149,14 +6149,14 @@ MonoBehaviour:
   mTimeToOpenRewardPanel: 2
   HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
   HammerSpawnPoint: {fileID: 467147532}
-  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerHitPigParticle: {fileID: 5182249186578932088, guid: 46a1aae9bb716884fa773473cdc9fcb4, type: 3}
   HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
   mHowMiddleToCameraY: 20
   mHowFarFromCameraZ: 90
   mTimeBetweenHammerSpawnAndBreakAnimation: 1
   mTimeBetweenPigBreakAndCoinShower: 0.5
   GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
-  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+  CoinShowerParticleEffect: {fileID: 6733552320682675888, guid: dbb1f54a376c2b94cbc1357ae0b4d022, type: 3}
 --- !u!114 &815108684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6175,6 +6175,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}
   m_PrefabInstance: {fileID: 815108679}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &830830102
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
 --- !u!1 &864680902
 GameObject:
   m_ObjectHideFlags: 0
@@ -8142,14 +8199,14 @@ MonoBehaviour:
   mTimeToOpenRewardPanel: 2
   HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
   HammerSpawnPoint: {fileID: 467147532}
-  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerHitPigParticle: {fileID: 5182249186578932088, guid: 46a1aae9bb716884fa773473cdc9fcb4, type: 3}
   HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
   mHowMiddleToCameraY: 20
   mHowFarFromCameraZ: 90
   mTimeBetweenHammerSpawnAndBreakAnimation: 1
   mTimeBetweenPigBreakAndCoinShower: 0.5
   GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
-  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+  CoinShowerParticleEffect: {fileID: 6733552320682675888, guid: dbb1f54a376c2b94cbc1357ae0b4d022, type: 3}
 --- !u!114 &1252261534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10622,14 +10679,14 @@ MonoBehaviour:
   mTimeToOpenRewardPanel: 2
   HammerPrefab: {fileID: 8710487471254239398, guid: 56604971614d0c04ea153a27ebaa4a6e, type: 3}
   HammerSpawnPoint: {fileID: 467147532}
-  HammerHitPigParticle: {fileID: 1199680031934576525, guid: 1180b94e3f4c12443ac1f562b5ea24cb, type: 3}
+  HammerHitPigParticle: {fileID: 5182249186578932088, guid: 46a1aae9bb716884fa773473cdc9fcb4, type: 3}
   HammerSpawnParticle: {fileID: 7473104587106121702, guid: 681cd9dcd4faf2f4da2de9b7bbea5e9e, type: 3}
   mHowMiddleToCameraY: 20
   mHowFarFromCameraZ: 90
   mTimeBetweenHammerSpawnAndBreakAnimation: 1
   mTimeBetweenPigBreakAndCoinShower: 0.5
   GodRaysParticleSystem: {fileID: 3177890827393218982, guid: bc4a7b2e549189b4aabd9155a0d7d7cf, type: 3}
-  CoinShowerParticleEffect: {fileID: 3834570610802839068, guid: c4fdfbf0609c63f4db3abf4824b3fc11, type: 3}
+  CoinShowerParticleEffect: {fileID: 6733552320682675888, guid: dbb1f54a376c2b94cbc1357ae0b4d022, type: 3}
 --- !u!4 &1877534917 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b35e1eec77413c24c8f8d973df8a9ffe, type: 3}

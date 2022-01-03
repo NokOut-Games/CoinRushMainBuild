@@ -11,18 +11,15 @@ public class BuildMenuUI : MonoBehaviour
     //public GameObject screenItemsUIPanel;
     //public GameObject drawButtonUI;
 
-    public Transform ContentView;
-    public BuildingManager buildingManagerRef;
+    [SerializeField] private Transform ContentView;
+    [SerializeField] private BuildingManager buildingManagerRef;
 
     private GameObject BuildingItemTemplate;
 
     private GameManager mGameManager;
 
-    
-
     private void Start()
     {
-       
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -40,14 +37,30 @@ public class BuildMenuUI : MonoBehaviour
             buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
             buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
 
-
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
-                    buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
-                    mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
-                    UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
-
-
+                //if (!buildingManagerRef._isAnotherBuildingInConstruction)
+                //{
+                //if (buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel != 0)
+                //{
+                    if (GameManager.Instance.HasEnoughCoins(buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel]))
+                    {
+                        buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
+                        mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
+                        UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
+                    }
+                    else
+                    {
+                        Debug.Log("Not Enough Coins");
+                    }
+                //}
+                //else
+                //{
+                //    buildingManagerRef.GrabElementNumberBasedOnButtonClick(BuildingUpgradeNumber);
+                //    mGameManager._coins -= buildingManagerRef._buildingData[BuildingUpgradeNumber].UpgradeCosts[buildingManagerRef._buildingData[BuildingUpgradeNumber]._buildingLevel - 1];
+                //    UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
+                //}
+                //}
             });
             
             UpdateBuildingImage(buildingTemplateRef, BuildingUpgradeNumber);
@@ -60,7 +73,7 @@ public class BuildMenuUI : MonoBehaviour
         //AttachButton();
     }
 
-    public void UpdateBuildingImage(GameObject inButton,int inElementNumber)
+    private void UpdateBuildingImage(GameObject inButton,int inElementNumber)
     {
         if (buildingManagerRef._buildingData[inElementNumber]._buildingLevel < buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
         {
@@ -68,32 +81,30 @@ public class BuildMenuUI : MonoBehaviour
             {
                 inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
             }
-            StartCoroutine(TempInvoke(inButton, inElementNumber));
+            StartCoroutine(InvokeNextCostForButton(inButton, inElementNumber));
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel];
         }
-        //if(buildingManagerRef._buildingData[inElementNumber]._buildingLevel == buildingManagerRef._buildingData[inElementNumber]._buildingMaxLevel)
+        
         else {
-            //    inButton.transform.GetChild(0).GetComponent<Image>().color = Color.black;
+            
             inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Maxed";
             for (int i = 0; i < buildingManagerRef._buildingData[inElementNumber]._buildingLevel; i++)
             {
-                //if(inButton.transform.GetChild(4).GetChild(i).gameObject.activeInHierarchy)
-                //{
-                //    return;
-                //}
                 inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
             }
             inButton.transform.GetChild(3).GetComponent<Image>().sprite = buildingManagerRef._buildingData[inElementNumber].NextUpgradeImages[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
-//            mGameManager._coins -= buildingManagerRef._buildingData[inElementNumber].UpgradeCosts[buildingManagerRef._buildingData[inElementNumber]._buildingLevel - 1];
 
-            inButton.transform.GetChild(1).GetComponentInChildren<Button>().interactable = false;
+
+            inButton.transform.GetChild(1).gameObject.SetActive(false);
+            inButton.transform.GetChild(5).gameObject.SetActive(true);
         }
     }
 
-    IEnumerator TempInvoke(GameObject Button, int ElementNumber)
+    private IEnumerator InvokeNextCostForButton(GameObject Button, int ElementNumber)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.01f);
+        Button.transform.GetChild(1).GetComponent<Button>().interactable = true;
+        Button.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         Button.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[ElementNumber].UpgradeCosts[buildingManagerRef._buildingData[ElementNumber]._buildingLevel].ToString();
-        
     }
 }

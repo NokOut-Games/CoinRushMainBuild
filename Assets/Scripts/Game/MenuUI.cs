@@ -5,30 +5,30 @@ using TMPro;
 
 public class MenuUI : MonoBehaviour
 {
-    public GameObject buildPanelGameObject;
-    public GameObject screenItemsUIPanel;
-    public GameObject DrawButtonPanelUI;
+    [SerializeField] private GameObject buildPanelGameObject;
+    [SerializeField] private GameObject screenItemsUIPanel;
+    [SerializeField] private GameObject DrawButtonPanelUI;
 
     public TextMeshProUGUI _coinText;
     public TextMeshProUGUI _energyText;
 
     private GameManager mGameManager;
 
-    [SerializeField] BuildMenuUI mBuildMenuUI;
+    [SerializeField] private BuildMenuUI mBuildMenuUI;
 
-    public CameraController mCameraController;
+    private CameraController mCameraController;
     public bool BuildModeOn;
 
     public bool isButtonGenerated = false;
 
-    void Start()
+    private void Start()
     {
         isButtonGenerated = false;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mCameraController = Camera.main.GetComponent<CameraController>();
     }
 
-    void Update()
+    private void Update()
     {
         //if (buildPanelGameObject.activeInHierarchy == true)
         //{

@@ -152,5 +152,10 @@ public class GameManager : MonoBehaviour
         _IsBuildingFromFBase = true;
 
     }
+
+    public bool HasEnoughCoins(int amount)
+    {
+        return (_coins >= amount);
+    }
 }
 
