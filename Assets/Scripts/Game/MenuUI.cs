@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class MenuUI : MonoBehaviour
 
     public bool isButtonGenerated = false;
 
+    int value = 1000000;
+
     private void Start()
     {
         isButtonGenerated = false;
@@ -30,6 +33,7 @@ public class MenuUI : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(value.ToString("N2"));
         //if (buildPanelGameObject.activeInHierarchy == true)
         //{
         //    //To restrict the camera moving when build panel is on
@@ -62,7 +66,8 @@ public class MenuUI : MonoBehaviour
 
     private void UpdateCoinAndEnergyTextFields()
     {
-        _coinText.text = mGameManager._coins.ToString();
+        var currentCoin = mGameManager._coins.ToString("N1",System.Globalization.CultureInfo.InvariantCulture);
+        _coinText.text = currentCoin.Substring(0, currentCoin.Length - 2);
         _energyText.text = mGameManager._energy.ToString();
     }
 }

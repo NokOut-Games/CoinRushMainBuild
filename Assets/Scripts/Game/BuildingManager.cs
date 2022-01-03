@@ -34,11 +34,13 @@ public class BuildingData
     public bool isBuildingDamaged; //Just in case to check if building is damaged or not.
     public bool isBuildingShielded;
     public bool didBuildingReachMaxLevel;
+    public bool _isUnderConstruction;
 }
 
 public class BuildingManager : MonoBehaviour
 {
     public List<BuildingData> _buildingData;
+    public List<GameObject> _buildings;
 
     private GameManager mGameManager;
 
@@ -63,6 +65,8 @@ public class BuildingManager : MonoBehaviour
     public Coroutine BuildingCoroutine;
     [SerializeField] private bool mCoroutineIsInProcess;
 
+    public bool tempCheck;
+
 
     Task t;
     private void Awake()
@@ -72,6 +76,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Start()
     {
+        //tempCheck = mCameraControllerRef._inBetweenConstructionProcess;
         mCameraParentRef = GameObject.Find("CameraParent");
         mCameraControllerRef = mCameraParentRef.GetComponentInChildren<CameraController>();
 
@@ -91,6 +96,7 @@ public class BuildingManager : MonoBehaviour
                 GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].PlunkCardImage;
                 GORef.name = _buildingData[i]._buildingName;
                 _buildingData[i].isBuildingSpawnedAndActive = true;
+                _buildings.Add(GORef);
             }
             else  // But if there are buildings already spawned and active the grab the information from Game Manager
             {
@@ -100,6 +106,7 @@ public class BuildingManager : MonoBehaviour
                 {
                     _buildingData[i].didBuildingReachMaxLevel = true;
                 }
+                _buildings.Add(GORef);
                 //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
                 //GORef.name = _buildingData[i]._buildingName;
             }
@@ -159,18 +166,18 @@ public class BuildingManager : MonoBehaviour
 
     void Update()
     {
-        //if (mCoroutineIsInProcess)
-        //{
-        //    t.Finished += delegate (bool manual)
-        //    {
-        //        if (manual)
-        //            Debug.Log("t was stopped manually.");
-        //        else
-        //            Debug.Log("t completed execution normally.");
-        //    };
-        //}
-
-
+        foreach (var v in _buildingData)
+        {
+            if(v._isUnderConstruction != false)
+            {
+                mCameraControllerRef._inBetweenConstructionProcess = true;
+                return;
+            }
+            else
+            {
+                mCameraControllerRef._inBetweenConstructionProcess = false;
+            }
+        }
         if (GameManager.Instance._IsRefreshNeeded)
         {
             GameManager.Instance._IsRefreshNeeded = false;
@@ -194,42 +201,48 @@ public class BuildingManager : MonoBehaviour
     {
         mCoroutineIsInProcess = true;
         _isAnotherBuildingInConstruction = true;
-        mCameraControllerRef._inBetweenConstructionProcess = true;
+        //mCameraControllerRef._inBetweenConstructionProcess = true;
         GameObject goRef = GameObject.Find(inBuildingName);
-
+        _buildingData[inBuildingsElementNumber]._isUnderConstruction = true;
         //Upgrading Scenario Starts Here
         Destroy(goRef, 1f);
         GameObject smokeVFX = Instantiate(mBuildingConstructionVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
         mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false).OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
         //yield return new WaitForSeconds(0.25f);
 
-        goRef.transform.DOScaleY(0.75f, mBuildingShrinkAndEnlargeTime);/*.OnUpdate(()=> { mCameraParentRef.transform.DORotate(new Vector3(mCameraParentRef.transform.eulerAngles.x, mCameraParentRef.transform.eulerAngles.y -  1, mCameraParentRef.transform.eulerAngles.z), 0.5f, RotateMode.Fast); }).OnComplete(() => { /*Destroy(goRef);});*/
+        goRef.transform.DOScaleY(0.75f, .75f);/*.OnUpdate(() => { inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-15f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast); }).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f, inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });*/
+        //inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-30f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f,inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });
         yield return new WaitForSeconds(mBuildingSpawnTimeDelay);
-        inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inBuildingSpawnPoint.transform.rotation.eulerAngles.y + (-30f), inBuildingSpawnPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f,inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });
 
         GameObject newGoRef = Instantiate(_buildingData[inBuildingsElementNumber].UpgradeLevels[inBuildingLevel], _buildingData[inBuildingsElementNumber]._buildingSpawnPoint.position, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint.rotation);
         newGoRef.transform.localScale = new Vector3(1, 0.75f, 1);
         newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
+        _buildings[inBuildingsElementNumber] = newGoRef;
+        
+        GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel + 1, true, false, false);
         //newGoRef.transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), .5f, 5, 0);
 
         newGoRef.transform.DOScaleY(1, mBuildingShrinkAndEnlargeTime).OnComplete(()=> {
             Destroy(smokeVFX);
-            mCameraControllerRef._inBetweenConstructionProcess = false;
+            //mCameraControllerRef._inBetweenConstructionProcess = false;
+            mCoroutineIsInProcess = false;
+            _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
         }).WaitForCompletion();
-        GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel + 1, true, false, false);
-        mCoroutineIsInProcess = false;
+
+
+        //newGoRef.AddComponent<BuildingDetails>();
+        //BuildingDetails buildingDetailRef = newGoRef.GetComponent<BuildingDetails>();
+        //buildingDetailRef._buildingLevel = inBuildingLevel;
+        //buildingDetailRef.isUnderConstruction = true;
         //yield return new WaitForSeconds(mTimeDelayFromNewBuildingToCameraDefaultState);
-        
+
         //_isAnotherBuildingInConstruction = false;
 
 
-        
-        ////_buildingData[inBuildingNumber].currentLevelGameObject = inCurrentLevelsMesh;
-        ////Just in case if these data's are required
-        //newGoRef.AddComponent<BuildingDetails>();
-        //BuildingDetails buildingDetailRef = newGoRef.GetComponent<BuildingDetails>();
-        //buildingDetailRef._buildingLevel = inLevel;
-        ////buildingDetailRef._buildMeshBasedOnCurrentLevel = inCurrentLevelsMesh;
+
+        //_buildingData[inBuildingNumber].currentLevelGameObject = inCurrentLevelsMesh;
+        //Just in case if these data's are required
+        //buildingDetailRef._buildMeshBasedOnCurrentLevel = inCurrentLevelsMesh;
 
         //Saves the data from building manager to game manager
     }
@@ -239,16 +252,14 @@ public class BuildingManager : MonoBehaviour
         //if (mCoroutineIsInProcess)
         //{
         //    DOTween.CompleteAll();
-        //    //StopCoroutine(BuildingCoroutine);
-        //    StopAllCoroutines();
+        //    StopCoroutine(BuildingCoroutine);
+        //    //StopAllCoroutines();
         //    mCoroutineIsInProcess = false;
         //    //t.Stop();
         //}
         if (_buildingData[inBuildingsElementNumber]._buildingLevel < _buildingData[inBuildingsElementNumber]._buildingMaxLevel)
         {
-            Debug.Log(mCoroutineIsInProcess);
-            
-            /*BuildingCoroutine =*/ StartCoroutine(UpgradeBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint, _buildingData[inBuildingsElementNumber]._cameraFocusPoint));
+            BuildingCoroutine = StartCoroutine(UpgradeBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint, _buildingData[inBuildingsElementNumber]._cameraFocusPoint));
 
             //StartCoroutine(UpgradeBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint.position));
 

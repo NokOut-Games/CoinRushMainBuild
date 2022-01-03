@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.28357968, g: 0.3922329, b: 0.3806094, a: 1}
+  m_IndirectSpecularColor: {r: 0.28368124, g: 0.39226234, b: 0.3806502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3765,6 +3765,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3727211484658133527, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4316013464354854172, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4524371247633333944, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3884,6 +3892,10 @@ PrefabInstance:
     - target: {fileID: 4546269045787691386, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796466367982091570, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9163738164028224674, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
@@ -4375,6 +4387,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463370917}
   m_Mesh: {fileID: 5283197924642485434, guid: 89d62f5e3465f1f4491d868dc7f4c0e6, type: 3}
+--- !u!1 &469875923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263274110}
+  m_Layer: 0
+  m_Name: CrackPanel (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &470303750
 GameObject:
   m_ObjectHideFlags: 0
@@ -9703,22 +9731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mGameManager: {fileID: 0}
-  mCardHolderParent: {fileID: 0}
-  _playerHandPoints: []
-  mScriptedCards: []
-  _CardList: []
-  mCardListGameObject: []
-  DrawButton: {fileID: 0}
-  drawNormal: {fileID: 0}
-  drawAutomatic: {fileID: 0}
-  _drawButtonRectTransform: {fileID: 0}
-  mMaxHoldTime: 5
-  timeForCardAnimation: 2
-  _jokerList: []
-  onceDonee: 0
-  mHowManyCardSetsAreActive: 0
-  _cardsThatCanBeReplacedByJoker: []
+  PanSpeed: 20
 --- !u!4 &1190993576
 Transform:
   m_ObjectHideFlags: 0
@@ -10116,11 +10129,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
---- !u!224 &1263274110 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4258279162477888205, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
-  m_PrefabInstance: {fileID: 1263274109}
+--- !u!4 &1263274110
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469875923}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1412255684}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1272796263
 GameObject:
   m_ObjectHideFlags: 0
@@ -10853,6 +10875,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef3cf770749b263478ec3b1aa0e83f93, type: 3}
+--- !u!1 &1350777947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1350777948}
+  m_Layer: 0
+  m_Name: Missing Prefab (Dummy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1350777948
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 4258279162477888205, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
+  m_PrefabInstance: {fileID: 1263274109}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1350777947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1412255684}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1354624681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11103,6 +11160,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1350777948}
   - {fileID: 1263274110}
   m_Father: {fileID: 0}
   m_RootOrder: 17
@@ -13163,8 +13221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinText: {fileID: 0}
-  _energyText: {fileID: 0}
 --- !u!1 &1669474497
 GameObject:
   m_ObjectHideFlags: 0
@@ -19625,6 +19681,9 @@ MonoBehaviour:
   _drawButtonRectTransform: {fileID: 0}
   mMaxHoldTime: 5
   timeForCardAnimation: 2
+  time: 0
+  maxTime: 5
+  _drawButtonFillerImage: {fileID: 0}
   _jokerList: []
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
