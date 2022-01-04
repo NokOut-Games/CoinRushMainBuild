@@ -48,6 +48,7 @@ public class CardDeck : MonoBehaviour
     public List<GameObject> dummyCards;
     int positionNumber = 0;
 
+    public BuildingManager _buildingManagerRef;
 
     private void Start()
     {
@@ -292,8 +293,36 @@ public class CardDeck : MonoBehaviour
         {
             if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             {
-                canClick = false;
-                StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
+                if(_CardList[i+1]._cardType == CardType.SHIELD)
+                {
+                    if (mGameManager._shield <= mGameManager._maxShield - 1)
+                    {
+                        var randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
+                        mGameManager._shield += 1;
+                        //for (int j = 0; j < _buildingManagerRef._buildingData.Count; j++)
+                        //{
+                            if(_buildingManagerRef._buildingData[randomNumber].isBuildingShielded)
+                            {
+                            //    var updatern = Random.Range(0, _buildingManagerRef._buildingData.Count);
+                            //randomNumber = updatern;
+                                return;
+                            }
+                            else
+                            {
+                                _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
+                            }
+                        //}
+                    }
+                    else
+                    {
+                        mGameManager._energy += 3;
+                    }
+                }
+                else
+                {
+                    canClick = false;
+                    StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
+                }
             }
         }
     }

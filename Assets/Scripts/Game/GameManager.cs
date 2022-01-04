@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public int _coins;
     public int _energy = 25;
     public int _shield;
+    public int _maxShield;
     public int _playerCurrentLevel=1;
     public float _minutes;
 
@@ -73,6 +74,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+        _maxShield = _buildingManagerRef._buildingData.Count;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
@@ -94,6 +97,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        _shield = Mathf.Clamp(_shield, 0, _maxShield);
         if(EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -156,6 +160,12 @@ public class GameManager : MonoBehaviour
     public bool HasEnoughCoins(int amount)
     {
         return (_coins >= amount);
+    }
+
+    private void OnGUI()
+    {
+        GUI.TextField(new Rect(400, 200, 300, 100), "Sprint-7 Build");
+        GUILayout.FlexibleSpace();
     }
 }
 

@@ -168,7 +168,7 @@ public class BuildingManager : MonoBehaviour
     {
         foreach (var v in _buildingData)
         {
-            if(v._isUnderConstruction != false)
+            if (v._isUnderConstruction != false)
             {
                 mCameraControllerRef._inBetweenConstructionProcess = true;
                 return;
@@ -186,7 +186,6 @@ public class BuildingManager : MonoBehaviour
             SpawningBuilding();
         }
     }
-
 
     /// <summary>
     /// Order of progression

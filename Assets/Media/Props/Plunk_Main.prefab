@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 6244830331490575341}
   - component: {fileID: 2567813834638252204}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ImageSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1233,9 +1233,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7485785056313027038}
-  - component: {fileID: 8409265350199631813}
-  - component: {fileID: 331755073132750331}
   - component: {fileID: 8783320257154824633}
+  - component: {fileID: 129694013695966831}
   m_Layer: 0
   m_Name: Plunk_Main
   m_TagString: Untagged
@@ -1262,36 +1261,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &8409265350199631813
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7829799822873293668}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 852ecfbe6e0da4322abea8fcf64aa41f, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 0923ecc0742174c17b5a86c9b60dc816, type: 2}
-  - {fileID: 7400000, guid: b78024af729884dae9681f99ce1ebed7, type: 2}
-  - {fileID: 7400000, guid: 852ecfbe6e0da4322abea8fcf64aa41f, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!114 &331755073132750331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7829799822873293668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &8783320257154824633
 Animator:
   serializedVersion: 3
@@ -1311,6 +1280,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &129694013695966831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7829799822873293668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53987011b3ff4600ba53430b31456b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7974627607339291586
 GameObject:
   m_ObjectHideFlags: 0
