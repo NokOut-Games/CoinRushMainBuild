@@ -51,6 +51,12 @@ public class CameraController : MonoBehaviour
     public bool _isCameraInConstructionView;
     public MenuUI mMenuUI;
 
+    public float PanSpeed = 20f;    //New Addition
+
+    private Vector3 lastPanPosition;    //New Addition
+
+    public float timeToAcceleration = 0;
+
     private void Start()
     {
         mCardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
@@ -118,16 +124,14 @@ public class CameraController : MonoBehaviour
                     }
                 }
 
-                //if (_isCameraInConstructionView)
-                //{
+                
                 if (!_ScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
                 {
                     _buildButtonClicked = false;
                     _isCameraInConstructionView = false;
                     Invoke("SetCameraFreeRoam", 0.11f);
                     mMenuUI.CloseBuildButton();
-                }
-                //}
+                }    
             }
 
 
@@ -206,11 +210,53 @@ public class CameraController : MonoBehaviour
                     }
                 }
 
-                HorizontalPanning();
-                VerticalZooming();
+               // HorizontalPanning();
+                //VerticalZooming();
+                HandleMouse(); //New Addition
             }
         }
     }
+
+    void HandleMouse()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastPanPosition = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            timeToAcceleration += 1 * Time.deltaTime;
+            if (timeToAcceleration > 1.5f)
+            {
+                //Debug.Log(this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - Input.mousePosition));
+                Pan(this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - Input.mousePosition);
+            }
+            else
+            {
+                PanCamera(Input.mousePosition);
+            }
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            timeToAcceleration = 0;
+        }
+    } //New Addition
+    
+    void PanCamera(Vector3 newPanPosition)
+    {
+        Vector3 offset = this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - newPanPosition);
+        Vector3 move = new Vector3(offset.x * PanSpeed, 0, offset.y * PanSpeed);
+
+
+        _CameraParent.transform.Translate(move, Space.World);
+
+        Vector3 pos = _CameraParent.transform.position;
+        pos.x = Mathf.Clamp(_CameraParent.transform.position.x, _CameraLeftBound, _CameraRightBound);
+        pos.z = Mathf.Clamp(_CameraParent.transform.position.z, mCameraFarBound, mCameraNearBound);
+        _CameraParent.transform.position = pos;
+
+        lastPanPosition = newPanPosition;
+    } //New Addition
 
     public void HorizontalPanning()
     {

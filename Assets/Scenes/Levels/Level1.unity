@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.34620947, g: 0.48965842, b: 0.56876814, a: 1}
+  m_IndirectSpecularColor: {r: 0.34622434, g: 0.48989257, b: 0.56902647, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -43042,7 +43042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 750
+  mHorizontalPanSpeed: 20
   _CameraLeftBound: -230
   _CameraRightBound: 230
   _CameraUpBound: 250
@@ -43067,6 +43067,8 @@ MonoBehaviour:
   _inBetweenConstructionProcess: 0
   _isCameraInConstructionView: 0
   mMenuUI: {fileID: 0}
+  PanSpeed: 300
+  timeToAcceleration: 0
 --- !u!1001 &1623483422
 PrefabInstance:
   m_ObjectHideFlags: 0
