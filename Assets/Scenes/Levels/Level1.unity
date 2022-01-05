@@ -22713,6 +22713,49 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636049937}
   m_Mesh: {fileID: -6590055069928923904, guid: 7cfceff39255f324a88aa83dfbd9f791, type: 3}
+--- !u!1 &640750001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 640750003}
+  - component: {fileID: 640750002}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &640750002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640750001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &640750003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640750001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 610.7144, y: 1335.5427, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &641255335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25326,35 +25369,36 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854241761}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mGameManager: {fileID: 0}
-  mCardHolderParent: {fileID: 0}
+  mGameManager: {fileID: 1541244310}
+  mCardHolderParent: {fileID: 1971070334}
+  clicks: 0
   _playerHandPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 380024777}
+  - {fileID: 1421214019}
+  - {fileID: 1985328408}
+  - {fileID: 1932843264}
+  - {fileID: 1306384991}
+  - {fileID: 665581851}
+  - {fileID: 1284528877}
+  - {fileID: 1306834631}
   mScriptedCards:
   - {fileID: 11400000, guid: 25dd4160bcc872b448a49f88d1a4931c, type: 2}
   _CardList: []
   mCardListGameObject: []
-  DrawButton: {fileID: 0}
+  DrawButton: {fileID: 1298872327}
   drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
   drawAutomatic: {fileID: -2653432678774402417, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
-  _drawButtonRectTransform: {fileID: 0}
-  mMaxHoldTime: 5
+  _drawButtonRectTransform: {fileID: 1298872325}
+  mMaxHoldTime: 3
   timeForCardAnimation: 2
   time: 0
   maxTime: 5
-  _drawButtonFillerImage: {fileID: 0}
+  _drawButtonFillerImage: {fileID: 1885887629}
   _jokerList: []
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
@@ -25365,7 +25409,7 @@ MonoBehaviour:
   - {fileID: 4922323569806154452, guid: d36f2bbd9720eec4ab225ac993ac758a, type: 3}
   - {fileID: 1080941311999311897, guid: cade7ebefa1a92541be59e8ab7068a2c, type: 3}
   - {fileID: 3698473429944838919, guid: fcb34e8500b43f245becbff1e4dcffe7, type: 3}
-  _buildingManagerRef: {fileID: 0}
+  _buildingManagerRef: {fileID: 1640761560}
 --- !u!114 &854241763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25373,13 +25417,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854241761}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mGameManager: {fileID: 1541244310}
   mCardHolderParent: {fileID: 1971070334}
+  clicks: 0
   _playerHandPoints:
   - {fileID: 380024777}
   - {fileID: 1421214019}
@@ -41629,7 +41674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _shield
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _minutes
@@ -44581,7 +44626,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[2].isBuildingShielded
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _buildingData.Array.data[4].isBuildingShielded
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingSpawnPoint

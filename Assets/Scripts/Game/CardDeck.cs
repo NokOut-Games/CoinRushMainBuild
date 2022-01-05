@@ -10,7 +10,7 @@ public class CardDeck : MonoBehaviour
     [Header("Grabbing Other GameObject References:")]
     [SerializeField] private GameManager mGameManager;
     [SerializeField] private GameObject mCardHolderParent;
-    private int clicks = 0;
+    public int clicks = 0;
     public List<Transform> _playerHandPoints;
 
     [Space(10)]
@@ -295,28 +295,7 @@ public class CardDeck : MonoBehaviour
             {
                 if(_CardList[i+1]._cardType == CardType.SHIELD)
                 {
-                    if (mGameManager._shield <= mGameManager._maxShield - 1)
-                    {
-                        var randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
-                        mGameManager._shield += 1;
-                        //for (int j = 0; j < _buildingManagerRef._buildingData.Count; j++)
-                        //{
-                            if(_buildingManagerRef._buildingData[randomNumber].isBuildingShielded)
-                            {
-                            //    var updatern = Random.Range(0, _buildingManagerRef._buildingData.Count);
-                            //randomNumber = updatern;
-                                return;
-                            }
-                            else
-                            {
-                                _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
-                            }
-                        //}
-                    }
-                    else
-                    {
-                        mGameManager._energy += 3;
-                    }
+                    Shield();
                 }
                 else
                 {
@@ -324,6 +303,29 @@ public class CardDeck : MonoBehaviour
                     StartCoroutine(DelayedSceneLoader(_CardList[i]._cardType));
                 }
             }
+        }
+    }
+
+    private void Shield()
+    {
+        if (mGameManager._shield <= mGameManager._maxShield - 1)
+        {
+            int randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
+            Debug.Log("Random Number: " + randomNumber);
+            while(_buildingManagerRef._shieldedBuildings.Contains(randomNumber))
+            {
+                randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
+            }
+
+            
+            mGameManager._shield += 1;
+            _buildingManagerRef._shieldedBuildings.Add(randomNumber);
+            _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
+            GameManager.Instance.AddShieldToBuilding(randomNumber);
+        }
+        else
+        {
+            mGameManager._energy += 3;
         }
     }
 

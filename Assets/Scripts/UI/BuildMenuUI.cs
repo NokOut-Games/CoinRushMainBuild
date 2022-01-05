@@ -35,7 +35,8 @@ public class BuildMenuUI : MonoBehaviour
             //ButtonTemplatesHolder.Add(buildingTemplateRef);
             int BuildingUpgradeNumber = i;
             buildingManagerRef._buildingData[i]._respectiveBuildingButtons = buildingTemplateRef;
-            buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
+            if(buildingManagerRef._buildingData[i]._buildingLevel<buildingManagerRef._buildingData[i]._buildingMaxLevel)
+                buildingTemplateRef.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[i].UpgradeCosts[buildingManagerRef._buildingData[i]._buildingLevel].ToString();
 
             buildingTemplateRef.transform.GetChild(1).gameObject.AddComponent<Button>().onClick.AddListener(() =>
             {
@@ -79,6 +80,7 @@ public class BuildMenuUI : MonoBehaviour
         {
             for (int i = 0; i < buildingManagerRef._buildingData[inElementNumber]._buildingLevel; i++)
             {
+
                 inButton.transform.GetChild(4).GetChild(i).gameObject.SetActive(true);
             }
             StartCoroutine(InvokeNextCostForButton(inButton, inElementNumber));

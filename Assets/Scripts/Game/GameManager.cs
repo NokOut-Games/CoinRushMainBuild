@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
-        _maxShield = _buildingManagerRef._buildingData.Count;
+//        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+//        _maxShield = _buildingManagerRef._buildingData.Count;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
@@ -134,15 +134,19 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed , bool inIsBuildingShielded)
+    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed)
     {
         _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
-        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = inIsBuildingShielded;
         //FirebaseManager.Instance.WriteBuildingDataToFirebase();
+    }
+
+    public void AddShieldToBuilding(int inBuildingIndex)
+    {
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
     public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel)

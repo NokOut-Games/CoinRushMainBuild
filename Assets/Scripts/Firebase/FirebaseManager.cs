@@ -22,7 +22,7 @@ public class FirebaseManager : MonoBehaviour
 
     string userTitle = "Guest Users";
 
-
+    bool canWrite;
 
     bool readUserData;
 
@@ -77,12 +77,15 @@ public class FirebaseManager : MonoBehaviour
                     builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
                     builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
                     builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
 
                     BuildingDetails.Add(builddata);
 
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
                 readUserData = true;
+                canWrite = true;
 
             }
         });
@@ -195,9 +198,13 @@ public class FirebaseManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (canWrite)
+        {
 
-        WriteBuildingDataToFirebase();
-        WritePlayerDataToFirebase();
+            WriteBuildingDataToFirebase();
+            WritePlayerDataToFirebase();
+        }
+
     }
 }
 
