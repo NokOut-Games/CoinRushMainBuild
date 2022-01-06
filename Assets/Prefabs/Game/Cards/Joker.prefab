@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1049319272675060267}
   - component: {fileID: 1049319272675060276}
   - component: {fileID: -7336842119353226528}
+  - component: {fileID: -768106906271502988}
   m_Layer: 0
   m_Name: Joker
   m_TagString: Untagged
@@ -28,15 +29,15 @@ RectTransform:
   m_GameObject: {fileID: 1049319272675060277}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 175, y: 525}
-  m_SizeDelta: {x: 400, y: 400}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 360, y: 560}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1049319272675060267
 CanvasRenderer:
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2e76891ddc126c34fba208db5237a76f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e27f72f97d53b4e82aa933b72457ba67, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,3 +92,18 @@ MonoBehaviour:
   _cardID: 0
   _cardType: 3
   _Position: {x: 0, y: 0, z: 0}
+--- !u!111 &-768106906271502988
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049319272675060277}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0

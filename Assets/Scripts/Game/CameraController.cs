@@ -148,13 +148,13 @@ public class CameraController : MonoBehaviour
                 
                 _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);// Time.deltaTime * _transitionSpeed);
 
-            Vector3 currentAngle = new Vector3(
+                Vector3 currentAngle = new Vector3(
                 Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),// Time.deltaTime * _transitionSpeed),
                 Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),//Time.deltaTime * _transitionSpeed),
                 Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));//Time.deltaTime * _transitionSpeed));
 
-            _CameraParent.eulerAngles = currentAngle;
-        }
+                _CameraParent.eulerAngles = currentAngle;
+            }
             //else
             //{
             //    if (!_CameraFreeRoam)
@@ -162,15 +162,15 @@ public class CameraController : MonoBehaviour
             //        //OpenCardRegion.SetActive(false);
             //        //if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
             //        //{
-            //            _currentView = _views[0];
-            //            _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+            //        _currentView = _views[0];
+            //        _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
 
-            //            Vector3 currentAngle = new Vector3(
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
+            //        Vector3 currentAngle = new Vector3(
+            //            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
+            //            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
+            //            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
 
-            //            _CameraParent.eulerAngles = currentAngle;
+            //        _CameraParent.eulerAngles = currentAngle;
             //        //}
             //    }
             //}
@@ -210,9 +210,9 @@ public class CameraController : MonoBehaviour
                     }
                 }
 
-               // HorizontalPanning();
-                //VerticalZooming();
-                HandleMouse(); //New Addition
+                HorizontalPanning();
+                VerticalZooming();
+                //HandleMouse(); //New Addition
             }
         }
     }
@@ -225,21 +225,21 @@ public class CameraController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            timeToAcceleration += 1 * Time.deltaTime;
-            if (timeToAcceleration > 1.5f)
-            {
-                //Debug.Log(this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - Input.mousePosition));
-                Pan(this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - Input.mousePosition);
-            }
-            else
+            //timeToAcceleration += 1 * Time.deltaTime;
+            //if (timeToAcceleration > 1.5f)
+            //{
+            //    //Debug.Log(this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - Input.mousePosition));
+            //    Pan(1 * Time.deltaTime * Input.mousePosition.x);
+            //}
+            //else
             {
                 PanCamera(Input.mousePosition);
             }
         }
-        if(Input.GetMouseButtonUp(0))
-        {
-            timeToAcceleration = 0;
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    timeToAcceleration = 0;
+        //}
     } //New Addition
     
     void PanCamera(Vector3 newPanPosition)

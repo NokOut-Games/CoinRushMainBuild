@@ -25,7 +25,7 @@ public class Reels : MonoBehaviour
     private System.Random mRandomValue = new System.Random();
 
     [SerializeField]
-    private Transform mReelsRollerParent;
+    public Transform mReelsRollerParent;
     
     [SerializeField]
     private int mSpeed = 5000;  //Will use it later instead of 700 down in update function

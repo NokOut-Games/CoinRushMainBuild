@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using DG.Tweening;
 
 public class Slots : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class Slots : MonoBehaviour
         {
             for (int i = 0; i < _reels.Length; i++)
             {
+                _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
                 _reels[i].mSpinOver = false;
             }
             if (spin > 0)

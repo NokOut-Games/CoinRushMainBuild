@@ -18,7 +18,6 @@ public class BuildingData
 
     [Header("Building's GameObject: ")]
     public GameObject _initialBuildingGameObject;
-    public Sprite PlunkCardImage;
     public GameObject currentLevelGameObject;
     public Sprite[] NextUpgradeImages; //Future
     [Space]
@@ -95,8 +94,8 @@ public class BuildingManager : MonoBehaviour
             {
                 GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
                 GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].PlunkCardImage;
-                GORef.name = _buildingData[i]._buildingName;
-                _buildingData[i].isBuildingSpawnedAndActive = true;
+                GORef.name = _buildingData[i]._buildingNapawnedAndActime;
+                _buildingData[i].isBuildingSve = true;
                 _buildings.Add(GORef);
             }
             else  // But if there are buildings already spawned and active the grab the information from Game Manager
@@ -150,7 +149,8 @@ public class BuildingManager : MonoBehaviour
            {
             GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
             GORef.name = _buildingData[i]._buildingName;
-            _buildingData[i].isBuildingSpawnedAndActive = true;
+                GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].NextUpgradeImages[4];
+                _buildingData[i].isBuildingSpawnedAndActive = true;
 
                 _buildings.Add(GORef);
             }
@@ -298,9 +298,9 @@ public class BuildingManager : MonoBehaviour
 
     void LevelCompleted()
     {
-        GameManager.Instance._playerCurrentLevel++;
-        GameManager.Instance._IsBuildingFromFBase = false;
-        GameManager.Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(GameManager.Instance._playerCurrentLevel);
+        //GameManager.Instance._playerCurrentLevel++;
+        //GameManager.Instance._IsBuildingFromFBase = false;
+        GameManager.Instance.CurrentLevelCompleted();
     }
 
 }
