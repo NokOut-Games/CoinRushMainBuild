@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using DG.Tweening;
 
 public class Slots : MonoBehaviour
 {
@@ -17,16 +18,19 @@ public class Slots : MonoBehaviour
     public float spin = 1;
 
     private GameManager mGameManager;
+    private LevelLoadManager mLevelLoadManager;
 
     public List<ReelElement> _elementsName;
-    
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mLevelLoadManager = mGameManager.gameObject.GetComponent<LevelLoadManager>();
         _uiSpinButton.onClick.AddListener(()=>
         {
             for (int i = 0; i < _reels.Length; i++)
             {
+                _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
                 _reels[i].mSpinOver = false;
             }
             if (spin > 0)
@@ -192,7 +196,7 @@ public class Slots : MonoBehaviour
     }
     public void ActiveLevelInvoke()
     {
-        SceneManager.LoadScene(1);
+        mLevelLoadManager.BacktoHome();
     }
 }
 

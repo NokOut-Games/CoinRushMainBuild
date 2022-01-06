@@ -20,6 +20,8 @@ public class GameManagerBuildingData
     public int _buildingNo;
     public int _buildingCurrentLevel;
     public bool _isBuildingSpawned;
+    public bool _isBuildingShielded;
+    public bool _isBuildingDestroyed;
 }
 
 public class GameManager : MonoBehaviour
@@ -27,10 +29,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int _coins;
+
     public int _energy = 25;
+    public int _maxEnergy = 50;
+    public int _regenerationEnergy = 1;
+
     public int _shield;
+    public int _maxShield;
+
     public int _playerCurrentLevel=1;
-    public float _minutes;
+    public int _minutes;
+    
 
     public List<GameObject> _BuildingDetails;
     public List<BuildingTypes> _BuildingTypes;
@@ -53,13 +62,15 @@ public class GameManager : MonoBehaviour
 
     public bool _IsBuildingFromFBase = true;
 
-    public int _maxEnergy = 50;
+    
     private bool mIsFull = true;
+
+    public List<int> _SavedCardTypes = new List<int>();
+    public int _MaxLevelsInGame;
 
     private void Awake()
     {
         Application.targetFrameRate = 30;
-        
         
         if (Instance == null)
         {
@@ -72,6 +83,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+//        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+//        _maxShield = _buildingManagerRef._buildingData.Count;
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
             //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
@@ -93,6 +106,12 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        _shield = Mathf.Clamp(_shield, 0, _maxShield);
+        _energy = Mathf.Clamp(_energy, 0, 1000);
+        if(_energy < 0)
+        {
+            return;
+        }
         if(EventSystem.current.IsPointerOverGameObject())
         {
             return;
@@ -122,20 +141,26 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="inMinutes"></param>
     /// <returns></returns>
-    private float MinutesToSecondsConverter(float inMinutes) 
+    public float MinutesToSecondsConverter(float inMinutes) 
     {
         float seconds = inMinutes * 60;
         return seconds;
     }
 
 
-    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn)
+    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed)
     {
         _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
         //FirebaseManager.Instance.WriteBuildingDataToFirebase();
+    }
+
+    public void AddShieldToBuilding(int inBuildingIndex)
+    {
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
     public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel)
@@ -149,4 +174,32 @@ public class GameManager : MonoBehaviour
         _IsBuildingFromFBase = true;
 
     }
+
+    public bool HasEnoughCoins(int amount)
+    {
+        return (_coins >= amount);
+    }
+
+    private void OnGUI()
+    {
+        GUI.TextField(new Rect(400, 200, 300, 100), "Sprint-6 Build");
+        GUILayout.FlexibleSpace();
+    }
+
+    public void CurrentLevelCompleted()
+    {
+        if (_playerCurrentLevel < _MaxLevelsInGame)
+        {
+            _playerCurrentLevel++;
+            _IsBuildingFromFBase = false;
+            Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(_playerCurrentLevel);
+            FirebaseManager.Instance.WriteBuildingDataToFirebase();
+        }
+        else
+        {
+            Debug.Log("MaxLevel");
+        }
+
+    }
 }
+

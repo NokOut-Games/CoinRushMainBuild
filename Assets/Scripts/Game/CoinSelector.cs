@@ -97,7 +97,7 @@ public class CoinSelector : MonoBehaviour
 
         yield return new WaitForSeconds(mTimeBetweenHammerSpawnAndBreakAnimation);  //Yield to Wait for the Hammer
         inPigSelected.GetComponent<Animator>().SetTrigger("isBreaking?");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.50f);
         PlayParticleEffects(HammerHitPigParticle, HammerHitPigSpawnPoint,2);
         
         yield return new WaitForSeconds(mTimeBetweenPigBreakAndCoinShower);

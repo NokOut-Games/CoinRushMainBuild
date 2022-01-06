@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Firebase.Auth;
 using System.Collections.Generic;
+using System.Collections;
+using System;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -22,9 +24,13 @@ public class FirebaseManager : MonoBehaviour
 
     string userTitle = "Guest Users";
 
+   public bool canWrite;
 
-
-    bool readUserData;
+    public bool CanUpgradeToFacebook = false;
+    public bool readUserData;
+    //public GameObject _GuestUpgradeButton;
+    //Time
+    DateTime crntDateTime;
 
     private void Awake()
     {
@@ -32,7 +38,7 @@ public class FirebaseManager : MonoBehaviour
         mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
         auth = FirebaseAuth.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
-
+        crntDateTime = System.DateTime.Now;
         if (Instance == null)
         {
             Instance = this;
@@ -42,11 +48,16 @@ public class FirebaseManager : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        if (!auth.CurrentUser.IsAnonymous)
+        {
+            userTitle = "Facebook Users";
+            ReadData();
+        }
+    }
 
-
-
-
-    void ReadDataForGuest()
+    void ReadData()
     {
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
         {
@@ -64,6 +75,13 @@ public class FirebaseManager : MonoBehaviour
                  mGameManager._energy = int.Parse(mEnergyData);
                  mGameManager._playerCurrentLevel = int.Parse(mPlayerCurrentLevelData);*/
 
+                GameManager.Instance._SavedCardTypes.Clear();
+
+                for (int i = 0; i < snapshot.Child("SaveCards").ChildrenCount; i++)
+                {
+                    GameManager.Instance._SavedCardTypes.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
+                }
+
                 string levelName = mLevelPrefix + mPlayerCurrentLevelData;
                 GameManager.Instance._buildingGameManagerDataRef.Clear();
 
@@ -77,21 +95,101 @@ public class FirebaseManager : MonoBehaviour
                     builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
                     builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
                     builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
 
                     BuildingDetails.Add(builddata);
 
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
+                
+                 //Time difference Calculation
+                var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
+                int value = difference.Minutes;
+                Debug.Log("The Time Diff is: " + value);
+
+                if (value >= mGameManager._minutes)
+                {
+                    int energyAmount = value / mGameManager._minutes;
+                    Mathf.Ceil(energyAmount);
+                    Debug.Log("The energy amount gained is : " + energyAmount);
+                    mGameManager._energy += energyAmount;
+                }
                 readUserData = true;
+                //canWrite = true;
 
             }
         });
 
     }
 
+    public void GuestLogin()
+    {
+        if (auth.CurrentUser != null)
+        {
+
+            ReadData();
+            //WritePlayerDataToFirebase();
+
+            CanUpgradeToFacebook = true;
+        }
+        else
+        {
+            CreateNewGuestUser();
+        }
+    }
+
+    public void CreateNewGuestUser()
+    {
+        auth.SignInAnonymouslyAsync().ContinueWith(task =>
+        {
+            FirebaseUser newUser;
+            newUser = task.Result;
+            Player newPlayer = new Player(newUser.UserId);
+            Debug.Log(newUser.UserId);
+            SaveNewUserInFirebase(newPlayer);
+            WriteBuildingDataToFirebase();
+            CanUpgradeToFacebook = true;
+            readUserData = true;
+           // canWrite = true;
+        });
+    }
+
+    public void CreateNewFBUser(string inAccessToken)
+    {
+        Firebase.Auth.Credential credential = Firebase.Auth.FacebookAuthProvider.GetCredential(inAccessToken);
+
+        auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+        {
+            FirebaseUser newFBUser;
+            newFBUser = task.Result;
+            string newId = newFBUser.UserId.ToString();
+            Debug.Log(newId);
+            reference.GetValueAsync().ContinueWith(task =>
+            {
+                DataSnapshot snapshot = task.Result;
+                //DataSnapshot GuestUsers = snapshot.Child("Guest Users");
+                //var some = GuestUsers.Children;
+                //Debug.Log(some);
+                if (snapshot.Child("Facebook Users").HasChild(newId) == true)
+                {
+                    ReadData();
+                }
+                else
+                {
+                    Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
+                    Debug.Log(newFBUser.UserId);
+                    SaveNewUserInFirebase(newPlayer);
+                    WriteBuildingDataToFirebase();
+                    readUserData = true;
+                }
+            });
+        });
+    }
+
     public void WritePlayerDataToFirebase()
     {
-        Player playerDetails = new Player();
+        Player playerDetails = new Player(auth.CurrentUser.UserId, auth.CurrentUser.DisplayName);
 
         playerDetails._coins = mGameManager._coins;
         playerDetails._energy = mGameManager._energy;
@@ -130,43 +228,31 @@ public class FirebaseManager : MonoBehaviour
     //ScreenSwitch
 
 
-    public void GuestLogin()
-    {
-        if (auth.CurrentUser != null)
-        {
-
-            ReadDataForGuest();
-            // WriteBuildingData();
-        }
-        else
-        {
-            CreateNewUser();
-            WriteBuildingDataToFirebase();
-
-        }
-    }
 
 
 
-    public void CreateNewUser()
-    {
-        auth.SignInAnonymouslyAsync().ContinueWith(task =>
-        {
-            FirebaseUser newUser;
-            newUser = task.Result;
-            Player newPlayer = new Player(newUser.UserId);
-            Debug.Log(newUser.UserId);
-            SaveNewUserInFirebase(newPlayer);
-        });
-    }
+
+    //public void CreateNewUser()
+    //{
+    //    auth.SignInAnonymouslyAsync().ContinueWith(task =>
+    //    {
+    //        FirebaseUser newUser;
+    //        newUser = task.Result;
+    //        Player newPlayer = new Player(newUser.UserId);
+    //        Debug.Log(newUser.UserId);
+    //        SaveNewUserInFirebase(newPlayer);
+    //    });
+    //}
 
 
-    void SaveNewUserInFirebase(Player inPlayerDataToSave)
+    public void SaveNewUserInFirebase(Player inPlayerDataToSave)
     {
         var LoggedInUser = FirebaseAuth.DefaultInstance.CurrentUser;
         string json = JsonUtility.ToJson(inPlayerDataToSave);
         reference.Child(userTitle).Child(LoggedInUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json);
+        canWrite = true;
     }
+
     private void Update()
     {
         if (readUserData)
@@ -180,6 +266,28 @@ public class FirebaseManager : MonoBehaviour
              WritePlayerDataToFirebase();
              Debug.Log("One");
          }*/
+        //_GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
+
+        //if (CanUpgradeToFacebook)
+        //{
+        //    _GuestUpgradeButton.SetActive(true);
+        //}
+    }
+
+    GameObject FindInActiveObjectByName(string name)
+    {
+        Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+        for (int i = 0; i < objs.Length; i++)
+        {
+            if (objs[i].hideFlags == HideFlags.None)
+            {
+                if (objs[i].name == name)
+                {
+                    return objs[i].gameObject;
+                }
+            }
+        }
+        return null;
     }
 
 
@@ -191,12 +299,66 @@ public class FirebaseManager : MonoBehaviour
         readUserData = false;
     }
 
+    public void CalculateLogOutTime()
+    {
+        FirebaseDatabase.DefaultInstance.GetReference("Timestamp").RunTransaction(TimeData =>
+        {
+            TimeData.Value = ServerValue.Timestamp;
+
+            return TransactionResult.Success(TimeData);
+        })
+         .ContinueWith(task =>
+         {
+             long currentTimestamp = (long)(task.Result.Value);
+             var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Math.Round(currentTimestamp / 1000d)).ToLocalTime();
+             reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").Child("LogOutTime").SetValueAsync(dt.ToString());
+         });
+    }
+
+    public void WriteCardDataToFirebase()
+    {
+
+        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("SaveCards").SetValueAsync(GameManager.Instance._SavedCardTypes).ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                Debug.Log("Write Successful");
+            }
+        });
+
+
+    }
+     private void OnApplicationFocus(bool focus)
+     {
+         if (!focus)
+         {
+            WriteCardDataToFirebase();
+            CalculateLogOutTime();
+            WriteBuildingDataToFirebase();
+                 WritePlayerDataToFirebase();
+
+         }
+     }
+     private void OnApplicationPause(bool pause)
+     {
+         if (pause)
+         {
+            WriteCardDataToFirebase();
+            CalculateLogOutTime();
+            WriteBuildingDataToFirebase();
+             WritePlayerDataToFirebase();
+         }
+     }
 
     private void OnApplicationQuit()
     {
+        CalculateLogOutTime();
+        
+            WriteCardDataToFirebase();
+            WriteBuildingDataToFirebase();
+            WritePlayerDataToFirebase();
+        
 
-        WriteBuildingDataToFirebase();
-        WritePlayerDataToFirebase();
     }
 }
 
