@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public int _energy = 25;
     public int _shield;
     public int _playerCurrentLevel=1;
-    public float _minutes;
+    public int _minutes;
 
     public List<GameObject> _BuildingDetails;
     public List<BuildingTypes> _BuildingTypes;
@@ -48,12 +48,10 @@ public class GameManager : MonoBehaviour
     public List<GameManagerBuildingData> _buildingGameManagerDataRef;
     public BuildingManager _buildingManagerRef;
     public int _buildingCount;
-
     public bool _IsRefreshNeeded;
-
     public bool _IsBuildingFromFBase = true;
-
     public int _maxEnergy = 50;
+    public int _regenerationEnergy=1;
     private bool mIsFull = true;
 
     private void Awake()
@@ -113,7 +111,7 @@ public class GameManager : MonoBehaviour
         while (mIsFull)
         {
             yield return new WaitForSeconds(MinutesToSecondsConverter(_minutes));
-            _energy += 1;
+            _energy += _regenerationEnergy;
         }
     }
 
@@ -122,7 +120,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="inMinutes"></param>
     /// <returns></returns>
-    private float MinutesToSecondsConverter(float inMinutes) 
+    public float MinutesToSecondsConverter(float inMinutes) 
     {
         float seconds = inMinutes * 60;
         return seconds;
@@ -148,5 +146,10 @@ public class GameManager : MonoBehaviour
         _IsRefreshNeeded = true;
         _IsBuildingFromFBase = true;
 
+    }
+
+    public void Quitgame()
+    {
+        Application.Quit();
     }
 }

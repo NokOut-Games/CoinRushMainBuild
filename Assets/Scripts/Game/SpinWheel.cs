@@ -73,7 +73,6 @@ public class SpinWheel : MonoBehaviour
     public Animator mNeedleAnim;
 
     public Animator mLightAnimator;
-
     private void Start()
     {
         WheelDivider();
@@ -207,7 +206,7 @@ public class SpinWheel : MonoBehaviour
             bool isIndicatorOnTheLine = false;
 
             mNeedleAnim.SetBool("Spin", true);
-            Invoke("StopNeedleAnimation", _spinDuration - 0.8f);
+            Invoke("SlowNeedleAnimation", _spinDuration - 1.8f);
 
             mLightAnimator.SetBool("Spin", true);
 
@@ -239,9 +238,16 @@ public class SpinWheel : MonoBehaviour
             });
         }
     }
-    void StopNeedleAnimation()
+    void SlowNeedleAnimation()
+    {
+        
+        mNeedleAnim.SetBool("SpinSlow", true);
+        Invoke("Stopani", 1.3f);
+    }
+    void Stopani()
     {
         mNeedleAnim.SetBool("Spin", false);
+        mNeedleAnim.SetBool("SpinSlow", false);
     }
 
     /// <summary>
