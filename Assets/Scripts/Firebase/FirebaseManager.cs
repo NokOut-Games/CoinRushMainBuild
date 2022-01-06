@@ -22,13 +22,13 @@ public class FirebaseManager : MonoBehaviour
     [SerializeField] string mLevelPrefix = "Level";
 
 
-    string userTitle = "Guest Users";
+   public string userTitle = "Guest Users";
 
    public bool canWrite;
 
     public bool CanUpgradeToFacebook = false;
     public bool readUserData;
-    //public GameObject _GuestUpgradeButton;
+    public GameObject _GuestUpgradeButton;
     //Time
     DateTime crntDateTime;
 
@@ -225,24 +225,7 @@ public class FirebaseManager : MonoBehaviour
 
 
     }
-    //ScreenSwitch
-
-
-
-
-
-
-    //public void CreateNewUser()
-    //{
-    //    auth.SignInAnonymouslyAsync().ContinueWith(task =>
-    //    {
-    //        FirebaseUser newUser;
-    //        newUser = task.Result;
-    //        Player newPlayer = new Player(newUser.UserId);
-    //        Debug.Log(newUser.UserId);
-    //        SaveNewUserInFirebase(newPlayer);
-    //    });
-    //}
+   
 
 
     public void SaveNewUserInFirebase(Player inPlayerDataToSave)
@@ -250,7 +233,8 @@ public class FirebaseManager : MonoBehaviour
         var LoggedInUser = FirebaseAuth.DefaultInstance.CurrentUser;
         string json = JsonUtility.ToJson(inPlayerDataToSave);
         reference.Child(userTitle).Child(LoggedInUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json);
-        canWrite = true;
+        //canWrite = true;
+        GameManager.Instance._IsBuildingFromFBase = false;
     }
 
     private void Update()
@@ -260,18 +244,13 @@ public class FirebaseManager : MonoBehaviour
             LoadToTheCurrentLevel(mGameManager._playerCurrentLevel);
 
         }
-        /* if (GameManager.Instance._NxtLvlInitiated)
-         {
-             WriteBuildingDataToFirebase();
-             WritePlayerDataToFirebase();
-             Debug.Log("One");
-         }*/
-        //_GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
 
-        //if (CanUpgradeToFacebook)
-        //{
-        //    _GuestUpgradeButton.SetActive(true);
-        //}
+        _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
+
+        if (CanUpgradeToFacebook)
+        {
+            _GuestUpgradeButton.SetActive(true);
+        }
     }
 
     GameObject FindInActiveObjectByName(string name)

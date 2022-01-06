@@ -12,7 +12,15 @@ public class Player
     public Player(string inPlayerID, string inPlayerName = "Guest")
     {
         _playerID = inPlayerID;
-        _playerName = inPlayerName;
+        if(_playerName != "")
+        {
+            _playerName = inPlayerName;
+        }
+        else
+        {
+            _playerName = "Guest";
+        }
+        
     }
     public Player()
     {
