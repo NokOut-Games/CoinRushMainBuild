@@ -10,6 +10,9 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private GameObject screenItemsUIPanel;
     [SerializeField] private GameObject DrawButtonPanelUI;
 
+    public GameObject OpenCards;
+    public GameObject QuitButton;
+
     public TextMeshProUGUI _coinText;
     public TextMeshProUGUI _energyText;
     public TextMeshProUGUI _extraEnergytext;
@@ -70,6 +73,8 @@ public class MenuUI : MonoBehaviour
         Camera.main.GetComponent<CameraController>().BuildButtonClicked();
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
+        OpenCards.SetActive(false);
+        QuitButton.SetActive(false);
 
         if (isButtonGenerated == false)
         {
@@ -84,6 +89,8 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
+        OpenCards.SetActive(true);
+        QuitButton.SetActive(true);
     }
 
     private void UpdateCoinAndEnergyTextFields()

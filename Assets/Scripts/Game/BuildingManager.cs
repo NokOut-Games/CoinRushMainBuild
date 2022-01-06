@@ -215,7 +215,8 @@ public class BuildingManager : MonoBehaviour
         mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false).OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
         //yield return new WaitForSeconds(0.25f);
 
-        goRef.transform.DOScaleY(0.75f, .75f);/*.OnUpdate(() => { inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-15f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast); }).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f, inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });*/
+        goRef.transform.DOScaleY(0.75f, .75f);
+        /*.OnUpdate(() => { inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-15f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast); }).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f, inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });*/
         //inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-30f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f,inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });
         yield return new WaitForSeconds(mBuildingSpawnTimeDelay);
 

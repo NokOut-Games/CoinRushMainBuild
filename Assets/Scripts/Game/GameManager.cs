@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         while (mIsFull)
         {
             yield return new WaitForSeconds(MinutesToSecondsConverter(_minutes));
-            _energy += 1;
+            _energy += _regenerationEnergy;
         }
     }
 
@@ -182,8 +182,8 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        GUI.TextField(new Rect(400, 200, 300, 100), "Sprint-6 Build");
-        GUILayout.FlexibleSpace();
+        GUI.TextField(new Rect(400, 200, 300, 100), "Sprint-6");
+        GUI.skin.textField.fontSize = 70;
     }
 
     public void CurrentLevelCompleted()

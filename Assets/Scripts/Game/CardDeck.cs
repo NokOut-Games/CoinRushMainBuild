@@ -55,6 +55,7 @@ public class CardDeck : MonoBehaviour
 
     bool mMakeDrawBtnEnable = true;
 
+    public OpenCardSelector _openCardSelector;
     public BuildingManager _buildingManagerRef;
 
     ScriptedCards mCards;
@@ -711,11 +712,11 @@ public class CardDeck : MonoBehaviour
             return;
         }
         
-        for(int i = 0; i < mGameManager.OpenHandCardsPositions.Length;i++)
+        for(int i = 0; i < _openCardSelector.OpenHandCardsPositions.Length;i++)
         {
-            if(mGameManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
+            if(_openCardSelector.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
             {
-                Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], mGameManager.OpenHandCardsPositions[positionNumber].position, mGameManager.OpenHandCardsPositions[positionNumber].rotation, mGameManager.OpenHandCardsPositions[positionNumber]);
+                Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], _openCardSelector.OpenHandCardsPositions[positionNumber].position, _openCardSelector.OpenHandCardsPositions[positionNumber].rotation, _openCardSelector.OpenHandCardsPositions[positionNumber]);
                 break;
             }
         }
