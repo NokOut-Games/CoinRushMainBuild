@@ -28,7 +28,7 @@ public class SpinWheelSpin : MonoBehaviour
     public Animator mLightAnimator;
     private void Start()
     {
-         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        // mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _uiSpinButton.onClick.AddListener(() =>
         {

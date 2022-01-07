@@ -4,6 +4,7 @@ using UnityEngine;
 using Facebook.Unity;
 using Firebase.Auth;
 using Firebase.Database;
+using UnityEngine.UI;
 public class FacebookLogin : MonoBehaviour
 {
     private void Awake()
@@ -50,5 +51,4 @@ public class FacebookLogin : MonoBehaviour
             FirebaseManager.Instance.CreateNewFBUser(aToken.TokenString);
         }
     }
-
 }

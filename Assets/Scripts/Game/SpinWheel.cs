@@ -70,6 +70,7 @@ public class SpinWheel : MonoBehaviour
     private List<int> mNonZeroChancesIndices = new List<int>();
 
     //SpinWheel Needle Animation
+  
     public Animator mNeedleAnim;
 
     public Animator mLightAnimator;
@@ -238,6 +239,7 @@ public class SpinWheel : MonoBehaviour
             });
         }
     }
+
     void SlowNeedleAnimation()
     {
         

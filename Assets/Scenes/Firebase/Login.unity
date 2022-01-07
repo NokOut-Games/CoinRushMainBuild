@@ -1018,7 +1018,7 @@ GameObject:
   m_Component:
   - component: {fileID: 361868924}
   m_Layer: 5
-  m_Name: Facebook Info
+  m_Name: FacebookInformation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 479511130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1281,16 +1281,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &479511133
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1383,8 +1380,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 893426553}
-        m_TargetAssemblyTypeName: FbFirebaseLogin, Assembly-CSharp
-        m_MethodName: Facebook_Login
+        m_TargetAssemblyTypeName: FacebookLogin, Assembly-CSharp
+        m_MethodName: OnClickFacebookLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1785,7 +1782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1022383892
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1964,9 +1961,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mLevelPrefix: Level
   userTitle: Guest Users
-  CanUpgradeToGuest: 0
+  CanUpgradeToFacebook: 0
   readUserData: 0
-  _GuestUpgradeButton: {fileID: 0}
+  FbImg: {fileID: 0}
 --- !u!4 &1266492673
 Transform:
   m_ObjectHideFlags: 0

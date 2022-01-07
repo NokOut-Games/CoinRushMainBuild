@@ -6,6 +6,8 @@ using Firebase.Auth;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -19,9 +21,14 @@ public class FirebaseManager : MonoBehaviour
     public string userTitle ="Guest Users";
     public  bool CanUpgradeToFacebook = false;
     public bool readUserData;
-    public GameObject _GuestUpgradeButton;
+    private GameObject _GuestUpgradeButton;   
+    private GameObject _FacebookInfo;
+    private RawImage _FacebookPicture;
+
     //Time
     DateTime crntDateTime;
+
+    public Texture FbImg;
 
     private void Awake()
     {
@@ -40,6 +47,7 @@ public class FirebaseManager : MonoBehaviour
         {
             userTitle = "Facebook Users";
             ReadData();
+            StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
     }
     void InitializeFirebase()
@@ -77,7 +85,6 @@ public class FirebaseManager : MonoBehaviour
 
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
-
 
                 //Time difference Calculation
                 var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
@@ -141,6 +148,7 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Child("Facebook Users").HasChild(newId) == true)
                 {
                     ReadData();
+                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
                 }
                 else
                 {
@@ -148,7 +156,8 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log(newFBUser.UserId);
                     SaveNewUserInFirebase(newPlayer);
                     WriteBuildingDataToFirebase();
-                    readUserData = true;
+                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+                    readUserData = true;        
                 }
             });          
         });
@@ -198,20 +207,26 @@ public class FirebaseManager : MonoBehaviour
         {
             LoadToTheCurrentLevel(mGameManager._playerCurrentLevel);
         }
-        /* if (GameManager.Instance._NxtLvlInitiated)
-         {
-             WriteBuildingDataToFirebase();
-             WritePlayerDataToFirebase();
-             Debug.Log("One");
-         }*/
 
         _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
+        _FacebookInfo = FindInActiveObjectByName("FacebookInformation");
+        _FacebookPicture = FindObjectOfType<RawImage>();
 
-            if (CanUpgradeToFacebook)
-            {
-                _GuestUpgradeButton.SetActive(true);
-            }
+        if (CanUpgradeToFacebook)
+        {
+            _GuestUpgradeButton.SetActive(true);
+        }
+        else
+        {
+            _FacebookInfo.SetActive(true);
+            Invoke("DisplayFacebookInformation", 0.5f);
+        }
     }
+    void DisplayFacebookInformation()
+    {
+        _FacebookPicture.texture = FbImg;
+    }
+
     GameObject FindInActiveObjectByName(string name)
     {
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
@@ -227,7 +242,17 @@ public class FirebaseManager : MonoBehaviour
         }
         return null;
     }
-
+    IEnumerator DownloadFacebookImage(string MediaUrl)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+            Debug.Log(request.error);
+        else
+        {
+            FbImg = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+    }
 
     //Scenemanager Job.......
     void LoadToTheCurrentLevel(int inCurrentLevelNo)
@@ -266,10 +291,12 @@ public class FirebaseManager : MonoBehaviour
 
 
     //}
+
     private void OnApplicationQuit()
     {
         CalculateLogOutTime();
         WriteBuildingDataToFirebase();
         WritePlayerDataToFirebase();
     }
+
 }
