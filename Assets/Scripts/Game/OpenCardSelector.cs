@@ -8,8 +8,6 @@ public class OpenCardSelector : MonoBehaviour
     [SerializeField]
     private CameraController mcameraController;
 
-    public Transform[] OpenHandCardsPositions;
-
     private void Start()
     {
         mcardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();

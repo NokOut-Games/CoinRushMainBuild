@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.082990125, g: 0.0769746, b: 0.073454395, a: 1}
+  m_IndirectSpecularColor: {r: 0.08307052, g: 0.07705623, b: 0.073533975, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -220,6 +220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &23806665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226716931498054895, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+  m_PrefabInstance: {fileID: 257798272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &33681822
 GameObject:
   m_ObjectHideFlags: 0
@@ -7500,6 +7505,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &669806611 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226716931073677831, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+  m_PrefabInstance: {fileID: 257798272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &679555296
 GameObject:
   m_ObjectHideFlags: 0
@@ -7876,17 +7886,6 @@ Transform:
   m_Father: {fileID: 492189192}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &740036348 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4226716932633150666, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
-  m_PrefabInstance: {fileID: 257798272}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdeb23610e53d49419e8f2644f5379e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &762150735
 GameObject:
   m_ObjectHideFlags: 0
@@ -8378,6 +8377,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855797691}
   m_Mesh: {fileID: 1540178548843688688, guid: 6f3b5d1277523f246ada325b3a05f088, type: 3}
+--- !u!114 &865159930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+  m_PrefabInstance: {fileID: 1036547695}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &865534193 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1363669557664019783, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
@@ -9867,6 +9877,30 @@ PrefabInstance:
       propertyPath: buildingManagerRef
       value: 
       objectReference: {fileID: 349220986}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.data[0]
+      value: 
+      objectReference: {fileID: 669806611}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.data[1]
+      value: 
+      objectReference: {fileID: 23806665}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.data[2]
+      value: 
+      objectReference: {fileID: 1057322600}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.data[3]
+      value: 
+      objectReference: {fileID: 1342234256}
+    - target: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
+      propertyPath: OpenHandCardsPositions.Array.data[4]
+      value: 
+      objectReference: {fileID: 1712440837}
     - target: {fileID: 612471264391210443, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -10089,6 +10123,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &1057322600 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226716931476689275, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+  m_PrefabInstance: {fileID: 257798272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1064699128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12962,6 +13001,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a42d741e85232e14b956b71b6feb5574, type: 3}
   m_PrefabInstance: {fileID: 1328961270}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1342234256 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226716932069151288, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+  m_PrefabInstance: {fileID: 257798272}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1393774049
 GameObject:
@@ -17194,6 +17238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OpenHandCardsPositions: []
 --- !u!1001 &1664996929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17977,6 +18022,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!4 &1712440837 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4226716930684428889, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+  m_PrefabInstance: {fileID: 257798272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1716690196
 GameObject:
   m_ObjectHideFlags: 0
@@ -18726,7 +18776,7 @@ MonoBehaviour:
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
-  _openCardSelector: {fileID: 0}
+  _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mJokerProbability: 0
 --- !u!4 &1803622837
@@ -22138,13 +22188,12 @@ MonoBehaviour:
   - {fileID: 4168743852823018867, guid: 16f42c3ae32a6e94e95133d98c31183b, type: 3}
   - {fileID: 8578960879337220888, guid: 50a9dc731788cba459a69756cdfb8d3c, type: 3}
   - {fileID: 4922323569806154452, guid: d36f2bbd9720eec4ab225ac993ac758a, type: 3}
-  - {fileID: 1080941311999311897, guid: cade7ebefa1a92541be59e8ab7068a2c, type: 3}
   - {fileID: 3698473429944838919, guid: fcb34e8500b43f245becbff1e4dcffe7, type: 3}
   cardDeckAnimation2D: {fileID: 412256756}
   cardDeckAnimation3D: {fileID: 267911467}
   backToDeckAnimation3D: {fileID: 1770395786}
-  _openCardSelector: {fileID: 740036348}
-  _buildingManagerRef: {fileID: 0}
+  _levelManager: {fileID: 865159930}
+  _buildingManagerRef: {fileID: 349220986}
   mJokerProbability: 0
 --- !u!1 &919132148165148767
 GameObject:

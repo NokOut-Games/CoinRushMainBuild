@@ -86,31 +86,31 @@ public class BuildingManager : MonoBehaviour
             SpawningBuilding();
         }
 
-       /* for (int i = 0; i < _buildingData.Count; i++)
-        {
-            // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
+        //for (int i = 0; i < _buildingData.Count; i++)
+        //{
+        //    // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
 
-            if (_buildingData[i]._buildingLevel == 0)
-            {
-                GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
-                GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].PlunkCardImage;
-                GORef.name = _buildingData[i]._buildingNapawnedAndActime;
-                _buildingData[i].isBuildingSve = true;
-                _buildings.Add(GORef);
-            }
-            else  // But if there are buildings already spawned and active the grab the information from Game Manager
-            {
-                GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-                GORef.name = _buildingData[i]._buildingName;
-                if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
-                {
-                    _buildingData[i].didBuildingReachMaxLevel = true;
-                }
-                _buildings.Add(GORef);
-                //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-                //GORef.name = _buildingData[i]._buildingName;
-            }
-        }*/
+        //    if (_buildingData[i]._buildingLevel <= 0)
+        //    {
+        //        GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
+        //        GORef.name = _buildingData[i]._buildingName;
+        //        GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].NextUpgradeImages[4];
+        //        _buildingData[i].isBuildingSpawnedAndActive = true;
+
+        //        _buildings.Add(GORef);
+        //    }
+        //    else  // But if there are buildings already spawned and active the grab the information from Game Manager
+        //    {
+        //        GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+        //        GORef.name = _buildingData[i]._buildingName;
+        //        if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
+        //        {
+        //            _buildingData[i].didBuildingReachMaxLevel = true;
+        //        }
+        //        //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+        //        //GORef.name = _buildingData[i]._buildingName;
+        //    }
+        //}
     }
 
     void GetCurrentBuildingDetails()
@@ -146,9 +146,9 @@ public class BuildingManager : MonoBehaviour
             // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
 
             if (_buildingData[i]._buildingLevel <= 0)
-           {
-            GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
-            GORef.name = _buildingData[i]._buildingName;
+            {
+                GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
+                GORef.name = _buildingData[i]._buildingName;
                 GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].NextUpgradeImages[4];
                 _buildingData[i].isBuildingSpawnedAndActive = true;
 
@@ -156,16 +156,16 @@ public class BuildingManager : MonoBehaviour
             }
             else  // But if there are buildings already spawned and active the grab the information from Game Manager
             {
-            GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-            GORef.name = _buildingData[i]._buildingName;
-            if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
-            {
-                _buildingData[i].didBuildingReachMaxLevel = true;
+                GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                GORef.name = _buildingData[i]._buildingName;
+                if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
+                {
+                    _buildingData[i].didBuildingReachMaxLevel = true;
+                }
+                //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
+                //GORef.name = _buildingData[i]._buildingName;
             }
-            //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-            //GORef.name = _buildingData[i]._buildingName;
-           }
-    }
+        }
 
 
     }
@@ -182,6 +182,7 @@ public class BuildingManager : MonoBehaviour
             else
             {
                 mCameraControllerRef._inBetweenConstructionProcess = false;
+                //Invoke(nameof(InvokeCamera), 1f);
             }
         }
         if (GameManager.Instance._IsRefreshNeeded)
@@ -192,6 +193,7 @@ public class BuildingManager : MonoBehaviour
             SpawningBuilding();
         }
     }
+
 
     /// <summary>
     /// Order of progression
@@ -212,7 +214,7 @@ public class BuildingManager : MonoBehaviour
         //Upgrading Scenario Starts Here
         Destroy(goRef, 1f);
         GameObject smokeVFX = Instantiate(mBuildingConstructionVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
-        mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false).OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
+        mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false);//.OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
         //yield return new WaitForSeconds(0.25f);
 
         goRef.transform.DOScaleY(0.75f, .75f);
@@ -276,7 +278,7 @@ public class BuildingManager : MonoBehaviour
             _buildingData[inBuildingsElementNumber]._buildingLevel += 1;
             _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Button>().interactable = false;   
             _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Image>().color = new Color32(0, 0, 0, 100);
-            _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Building....";
+            _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Building...";
         }
         if (_buildingData[inBuildingsElementNumber]._buildingLevel == _buildingData[inBuildingsElementNumber]._buildingMaxLevel)
         {

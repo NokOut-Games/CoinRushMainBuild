@@ -6,6 +6,8 @@ using Firebase.Auth;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -21,8 +23,11 @@ public class FirebaseManager : MonoBehaviour
 
     [SerializeField] string mLevelPrefix = "Level";
 
+    private GameObject _FacebookInfo;
+    private RawImage _FacebookPicture;
+    public Texture FbImg;
 
-   public string userTitle = "Guest Users";
+    public string userTitle = "Guest Users";
 
    public bool canWrite;
 
@@ -54,7 +59,9 @@ public class FirebaseManager : MonoBehaviour
         {
             userTitle = "Facebook Users";
             ReadData();
+            StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
+        
     }
 
     void ReadData()
@@ -129,6 +136,7 @@ public class FirebaseManager : MonoBehaviour
         {
 
             ReadData();
+            
             //WritePlayerDataToFirebase();
 
             CanUpgradeToFacebook = true;
@@ -174,6 +182,7 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Child("Facebook Users").HasChild(newId) == true)
                 {
                     ReadData();
+                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
                 }
                 else
                 {
@@ -181,11 +190,14 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log(newFBUser.UserId);
                     SaveNewUserInFirebase(newPlayer);
                     WriteBuildingDataToFirebase();
+                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
                     readUserData = true;
                 }
             });
         });
     }
+
+   
 
     public void WritePlayerDataToFirebase()
     {
@@ -246,10 +258,40 @@ public class FirebaseManager : MonoBehaviour
         }
 
         _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
+        _FacebookInfo = FindInActiveObjectByName("FacebookInformation");
+        _FacebookPicture = FindObjectOfType<RawImage>();
 
         if (CanUpgradeToFacebook)
         {
             _GuestUpgradeButton.SetActive(true);
+        }
+        else
+        {
+            if (_FacebookInfo != null)
+            {
+                _FacebookInfo.SetActive(true);
+
+                Invoke("DisplayFacebookInformation", 0.7f);
+            }
+
+           
+        }
+    }
+
+    void DisplayFacebookInformation()
+    {
+        _FacebookPicture.texture = FbImg;
+    }
+
+    IEnumerator DownloadFacebookImage(string MediaUrl)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+            Debug.Log(request.error);
+        else
+        {
+            FbImg = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
     }
 
