@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.28368124, g: 0.39226234, b: 0.3806502, a: 1}
+  m_IndirectSpecularColor: {r: 0.28357968, g: 0.3922329, b: 0.3806094, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4919,11 +4919,11 @@ MonoBehaviour:
   _ScoreTextTwo: {fileID: 385032550}
   _ScoreTextThree: {fileID: 0}
   _bulletPre: {fileID: 0}
-  _Sprite1: {fileID: 21300000, guid: 5f85f1b9ae70e48ee85195afe2a0d0ad, type: 3}
-  _Sprite2: {fileID: 21300000, guid: e1095cb31d2ff466280e59134a41efdb, type: 3}
-  _Sprite3: {fileID: 21300000, guid: 23b06bd93a2274818862ddf81831740e, type: 3}
-  _Sprite4: {fileID: 21300000, guid: 5f85f1b9ae70e48ee85195afe2a0d0ad, type: 3}
-  _Sprite5: {fileID: 21300000, guid: 5f85f1b9ae70e48ee85195afe2a0d0ad, type: 3}
+  _Sprite1: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
+  _Sprite2: {fileID: 21300000, guid: a45f15bb808607b4b84b9b18537d7667, type: 3}
+  _Sprite3: {fileID: 21300000, guid: ec211a55ee1047f4facad8535f15b30c, type: 3}
+  _Sprite4: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
+  _Sprite5: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
   _TargetTransform: {fileID: 0}
   _Shield: 0
   CameraAttackRotation: {x: 0.25881904, y: 0, z: 0, w: 0.9659258}
@@ -6526,6 +6526,10 @@ PrefabInstance:
       value: -1.0023584
       objectReference: {fileID: 0}
     - target: {fileID: -1578444296140453417, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1578444296140453417, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4d7ab6625c446b94fae5dea901db0dac, type: 2}
@@ -6541,6 +6545,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1171549304580213878, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4918753458281921464, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -1.5164768e-10
@@ -6552,6 +6560,10 @@ PrefabInstance:
     - target: {fileID: 4918753458281921464, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.49309805
+      objectReference: {fileID: 0}
+    - target: {fileID: 5917893844142046307, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7543904117081291052, guid: ea5818fb7f8bc7d4298b8ae670544160, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12484,6 +12496,10 @@ PrefabInstance:
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_RootOrder

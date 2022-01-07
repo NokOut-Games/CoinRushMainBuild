@@ -98,7 +98,8 @@ public class MenuUI : MonoBehaviour
         var currentCoin = mGameManager._coins.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
         _coinText.text = currentCoin.Substring(0, currentCoin.Length - 2);
 
-        _energyText.text = mGameManager._energy.ToString();
+        var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
+        _energyText.text = energyBarMax.ToString();
 
         if (mGameManager._energy > mGameManager._maxEnergy)
         {

@@ -24,7 +24,7 @@ public class LevelLoadManager : MonoBehaviour
     }
     public void LoadLevelASyncOf(int inLevelIndex)
     {
-        SceneManager.LoadSceneAsync(levelPrefix + inLevelIndex);
+        SceneManager.LoadScene(levelPrefix + inLevelIndex);
     }
     public void BacktoHome()
     {

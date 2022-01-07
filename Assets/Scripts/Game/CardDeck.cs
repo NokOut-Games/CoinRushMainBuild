@@ -145,7 +145,9 @@ public class CardDeck : MonoBehaviour
             }
         }
 
-        if (canClick == true)
+        if (mGameManager._energy > 0)
+        { 
+            if (canClick == true)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -204,7 +206,7 @@ public class CardDeck : MonoBehaviour
 
             }
         }
-        //}
+        }
     }
 
     void SelectCardPairOfIndex(int inSelectedIndex, int inUnSelectedIndex)
