@@ -70,7 +70,8 @@ public class MenuUI : MonoBehaviour
     public void BuildButton()
     {
         buildPanelGameObject.SetActive(true);
-        Camera.main.GetComponent<CameraController>().BuildButtonClicked();
+        //Camera.main.GetComponent<CameraController>().BuildButtonClicked();
+        Camera.main.GetComponent<TestScript>().BuildButtonClicked();
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
         OpenCards.SetActive(false);

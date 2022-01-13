@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class CardDeck : MonoBehaviour
 {
     [Header("Grabbing Other GameObject References:")]
     [SerializeField] private GameManager mGameManager;
-    [SerializeField] private GameObject mCardHolderParent;
+    [SerializeField] public GameObject mCardHolderParent;
     public int clicks = 0;
     public List<Transform> _playerHandPoints;
 
@@ -17,7 +16,7 @@ public class CardDeck : MonoBehaviour
     [Header("Cards And Related Lists:")]
     [SerializeField] private List<ScriptedCards> mScriptedCards;
     [SerializeField] private List<Cards> _CardList = new List<Cards>();
-    [SerializeField] private List<GameObject> mCardListGameObject;
+    [SerializeField] public List<GameObject> mCardListGameObject;
     private List<Vector3> _PositionList = new List<Vector3>();
     private List<Vector3> _RotationList = new List<Vector3>();
 
@@ -34,7 +33,7 @@ public class CardDeck : MonoBehaviour
     private bool mAutomaticDrawModeOn = false;
     private bool mOnceDone = false;
     private bool canClick = true;
-    
+
     public Image _drawButtonFillerImage;
 
     [Space(10)]
@@ -146,66 +145,66 @@ public class CardDeck : MonoBehaviour
         }
 
         if (mGameManager._energy > 0)
-        { 
-            if (canClick == true)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (canClick == true)
             {
-                if (_drawButtonRectTransform.rect.Contains(localMousePosition) && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    mMakeDrawBtnEnable = false;
-                   
-                    time = 0;
-                    DrawCard();
-                }
-                else
-                {
-                    BackToNormalState();
-                }
-
-            }
-
-            if (!mOnceDone)
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                    if (_drawButtonRectTransform.rect.Contains(localMousePosition) && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
                     {
-                        if (!mAutomaticDrawModeOn)
+                        mMakeDrawBtnEnable = false;
+
+                        time = 0;
+                        DrawCard();
+                    }
+                    else
+                    {
+                        BackToNormalState();
+                    }
+
+                }
+
+                if (!mOnceDone)
+                {
+                    if (Input.GetMouseButton(0))
+                    {
+                        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                         {
-                            DrawButton.color = new Color32(200, 200, 200, 255);
-                        }
+                            if (!mAutomaticDrawModeOn)
+                            {
+                                DrawButton.color = new Color32(200, 200, 200, 255);
+                            }
 
-                        time += Time.deltaTime;
-                        var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
-                        //CircleOutlineFiller();
-                        _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
+                            time += Time.deltaTime;
+                            var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
+                            //CircleOutlineFiller();
+                            _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
 
 
-                        if (time >= mMaxHoldTime)
-                        {
-                            ChangeSprites();
+                            if (time >= mMaxHoldTime)
+                            {
+                                ChangeSprites();
 
-                            mOnceDone = true;
-                            mAutomaticDrawModeOn = true;
-                            mAutoCardDraw = true;
-                            StartCoroutine(AutomaticCardDrawing());
+                                mOnceDone = true;
+                                mAutomaticDrawModeOn = true;
+                                mAutoCardDraw = true;
+                                StartCoroutine(AutomaticCardDrawing());
+                            }
                         }
                     }
                 }
-            }
 
-            if (Input.GetMouseButtonUp(0))
-            {
-                _drawButtonFillerImage.fillAmount = 0;
-                DrawButton.color = new Color32(255, 255, 255, 255);
-                if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                if (Input.GetMouseButtonUp(0))
                 {
-                    time = 0;
-                }
+                    _drawButtonFillerImage.fillAmount = 0;
+                    DrawButton.color = new Color32(255, 255, 255, 255);
+                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                    {
+                        time = 0;
+                    }
 
+                }
             }
-        }
         }
     }
 
@@ -291,7 +290,9 @@ public class CardDeck : MonoBehaviour
         }
         mGameManager._energy -= 1;
 
-        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        Camera.main.GetComponent<TestScript>().DrawButtonClicked();
+
         if (!mHasJoker && Random.Range(0, 100) < mJokerProbability)
         {
             mCards = mScriptedCards[0];//card will be joker if no joker is there and the chance of getting joker is with percentage            
@@ -333,7 +334,7 @@ public class CardDeck : MonoBehaviour
         cardDetails._Position = card.transform.position;
 
         clicks += 1;
-        AddNewCard(card.GetComponent<Cards>(), card,isSavedCard);
+        AddNewCard(card.GetComponent<Cards>(), card, isSavedCard);
         ReplacementOfCards(isSavedCard, isSavedCard ? 0 : .5f);
         CardCheckingFunction();
     }
@@ -612,10 +613,10 @@ public class CardDeck : MonoBehaviour
         {
             //if (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType)
             //{
-                //if(_CardList[i+1]._cardType == CardType.SHIELD)
-                //{
-                //    Shield();
-                //}
+            //if(_CardList[i+1]._cardType == CardType.SHIELD)
+            //{
+            //    Shield();
+            //}
             if (!mHasJoker && (_CardList[i]._cardType == _CardList[i + 1]._cardType && _CardList[i + 1]._cardType == _CardList[i + 2]._cardType))
             {
                 mThreeCardMatchIndex = i;
@@ -650,7 +651,7 @@ public class CardDeck : MonoBehaviour
         {
             int randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
             Debug.Log("Random Number: " + randomNumber);
-            while(_buildingManagerRef._shieldedBuildings.Contains(randomNumber))
+            while (_buildingManagerRef._shieldedBuildings.Contains(randomNumber))
             {
                 randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
             }
@@ -709,20 +710,20 @@ public class CardDeck : MonoBehaviour
 
     public void OpenCardAdder()
     {
-        if(positionNumber > 4)
+        if (positionNumber > 4)
         {
             return;
         }
-        
-        for(int i = 0; i < _levelManager.OpenHandCardsPositions.Length;i++)
+
+        for (int i = 0; i < _levelManager.OpenHandCardsPositions.Length; i++)
         {
-            if(_levelManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
+            if (_levelManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
             {
                 Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], _levelManager.OpenHandCardsPositions[positionNumber].position, _levelManager.OpenHandCardsPositions[positionNumber].rotation, _levelManager.OpenHandCardsPositions[positionNumber]);
                 break;
             }
         }
-        
+
         positionNumber += 1;
     }
 }

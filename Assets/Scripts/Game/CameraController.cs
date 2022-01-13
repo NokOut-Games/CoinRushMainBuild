@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
     public bool _DrawButtonClicked = false;
     public bool _CameraFreeRoam = true;
     public bool _isCameraInGamePlayView = false;
-    
+
     public GameObject OpenCardRegion;
 
     public int _RotationLimit = 30;
@@ -94,7 +94,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        
+
         if (!_inBetweenConstructionProcess)
         {
             if (Input.GetMouseButtonDown(0))
@@ -124,14 +124,16 @@ public class CameraController : MonoBehaviour
                     }
                 }
 
-                
-                if (!_ScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
+                if (_isCameraInConstructionView && !_isCameraInGamePlayView)
                 {
-                    _buildButtonClicked = false;
-                    _isCameraInConstructionView = false;
-                    Invoke("SetCameraFreeRoam", 0.11f);
-                    mMenuUI.CloseBuildButton();
-                }    
+                    if (!_ScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
+                    {
+                        _buildButtonClicked = false;
+                        _isCameraInConstructionView = false;
+                        Invoke("SetCameraFreeRoam", 0.11f);
+                        mMenuUI.CloseBuildButton();
+                    }
+                }
             }
 
 
@@ -142,54 +144,17 @@ public class CameraController : MonoBehaviour
 
             if (_buildButtonClicked)
             {
-                
                 _isCameraInConstructionView = true;
-                _currentView = _views[2];
-                
-                _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);// Time.deltaTime * _transitionSpeed);
-
-                Vector3 currentAngle = new Vector3(
-                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),// Time.deltaTime * _transitionSpeed),
-                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),//Time.deltaTime * _transitionSpeed),
-                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));//Time.deltaTime * _transitionSpeed));
-
-                _CameraParent.eulerAngles = currentAngle;
+                ViewShifter(2, Time.deltaTime * _transitionSpeed);
             }
-            //else
-            //{
-            //    if (!_CameraFreeRoam)
-            //    {
-            //        //OpenCardRegion.SetActive(false);
-            //        //if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
-            //        //{
-            //            _currentView = _views[0];
-            //            _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
+            
 
-            //            Vector3 currentAngle = new Vector3(
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
-            //                Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
-
-            //            _CameraParent.eulerAngles = currentAngle;
-            //        //}
-            //    }
-            //}
-
-           else if (_DrawButtonClicked)
+            if (_DrawButtonClicked)
             {
                 _isCameraInGamePlayView = true;
                 OpenCardRegion.SetActive(true);
 
-                _currentView = _views[1];
-
-                _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);
-
-                Vector3 currentAngle = new Vector3(
-                    Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, 0.1f),// Time.deltaTime * _transitionSpeed),
-                    Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, 0.1f),//Time.deltaTime * _transitionSpeed),
-                    Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, 0.1f));//Time.deltaTime * _transitionSpeed));
-
-                _CameraParent.eulerAngles = currentAngle;
+                ViewShifter(1, 0.1f);
             }
             else
             {
@@ -198,26 +163,29 @@ public class CameraController : MonoBehaviour
                     OpenCardRegion.SetActive(false);
                     if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
                     {
-                        _currentView = _views[0];
-                        _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, Time.deltaTime * _transitionSpeed);
-
-                        Vector3 currentAngle = new Vector3(
-                            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, Time.deltaTime * _transitionSpeed),
-                            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, Time.deltaTime * _transitionSpeed),
-                            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, Time.deltaTime * _transitionSpeed));
-
-                        _CameraParent.eulerAngles = currentAngle;
+                        ViewShifter(0, Time.deltaTime * _transitionSpeed);
                     }
                 }
-               
-                    //HandleMouse();
-              
 
+                //HandleMouse();    //New Addition
                 HorizontalPanning();
-                VerticalZooming();
-                //New Addition
+                VerticalZooming();  
             }
         }
+    }
+
+    private void ViewShifter(int inViewNumber, float inTransitionSpeed)
+    {
+        _currentView = _views[inViewNumber];
+
+        _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, inTransitionSpeed);// Time.deltaTime * _transitionSpeed);
+        
+        Vector3 currentAngle = new Vector3(
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, inTransitionSpeed),// Time.deltaTime * _transitionSpeed),
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, inTransitionSpeed),//Time.deltaTime * _transitionSpeed),
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, inTransitionSpeed));//Time.deltaTime * _transitionSpeed));
+
+        _CameraParent.eulerAngles = currentAngle;
     }
 
     void HandleMouse()
@@ -244,7 +212,7 @@ public class CameraController : MonoBehaviour
         //    timeToAcceleration = 0;
         //}
     } //New Addition
-    
+
     void PanCamera(Vector3 newPanPosition)
     {
         Vector3 offset = this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - newPanPosition);
