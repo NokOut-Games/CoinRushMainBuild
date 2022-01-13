@@ -290,8 +290,8 @@ public class CardDeck : MonoBehaviour
         }
         mGameManager._energy -= 1;
 
-        //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-        Camera.main.GetComponent<TestScript>().DrawButtonClicked();
+        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        //Camera.main.GetComponent<TestScript>().DrawButtonClicked();
 
         if (!mHasJoker && Random.Range(0, 100) < mJokerProbability)
         {

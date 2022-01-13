@@ -57,6 +57,9 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private Vector3 mCameraOffSetFromBuilding;
     [SerializeField] private Vector3 mParticleOffSetFromBuilding;
 
+    [SerializeField] private Vector3 newBuildingSpawnScale;
+    [SerializeField] private float mSizeToDecrease;
+
     public float mTimeDelayFromNewBuildingToCameraDefaultState;
 
     public bool _isAnotherBuildingInConstruction = false;
@@ -110,6 +113,30 @@ public class BuildingManager : MonoBehaviour
                 //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
                 //GORef.name = _buildingData[i]._buildingName;
             }
+        }
+    }
+
+    void Update()
+    {
+        foreach (var v in _buildingData)
+        {
+            if (v._isUnderConstruction != false)
+            {
+                mCameraControllerRef._inBetweenConstructionProcess = true;
+                return;
+            }
+            else
+            {
+                mCameraControllerRef._inBetweenConstructionProcess = false;
+                //Invoke(nameof(InvokeCamera), 1f);
+            }
+        }
+        if (GameManager.Instance._IsRefreshNeeded)
+        {
+            GameManager.Instance._IsRefreshNeeded = false;
+
+            GetCurrentBuildingDetails();
+            SpawningBuilding();
         }
     }
 
@@ -170,29 +197,7 @@ public class BuildingManager : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        foreach (var v in _buildingData)
-        {
-            if (v._isUnderConstruction != false)
-            {
-                mCameraControllerRef._inBetweenConstructionProcess = true;
-                return;
-            }
-            else
-            {
-                mCameraControllerRef._inBetweenConstructionProcess = false;
-                //Invoke(nameof(InvokeCamera), 1f);
-            }
-        }
-        if (GameManager.Instance._IsRefreshNeeded)
-        {
-            GameManager.Instance._IsRefreshNeeded = false;
-
-            GetCurrentBuildingDetails();
-            SpawningBuilding();
-        }
-    }
+    
 
 
     /// <summary>
@@ -217,27 +222,27 @@ public class BuildingManager : MonoBehaviour
         mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false);//.OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
         //yield return new WaitForSeconds(0.25f);
 
-        goRef.transform.DOScaleY(0.75f, .75f);
+        goRef.transform.DOScale(mSizeToDecrease, mBuildingShrinkAndEnlargeTime);
         /*.OnUpdate(() => { inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-15f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast); }).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f, inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });*/
         //inPanPoint.DORotate(new Vector3(inPanPoint.transform.rotation.eulerAngles.x, inPanPoint.transform.rotation.eulerAngles.y + (-30f), inPanPoint.transform.rotation.eulerAngles.z), 1, RotateMode.Fast).OnComplete(() => { inPanPoint.transform.eulerAngles = new Vector3(inPanPoint.transform.localEulerAngles.x, 0f,inPanPoint.transform.localEulerAngles.z); mCameraParentRef.transform.parent = null; });
         yield return new WaitForSeconds(mBuildingSpawnTimeDelay);
 
         GameObject newGoRef = Instantiate(_buildingData[inBuildingsElementNumber].UpgradeLevels[inBuildingLevel], _buildingData[inBuildingsElementNumber]._buildingSpawnPoint.position, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint.rotation);
-        newGoRef.transform.localScale = new Vector3(1, 0.75f, 1);
+        newGoRef.transform.localScale = newBuildingSpawnScale;
         newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
         //_buildings[inBuildingsElementNumber] = newGoRef;
         
         //GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel + 1, true, false);
         //newGoRef.transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), .5f, 5, 0);
 
-        newGoRef.transform.DOScaleY(1, mBuildingShrinkAndEnlargeTime).OnComplete(()=> {
+        newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime).OnComplete(()=> 
+        {
             Destroy(smokeVFX);
             //mCameraControllerRef._inBetweenConstructionProcess = false;
             mCoroutineIsInProcess = false;
             _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
         }).WaitForCompletion();
-
-
+        
         //newGoRef.AddComponent<BuildingDetails>();
         //BuildingDetails buildingDetailRef = newGoRef.GetComponent<BuildingDetails>();
         //buildingDetailRef._buildingLevel = inBuildingLevel;

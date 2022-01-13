@@ -34134,13 +34134,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276579343}
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
   m_LocalPosition: {x: 0, y: 525, z: -1200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 602949862}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22, y: 0, z: 0}
 --- !u!1001 &1279706797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43053,39 +43053,37 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622744561}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de3974bee9bd5b04a8511d4d792c520e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 350
-  _CameraLeftBound: -230
-  _CameraRightBound: 230
-  _CameraUpBound: 250
-  _CameraDownBound: 150
-  mZoomSpeed: 200
+  mPanSpeed: 300
+  mAutoDragPanSpeed: 300
+  mCameraLeftBound: -230
+  mCameraRightBound: 230
+  timeToAcceleration: 0
+  mTimeTakenToAutoPan: 1
   mCameraNearBound: -350
-  mCameraFarBound: -515
+  mCameraFarBound: -550
+  _currentView: {fileID: 0}
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
   - {fileID: 1276579344}
   _transitionSpeed: 4
-  _DrawButtonRectTransform: {fileID: 1298872325}
-  _OpenHandRectTransform: {fileID: 340822432}
-  _ScrollViewRectTransform: {fileID: 372537254}
+  mDrawButtonRectTransform: {fileID: 1298872325}
+  mOpenHandRectTransform: {fileID: 340822432}
+  mScrollViewRectTransform: {fileID: 372537254}
+  mOpenCardRegion: {fileID: 340822431}
   _DrawButtonClicked: 0
-  _CameraFreeRoam: 1
   _isCameraInGamePlayView: 0
-  OpenCardRegion: {fileID: 340822431}
-  _RotationLimit: 30
   _buildButtonClicked: 0
-  _inBetweenConstructionProcess: 0
   _isCameraInConstructionView: 0
+  _inBetweenConstructionProcess: 0
+  _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
-  PanSpeed: 300
-  timeToAcceleration: 0
 --- !u!114 &1622744567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43093,13 +43091,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622744561}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 100
+  mHorizontalPanSpeed: 300
   _CameraLeftBound: -230
   _CameraRightBound: 230
   _CameraUpBound: 250

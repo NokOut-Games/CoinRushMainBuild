@@ -183,7 +183,7 @@ public class TestScript : MonoBehaviour
                             ViewShifter(0, 0.1f); // 0 takes to normal view //_currentView = _views[0];
                         }
                     }
-                    //HandleMouse();
+                    HandleMouse();
                 }
             }
 
@@ -215,7 +215,7 @@ public class TestScript : MonoBehaviour
                 }
             }
 
-            HandleMouse();
+            //HandleMouse();
         }
     }
     private void ViewShifter(int inViewNumber, float inTransitionSpeed)
@@ -404,6 +404,152 @@ public class TestScript : MonoBehaviour
 }
 
 
+
+
+
+
+//void cameraNEWRemovingFEwChanges()
+//{
+//     private float mInitialPositionX;
+//private float mChangedPositionX;
+//private float mInitialPositionY;
+//private float mChangedPositionY;
+
+//public float _CameraUpBound = 0;
+//public float _CameraDownBound = 0;
+
+//[SerializeField] private float mZoomSpeed;
+
+//public int _RotationLimit = 30;
+
+//public void HorizontalPanning()
+//{
+//    //float panSpeed = 0;
+
+//    if (Input.GetMouseButtonDown(0))
+//    {
+//        mInitialPositionX = Input.mousePosition.x;
+//    }
+
+//    if (_CameraFreeRoam)
+//    {
+//        mChangedPositionX = Input.mousePosition.x;
+
+//        if (mChangedPositionX == mInitialPositionX)
+//        {
+//            return;
+//        }
+//        if (mChangedPositionX < mInitialPositionX - 50f)
+//        {
+//            //panSpeed = mZoomSpeed * -1f * Time.deltaTime;
+//            Pan(mHorizontalPanSpeed * Time.deltaTime);
+//        }
+//        if (mChangedPositionX > mInitialPositionX + 50f)
+//        {
+//            //panSpeed = mZoomSpeed * Time.deltaTime;
+//            Pan(mHorizontalPanSpeed * -1f * Time.deltaTime);
+//        }
+//    }
+//    if (!_isCameraInConstructionView)
+//    {
+
+//        if (!Input.GetMouseButton(0))
+//        {
+//            //PlayCameraBoundEffectX();
+//            PlayCameraBoundEffect(_CameraParent.position.x, _CameraRightBound, _CameraLeftBound, new Vector3(_CameraLeftBound, _CameraParent.position.y, _CameraParent.position.z), new Vector3(_CameraRightBound, _CameraParent.position.y, _CameraParent.position.z));
+//        }
+//    }
+
+//    //if ((transform.position.x <= _CameraRightBound + 30 && panSpeed > 0) || (transform.position.x >= _CameraLeftBound - 2 && panSpeed < 0))
+//    //{
+//    //    transform.Translate(panSpeed * transform.right);
+//    //}
+
+//}
+
+//private void Pan(float inPanSpeed) //New Addition
+//{
+//    if ((_CameraParent.position.x <= _CameraRightBound + 30 && inPanSpeed > 0) || (_CameraParent.position.x >= _CameraLeftBound - 30 && inPanSpeed < 0))
+//    {
+//        _CameraParent.Translate(inPanSpeed * _CameraParent.right);
+//    }
+//}
+
+///// <summary>
+///// We get the input position in y on click.
+///// And keep updating the input.y position as save it to mInitialPosition and keep taking count of whats the changed Position and see if its greater or lesser
+///// and do action accordingly
+///// </summary>
+//private void VerticalZooming()
+//{
+//    if (Input.GetMouseButtonDown(0))
+//    {
+//        mInitialPositionY = Input.mousePosition.y;
+//    }
+
+//    if (_CameraFreeRoam)
+//    {
+//        mChangedPositionY = Input.mousePosition.y;
+
+//        if (mChangedPositionY == mInitialPositionY)
+//        {
+//            return;
+//        }
+//        if (mChangedPositionY < mInitialPositionY - 100f) //Plus and -100 is to restrict the movement diagonally
+//        {
+//            Zoom(mZoomSpeed * Time.deltaTime);
+//        }
+//        if (mChangedPositionY > mInitialPositionY + 100f)
+//        {
+//            Zoom(mZoomSpeed * -1f * Time.deltaTime);
+//        }
+//    }
+
+//    if (!_isCameraInConstructionView)
+//    {
+//        if (!Input.GetMouseButton(0))
+//        {
+//            //PlayCameraBoundEffectZ();
+//            PlayCameraBoundEffect(_CameraParent.position.z, mCameraNearBound, mCameraFarBound, new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraFarBound), new Vector3(_CameraParent.position.x, _CameraParent.position.y, mCameraNearBound));
+//            PlayCameraBoundEffect(_CameraParent.position.y, _CameraUpBound, _CameraDownBound, new Vector3(_CameraParent.position.x, _CameraDownBound, _CameraParent.position.z), new Vector3(_CameraParent.position.x, _CameraUpBound, _CameraParent.position.z));
+//        }
+//    }
+//}
+
+///// <summary>
+///// Zoom Condition
+///// check for camera near and far bounds, check conditions independently
+///// Give a small buffer value to bring in rubber band effect for the camera
+///// Buffervalue being 2
+///// </summary>
+///// <param name="inZoomSpeed"></param>
+//private void Zoom(float inZoomSpeed)
+//{                                                                                //New Change
+//    if ((_CameraParent.position.z <= mCameraNearBound + 30 && inZoomSpeed > 0 && _CameraParent.position.y <= _CameraUpBound + 30) || (_CameraParent.position.z >= mCameraFarBound - 30 && inZoomSpeed < 0 && _CameraParent.position.y >= _CameraDownBound - 30))
+//    {
+//        _CameraParent.Translate(inZoomSpeed * _CameraParent.forward, Space.World);
+//    }
+//}
+
+//public void PlayCameraBoundEffect(float inCameraDirection, float inBound1, float inBound2, Vector3 inCameraBound1, Vector3 inCameraBound2) //Function Modification
+//{
+//    Vector3 newCameraParentPos = Vector3.zero;
+//    if (inCameraDirection > inBound1 || inCameraDirection < inBound2)
+//    {
+
+//        if (Mathf.Abs(inBound2 - inCameraDirection) < Mathf.Abs(inBound1 - inCameraDirection))
+//        {
+//            newCameraParentPos = inCameraBound1;
+//        }
+//        else
+//        {
+//            newCameraParentPos = inCameraBound2;
+//        }
+
+//        _CameraParent.position = Vector3.Lerp(_CameraParent.position, newCameraParentPos, 0.1f);
+//    }
+//}
+//}
 
 //private void LateUpdate()
 //{
