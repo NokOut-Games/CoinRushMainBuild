@@ -178,7 +178,7 @@ public class ChestOpener : MonoBehaviour
     /// </summary>
     public void BackToMainScene()
     {
-        mlevelLoadManagerRef.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }
 

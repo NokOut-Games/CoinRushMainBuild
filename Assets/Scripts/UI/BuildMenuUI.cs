@@ -104,7 +104,7 @@ public class BuildMenuUI : MonoBehaviour
 
     private IEnumerator InvokeNextCostForButton(GameObject Button, int ElementNumber)
     {
-        yield return new WaitForSeconds(1.01f);
+        yield return new WaitForSeconds(1.50f);
         Button.transform.GetChild(1).GetComponent<Button>().interactable = true;
         Button.transform.GetChild(1).GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         Button.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = buildingManagerRef._buildingData[ElementNumber].UpgradeCosts[buildingManagerRef._buildingData[ElementNumber]._buildingLevel].ToString();

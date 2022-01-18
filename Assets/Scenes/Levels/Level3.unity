@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.28357968, g: 0.3922329, b: 0.3806094, a: 1}
+  m_IndirectSpecularColor: {r: 0.28368124, g: 0.39226234, b: 0.3806502, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5628,6 +5628,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5da65e183e104c04ca274013f64ee944, type: 3}
   m_PrefabInstance: {fileID: 811596252}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &813331504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1505508770971341066, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_Name
+      value: 3DCardAnimationCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341066, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 230
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -185
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
 --- !u!1 &838428474
 GameObject:
   m_ObjectHideFlags: 0
@@ -6092,13 +6153,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876818836}
-  m_LocalRotation: {x: 0.17364816, y: -0, z: -0, w: 0.9848078}
+  m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
   m_LocalPosition: {x: 0, y: 364, z: -828}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 602949862}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22, y: 0, z: 0}
 --- !u!1 &887196136
 GameObject:
   m_ObjectHideFlags: 0
@@ -8085,23 +8146,23 @@ PrefabInstance:
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 3d14e6e606c31468c9673023dca40dae, type: 3}
+      objectReference: {fileID: 21300000, guid: 19b398bf1952de94491ea7481e3bed59, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 20e7e6801ad844cb28555ab1bd34d23f, type: 3}
+      objectReference: {fileID: 21300000, guid: f7d35ecc278e00c48b0012d2fbbbbac3, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: 87b1777d0e9ea44ec90a2265452edb60, type: 3}
+      objectReference: {fileID: 21300000, guid: f59a49c74c356a64a8cf9fd10e04c37f, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: b2d18b54fb42842e3b7fdcd086a33fca, type: 3}
+      objectReference: {fileID: 21300000, guid: 1bfb1028127e51047ae46654afaabf0a, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0].NextUpgradeImages.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: 7de305c4d7704466880f938a85484888, type: 3}
+      objectReference: {fileID: 21300000, guid: 87bd0c6d073a8ec4e94db4bfe386a2c0, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[1].NextUpgradeImages.Array.data[0]
       value: 
@@ -11070,33 +11131,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 250
-  _CameraLeftBound: -50
-  _CameraRightBound: 150
-  _CameraUpBound: 250
-  _CameraDownBound: -170
-  mZoomSpeed: 200
+  mPanSpeed: 20
+  mAutoDragPanSpeed: 0
+  mCameraLeftBound: 0
+  mCameraRightBound: 0
+  timeToAcceleration: 0
+  mTimeTakenToAutoPan: 0
   mCameraNearBound: -350
   mCameraFarBound: -515
+  _currentView: {fileID: 0}
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
   - {fileID: 876818837}
   _transitionSpeed: 4
-  _DrawButtonRectTransform: {fileID: 502668290}
-  _OpenHandRectTransform: {fileID: 1350716502}
-  _ScrollViewRectTransform: {fileID: 644968090}
+  mDrawButtonRectTransform: {fileID: 502668290}
+  mOpenHandRectTransform: {fileID: 1350716502}
+  mScrollViewRectTransform: {fileID: 644968090}
+  mOpenCardRegion: {fileID: 1350716501}
   _DrawButtonClicked: 0
-  _CameraFreeRoam: 1
   _isCameraInGamePlayView: 0
-  OpenCardRegion: {fileID: 1350716501}
-  _RotationLimit: 30
   _buildButtonClicked: 0
-  _inBetweenConstructionProcess: 0
   _isCameraInConstructionView: 0
+  _inBetweenConstructionProcess: 0
+  _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
-  PanSpeed: 20
-  timeToAcceleration: 0
 --- !u!1 &1637218285
 GameObject:
   m_ObjectHideFlags: 0
@@ -17620,6 +17679,7 @@ MonoBehaviour:
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
+  blackOutScreen: {fileID: 0}
   _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mJokerProbability: 0
@@ -17739,6 +17799,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1824804461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1592102144049235074, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1832095151
 GameObject:
   m_ObjectHideFlags: 0
@@ -20318,6 +20383,7 @@ MonoBehaviour:
   cardDeckAnimation2D: {fileID: 412256755}
   cardDeckAnimation3D: {fileID: 771169293}
   backToDeckAnimation3D: {fileID: 416097092}
+  blackOutScreen: {fileID: 1824804461}
   _levelManager: {fileID: 1295091}
   _buildingManagerRef: {fileID: 1155393102}
   mJokerProbability: 0

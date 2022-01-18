@@ -196,7 +196,7 @@ public class Slots : MonoBehaviour
     }
     public void ActiveLevelInvoke()
     {
-        mLevelLoadManager.BacktoHome();
+        LevelLoadManager.instance.BacktoHome();
     }
 }
 

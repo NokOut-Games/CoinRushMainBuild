@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         {
             //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
             //_buildingCount = _buildingManagerRef._buildingData.Count;
-            Debug.Log("Get The Building Manager");
+            //Debug.Log("Get The Building Manager");
         }
         //_buildingGameManagerDataRef = new List<GameManagerBuildingData>(new GameManagerBuildingData[_buildingCount]);
         StartCoroutine(AutomaticEnergyRefiller());
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
         {
             _playerCurrentLevel++;
             _IsBuildingFromFBase = false;
-            Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(_playerCurrentLevel);
+            LevelLoadManager.instance.LoadLevelASyncOf(_playerCurrentLevel);
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
         }
         else
