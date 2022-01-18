@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7918069828617268918}
   - component: {fileID: 7918069828617268919}
+  - component: {fileID: 83501057013506508}
   m_Layer: 5
   m_Name: BuildPanel
   m_TagString: Untagged
@@ -219,6 +220,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ContentView: {fileID: 7918069828464997410}
   buildingManagerRef: {fileID: 0}
+--- !u!95 &83501057013506508
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918069828617268913}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cfb5d7638e0cb36489d098cfa48538d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7918069829251527895
 GameObject:
   m_ObjectHideFlags: 0

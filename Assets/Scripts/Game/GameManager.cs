@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
         {
             _playerCurrentLevel++;
             _IsBuildingFromFBase = false;
-            Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(_playerCurrentLevel);
+            LevelLoadManager.instance.LoadLevelASyncOf(_playerCurrentLevel);
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
         }
         else

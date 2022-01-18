@@ -30,11 +30,13 @@ public class MenuUI : MonoBehaviour
     public bool BuildModeOn;
 
     public bool isButtonGenerated = false;
+    Animator mCanvasAnimator;
 
     private void Start()
     {
         isButtonGenerated = false;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mCanvasAnimator = GetComponent<Animator>();
         mCameraController = Camera.main.GetComponent<CameraController>();
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
@@ -69,6 +71,7 @@ public class MenuUI : MonoBehaviour
 
     public void BuildButton()
     {
+        mCanvasAnimator.SetBool("GetOut", true);
         buildPanelGameObject.SetActive(true);
         Camera.main.GetComponent<CameraController>().BuildButtonClicked();
         //Camera.main.GetComponent<TestScript>().BuildButtonClicked();
@@ -87,6 +90,8 @@ public class MenuUI : MonoBehaviour
 
     public void CloseBuildButton()
     {
+        mCanvasAnimator.SetBool("GetOut", false);
+
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);

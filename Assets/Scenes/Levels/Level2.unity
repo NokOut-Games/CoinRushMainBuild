@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.082990125, g: 0.0769746, b: 0.073454395, a: 1}
+  m_IndirectSpecularColor: {r: 0.08307052, g: 0.07705623, b: 0.073533975, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12420,6 +12420,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1297956491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1592102144049235074, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1303194233
 GameObject:
   m_ObjectHideFlags: 0
@@ -15377,6 +15382,10 @@ PrefabInstance:
       propertyPath: _minutes
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -15429,7 +15438,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4331414937515088581, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
 --- !u!114 &1541244310 stripped
 MonoBehaviour:
@@ -15437,7 +15447,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1541244309}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00b19274cde53ad42983bdbbeb6ae348, type: 3}
   m_Name: 
@@ -16366,7 +16376,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -16437,33 +16447,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 350
-  _CameraLeftBound: -260
-  _CameraRightBound: 260
-  _CameraUpBound: 250
-  _CameraDownBound: -170
-  mZoomSpeed: 200
+  mPanSpeed: 20
+  mAutoDragPanSpeed: 0
+  mCameraLeftBound: 0
+  mCameraRightBound: 0
+  timeToAcceleration: 0
+  mTimeTakenToAutoPan: 0
   mCameraNearBound: -350
   mCameraFarBound: -515
+  _currentView: {fileID: 0}
   _views:
   - {fileID: 1474503603}
   - {fileID: 2112903083}
   - {fileID: 1881664604}
   _transitionSpeed: 4
-  _DrawButtonRectTransform: {fileID: 1739856412}
-  _OpenHandRectTransform: {fileID: 1034567238}
-  _ScrollViewRectTransform: {fileID: 412256755}
+  mDrawButtonRectTransform: {fileID: 1739856412}
+  mOpenHandRectTransform: {fileID: 1034567238}
+  mScrollViewRectTransform: {fileID: 412256755}
+  mOpenCardRegion: {fileID: 1034567237}
   _DrawButtonClicked: 0
-  _CameraFreeRoam: 1
   _isCameraInGamePlayView: 0
-  OpenCardRegion: {fileID: 1034567237}
-  _RotationLimit: 30
   _buildButtonClicked: 0
-  _inBetweenConstructionProcess: 0
   _isCameraInConstructionView: 0
+  _inBetweenConstructionProcess: 0
+  _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
-  PanSpeed: 20
-  timeToAcceleration: 0
 --- !u!1 &1625840898
 GameObject:
   m_ObjectHideFlags: 0
@@ -18752,7 +18760,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mGameManager: {fileID: 1541244310}
   mCardHolderParent: {fileID: 0}
   clicks: 0
   _playerHandPoints: []
@@ -18776,6 +18783,7 @@ MonoBehaviour:
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
+  blackOutScreen: {fileID: 0}
   _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mJokerProbability: 0
@@ -19284,13 +19292,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1881664603}
-  m_LocalRotation: {x: 0.17364816, y: -0, z: -0, w: 0.9848078}
+  m_LocalRotation: {x: 0.19080894, y: 0, z: 0, w: 0.9816273}
   m_LocalPosition: {x: 0, y: 541.6, z: -1316.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 602949862}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22, y: 0, z: 0}
 --- !u!1 &1882393032
 GameObject:
   m_ObjectHideFlags: 0
@@ -21657,6 +21665,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2132224050}
   m_Mesh: {fileID: -3710652624261060222, guid: d1120a9c65434b54cbc92ba59e16783c, type: 3}
+--- !u!1001 &2134510906
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1505508770971341066, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_Name
+      value: 3DCardAnimationCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 230
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -185
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1505508770971341071, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6c7850d73d534b99a5972c712a471e8, type: 3}
 --- !u!33 &101370515637141321
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22142,7 +22207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mGameManager: {fileID: 1541244310}
   mCardHolderParent: {fileID: 1927228145}
   clicks: 0
   _playerHandPoints:
@@ -22192,6 +22256,7 @@ MonoBehaviour:
   cardDeckAnimation2D: {fileID: 412256756}
   cardDeckAnimation3D: {fileID: 267911467}
   backToDeckAnimation3D: {fileID: 1770395786}
+  blackOutScreen: {fileID: 1297956491}
   _levelManager: {fileID: 865159930}
   _buildingManagerRef: {fileID: 349220986}
   mJokerProbability: 0

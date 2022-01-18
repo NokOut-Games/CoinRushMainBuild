@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CardDeck : MonoBehaviour
 {
     [Header("Grabbing Other GameObject References:")]
-    [SerializeField] private GameManager mGameManager;
+    //[SerializeField] private GameManager mGameManager;
     [SerializeField] public GameObject mCardHolderParent;
     public int clicks = 0;
     public List<Transform> _playerHandPoints;
@@ -51,6 +51,7 @@ public class CardDeck : MonoBehaviour
     public GameObject cardDeckAnimation2D;
     public GameObject cardDeckAnimation3D;
     public GameObject backToDeckAnimation3D;
+    public GameObject blackOutScreen;
 
     bool mMakeDrawBtnEnable = true;
 
@@ -76,7 +77,7 @@ public class CardDeck : MonoBehaviour
         onceDonee = false;
         canClick = true;
         DrawButton.sprite = drawNormal;
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         if (GameManager.Instance._SavedCardTypes.Count > 0)
         {
             //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
@@ -144,7 +145,7 @@ public class CardDeck : MonoBehaviour
             }
         }
 
-        if (mGameManager._energy > 0)
+        if (GameManager.Instance._energy > 0)
         {
             if (canClick == true)
             {
@@ -288,7 +289,7 @@ public class CardDeck : MonoBehaviour
         {
             return;
         }
-        mGameManager._energy -= 1;
+        GameManager.Instance._energy -= 1;
 
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();
         //Camera.main.GetComponent<TestScript>().DrawButtonClicked();
@@ -304,7 +305,8 @@ public class CardDeck : MonoBehaviour
         }
         cardDeckAnimation3D.GetComponent<Renderer>().material.mainTexture = mCards._cardTex;
         cardDeckAnimation3D.SetActive(true);
-        Invoke(nameof(Instantiate2DCard), 1.01f);
+        blackOutScreen.SetActive(true);
+        Invoke(nameof(Instantiate2DCard), .8f);
 
         //ScriptedCards cards = mScriptedCards[Random.Range(0, mScriptedCards.Count)];
 
@@ -408,6 +410,9 @@ public class CardDeck : MonoBehaviour
 
     void TwoPairCardWithJoker()
     {
+        blackOutScreen.SetActive(true);
+        blackOutScreen.GetComponent<Animator>().SetBool("BlackOut", true);
+
         mFlotingJoker.SetActive(true);
         cardDeckAnimation2D.SetActive(false);
         cardDeckAnimation2D.transform.SetAsLastSibling();
@@ -439,6 +444,10 @@ public class CardDeck : MonoBehaviour
     {
         if (mHasJoker && mNumOfPairCards == 0)// Already have a joker and now we have 1 pair of card
         {
+            blackOutScreen.SetActive(true);
+            blackOutScreen.GetComponent<Animator>().SetBool("BlackOut", true);
+
+
             CardType matchCardType = _CardList[newCardIndex]._cardType;
             _CardList[newCardIndex].PlayThreeCardMatchAnim(-350);
             _CardList[newCardIndex + 1].PlayThreeCardMatchAnim(350);
@@ -559,7 +568,7 @@ public class CardDeck : MonoBehaviour
             {
                 cardDeckAnimation2D.GetComponent<CardDeckAnimation>().PlayOnDropAnimation(_PositionList[newCardIndex], _RotationList[newCardIndex].z);
                 Invoke(nameof(CardShufflingDelay), .6f);
-                Invoke(nameof(CardGenerationDelay), 1.4f);
+                Invoke(nameof(CardGenerationDelay), 1f);
             }
         }
         else
@@ -604,6 +613,7 @@ public class CardDeck : MonoBehaviour
         _CardList[newCardIndex].transform.localEulerAngles = _RotationList[newCardIndex];
         _CardList[newCardIndex].transform.SetSiblingIndex(newCardIndex + 1);
         cardDeckAnimation2D.SetActive(false);
+        blackOutScreen.SetActive(false);
         mMakeDrawBtnEnable = true;
     }
 
@@ -647,7 +657,8 @@ public class CardDeck : MonoBehaviour
 
     private void Shield()
     {
-        if (mGameManager._shield <= mGameManager._maxShield - 1)
+        
+        if (GameManager.Instance._shield <= GameManager.Instance._maxShield - 1)
         {
             int randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
             Debug.Log("Random Number: " + randomNumber);
@@ -655,19 +666,23 @@ public class CardDeck : MonoBehaviour
             {
                 randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
             }
-            mGameManager._shield += 1;
+            GameManager.Instance._shield += 1;
             _buildingManagerRef._shieldedBuildings.Add(randomNumber);
             _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
             GameManager.Instance.AddShieldToBuilding(randomNumber);
         }
         else
         {
-            mGameManager._energy += 3;
+            GameManager.Instance._energy += 3;
         }
+        mHasThreeCardMatch = false;
+
     }
 
     void PlayThreeCardAnimation()
     {
+        blackOutScreen.SetActive(true);
+        blackOutScreen.GetComponent<Animator>().SetBool("BlackOut", true);
         _CardList[mThreeCardMatchIndex].PlayThreeCardMatchAnim(-350);
         _CardList[mThreeCardMatchIndex + 1].PlayThreeCardMatchAnim(0, mHasJoker ? _CardList[mThreeCardMatchIndex].gameObject.GetComponent<Image>().sprite : null);
         _CardList[mThreeCardMatchIndex + 2].PlayThreeCardMatchAnim(350);
@@ -677,10 +692,17 @@ public class CardDeck : MonoBehaviour
             Destroy(_CardList[mThreeCardMatchIndex].gameObject, 3.25f);
             Destroy(_CardList[mThreeCardMatchIndex + 1].gameObject, 3.25f);
             Destroy(_CardList[mThreeCardMatchIndex + 2].gameObject, 3.25f);
+            Invoke(nameof(DelayBalckOut), 3.25f);
         }
         _CardList.RemoveRange(mThreeCardMatchIndex, 3);
         clicks -= 3;
         ReplacementOfCards(true);
+
+    }
+
+    void DelayBalckOut()
+    {
+        blackOutScreen.SetActive(false);
 
     }
 
@@ -704,7 +726,8 @@ public class CardDeck : MonoBehaviour
         else
         {
             //yield return new WaitForSeconds(delayTime);
-            SceneManager.LoadScene(inType.ToString());
+            //SceneManager.LoadScene(inType.ToString());
+            LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString());
         }
     }
 

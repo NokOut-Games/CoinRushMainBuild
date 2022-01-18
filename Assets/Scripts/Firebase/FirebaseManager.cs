@@ -259,7 +259,7 @@ public class FirebaseManager : MonoBehaviour
 
         _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
         _FacebookInfo = FindInActiveObjectByName("FacebookInformation");
-        _FacebookPicture = FindObjectOfType<RawImage>();
+        //_FacebookPicture = FindObjectOfType<RawImage>();
 
         if (CanUpgradeToFacebook)
         {
@@ -280,7 +280,7 @@ public class FirebaseManager : MonoBehaviour
 
     void DisplayFacebookInformation()
     {
-        _FacebookPicture.texture = FbImg;
+       // _FacebookPicture.texture = FbImg;
     }
 
     IEnumerator DownloadFacebookImage(string MediaUrl)

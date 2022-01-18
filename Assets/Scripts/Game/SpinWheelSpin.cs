@@ -130,7 +130,7 @@ public class SpinWheelSpin : MonoBehaviour
     }
     public void BackToGameScene()
     {
-        mLevelLoadManager.BacktoHome();
+        LevelLoadManager.instance.BacktoHome();
     }
     private void Update()
     {    if(FreeSpins<10)

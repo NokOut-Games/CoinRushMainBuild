@@ -330,6 +330,8 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        mGameManager.gameObject.GetComponent<LevelLoadManager>().BacktoHome();
+        // mGameManager.gameObject.GetComponent<LevelLoadManager>().BacktoHome();
+        LevelLoadManager.instance.BacktoHome();
+
     }
 }

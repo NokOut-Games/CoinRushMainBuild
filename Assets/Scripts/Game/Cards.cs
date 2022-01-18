@@ -149,9 +149,11 @@ public class Cards : MonoBehaviour
         }
 
         Keyframe[] PosY;
-        PosY = new Keyframe[2];
+        PosY = new Keyframe[4];
         PosY[0] = new Keyframe(0f, transform.localPosition.y);
         PosY[1] = new Keyframe(1f, 716);
+        PosY[2] = new Keyframe(3.2f, 716);
+        PosY[3] = new Keyframe(4.5f, -1100);
 
         CurvePosY = new AnimationCurve(PosY);
 
@@ -205,4 +207,3 @@ public class Cards : MonoBehaviour
     }
 }
 
-    
