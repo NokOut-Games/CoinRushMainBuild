@@ -42,16 +42,54 @@ public class AttackManager : MonoBehaviour
     public GameObject obj;
 
     public MultiplayerPlayerData mMultiplayerPlayerData;
+    public int _enemyPlayerLevel;
+    public List<GameObject> mEnemyBuildingPrefabPopulateList;
+    public List<GameObject> _enemyBuildings;
+
+    [SerializeField] private GameObject mTransformPoint;
+    public List<Transform> _enemyBuildingsTransformList;
+
+    public List<GameObject> _LevelHolder = new List<GameObject>();
+    public List<bool> _shieldedEnemyBuildings;
 
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        for (int i = 0; i < mGameManager._BuildingDetails.Count; i++)
+        mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+        _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+        Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
+        mTransformPoint = GameObject.Find("TransformPoints");
+        Debug.LogError(mMultiplayerPlayerData._enemyBuildingDetails.Count + " extra " + mMultiplayerPlayerData._buildingMultiplayerDataRef.Count);
+        for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
         {
-            Instantiate(mGameManager._BuildingDetails[i], mGameManager._PositionDetails[i], mGameManager._RotationList[i]);
+            Debug.LogError("HI");
+            GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+            mEnemyBuildingPrefabPopulateList.Add(building);
+            bool shieldedEnemy = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded;
+            _shieldedEnemyBuildings.Add(shieldedEnemy);
+        }
+        //Debug.LogError(mTransformPoint.transform.childCount);
+        for (int i = 0; i < mTransformPoint.transform.childCount; i++)
+        {
+            _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
         }
 
+        Invoke(nameof(InstantiatePopulatedBuildingPrefabList), 0f);
+    }
+
+    void InstantiatePopulatedBuildingPrefabList()
+    {
+        //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
+        //{
+        //    Debug.LogError("HI");
+        //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+        //    _enemyBuildingDetails.Add(building);
+        //}
+        for (int i = 0; i < /*mGameManager._BuildingDetails*/ /*mMultiplayerPlayerData._enemyBuildingDetails*/ mEnemyBuildingPrefabPopulateList.Count; i++)
+        {
+            GameObject enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ mEnemyBuildingPrefabPopulateList[i], _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
+            _enemyBuildings.Add(enemyBuilding);
+        }
     }
 
     private void Start()
@@ -60,7 +98,8 @@ public class AttackManager : MonoBehaviour
         cam = Camera.main;
         // Application.targetFrameRate = 30;
         Debug.Log(Application.targetFrameRate + "Target Fram Rate ");
-        TargetInstantiation();
+        
+        Invoke(nameof(TargetInstantiation),1f);
         //MultiplierInstantiation();
         InvokeRepeating("DoMultiplierSwitching", 0f, _MultiplierSwitchTime);
     }
@@ -69,7 +108,6 @@ public class AttackManager : MonoBehaviour
     void Update()
     {
         TargetButtonPositionUpdate();
-     
     }
 
     public void ResetAnim()
@@ -89,7 +127,7 @@ public class AttackManager : MonoBehaviour
         }
 
   
-        int rand = Random.Range(0, mGameManager._BuildingDetails.Count);
+        int rand = Random.Range(0, /*mGameManager._BuildingDetails*/_enemyBuildings.Count);
         cachedTargetPoint = rand;
         _multiplierGameObject = _spawnedTargetPoints[cachedTargetPoint];
 
@@ -105,12 +143,14 @@ public class AttackManager : MonoBehaviour
     /// </summary>    
     void TargetInstantiation()
     {
-        for (int i = 0; i < mGameManager._BuildingDetails.Count; i++)
+        Debug.LogError("EnemyBuilding Count " + _enemyBuildings.Count);
+        for (int i = 0; i < /*mGameManager._BuildingDetails*/_enemyBuildings.Count; i++)
         {
 
             GameObject go = Instantiate(_TargetButton) as GameObject; //GameObject.Instantiate(_Button);//Instantiate(_Button, Vector3.zero, Quaternion.identity) as Button;
             go.transform.SetParent(_CanvasGO.transform);
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(mGameManager._BuildingDetails[i].transform.position);
+            Debug.LogError("EnemyBuilding Count " + _enemyBuildings.Count);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(/*mGameManager._BuildingDetails[i]*/_enemyBuildings[i].transform.position);
             screenPos.y = screenPos.y + HeightAdjustment;
             screenPos.z = 0;
             go.transform.position = screenPos;
@@ -123,14 +163,14 @@ public class AttackManager : MonoBehaviour
             go.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
                 //Debug.Log(go.GetComponent<Image>().sprite.name + "Selected Sprite Name" );
-                AssignTarget(mGameManager._BuildingDetails[int.Parse(go.name)].transform);
-                if (mGameManager._BuildingShield[int.Parse(go.name)] == true)
-                    _Shield = mGameManager._BuildingShield[int.Parse(go.name)];
+                AssignTarget(/*mGameManager._BuildingDetails*/_enemyBuildings[int.Parse(go.name)].transform);
+                if (/*mGameManager._BuildingShield*/_shieldedEnemyBuildings[int.Parse(go.name)] == true)
+                    _Shield = /*mGameManager._BuildingShield*/_shieldedEnemyBuildings[int.Parse(go.name)];
                 Debug.LogError(mGameManager._BuildingShield[int.Parse(go.name)] + " shield Yes or No Once selected ");
                 TargetObjectIndex = int.Parse(go.name);
                 Debug.Log(TargetObjectIndex + "TargetObjectIndex");
                 Debug.Log("Target position Details  " + mGameManager._BuildingDetails[int.Parse(go.name)].transform.position);
-              if (_multiplierGameObject.name == go.name )
+                if (_multiplierGameObject.name == go.name )
                 {
                     Debug.LogError("Multiplier selected");
                     Debug.Log(_multiplierGameObject.name);
@@ -156,7 +196,7 @@ public class AttackManager : MonoBehaviour
         {
 
             GameObject go = _spawnedTargetPoints[i];
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(mGameManager._BuildingDetails[i].transform.position);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(/*mGameManager._BuildingDetails*/_enemyBuildings[i].transform.position);
             screenPos.y = screenPos.y + HeightAdjustment;
             screenPos.z = 0;
             go.transform.position = screenPos;
@@ -194,7 +234,7 @@ public class AttackManager : MonoBehaviour
 
             for (int i = 0; i < mGameManager._BuildingCost.Count; i++)
             {
-                if (mGameManager._BuildingShield[i] == true)
+                if (/*mGameManager._BuildingShield*/_shieldedEnemyBuildings[i] == true)
                 {
                     // _spawnedTargetPoints[i].transform.GetChild(0).gameObject.SetActive(true);
                     _spawnedTargetPoints[i].transform.GetChild(2).gameObject.SetActive(true);
@@ -289,7 +329,7 @@ public class AttackManager : MonoBehaviour
             _ScoreTextTwo.text = "Multiplier (2x) - " + RewardValue + "*2";
             RewardValue = RewardValue * 2;
         }
-       // Debug.Log(TargetObjectIndex.)
+        //Debug.Log(TargetObjectIndex.)
         mGameManager._coins = mGameManager._coins + mGameManager._BuildingCost[TargetObjectIndex];
         Debug.LogError(mGameManager._coins + " Game Manager Coins ");
         _ScoreTextOne.text = "Building Cost - " + RewardValue;

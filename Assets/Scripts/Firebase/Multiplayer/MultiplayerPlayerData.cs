@@ -25,40 +25,67 @@ public class MultiplayerPlayerData : MonoBehaviour
 
     public List<GameObject> _enemyBuildingDetails;
 
+    public List<GameObject> mEnemyBuildingPrefabPopulateList;
+    public List<GameObject> _enemyBuildings;
+
+    [SerializeField] private GameObject mTransformPoint;
+    public List<Transform> _enemyBuildingsTransformList;
+
+    
     public void Start()
     {
         onceDone = false;
         //InvokeRepeating(nameof(PopulateEnemyBuildingPrefabs), 1,1);
     }
 
-    void PopulateEnemyBuildingPrefabs()
-    {
-        for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
-        {
-            Debug.LogError("HI");
-            GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
-            _enemyBuildingDetails.Add(building);
-        }
-    }
+    //void PopulateEnemyBuildingPrefabs()
+    //{
+    //    Debug.LogError("I'm also coming here");
+    //    //Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
+    //    //mTransformPoint = GameObject.Find("TransformPoints");
+    //    //Debug.LogError(mMultiplayerPlayerData._enemyBuildingDetails.Count + " extra " + mMultiplayerPlayerData._buildingMultiplayerDataRef.Count);
+    //    Debug.LogError(_buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel);
+    //        GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel) as GameObject;
+    //        mEnemyBuildingPrefabPopulateList.Add(building);
+    //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
+    //    //{
+    //    //    Debug.LogError("HI");
+    //    //}
+    //    Debug.LogError("But not past this");
+
+    //    //Debug.LogError(mTransformPoint.transform.childCount);
+    //    //for (int i = 0; i < mTransformPoint.transform.childCount; i++)
+    //    //{
+    //    //    _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
+    //    //}
+    //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
+    //    //{
+    //    //    Debug.LogError("HI");
+    //    //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+    //    //    _enemyBuildingDetails.Add(building);
+    //    //}
+    //}
 
     public void Update()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ATTACK" && !onceDone)
-        {
-            Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
-            for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
-            {
-                Debug.LogError("HI");
-                GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
-                _enemyBuildingDetails.Add(building);
-            }
-            onceDone = true;
-        }
-        else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ATTACK")
-        {
-            _enemyBuildingDetails.Clear();
-            onceDone = false;
-        }
+        //GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel) as GameObject;
+        //mEnemyBuildingPrefabPopulateList.Add(building);
+        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ATTACK" && !onceDone)
+        //{
+
+        //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
+        //    //{
+        //    //    Debug.LogError("HI");
+        //    //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+        //    //    _enemyBuildingDetails.Add(building);
+        //    //}
+        //    onceDone = true;
+        //}
+        //else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ATTACK")
+        //{
+        //    _enemyBuildingDetails.Clear();
+        //    onceDone = false;
+        //}
     }
 
     public void GetBuildingManagerDetails()
@@ -83,11 +110,25 @@ public class MultiplayerPlayerData : MonoBehaviour
 
     public void UpdateUserDetails(List<MultiplayerBuildingData> inBuildingData, int inCurrentLevel)
     {
+        //Debug.LogError("I Reached Till Here 1");
         _buildingMultiplayerDataRef = inBuildingData;
         _enemyPlayerLevel = inCurrentLevel;
-        //Invoke(nameof(PopulateEnemyBuildingPrefabs), 3);
+        //Debug.LogError("I Reached Till Here 2");
+        //PopulateEnemyBuildingPrefabs();
+        //chumma();
+        //Debug.LogError("I Reached Till Here 3");
+
+
+
         //Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
+
+
     }
+
+    //void chumma()
+    //{
+    //    Debug.LogError("HI");
+    //}
 
     public void AddShieldToBuilding(int inBuildingIndex)
     {

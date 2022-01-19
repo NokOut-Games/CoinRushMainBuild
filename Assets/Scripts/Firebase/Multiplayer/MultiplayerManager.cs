@@ -73,7 +73,7 @@ public class MultiplayerManager : MonoBehaviour
                 mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
 
                 mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-               // mManager_Multiplayer._buildingMultiplayerDataRef.Clear();
+               // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
 
                 List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
                 for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
@@ -188,7 +188,7 @@ public class MultiplayerManager : MonoBehaviour
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();
         StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadAttackScene), 3f);
+        Invoke(nameof(LoadAttackScene), 2f);
     }
 
     void LoadAttackScene()
