@@ -41,6 +41,8 @@ public class AttackManager : MonoBehaviour
     private float transitionDuration = 2.5f;
     public GameObject obj;
 
+    public MultiplayerPlayerData mMultiplayerPlayerData;
+
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -54,6 +56,7 @@ public class AttackManager : MonoBehaviour
 
     private void Start()
     {
+        mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
         cam = Camera.main;
         // Application.targetFrameRate = 30;
         Debug.Log(Application.targetFrameRate + "Target Fram Rate ");
@@ -330,8 +333,13 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        // mGameManager.gameObject.GetComponent<LevelLoadManager>().BacktoHome();
+        //mMultiplayerPlayerData.onceDone = false;
+        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
+        MultiplayerManager.Instance.ReadMyData();
+        Invoke("BackToGame", 2.5f);
+    }
+    public void BackToGame()
+    {
         LevelLoadManager.instance.BacktoHome();
-
     }
 }

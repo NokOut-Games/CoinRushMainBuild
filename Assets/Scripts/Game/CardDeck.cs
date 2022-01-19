@@ -723,6 +723,10 @@ public class CardDeck : MonoBehaviour
             Shield();
             canClick = true;
         }
+        else if(inType == CardType.ATTACK)
+        {
+            MultiplayerManager.Instance.OnGettingAttackCard();
+        }
         else
         {
             //yield return new WaitForSeconds(delayTime);

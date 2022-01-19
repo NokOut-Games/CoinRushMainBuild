@@ -118,19 +118,19 @@ public class BuildingManager : MonoBehaviour
 
     void Update()
     {
-        foreach (var v in _buildingData)
-        {
-            if (v._isUnderConstruction != false)
-            {
-                mCameraControllerRef._inBetweenConstructionProcess = true;
-                return;
-            }
-            else
-            {
-                mCameraControllerRef._inBetweenConstructionProcess = false;
-                //Invoke(nameof(InvokeCamera), 1f);
-            }
-        }
+        //foreach (var v in _buildingData)
+        //{
+        //    if (v._isUnderConstruction != false)
+        //    {
+        //        mCameraControllerRef._inBetweenConstructionProcess = true;
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        mCameraControllerRef._inBetweenConstructionProcess = false;
+        //        //Invoke(nameof(InvokeCamera), 1f);
+        //    }
+        //}
         if (GameManager.Instance._IsRefreshNeeded)
         {
             GameManager.Instance._IsRefreshNeeded = false;

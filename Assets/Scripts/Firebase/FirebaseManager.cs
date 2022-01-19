@@ -13,6 +13,8 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
 
+    public string CurrentPlayerID;
+
     DatabaseReference reference;
     FirebaseAuth auth;
 
@@ -59,6 +61,7 @@ public class FirebaseManager : MonoBehaviour
         {
             userTitle = "Facebook Users";
             ReadData();
+            CurrentPlayerID = auth.CurrentUser.UserId;
             StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
         
@@ -135,8 +138,9 @@ public class FirebaseManager : MonoBehaviour
         if (auth.CurrentUser != null)
         {
 
+            CurrentPlayerID = auth.CurrentUser.UserId;
             ReadData();
-            
+
             //WritePlayerDataToFirebase();
 
             CanUpgradeToFacebook = true;
@@ -155,6 +159,7 @@ public class FirebaseManager : MonoBehaviour
             newUser = task.Result;
             Player newPlayer = new Player(newUser.UserId);
             Debug.Log(newUser.UserId);
+            CurrentPlayerID = auth.CurrentUser.UserId;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
             CanUpgradeToFacebook = true;
@@ -188,6 +193,7 @@ public class FirebaseManager : MonoBehaviour
                 {
                     Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
                     Debug.Log(newFBUser.UserId);
+                    CurrentPlayerID = auth.CurrentUser.UserId;
                     SaveNewUserInFirebase(newPlayer);
                     WriteBuildingDataToFirebase();
                     StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
@@ -316,7 +322,7 @@ public class FirebaseManager : MonoBehaviour
     //Scenemanager Job.......
     void LoadToTheCurrentLevel(int inCurrentLevelNo)
     {
-        mLevelLoadManager.LoadLevelOf(inCurrentLevelNo);
+        LevelLoadManager.instance.LoadLevelOf(inCurrentLevelNo);
         readUserData = false;
     }
 
