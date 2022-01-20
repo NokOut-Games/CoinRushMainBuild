@@ -100,8 +100,7 @@ public class BallLaunch : MonoBehaviour
   */
     public void OnCollisionEnter(Collision col)
     {
-        Debug.Log("Collision Entered");
-        Debug.Log(col.gameObject.name);
+       
         GameObject.Find("CANNON_ANIM_1").GetComponent<CannonShotController>().fixCameraRot = false;
         _bullet = this.gameObject;
 
@@ -110,47 +109,58 @@ public class BallLaunch : MonoBehaviour
             if (col.gameObject.tag == "Shield Protection")
             {
                 BallFlow = false;
-                Debug.LogError(col.transform.position + "ball Last Position");
-                Debug.LogError(col.transform.localPosition + "ball Last Position");
+                
                 
                 Camera.main.transform.parent = null;
                // this.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
               //  this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                Debug.LogError(col.transform.position + "ball Last Position");
-                Debug.Log(this.gameObject.transform.position + "  Ball Last hit position");
-                Debug.Log(Camera.main.transform.position + " Camera last position");
+               
 
 
                 //BallReverse = true;
                 //Invoke("BallReturnDelay", .5f);
                 BallReverse = true;
                 ShieldCameraDistance = Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position);
-                Debug.Log(ShieldCameraDistance + "  Shield Camera Distance");
-                Debug.Log(ShieldCameraDistance / 2 + " Shield Camera Halfway Distance");
-                Debug.Log(ShieldCameraDistance / 3 + " Shield Camera Quaterway Distance");
+               
                 //  this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, Camera.main.transform.position, Time.deltaTime);
 
-                Debug.Log("SHIELD PROTECTED");
+             
             }
         }
         else if (_attackManager._Shield == false)
         {
-            Debug.Log("Shield Disabled");
-            Debug.Log(_bullet.transform.childCount + "Child Count");
-            for (int i = 0; i < _bullet.transform.childCount - 2; i++)
-            {
-                Debug.Log(_bullet.transform.childCount -1 + "Child Count status");
-                Debug.LogError(_bullet.transform.childCount);
-                _bullet.transform.GetChild(i).gameObject.SetActive(true);
-                _bullet.transform.GetChild(i).parent = null;
+           
 
-                Debug.Log(_bullet.transform.GetChild(i).gameObject.name);
-            }
+            _bullet.transform.GetChild(4).transform.parent = null;
             Camera.main.transform.parent = null;
 
+           
+
+
+            for (int i = 0; i < _bullet.transform.childCount; i++)
+            {
+               
+                _bullet.transform.GetChild(i).gameObject.SetActive(true);
+                //  _bullet.transform.GetChild(i).parent = null;
+
+              
+            }
+
+            // Camera.main.transform.parent = null;
+            while (_bullet.transform.childCount > 0)
+            {
+                foreach (Transform child in _bullet.transform)
+                {
+                    child.gameObject.transform.parent = null;
+                }
+            }
+
+          
             _bullet.SetActive(false);
+            //_bullet.SetActive(false);
         }
+
         // Camera.main.transform.parent = null;
 
         // _bullet.SetActive(false);

@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4859758883074419293}
   - component: {fileID: 6938622445340889041}
   - component: {fileID: 8933928664938057053}
+  - component: {fileID: 8279646625989287375}
   m_Layer: 0
   m_Name: BurgerShop5__1_
   m_TagString: Untagged
@@ -205,6 +206,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8279646625989287375
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4149450586462054114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 196.13882, y: 117.83008, z: 163.07986}
+  m_Center: {x: 14.170486, y: 0.8510475, z: 6.4103622}
 --- !u!1 &4751012648236323031
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +381,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &8838320270807591886
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8532470423287486105}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bf6bf328ec8b3844ba363d598317e28b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8838320270168409796
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,25 +431,6 @@ Transform:
   m_Father: {fileID: 3675120008327047110}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -31.869, y: -59.949, z: -4.911}
---- !u!95 &8838320270807591886
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8532470423287486105}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bf6bf328ec8b3844ba363d598317e28b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9002941505605677964
 GameObject:
   m_ObjectHideFlags: 0
