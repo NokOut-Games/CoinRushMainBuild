@@ -63,12 +63,14 @@ public class FirebaseManager : MonoBehaviour
             ReadData();
             CurrentPlayerID = auth.CurrentUser.UserId;
             StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+            //WriteBuildingDataToFirebase();
         }
-        
+
     }
 
     void ReadData()
     {
+        
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
@@ -127,7 +129,7 @@ public class FirebaseManager : MonoBehaviour
                 }
                 readUserData = true;
                 //canWrite = true;
-
+                Debug.LogError("I have read the data from firebase succesfully");
             }
         });
 

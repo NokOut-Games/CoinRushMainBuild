@@ -20,7 +20,7 @@ public class AttackManager : MonoBehaviour
     public Text _ScoreTextTwo;
     public Text _ScoreTextThree;
     public GameObject _bulletPre;
-    public Sprite _Sprite1, _Sprite2, _Sprite3, _Sprite4, _Sprite5;
+    public Sprite _Sprite1, _Sprite2, _Sprite3, _Sprite4, _Sprite5, _Sprite6, _Sprite7 , _Sprite8 , _Sprite9;
     public Transform _TargetTransform;
     public bool _Shield = false;
     public Quaternion CameraAttackRotation;
@@ -52,30 +52,45 @@ public class AttackManager : MonoBehaviour
     public List<GameObject> _LevelHolder = new List<GameObject>();
     public List<bool> _shieldedEnemyBuildings;
 
+    [SerializeField] private AttackCameraController mCameraController;
+    [SerializeField] private float extraCameraPanDistance;
+
+    public float _buildingSinkPositionAmount = -50;
+    public float _buildingTiltRotationAmount = -25;
+    public GameObject _destroyedSmokeEffectVFX;
+
+    public List<int> _buildingCost = new List<int>(9);
+
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
         _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+
+        InstantiateLevelAndPopulateBuildingPrefabsWithTheirTranformPoint();
+
+        Invoke(nameof(InstantiatePopulatedBuildingPrefabList), 0f);
+    }
+
+    void InstantiateLevelAndPopulateBuildingPrefabsWithTheirTranformPoint()
+    {
         Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
         mTransformPoint = GameObject.Find("TransformPoints");
-       
+
         for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
         {
-           
             GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
             mEnemyBuildingPrefabPopulateList.Add(building);
             bool shieldedEnemy = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded;
             _shieldedEnemyBuildings.Add(shieldedEnemy);
         }
-        //Debug.LogError(mTransformPoint.transform.childCount);
+        
         for (int i = 0; i < mTransformPoint.transform.childCount; i++)
         {
             _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
         }
-
-        Invoke(nameof(InstantiatePopulatedBuildingPrefabList), 0f);
     }
+
 
     void InstantiatePopulatedBuildingPrefabList()
     {
@@ -85,12 +100,26 @@ public class AttackManager : MonoBehaviour
         //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
         //    _enemyBuildingDetails.Add(building);
         //}
+        
         for (int i = 0; i < /*mGameManager._BuildingDetails*/ /*mMultiplayerPlayerData._enemyBuildingDetails*/ mEnemyBuildingPrefabPopulateList.Count; i++)
         {
-            GameObject enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ mEnemyBuildingPrefabPopulateList[i], _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
-            enemyBuilding.name = mEnemyBuildingPrefabPopulateList[i].name;
-            enemyBuilding.name = enemyBuilding.name.Substring(0, enemyBuilding.name.Length - 1);
-            _enemyBuildings.Add(enemyBuilding);
+            if (!mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingDestroyed)
+            {
+                GameObject enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ mEnemyBuildingPrefabPopulateList[i], _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
+                enemyBuilding.name = mEnemyBuildingPrefabPopulateList[i].name;
+                enemyBuilding.name = enemyBuilding.name.Substring(0, enemyBuilding.name.Length - 1);
+                _enemyBuildings.Add(enemyBuilding);
+            }
+            else
+            {
+                GameObject enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ mEnemyBuildingPrefabPopulateList[i], _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
+                enemyBuilding.transform.position = new Vector3(enemyBuilding.transform.position.x, _buildingSinkPositionAmount, enemyBuilding.transform.position.z);
+                enemyBuilding.transform.rotation = Quaternion.Euler(enemyBuilding.transform.eulerAngles.x, enemyBuilding.transform.eulerAngles.y, _buildingTiltRotationAmount);
+                Instantiate(_destroyedSmokeEffectVFX, enemyBuilding.transform.position, Quaternion.identity, enemyBuilding.transform);
+                enemyBuilding.name = mEnemyBuildingPrefabPopulateList[i].name;
+                enemyBuilding.name = enemyBuilding.name.Substring(0, enemyBuilding.name.Length - 1);
+                _enemyBuildings.Add(enemyBuilding);
+            }
         }
     }
 
@@ -98,16 +127,46 @@ public class AttackManager : MonoBehaviour
     {
         mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
         cam = Camera.main;
-        // Application.targetFrameRate = 30;
+        mCameraController = cam.GetComponent<AttackCameraController>();
+
+        Invoke(nameof(UpdateCamerHorizontalBounds),0.5f);
         Debug.Log(Application.targetFrameRate + "Target Fram Rate ");
         
-        Invoke(nameof(TargetInstantiation),1f);
+        Invoke(nameof(TargetInstantiation),0.5f);
         //MultiplierInstantiation();
         InvokeRepeating("DoMultiplierSwitching", 0f, _MultiplierSwitchTime);
+        ShuffleBuildingCostList();
+    }
+
+    /// <summary>
+    /// Updates the camera bounds based on Level Size
+    /// </summary>
+    private void UpdateCamerHorizontalBounds()
+    {
+        Transform leftMostBuilding = _enemyBuildings[0].transform;
+       
+        Transform rightMostBuilding = _enemyBuildings[_enemyBuildings.Count - 1].transform;
+       
+        mCameraController._CameraLeftBound = leftMostBuilding.position.x - extraCameraPanDistance;
+        mCameraController._CameraRightBound = rightMostBuilding.position.x + extraCameraPanDistance;
+    }
+
+    /// <summary>
+    /// Shuffles the Building_Cost list
+    /// </summary>
+    private void ShuffleBuildingCostList()
+    {
+        for (int i = 0; i < _buildingCost.Count; i++)
+        {
+            int temp = _buildingCost[i];
+            int randomIndex = Random.Range(i, _buildingCost.Count);
+            _buildingCost[i] = _buildingCost[randomIndex];
+            _buildingCost[randomIndex] = temp;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         TargetButtonPositionUpdate();
     }
@@ -232,7 +291,7 @@ public class AttackManager : MonoBehaviour
             CamParent.GetComponent<AttackCameraController>()._CameraFreeRoam = false;
 
 
-            for (int i = 0; i < mGameManager._BuildingCost.Count; i++)
+            for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
             {
                 if (/*mGameManager._BuildingShield*/_shieldedEnemyBuildings[i] == true)
                 {
@@ -246,7 +305,7 @@ public class AttackManager : MonoBehaviour
                     }
                 }
 
-                switch (mGameManager._BuildingCost[i])
+                switch (_buildingCost[i])
                 {
                     case 1000:       
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite1;
@@ -262,6 +321,18 @@ public class AttackManager : MonoBehaviour
                         break;
                     case 5000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite5;
+                        break;
+                    case 6000:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite6;
+                        break;
+                    case 7000:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite7;
+                        break;
+                    case 8000:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite8;
+                        break;
+                    case 9000:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite9;
                         break;
                 }
 
@@ -321,7 +392,7 @@ public class AttackManager : MonoBehaviour
     {
         Debug.Log("Scoring Calculation function Entered");
 
-        int RewardValue = mGameManager._BuildingCost[TargetObjectIndex];
+        int RewardValue = _buildingCost[TargetObjectIndex];
 
         if(_multiplierSelected == true)
         {
@@ -329,7 +400,7 @@ public class AttackManager : MonoBehaviour
             RewardValue = RewardValue * 2;
         }
         //Debug.Log(TargetObjectIndex.)
-        mGameManager._coins = mGameManager._coins + mGameManager._BuildingCost[TargetObjectIndex];
+        mGameManager._coins = mGameManager._coins + _buildingCost[TargetObjectIndex];
         
         _ScoreTextOne.text = "Building Cost - " + RewardValue;
 

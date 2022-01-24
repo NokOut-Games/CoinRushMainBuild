@@ -25,6 +25,8 @@ public class BallLaunch : MonoBehaviour
     public GameObject CrackCanvas;
     private float ShieldCameraDistance;
 
+    private Vector3 _ballOffseToHitTargetTransform = new Vector3(0,250,0);
+     
     public void Awake()
     {
         
@@ -34,7 +36,7 @@ public class BallLaunch : MonoBehaviour
     {
         _attackManager = GameObject.Find("AttackManager").GetComponent<AttackManager>();
         CrackCanvas = GameObject.Find("CrackCanvas");
-        dest = target.position;
+        dest = target.position + _ballOffseToHitTargetTransform;
         position = transform.position;
         Velocity = PhysicsUtil.GetParabolaInitVelocity(position, dest, gravity, hight, 0);
         transform.LookAt(PhysicsUtil.GetParabolaNextPosition(position, Velocity, gravity, Time.deltaTime));
@@ -130,8 +132,8 @@ public class BallLaunch : MonoBehaviour
         }
         else if (_attackManager._Shield == false)
         {
-           
 
+            GameObject attackedBuilding = _attackManager._TargetTransform.gameObject;
             _bullet.transform.GetChild(4).transform.parent = null;
             Camera.main.transform.parent = null;
 
@@ -143,10 +145,13 @@ public class BallLaunch : MonoBehaviour
                
                 _bullet.transform.GetChild(i).gameObject.SetActive(true);
                 //  _bullet.transform.GetChild(i).parent = null;
-
-              
             }
 
+            attackedBuilding.transform.position = new Vector3(attackedBuilding.transform.position.x, _attackManager._buildingSinkPositionAmount, attackedBuilding.transform.position.z);
+            attackedBuilding.transform.rotation = Quaternion.Euler(attackedBuilding.transform.eulerAngles.x, attackedBuilding.transform.eulerAngles.y, _attackManager._buildingTiltRotationAmount);
+            Instantiate(_attackManager._destroyedSmokeEffectVFX, attackedBuilding.transform.position, Quaternion.identity, attackedBuilding.transform);
+
+            // Tilt the building.
             // Camera.main.transform.parent = null;
             while (_bullet.transform.childCount > 0)
             {

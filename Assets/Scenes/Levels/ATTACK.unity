@@ -4164,9 +4164,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5708752851653082887, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5858072914434263661, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982743193493737206, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6050413907624620928, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6228436610989736436, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6235882056533898445, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
@@ -4960,6 +4976,10 @@ MonoBehaviour:
   _Sprite3: {fileID: 21300000, guid: ec211a55ee1047f4facad8535f15b30c, type: 3}
   _Sprite4: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
   _Sprite5: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
+  _Sprite6: {fileID: 21300000, guid: ec211a55ee1047f4facad8535f15b30c, type: 3}
+  _Sprite7: {fileID: 21300000, guid: a45f15bb808607b4b84b9b18537d7667, type: 3}
+  _Sprite8: {fileID: 21300000, guid: 51f7a54c6dd2b2744b9025657559f5ff, type: 3}
+  _Sprite9: {fileID: 21300000, guid: ec211a55ee1047f4facad8535f15b30c, type: 3}
   _TargetTransform: {fileID: 0}
   _Shield: 0
   CameraAttackRotation: {x: 0.25881904, y: 0, z: 0, w: 0.9659258}
@@ -4987,6 +5007,12 @@ MonoBehaviour:
   - {fileID: 1625028447831759002, guid: 08cb9512260b5ab4394c6b461f0df6b8, type: 3}
   - {fileID: 8034359310136114277, guid: f822e566ba9c40548941e487ad48d670, type: 3}
   _shieldedEnemyBuildings: 
+  mCameraController: {fileID: 0}
+  extraCameraPanDistance: 25
+  _buildingSinkPositionAmount: -50
+  _buildingTiltRotationAmount: -25
+  _destroyedSmokeEffectVFX: {fileID: 7167539000141572787, guid: a9dc5275ad69b4a0088e3b473d86bc6f, type: 3}
+  _buildingCost: e8030000d0070000b80b0000a00f00008813000070170000581b0000401f000028230000
 --- !u!4 &503097514
 Transform:
   m_ObjectHideFlags: 0
@@ -20226,6 +20252,8 @@ MonoBehaviour:
   blackOutScreen: {fileID: 0}
   _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
+  mHasThreeCardMatch: 0
+  mJokerFindWithMultiCardPair: 0
   mJokerProbability: 0
 --- !u!4 &1803622837
 Transform:

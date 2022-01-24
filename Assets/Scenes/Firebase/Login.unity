@@ -918,23 +918,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.data[0]._buildingName
-      value: Boat
+      value: Dock_Boat_
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.data[1]._buildingName
-      value: BurgerShop
+      value: Dock_BurgerShop_
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.data[2]._buildingName
-      value: MainDock
+      value: Dock_MainBuilding_
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.data[3]._buildingName
-      value: LightHouse
+      value: Dock_Lighthouse_
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.data[4]._buildingName
-      value: Crane
+      value: Dock_Crane_
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
@@ -1360,6 +1360,7 @@ MonoBehaviour:
   mPlayerCurrentLevelData: 
   mLevelPrefix: Level
   _dataBaseFetchTime: 1.5
+  _enemyBuildingDetails: []
 --- !u!114 &1012865290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1372,7 +1373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ac195bacb194c439d6b1c114659a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerCurrentLevel: 1
+  _enemyPlayerLevel: 1
   _buildingMultiplayerDataRef: []
   _buildingManagerRef: {fileID: 0}
   _buildingCount: 0
@@ -1382,7 +1383,12 @@ MonoBehaviour:
   - {fileID: 8046755681357889644, guid: fa82e192b09cafc40bfbb971bb6b55c5, type: 3}
   - {fileID: 1625028447831759002, guid: 08cb9512260b5ab4394c6b461f0df6b8, type: 3}
   - {fileID: 8034359310136114277, guid: f822e566ba9c40548941e487ad48d670, type: 3}
-  _levelNumber: 0
+  onceDone: 0
+  _enemyBuildingDetails: []
+  mEnemyBuildingPrefabPopulateList: []
+  _enemyBuildings: []
+  mTransformPoint: {fileID: 0}
+  _enemyBuildingsTransformList: []
 --- !u!1 &1109612900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95cec43474806d4bab2eafe4428a3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentPlayerID: 
   mLevelPrefix: Level
   FbImg: {fileID: 0}
   userTitle: Guest Users

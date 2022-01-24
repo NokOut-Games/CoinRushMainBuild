@@ -166,22 +166,22 @@ public class MultiplayerManager : MonoBehaviour
         
     }
 
-   public void WriteDetailsOnAttackComplete()
-   {
-            int i = 0;
-            foreach (MultiplayerBuildingData buildings in mMultiplayerPlayerData._buildingMultiplayerDataRef)
+    public void WriteDetailsOnAttackComplete()
+    {    
+        int i = 0;
+        foreach (MultiplayerBuildingData buildings in mMultiplayerPlayerData._buildingMultiplayerDataRef)
+        {
+            string json = JsonUtility.ToJson(buildings);
+            reference.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mMultiplayerPlayerData._enemyPlayerLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
-                string json = JsonUtility.ToJson(buildings);
-                reference.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mMultiplayerPlayerData._enemyPlayerLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+                if (task.IsCompleted)
                 {
-                    if (task.IsCompleted)
-                    {
-                        Debug.Log("Write Successful");
-                    }
-                });
-                i++;
-            }
-   }
+                    Debug.Log("Write Successful");
+                }
+            });
+            i++;
+        }
+    }
     public  void OnGettingAttackCard()
     {
         FirebaseManager.Instance.WriteCardDataToFirebase();

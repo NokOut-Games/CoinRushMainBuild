@@ -59,11 +59,11 @@ public class CardDeck : MonoBehaviour
     public BuildingManager _buildingManagerRef;
 
     ScriptedCards mCards;
-    bool mHasThreeCardMatch;
+    public bool mHasThreeCardMatch;
     int mThreeCardMatchIndex;
     bool mHasJoker;
     int mNumOfPairCards;
-    bool mJokerFindWithMultiCardPair;
+    public bool mJokerFindWithMultiCardPair;
     bool take_Multi_Card_Joker_Pair_Input;
     int[] mSelectionCards = new int[2];
 

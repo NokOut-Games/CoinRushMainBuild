@@ -80,12 +80,15 @@ public class MenuUI : MonoBehaviour
         OpenCards.SetActive(false);
         QuitButton.SetActive(false);
 
-        if (isButtonGenerated == false)
-        {
-            mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
-            mBuildMenuUI.SetUpgradeButtons();
-            isButtonGenerated = true;
-        }
+        mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+        mBuildMenuUI.SetUpgradeButtons();
+
+        //if (isButtonGenerated == false)
+        //{
+        //    mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+        //    mBuildMenuUI.SetUpgradeButtons();
+        //    isButtonGenerated = true;
+        //}
     }
 
     public void CloseBuildButton()
