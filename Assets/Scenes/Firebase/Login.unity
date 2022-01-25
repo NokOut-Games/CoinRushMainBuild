@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1352,12 +1352,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentPlayerId: 
-  _enemyPlayerID: nUZ59DGLcMRBWnjVnZ3NLLNEQNj2
+  _currentPlayerPhotoURL: 
+  _enemyPlayerID: tyJBxBDWFEdVNPOsBoyD2SXnxNV2
+  mOpenCardsManager: {fileID: 0}
   mPlayerNameData: 
   mPlayerIDData: 
   mCoinData: 
   mEnergyData: 
   mPlayerCurrentLevelData: 
+  mOpenCardData: 
+  mPlayerPhotoURLData: 
   mLevelPrefix: Level
   _dataBaseFetchTime: 1.5
   _enemyBuildingDetails: []
@@ -1373,7 +1377,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ac195bacb194c439d6b1c114659a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyName: 
+  _enemyPhotoURL: 
   _enemyPlayerLevel: 1
+  _openCardInfo: 0
   _buildingMultiplayerDataRef: []
   _buildingManagerRef: {fileID: 0}
   _buildingCount: 0
@@ -1641,6 +1648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPlayerID: 
+  CurrentPlayerPhotoURL: 
   mLevelPrefix: Level
   FbImg: {fileID: 0}
   userTitle: Guest Users

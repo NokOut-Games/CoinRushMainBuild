@@ -14,7 +14,10 @@ public class MultiplayerBuildingData
 }
 public class MultiplayerPlayerData : MonoBehaviour
 {
+    public string _enemyName;
+    public string _enemyPhotoURL;
     public int _enemyPlayerLevel = 1;
+    public int _openCardInfo;
     public List<MultiplayerBuildingData> _buildingMultiplayerDataRef;
     public BuildingManager _buildingManagerRef;
     public int _buildingCount;
@@ -108,11 +111,14 @@ public class MultiplayerPlayerData : MonoBehaviour
     //    //FirebaseManager.Instance.WriteBuildingDataToFirebase();
     //}
 
-    public void UpdateUserDetails(List<MultiplayerBuildingData> inBuildingData, int inCurrentLevel)
+    public void UpdateUserDetails(List<MultiplayerBuildingData> inBuildingData, int inCurrentLevel, int inOpenCardData, string inPlayerName, string inPlayerPhotoURL)
     {
         //Debug.LogError("I Reached Till Here 1");
         _buildingMultiplayerDataRef = inBuildingData;
         _enemyPlayerLevel = inCurrentLevel;
+        _openCardInfo = inOpenCardData;
+        _enemyName = inPlayerName;
+        _enemyPhotoURL = inPlayerPhotoURL;
         //Debug.LogError("I Reached Till Here 2");
         //PopulateEnemyBuildingPrefabs();
         //chumma();

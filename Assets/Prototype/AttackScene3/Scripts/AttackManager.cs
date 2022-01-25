@@ -442,18 +442,18 @@ public class AttackManager : MonoBehaviour
 
     public void BackButton()
     {
-        ChangeEnemyBuildingData();
-        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
-        MultiplayerManager.Instance.ReadMyData();
-        Invoke("BackToGame", 2.5f); 
+        MultiplayerManager.Instance.CheckAndWriteAttackData();
+       // MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
+       // Invoke("ReadPlayerData", 1f);
     }
-    public void BackToGame()
+    void ReadPlayerData()
     {
-        LevelLoadManager.instance.BacktoHome();
+        MultiplayerManager.Instance.ReadMyData();
     }
 
     public void ChangeEnemyBuildingData()
     {
+        Debug.Log("Changing enemy data");
         string enemyBuildingName = _TargetTransform.name;
         //mMultiplayerPlayerData.onceDone = false;
         for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
@@ -474,5 +474,14 @@ public class AttackManager : MonoBehaviour
                 }
             }
         }
+
+        Invoke("WriteData", 1f);
+    }
+
+    void WriteData()
+    {
+        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
+        Invoke("ReadPlayerData", 1f);
     }
 }
+

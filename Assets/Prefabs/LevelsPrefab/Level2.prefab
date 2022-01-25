@@ -5514,7 +5514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002038257356472827}
   m_Layer: 0
-  m_Name: Transform Points
+  m_Name: TransformPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24431,6 +24431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingData:
   - _buildingName: Cinema
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038257623166873}
@@ -24451,6 +24452,7 @@ MonoBehaviour:
     - {fileID: 7884894340647910372, guid: 0ae50f9300dbd314287b9a78ad508bb7, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
     destroyedVersions: []
+    _repairCosts: 
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24458,6 +24460,7 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: CoffeeHouse
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038257063511896}
@@ -24478,6 +24481,7 @@ MonoBehaviour:
     - {fileID: 465281576235201455, guid: 2956be40b0879a342bbf30de28d24917, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
     destroyedVersions: []
+    _repairCosts: 
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24485,6 +24489,7 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: Museum
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256349760646}
@@ -24505,6 +24510,7 @@ MonoBehaviour:
     - {fileID: 3125201540718348976, guid: 61f2b8e44d75f23419a546e9ba09ce5b, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
     destroyedVersions: []
+    _repairCosts: 
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24512,6 +24518,7 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: B-Building
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256155290649}
@@ -24532,6 +24539,7 @@ MonoBehaviour:
     - {fileID: 2452473030277692564, guid: 7ddc634841978c249a8dc8d04f21e4d4, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
     destroyedVersions: []
+    _repairCosts: 
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24539,6 +24547,7 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: Parking Building
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256655096647}
@@ -24559,6 +24568,7 @@ MonoBehaviour:
     - {fileID: 3497473822638800742, guid: 6081aeaec947daf40a201f273f826457, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
     destroyedVersions: []
+    _repairCosts: 
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24580,6 +24590,9 @@ MonoBehaviour:
   mCoroutineIsInProcess: 0
   tempCheck: 0
   _shieldedBuildings: 
+  _buildingSinkPositionAmount: 0
+  _buildingTiltRotationAmount: 0
+  _destroyedSmokeEffectVFX: {fileID: 0}
 --- !u!1 &4409159776857725059
 GameObject:
   m_ObjectHideFlags: 0
