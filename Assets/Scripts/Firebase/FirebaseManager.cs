@@ -14,6 +14,7 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseManager Instance;
 
     public string CurrentPlayerID;
+    public string CurrentPlayerName;
     public string CurrentPlayerPhotoURL;
 
     DatabaseReference reference;
@@ -66,7 +67,6 @@ public class FirebaseManager : MonoBehaviour
             StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
             //WriteBuildingDataToFirebase();
         }
-
     }
 
     public void ReadData()
@@ -86,6 +86,7 @@ public class FirebaseManager : MonoBehaviour
                 mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
                 CurrentPlayerPhotoURL = mPlayerPhotoURLData;
+                CurrentPlayerName = mPlayerNameData;
                 /*mGameManager._coins = int.Parse(mCoinData);
                  mGameManager._energy = int.Parse(mEnergyData);
                  mGameManager._playerCurrentLevel = int.Parse(mPlayerCurrentLevelData);*/

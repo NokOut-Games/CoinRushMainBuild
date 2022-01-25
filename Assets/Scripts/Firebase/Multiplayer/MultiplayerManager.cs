@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 public class AttackedPlayerInformation
 {
     public string _attackedPlayerID;
+    public string _attackedPlayerName;
     public string _attackedPlayerPhotoURL;
 }
 public class OpenCardData
@@ -23,6 +25,7 @@ public class MultiplayerManager : MonoBehaviour
     public static MultiplayerManager Instance;
 
     public string _currentPlayerId;
+    public string _currentPlayerName;
     public string _currentPlayerPhotoURL;
 
     public string _enemyPlayerID;
@@ -56,7 +59,7 @@ public class MultiplayerManager : MonoBehaviour
     }
     void Start()
     {
-        mAttackManager = FindObjectOfType<AttackManager>();
+
         mplayerIDDetails = FindObjectOfType<PlayerIDDetails>();
         mGameManager = FindObjectOfType<GameManager>();
         mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
@@ -69,6 +72,7 @@ public class MultiplayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _currentPlayerName = FirebaseManager.Instance.CurrentPlayerName;
         _currentPlayerId = FirebaseManager.Instance.CurrentPlayerID;
         _currentPlayerPhotoURL = FirebaseManager.Instance.CurrentPlayerPhotoURL;
         //_enemyPlayerID = Random. mplayerIDDetails._playerList;
@@ -76,6 +80,10 @@ public class MultiplayerManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mOpenCardsManager = FindObjectOfType<OpenCardsManager>();
+        }
+        if(SceneManager.GetActiveScene().name == "ATTACK")
+        {
+            mAttackManager = FindObjectOfType<AttackManager>();
         }
     }
 
@@ -96,7 +104,6 @@ public class MultiplayerManager : MonoBehaviour
                 mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
                 mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-                // OpenedCardinfo = int.Parse(mOpenCardData);
                 // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
 
                 List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
@@ -221,14 +228,17 @@ public class MultiplayerManager : MonoBehaviour
             });
             i++;
         }
-        ////Write attacked Player Info in Firebase
-        //AttackedPlayerInformation AttakedPlayerInfo = new AttackedPlayerInformation();
-        //AttakedPlayerInfo._attackedPlayerID = _currentPlayerId;
-        //AttakedPlayerInfo._attackedPlayerPhotoURL = _currentPlayerPhotoURL;
-        //reference.Child("Facebook Users").Child(_enemyPlayerID).Child("AttackedPlayer").SetValueAsync(AttakedPlayerInfo).ContinueWith(task => {
-        //    if (task.IsCompleted)
-        //    { Debug.Log("Attaacked info Written"); }
-        //});
+        //Write attacked Player Info in Firebase
+        AttackedPlayerInformation AttackedPlayerInfo = new AttackedPlayerInformation();
+        AttackedPlayerInfo._attackedPlayerID = _currentPlayerId;
+        AttackedPlayerInfo._attackedPlayerName = _currentPlayerName;
+        AttackedPlayerInfo._attackedPlayerPhotoURL = _currentPlayerPhotoURL;
+        string attackDetails = JsonUtility.ToJson(AttackedPlayerInfo);
+        reference.Child("Facebook Users").Child(_enemyPlayerID).Child("AttackedPlayer").SetRawJsonValueAsync(attackDetails).ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            { Debug.Log("Attaacked info Written"); }
+        });
     }
     public void OnClickViewIslandToOpenCard()
     {

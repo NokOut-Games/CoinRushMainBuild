@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class MultiplayerBuildingData
@@ -14,6 +15,7 @@ public class MultiplayerBuildingData
 }
 public class MultiplayerPlayerData : MonoBehaviour
 {
+    public Texture _enemyImageTexture;
     public string _enemyName;
     public string _enemyPhotoURL;
     public int _enemyPlayerLevel = 1;
@@ -38,57 +40,15 @@ public class MultiplayerPlayerData : MonoBehaviour
     public void Start()
     {
         onceDone = false;
-        //InvokeRepeating(nameof(PopulateEnemyBuildingPrefabs), 1,1);
     }
 
-    //void PopulateEnemyBuildingPrefabs()
-    //{
-    //    Debug.LogError("I'm also coming here");
-    //    //Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
-    //    //mTransformPoint = GameObject.Find("TransformPoints");
-    //    //Debug.LogError(mMultiplayerPlayerData._enemyBuildingDetails.Count + " extra " + mMultiplayerPlayerData._buildingMultiplayerDataRef.Count);
-    //    Debug.LogError(_buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel);
-    //        GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel) as GameObject;
-    //        mEnemyBuildingPrefabPopulateList.Add(building);
-    //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
-    //    //{
-    //    //    Debug.LogError("HI");
-    //    //}
-    //    Debug.LogError("But not past this");
-
-    //    //Debug.LogError(mTransformPoint.transform.childCount);
-    //    //for (int i = 0; i < mTransformPoint.transform.childCount; i++)
-    //    //{
-    //    //    _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
-    //    //}
-    //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
-    //    //{
-    //    //    Debug.LogError("HI");
-    //    //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
-    //    //    _enemyBuildingDetails.Add(building);
-    //    //}
-    //}
 
     public void Update()
     {
-        //GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[0]._buildingName + _buildingMultiplayerDataRef[0]._buildingCurrentLevel) as GameObject;
-        //mEnemyBuildingPrefabPopulateList.Add(building);
-        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "ATTACK" && !onceDone)
-        //{
-
-        //    //for (int i = 0; i < _buildingMultiplayerDataRef.Count; i++)
-        //    //{
-        //    //    Debug.LogError("HI");
-        //    //    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + _buildingMultiplayerDataRef[i]._buildingName + _buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
-        //    //    _enemyBuildingDetails.Add(building);
-        //    //}
-        //    onceDone = true;
-        //}
-        //else if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "ATTACK")
-        //{
-        //    _enemyBuildingDetails.Clear();
-        //    onceDone = false;
-        //}
+        if (_enemyPhotoURL != null)
+        {
+            StartCoroutine(DownloadFacebookImage(_enemyPhotoURL));
+        }
     }
 
     public void GetBuildingManagerDetails()
@@ -99,46 +59,28 @@ public class MultiplayerPlayerData : MonoBehaviour
             _buildingMultiplayerDataRef[i]._buildingCurrentLevel = _buildingManagerRef._buildingData[i]._buildingLevel;
         }
     }
-
-    //public void UpdateMultiplayerBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn, bool inIsBuildingDestroyed)
-    //{
-    //    _buildingMultiplayerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
-    //    _buildingMultiplayerDataRef[inBuildingIndex]._buildingName = inBuildingName;
-    //    _buildingMultiplayerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
-    //    _buildingMultiplayerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
-    //    _buildingMultiplayerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
-
-    //    //FirebaseManager.Instance.WriteBuildingDataToFirebase();
-    //}
-
+    public void AddShieldToBuilding(int inBuildingIndex)
+    {
+        _buildingMultiplayerDataRef[inBuildingIndex]._isBuildingShielded = true;
+    }
     public void UpdateUserDetails(List<MultiplayerBuildingData> inBuildingData, int inCurrentLevel, int inOpenCardData, string inPlayerName, string inPlayerPhotoURL)
     {
-        //Debug.LogError("I Reached Till Here 1");
         _buildingMultiplayerDataRef = inBuildingData;
         _enemyPlayerLevel = inCurrentLevel;
         _openCardInfo = inOpenCardData;
         _enemyName = inPlayerName;
         _enemyPhotoURL = inPlayerPhotoURL;
-        //Debug.LogError("I Reached Till Here 2");
-        //PopulateEnemyBuildingPrefabs();
-        //chumma();
-        //Debug.LogError("I Reached Till Here 3");
-
-
-
-        //Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
-
-
     }
-
-    //void chumma()
-    //{
-    //    Debug.LogError("HI");
-    //}
-
-    public void AddShieldToBuilding(int inBuildingIndex)
+    IEnumerator DownloadFacebookImage(string MediaUrl)
     {
-        _buildingMultiplayerDataRef[inBuildingIndex]._isBuildingShielded = true;
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+            Debug.Log(request.error);
+        else
+        {
+            _enemyImageTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Debug.Log("Getting texture");
+        }
     }
-
 }

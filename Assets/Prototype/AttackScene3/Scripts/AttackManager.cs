@@ -45,6 +45,13 @@ public class AttackManager : MonoBehaviour
 
     public MultiplayerPlayerData mMultiplayerPlayerData;
     public int _enemyPlayerLevel;
+
+    [Space]
+    [Header("EnemyDetails")]
+    public Text _enemyName;
+    public RawImage _enemyDisplayPicture;
+    [Space]
+
     public List<GameObject> mEnemyBuildingPrefabPopulateList;
     public List<GameObject> _enemyBuildings;
 
@@ -67,7 +74,11 @@ public class AttackManager : MonoBehaviour
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+
+        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture; 
+        _enemyName.text = mMultiplayerPlayerData._enemyName;
         _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+
 
         InstantiateLevelAndPopulateBuildingPrefabsWithTheirTranformPoint();
 
