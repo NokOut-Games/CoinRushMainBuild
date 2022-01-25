@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OpenCardsManager : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class OpenCardsManager : MonoBehaviour
     public List<Transform> _otherPlayerBuildingsTransformList;
     public List<GameObject> _LevelHolder = new List<GameObject>();
     private GameManager mGameManager;
+
+
+    [Space]
+    [Header("OtherPlayerDetails")]
+    public Text _otherPlayerName;
+    public RawImage _otherPlayerDisplayPicture;
+    [Space]
 
     private int mPositionNumber;
     public int _OpenCardNumberIndex;
@@ -25,6 +33,9 @@ public class OpenCardsManager : MonoBehaviour
         
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+
+        _otherPlayerDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
+        _otherPlayerName.text = mMultiplayerPlayerData._enemyName+"'s" + " Island";
         _otherPlayerCurrentLevel = mMultiplayerPlayerData._enemyPlayerLevel;
         Instantiate(_LevelHolder[_otherPlayerCurrentLevel - 1], Vector3.zero, Quaternion.identity);
         mTransformPoint = GameObject.Find("TransformPoints");
@@ -82,5 +93,4 @@ public class OpenCardsManager : MonoBehaviour
     {
         MultiplayerManager.Instance.WriteOpenCardDataToFirebase();
     }
-
 }

@@ -13,12 +13,16 @@ public class AttackedPlayerInformation
     public string _attackedPlayerID;
     public string _attackedPlayerName;
     public string _attackedPlayerPhotoURL;
+    public string _attackedBuildingName;
+
 }
 public class OpenCardData
 {
-    public string OpenedPlayerID;
-    public string openedPlayerphotoURL;
-    public int OpenedCardIndex;
+    public string _openedPlayerID;
+    public string _openedPlayerName;
+    public string _openedPlayerPhotoURL;
+    public int _openedCardSlot;
+    public int _openedCardIndex;
 }
 public class MultiplayerManager : MonoBehaviour
 {
@@ -119,7 +123,6 @@ public class MultiplayerManager : MonoBehaviour
 
                     BuildingDetails.Add(builddata);
                 }
-                
                 mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
             }
         });
@@ -202,7 +205,6 @@ public class MultiplayerManager : MonoBehaviour
                         BuildingDetails.Add(builddata);
                     }
                     mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
-                   // mAttackManager.ChangeEnemyBuildingData();
                 }
                 else
                 {
@@ -233,6 +235,7 @@ public class MultiplayerManager : MonoBehaviour
         AttackedPlayerInfo._attackedPlayerID = _currentPlayerId;
         AttackedPlayerInfo._attackedPlayerName = _currentPlayerName;
         AttackedPlayerInfo._attackedPlayerPhotoURL = _currentPlayerPhotoURL;
+        AttackedPlayerInfo._attackedBuildingName = mAttackManager._TargetTransform.name;
         string attackDetails = JsonUtility.ToJson(AttackedPlayerInfo);
         reference.Child("Facebook Users").Child(_enemyPlayerID).Child("AttackedPlayer").SetRawJsonValueAsync(attackDetails).ContinueWith(task =>
         {
@@ -289,9 +292,11 @@ public class MultiplayerManager : MonoBehaviour
     {
         Invoke("BackToGame", 3f);
         OpenCardData cardsDetails = new OpenCardData();
-        cardsDetails.OpenedPlayerID = _currentPlayerId;
-        cardsDetails.OpenedCardIndex = mOpenCardsManager._openedCardIndex;
-        cardsDetails.openedPlayerphotoURL = _currentPlayerPhotoURL;
+        cardsDetails._openedPlayerID = _currentPlayerId;
+        cardsDetails._openedPlayerName = _currentPlayerName;
+        cardsDetails._openedCardSlot = mMultiplayerPlayerData._openCardInfo;
+        cardsDetails._openedCardIndex = mOpenCardsManager._openedCardIndex;
+        cardsDetails._openedPlayerPhotoURL = _currentPlayerPhotoURL;
         string json = JsonUtility.ToJson(cardsDetails);
         reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(mOpenCardsManager._OpenCardNumberIndex.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>{});
 

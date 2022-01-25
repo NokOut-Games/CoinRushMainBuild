@@ -76,6 +76,7 @@ public class BuildingManager : MonoBehaviour
     public float _buildingSinkPositionAmount;
     public float _buildingTiltRotationAmount;
     public GameObject _destroyedSmokeEffectVFX;
+    GameObject go;
 
     private void Awake()
     {
@@ -93,6 +94,19 @@ public class BuildingManager : MonoBehaviour
         {
             PutCurrentLevelBuildingdetails();
             SpawningBuilding();
+        }
+        if (true)
+        {
+            for (int i = 0; i < _buildingData.Count; i++)
+            {
+                if (_buildingData[i]._buildingName == GameManager.Instance._attackedBuildingName)
+                {
+                 
+                   go  = Instantiate(GameManager.Instance.AttackedCard, _buildingData[i]._buildingSpawnPoint.position + new Vector3(0, 0, -50), Quaternion.identity);
+                 //Call in update to get Output
+                    go.transform.GetChild(1).GetComponent<Renderer>().material.mainTexture = GameManager.Instance._attackedPlayerImageTexture;  
+                }
+            }
         }
 
         #region "Test Script When Not Grabbing details from FireBase"
@@ -159,6 +173,7 @@ public class BuildingManager : MonoBehaviour
         //        //Invoke(nameof(InvokeCamera), 1f);
         //    }
         //}
+
         if (GameManager.Instance._IsRefreshNeeded)
         {
             GameManager.Instance._IsRefreshNeeded = false;
