@@ -5071,9 +5071,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4524371248474605912}
     m_Modifications:
+    - target: {fileID: 7918069828464997410, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 7918069828617268913, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_Name
       value: BuildPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069828617268913, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7918069828617268918, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_Pivot.x
@@ -5158,6 +5166,34 @@ PrefabInstance:
     - target: {fileID: 7918069828617268918, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069828617268919, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: firstStarState.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069828617268919, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: firstStarState.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3189dba1a89af4e44994f8a38b551083, type: 3}
+    - target: {fileID: 7918069828617268919, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: firstStarState.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b98213d859d72452f8a11eb90b7dfe1a, type: 3}
+    - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -245
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
