@@ -80,12 +80,7 @@ public class OpenCardsManager : MonoBehaviour
     }
     public void GoBackToGame()
     {
-        MultiplayerManager.Instance.CheckDetailsForOpenCard();
         MultiplayerManager.Instance.WriteOpenCardDataToFirebase();
-        Invoke("ReadPlayerData", 1f);
     }
-    void ReadPlayerData()
-    {
-        MultiplayerManager.Instance.ReadMyData();
-    }
+
 }

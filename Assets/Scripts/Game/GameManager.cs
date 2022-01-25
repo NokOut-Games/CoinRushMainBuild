@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
         _IsBuildingFromFBase = true;
         _openedCards = inOpenedCards;
         _playerFBPhotoURL = inPlayerPhotoURL;
-        FirebaseManager.Instance.readUserData = true;
+       // FirebaseManager.Instance.readUserData = true;
     }
 
     public bool HasEnoughCoins(int amount)

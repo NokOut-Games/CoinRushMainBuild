@@ -36,7 +36,7 @@ public class BallLaunch : MonoBehaviour
     {
         _attackManager = GameObject.Find("AttackManager").GetComponent<AttackManager>();
         CrackCanvas = GameObject.Find("CrackCanvas");
-        dest = target.position + _ballOffseToHitTargetTransform;
+        dest = target.position; //+ _ballOffseToHitTargetTransform;
         position = transform.position;
         Velocity = PhysicsUtil.GetParabolaInitVelocity(position, dest, gravity, hight, 0);
         transform.LookAt(PhysicsUtil.GetParabolaNextPosition(position, Velocity, gravity, Time.deltaTime));

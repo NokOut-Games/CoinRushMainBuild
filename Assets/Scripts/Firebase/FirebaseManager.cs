@@ -69,7 +69,7 @@ public class FirebaseManager : MonoBehaviour
 
     }
 
-    void ReadData()
+    public void ReadData()
     {
         
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
