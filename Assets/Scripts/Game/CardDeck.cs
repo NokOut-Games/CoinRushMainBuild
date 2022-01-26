@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CardDeck : MonoBehaviour
@@ -44,8 +43,10 @@ public class CardDeck : MonoBehaviour
     public int mHowManyCardSetsAreActive;
     public List<Cards> _cardsThatCanBeReplacedByJoker;
 
-    public List<GameObject> dummyCards;
-    int positionNumber = 0;
+    public List<GameObject> _openCardPrefabs;
+    public int positionNumber = 0;
+    public List<int> _OpenCardSlotFilled;
+
     int newCardIndex = 0;
 
     public GameObject cardDeckAnimation2D;
@@ -447,7 +448,6 @@ public class CardDeck : MonoBehaviour
             blackOutScreen.SetActive(true);
             blackOutScreen.GetComponent<Animator>().SetBool("BlackOut", true);
 
-
             CardType matchCardType = _CardList[newCardIndex]._cardType;
             _CardList[newCardIndex].PlayThreeCardMatchAnim(-350);
             _CardList[newCardIndex + 1].PlayThreeCardMatchAnim(350);
@@ -657,7 +657,7 @@ public class CardDeck : MonoBehaviour
 
     private void Shield()
     {
-        
+
         if (GameManager.Instance._shield <= GameManager.Instance._maxShield - 1)
         {
             int randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
@@ -723,7 +723,7 @@ public class CardDeck : MonoBehaviour
             Shield();
             canClick = true;
         }
-        else if(inType == CardType.ATTACK)
+        else if (inType == CardType.ATTACK)
         {
             MultiplayerManager.Instance.OnGettingAttackCard();
         }
@@ -735,23 +735,39 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    public void OpenCardAdder()
+    public void OpenHandCardAdder()
     {
-        if (positionNumber > 4)
+        //Future Case
+        //if(Camera.main.GetComponent<CameraController>()._DrawButtonClicked)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        //}
+        //int Something;
+        if (positionNumber == 4)
         {
-            return;
+            positionNumber = 0;
         }
-
-        for (int i = 0; i < _levelManager.OpenHandCardsPositions.Length; i++)
+        if (_OpenCardSlotFilled.Count != 5)
         {
-            if (_levelManager.OpenHandCardsPositions[positionNumber].GetComponent<OpenCardFilled>().isOpenCardSlotFilled == false)
+            positionNumber = 0;
+            while (_OpenCardSlotFilled.Contains(positionNumber))
             {
-                Instantiate(dummyCards[Random.Range(0, dummyCards.Count)], _levelManager.OpenHandCardsPositions[positionNumber].position, _levelManager.OpenHandCardsPositions[positionNumber].rotation, _levelManager.OpenHandCardsPositions[positionNumber]);
-                break;
+                positionNumber += 1;
             }
+            int RandomCard = Random.Range(0, _openCardPrefabs.Count);
+            GameObject OpenCards = Instantiate(_openCardPrefabs[RandomCard], _levelManager.OpenHandCardsPositions[positionNumber].position, _levelManager.OpenHandCardsPositions[positionNumber].rotation, _levelManager.OpenHandCardsPositions[positionNumber]);
+            OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = RandomCard;
+            OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
+            _OpenCardSlotFilled.Add(positionNumber);
         }
-
-        positionNumber += 1;
+        else
+        {
+            Debug.Log("Open Hand Card Slot Filled");
+        }
     }
 }
 

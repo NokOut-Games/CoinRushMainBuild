@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.34620947, g: 0.48965842, b: 0.56876814, a: 1}
+  m_IndirectSpecularColor: {r: 0.34622434, g: 0.48989257, b: 0.56902647, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14756,6 +14756,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 919945655}
     m_Modifications:
+    - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 854241763}
+    - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenHandCardAdder
+      objectReference: {fileID: 0}
     - target: {fileID: 4316013464354854173, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: mBuildingManagerRef
       value: 
@@ -25275,7 +25283,6 @@ GameObject:
   - component: {fileID: 854241765}
   - component: {fileID: 854241764}
   - component: {fileID: 854241763}
-  - component: {fileID: 854241762}
   m_Layer: 0
   m_Name: CardDeck
   m_TagString: Untagged
@@ -25283,68 +25290,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &854241762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854241761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mCardHolderParent: {fileID: 1872377559}
-  clicks: 0
-  _playerHandPoints:
-  - {fileID: 346305288}
-  - {fileID: 150836312}
-  - {fileID: 497189857}
-  - {fileID: 378761240}
-  - {fileID: 498446338}
-  - {fileID: 565170486}
-  - {fileID: 1211129431}
-  - {fileID: 1451851814}
-  - {fileID: 649886407}
-  - {fileID: 1054027691}
-  - {fileID: 1926067359}
-  - {fileID: 56019312}
-  - {fileID: 62338350}
-  - {fileID: 806168277}
-  - {fileID: 310703401}
-  mScriptedCards:
-  - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
-  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
-  _CardList: []
-  mCardListGameObject: []
-  DrawButton: {fileID: 1298872327}
-  drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
-  drawAutomatic: {fileID: -2653432678774402417, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
-  _drawButtonRectTransform: {fileID: 1298872325}
-  mMaxHoldTime: 2
-  timeForCardAnimation: 2
-  time: 0
-  maxTime: 5
-  _drawButtonFillerImage: {fileID: 1885887629}
-  _jokerList: []
-  onceDonee: 0
-  mHowManyCardSetsAreActive: 0
-  _cardsThatCanBeReplacedByJoker: []
-  dummyCards:
-  - {fileID: 4168743852823018867, guid: 16f42c3ae32a6e94e95133d98c31183b, type: 3}
-  - {fileID: 8578960879337220888, guid: 50a9dc731788cba459a69756cdfb8d3c, type: 3}
-  - {fileID: 4922323569806154452, guid: d36f2bbd9720eec4ab225ac993ac758a, type: 3}
-  - {fileID: 3698473429944838919, guid: fcb34e8500b43f245becbff1e4dcffe7, type: 3}
-  cardDeckAnimation2D: {fileID: 1699647918}
-  cardDeckAnimation3D: {fileID: 1351281573}
-  backToDeckAnimation3D: {fileID: 2069528796}
-  blackOutScreen: {fileID: 1905527977}
-  _levelManager: {fileID: 597977066}
-  _buildingManagerRef: {fileID: 1640761560}
-  mHasThreeCardMatch: 0
-  mJokerFindWithMultiCardPair: 0
-  mJokerProbability: 0
 --- !u!114 &854241763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25352,7 +25297,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854241761}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
   m_Name: 
@@ -25398,11 +25343,16 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
-  dummyCards:
-  - {fileID: 4168743852823018867, guid: 16f42c3ae32a6e94e95133d98c31183b, type: 3}
-  - {fileID: 8578960879337220888, guid: 50a9dc731788cba459a69756cdfb8d3c, type: 3}
-  - {fileID: 4922323569806154452, guid: d36f2bbd9720eec4ab225ac993ac758a, type: 3}
-  - {fileID: 3698473429944838919, guid: fcb34e8500b43f245becbff1e4dcffe7, type: 3}
+  _openCardPrefabs:
+  - {fileID: 8048051998541067576, guid: 3e7a3b571d3239548a6c6f5c1907dd8d, type: 3}
+  - {fileID: 6233861162172181354, guid: 2d82b0d3d6cbeb54da26f8b771fab9a3, type: 3}
+  - {fileID: 6233861162172181354, guid: 9a4b56bf88c4b1c419bace01edb263a2, type: 3}
+  - {fileID: 6233861162172181354, guid: 95d11c86e12945a46a8f406ae97e01b7, type: 3}
+  - {fileID: 6233861162172181354, guid: 136ce179237474d499b227e5a3735fac, type: 3}
+  - {fileID: 6233861162172181354, guid: 132ac5598b885b940b6aacd29aeec522, type: 3}
+  - {fileID: 6233861162172181354, guid: 1975f6a77c017e64396d4ef132f830c4, type: 3}
+  positionNumber: 0
+  _OpenCardSlotFilled: 
   cardDeckAnimation2D: {fileID: 1699647918}
   cardDeckAnimation3D: {fileID: 1351281573}
   backToDeckAnimation3D: {fileID: 2069528796}
@@ -42968,7 +42918,6 @@ GameObject:
   - component: {fileID: 1622744562}
   - component: {fileID: 1622744565}
   - component: {fileID: 1622744566}
-  - component: {fileID: 1622744567}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -43111,47 +43060,6 @@ MonoBehaviour:
   _inBetweenConstructionProcess: 0
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
---- !u!114 &1622744567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622744561}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81f620d4970d364a82f1e6e63c822c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _CameraParent: {fileID: 343195022}
-  mHorizontalPanSpeed: 300
-  _CameraLeftBound: -230
-  _CameraRightBound: 230
-  _CameraUpBound: 250
-  _CameraDownBound: 150
-  mZoomSpeed: 200
-  mCameraNearBound: -350
-  mCameraFarBound: -515
-  _currentView: {fileID: 0}
-  _views:
-  - {fileID: 1474503603}
-  - {fileID: 2112903083}
-  - {fileID: 1276579344}
-  _transitionSpeed: 4
-  _DrawButtonRectTransform: {fileID: 1298872325}
-  _OpenHandRectTransform: {fileID: 340822432}
-  _ScrollViewRectTransform: {fileID: 372537254}
-  _DrawButtonClicked: 0
-  _CameraFreeRoam: 1
-  _isCameraInGamePlayView: 0
-  OpenCardRegion: {fileID: 340822431}
-  _RotationLimit: 30
-  _buildButtonClicked: 0
-  _inBetweenConstructionProcess: 0
-  _isCameraInConstructionView: 0
-  mMenuUI: {fileID: 0}
-  PanSpeed: 300
-  timeToAcceleration: 0
 --- !u!1001 &1623483422
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56574,7 +56482,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4226716930684428890, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+    - {fileID: 4226716932069151289, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+    - {fileID: 4226716931476689268, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+    - {fileID: 4226716931498054888, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
+    - {fileID: 4226716931073677824, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d6a61f3dd312e004991ee705c0f601b9, type: 3}
 --- !u!1 &5016409071083715226
 GameObject:

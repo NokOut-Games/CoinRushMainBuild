@@ -96,6 +96,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+
         //if(_currentView == _views[0])
         //{
         //    Debug.Log("CurrentView = " + "<color=red>  Normal-View  </color>");
@@ -119,27 +120,13 @@ public class CameraController : MonoBehaviour
                 Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
                 Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
                 Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);
-                if (_isCameraInGamePlayView) //New Addition
+                if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition))
                 {
-                    if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition) && !mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition))
-                    {
-                        _DrawButtonClicked = false;
-                        _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mCardDeck.BackToNormalState();
-                    }
+                    _DrawButtonClicked = false;
+                    _isCameraInGamePlayView = false;
+                    Invoke("SetCameraFreeRoam", 0.11f);
+                    mCardDeck.BackToNormalState();
                 }
-                else
-                {
-                    if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition))
-                    {
-                        _DrawButtonClicked = false;
-                        _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mCardDeck.BackToNormalState();
-                    }
-                }
-
                 if (_isCameraInConstructionView && !_isCameraInGamePlayView)
                 {
                     if (!mScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
@@ -150,6 +137,37 @@ public class CameraController : MonoBehaviour
                         mMenuUI.CloseBuildButton();
                     }
                 }
+                //if (_isCameraInGamePlayView) //New Addition
+                //{
+                //    if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition) && !mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition))
+                //    {
+                //        _DrawButtonClicked = false;
+                //        _isCameraInGamePlayView = false;
+                //        Invoke("SetCameraFreeRoam", 0.11f);
+                //        mCardDeck.BackToNormalState();
+                //    }
+                //}
+                //else
+                //{
+                //if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition))
+                //{
+                //    _DrawButtonClicked = false;
+                //    _isCameraInGamePlayView = false;
+                //    Invoke("SetCameraFreeRoam", 0.11f);
+                //    mCardDeck.BackToNormalState();
+                //}
+                //}
+
+                //if (_isCameraInConstructionView && !_isCameraInGamePlayView)
+                //{
+                //    if (!mScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
+                //    {
+                //        _buildButtonClicked = false;
+                //        _isCameraInConstructionView = false;
+                //        Invoke("SetCameraFreeRoam", 0.11f);
+                //        mMenuUI.CloseBuildButton();
+                //    }
+                //}
             }
 
             if (_CameraFreeRoam && !Input.GetMouseButton(0))

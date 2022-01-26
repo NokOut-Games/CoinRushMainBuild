@@ -281,8 +281,6 @@ public class FirebaseManager : MonoBehaviour
 
                 Invoke("DisplayFacebookInformation", 0.7f);
             }
-
-           
         }
     }
 
@@ -301,6 +299,8 @@ public class FirebaseManager : MonoBehaviour
         {
             FbImg = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
+
+
     }
 
     GameObject FindInActiveObjectByName(string name)

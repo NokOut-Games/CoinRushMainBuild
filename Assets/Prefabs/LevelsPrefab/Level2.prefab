@@ -5514,7 +5514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002038257356472827}
   m_Layer: 0
-  m_Name: Transform Points
+  m_Name: TransformPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24431,11 +24431,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingData:
   - _buildingName: Cinema
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038257623166873}
-    _cameraFocusPoint: {fileID: 0}
-    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: 25407b35fa0b50f46a8ca52c8ef5333e, type: 3}
@@ -24450,7 +24449,6 @@ MonoBehaviour:
     - {fileID: 7605338440082709832, guid: 43fd18cfca7826342a2e0d6eaad282e3, type: 3}
     - {fileID: 7884894340647910372, guid: 0ae50f9300dbd314287b9a78ad508bb7, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
-    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24458,11 +24456,10 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: CoffeeHouse
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038257063511896}
-    _cameraFocusPoint: {fileID: 0}
-    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: 4481d9e66a5ed274092b6eb0dd5f88ee, type: 3}
@@ -24477,7 +24474,6 @@ MonoBehaviour:
     - {fileID: 7459143094591718243, guid: 898830ab6f188c243818fb63a666a261, type: 3}
     - {fileID: 465281576235201455, guid: 2956be40b0879a342bbf30de28d24917, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
-    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24485,11 +24481,10 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: Museum
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256349760646}
-    _cameraFocusPoint: {fileID: 0}
-    _initialBuildingGameObject: {fileID: 7829799822873293668, guid: 242b72c08b4f047a192d9e69b03b515b, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: 5769f5adb285fb64c9a44ab053f97fa0, type: 3}
@@ -24504,7 +24499,6 @@ MonoBehaviour:
     - {fileID: 1652724038754166254, guid: bbc2fbef4f8c60e4881164750bd11947, type: 3}
     - {fileID: 3125201540718348976, guid: 61f2b8e44d75f23419a546e9ba09ce5b, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
-    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24512,11 +24506,10 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: B-Building
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256155290649}
-    _cameraFocusPoint: {fileID: 0}
-    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: c8f95d2efe1193b469cfdd8281b1ba1f, type: 3}
@@ -24531,7 +24524,6 @@ MonoBehaviour:
     - {fileID: 3231673053407470895, guid: 70809fded97efa9489671295bed34782, type: 3}
     - {fileID: 2452473030277692564, guid: 7ddc634841978c249a8dc8d04f21e4d4, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
-    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24539,11 +24531,10 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: Parking Building
+    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 1002038256655096647}
-    _cameraFocusPoint: {fileID: 0}
-    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages:
     - {fileID: 21300000, guid: 7c538c304983fd344a9627c13c9b45fe, type: 3}
@@ -24558,7 +24549,6 @@ MonoBehaviour:
     - {fileID: 5839174827618345704, guid: 64cf57941c7c6914cbe5e25a9c7e00f2, type: 3}
     - {fileID: 3497473822638800742, guid: 6081aeaec947daf40a201f273f826457, type: 3}
     UpgradeCosts: 0a000000140000001e0000002800000032000000
-    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -24580,6 +24570,9 @@ MonoBehaviour:
   mCoroutineIsInProcess: 0
   tempCheck: 0
   _shieldedBuildings: 
+  _buildingSinkPositionAmount: 0
+  _buildingTiltRotationAmount: 0
+  _destroyedSmokeEffectVFX: {fileID: 0}
 --- !u!1 &4409159776857725059
 GameObject:
   m_ObjectHideFlags: 0

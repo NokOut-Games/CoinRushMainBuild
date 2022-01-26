@@ -6,24 +6,50 @@ public class OpenCardSelector : MonoBehaviour
     private CardDeck mcardDeck;
 
     [SerializeField]
-    private CameraController mcameraController;
+    private CameraController mCameraController;
+
+    [SerializeField]
+    private float mCardSpawnDelay = 1f;
+
+    public int _OpenCardSelectedCard;
+    public int _OpenCardPosition;
 
     private void Start()
     {
-        mcardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
-        mcameraController = Camera.main.GetComponent<CameraController>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "OPENCARD")
+        {
+            mcardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
+            mCameraController = Camera.main.GetComponent<CameraController>();
+        }
     }
 
     public void OnMouseDown()
     {
-        if (mcameraController._isCameraInGamePlayView)
+        if (!mCameraController._isCameraInGamePlayView)
         {
-            string cardName = this.gameObject.name;
-            cardName = cardName.Remove(cardName.Length - 7);
-            ScriptedCards card = Resources.Load(cardName) as ScriptedCards;
-            mcardDeck.InstantiateCard(card);
-            Destroy(this.gameObject,.5f);
+            //mCameraController.DrawButtonClicked();
+            Invoke(nameof(CardSpawnDelay), mCardSpawnDelay);
         }
+        else
+        {
+            CardSpawnDelay();
+        }
+    }
+
+    //Future Case
+    //public void OnMouseOver()
+    //{
+    //    mCameraController.DrawButtonClicked();
+    //}
+
+    private void CardSpawnDelay()
+    {
+        mcardDeck._OpenCardSlotFilled.Remove(_OpenCardPosition);
+        string cardName = this.gameObject.name;
+        cardName = cardName.Remove(cardName.Length - 7);
+        ScriptedCards card = Resources.Load(cardName) as ScriptedCards;
+        mcardDeck.InstantiateCard(card);
+        Destroy(this.gameObject, .5f);
     }
 }
 
