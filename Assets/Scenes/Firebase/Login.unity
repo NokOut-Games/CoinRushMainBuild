@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -553,6 +553,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: AttackedCard
+      value: 
+      objectReference: {fileID: 2878525332875178298, guid: 644b1b0660b7f6e49bbc6c9a116215d0, type: 3}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _MaxLevelsInGame
       value: 5
       objectReference: {fileID: 0}
@@ -604,6 +608,10 @@ PrefabInstance:
       propertyPath: _PositionDetails.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _attackedPlayerImageTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: b1e1ab6ba53271a46bd73a806ab4a420, type: 3}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _BuildingTypes.Array.data[1]
       value: 1
@@ -839,6 +847,10 @@ PrefabInstance:
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _buildingGameManagerDataRef.Array.size
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: _gameManagerOpenCardDetails.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: OpenHandCardsVectorPositions.Array.size
@@ -1352,12 +1364,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentPlayerId: 
-  _enemyPlayerID: nUZ59DGLcMRBWnjVnZ3NLLNEQNj2
+  _currentPlayerName: 
+  _currentPlayerPhotoURL: 
+  _enemyPlayerID: tyJBxBDWFEdVNPOsBoyD2SXnxNV2
+  mOpenCardsManager: {fileID: 0}
   mPlayerNameData: 
   mPlayerIDData: 
   mCoinData: 
   mEnergyData: 
   mPlayerCurrentLevelData: 
+  mOpenCardData: 
+  mPlayerPhotoURLData: 
   mLevelPrefix: Level
   _dataBaseFetchTime: 1.5
   _enemyBuildingDetails: []
@@ -1373,7 +1390,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ac195bacb194c439d6b1c114659a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyImageTexture: {fileID: 0}
+  _enemyName: 
+  _enemyPhotoURL: 
   _enemyPlayerLevel: 1
+  _openCardInfo: 0
   _buildingMultiplayerDataRef: []
   _buildingManagerRef: {fileID: 0}
   _buildingCount: 0
@@ -1641,8 +1662,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentPlayerID: 
+  CurrentPlayerName: 
+  CurrentPlayerPhotoURL: 
+  _attackedPlayerName: 
+  _attackedPlayerPhotoURL: 
+  _attackedBuildingName: 
+  AttackedPlayerImageTexture: {fileID: 0}
   mLevelPrefix: Level
-  FbImg: {fileID: 0}
+  CurrentPlayerImageTexture: {fileID: 0}
   userTitle: Guest Users
   canWrite: 0
   CanUpgradeToFacebook: 0
@@ -1669,7 +1696,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266492671}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da30945ff5a6564ea5f95aaa64b045a, type: 3}
   m_Name: 

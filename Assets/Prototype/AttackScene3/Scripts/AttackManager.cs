@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class AttackManager : MonoBehaviour
 {
+    public bool isDataChanging=true;
+
     [SerializeField] private GameManager mGameManager;
     // public List<GameObject> _TargetPoints = new List<GameObject>();
     public List<GameObject> _spawnedTargetPoints = new List<GameObject>();
@@ -42,6 +44,13 @@ public class AttackManager : MonoBehaviour
 
     public MultiplayerPlayerData mMultiplayerPlayerData;
     public int _enemyPlayerLevel;
+
+    [Space]
+    [Header("EnemyDetails")]
+    public Text _enemyName;
+    public RawImage _enemyDisplayPicture;
+    [Space]
+
     public List<GameObject> mEnemyBuildingPrefabPopulateList;
     public List<GameObject> _enemyBuildings;
 
@@ -64,7 +73,11 @@ public class AttackManager : MonoBehaviour
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+
+        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture; 
+        _enemyName.text = mMultiplayerPlayerData._enemyName;
         _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+
 
         InstantiateLevelAndPopulateBuildingPrefabsWithTheirTranformPoint();
 
@@ -498,6 +511,7 @@ public class AttackManager : MonoBehaviour
             yield return 0;
         }
     }
+<<<<<<< HEAD
 
     public void BackButton()
     {
@@ -511,27 +525,47 @@ public class AttackManager : MonoBehaviour
         LevelLoadManager.instance.BacktoHome();
     }
 
+=======
+>>>>>>> Balaji's-Branch-7
     public void ChangeEnemyBuildingData()
     {
-        string enemyBuildingName = _TargetTransform.name;
-        //mMultiplayerPlayerData.onceDone = false;
-        for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
+        if (isDataChanging)
         {
-            if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName != enemyBuildingName)
+            Debug.Log("Changing enemy data");
+            string enemyBuildingName = _TargetTransform.name;
+            //mMultiplayerPlayerData.onceDone = false;
+            for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
             {
-                continue;
-            }
-            else
-            {
-                if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded)
+                if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName != enemyBuildingName)
                 {
-                    mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded = false;
+                    continue;
                 }
                 else
                 {
-                    mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingDestroyed = true;
+                    if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded)
+                    {
+                        mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded = false;
+                    }
+                    else
+                    {
+                        mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingDestroyed = true;
+                    }
                 }
             }
+            //Invoke("WriteData", 1f);
+            MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
         }
+       
+    }
+    public void BackButton()
+    {
+        MultiplayerManager.Instance.CheckAndWriteAttackData();
+        MultiplayerManager.Instance.ReadMyData();
+        ChangeEnemyBuildingData();
+    }
+    void WriteData()
+    {
+        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
     }
 }
+
