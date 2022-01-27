@@ -122,6 +122,8 @@ public class FirebaseManager : MonoBehaviour
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
 
+                readUserData = true; // Works only if it gets all data ,otherwise it wont work
+
                 //if (snapshot.Child(userTitle).Child(auth.CurrentUser.UserId).HasChild("OpenCards") == true)
                 {   //OpencardInfo
                     OpenedCardSlot.Clear();
@@ -147,7 +149,7 @@ public class FirebaseManager : MonoBehaviour
 
 
 
-                readUserData = true; // Works only if it gets all data ,otherwise it wont work
+                
 
                 //Time difference Calculation
                 var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
@@ -283,6 +285,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void WriteopenCardData()
     {
+        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").RemoveValueAsync();
         int i = 0;
         foreach (OpenCardData cards in mGameManager.OpenCardDetails)
         {
