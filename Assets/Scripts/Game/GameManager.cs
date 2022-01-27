@@ -24,15 +24,15 @@ public class GameManagerBuildingData
     public bool _isBuildingDestroyed;
 }
 
-[System.Serializable]
-public class GameManagerOpenCardDetails
-{
-    public string _openedPlayerID;
-    public string _openedPlayerName;
-    public string _openedPlayerPhotoURL;
-    public int _openedCardSlot;
-    public int _openedCardIndex;
-}
+//[System.Serializable]
+//public class GameManagerOpenCardDetails
+//{
+//    public string _openedPlayerID;
+//    public string _openedPlayerName;
+//    public string _openedPlayerPhotoURL;
+//    public int _openedCardSlot;
+//    public int _openedCardIndex;
+//}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -71,7 +71,10 @@ public class GameManager : MonoBehaviour
     //public string _openedPlayerID, _openedPlayerName, _openedPlayerPhotoURL; 
     //public int _openedSlot, _openedIndex;
     //[Space]
-   public List<GameManagerOpenCardDetails> _gameManagerOpenCardDetails;
+
+    public List<OpenCardData> OpenCardDetails;
+    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    public List<int> OpenedCardSlot = new List<int>();
 
     public Transform[] OpenHandCardsPositions;
     /*(or)*/
@@ -150,15 +153,15 @@ public class GameManager : MonoBehaviour
             mIsFull = true;
         }
 
-        Debug.Log("buidlName+>"+ _buildingGameManagerDataRef[0]._buildingName);
+        //Debug.Log("buidlName+>"+ _buildingGameManagerDataRef[0]._buildingName);
 
-        _attackedPlayerName = FirebaseManager.Instance._attackedPlayerName;
-        _attackedBuildingName = FirebaseManager.Instance._attackedBuildingName;
-        _attackedPlayerImageTexture = FirebaseManager.Instance.AttackedPlayerImageTexture;
-        if (_attackedPlayerName != null && _attackedPlayerImageTexture != null)
-        {
-            DisplayAttackedEnemyDetails();
-        }
+        //_attackedPlayerName = FirebaseManager.Instance._attackedPlayerName;
+        //_attackedBuildingName = FirebaseManager.Instance._attackedBuildingName;
+        //_attackedPlayerImageTexture = FirebaseManager.Instance.AttackedPlayerImageTexture;
+        //if (_attackedPlayerName != null && _attackedPlayerImageTexture != null)
+        //{
+        //    DisplayAttackedEnemyDetails();
+        //}
 
     }
     private IEnumerator AutomaticEnergyRefiller()
@@ -210,22 +213,17 @@ public class GameManager : MonoBehaviour
         _playerFBPhotoURL = inPlayerPhotoURL;
        // FirebaseManager.Instance.readUserData = true;
     }
-    //public void UpdateOpenCardDetails(string inPlayerID, string inPlayerName, string inPlayerPhotoURL, int inCardSlot, int inCardIndex)
-    // {
-    //     _openedPlayerID = inPlayerID;
-    //     _openedPlayerName = inPlayerName;
-    //     _openedPlayerPhotoURL = inPlayerPhotoURL;
-    //     _openedSlot = inCardSlot;
-    //     _openedIndex = inCardIndex;
-    // }
-    public void UpdateOpenCardDetails(List<GameManagerOpenCardDetails> inOpenCardDetails)
+    public void UpdateOpenCardDetails(List<OpenCardData> inOpenCardDetails, List<int> inOpenCardSlot, List<string> inOpenedPlayerPhotoURL)
     {
-        _gameManagerOpenCardDetails = inOpenCardDetails;
+        OpenCardDetails = inOpenCardDetails;
+        OpenedCardSlot = inOpenCardSlot;
+        OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
     }
-     void DisplayAttackedEnemyDetails()
-    {
-        Debug.Log("Attacked Enemy Details Here.." + _attackedPlayerName);
-    }
+
+    // void DisplayAttackedEnemyDetails()
+    //{
+    //    Debug.Log("Attacked Enemy Details Here.." + _attackedPlayerName);
+    //}
     public bool HasEnoughCoins(int amount)
     {
         return (_coins >= amount);

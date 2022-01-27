@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+enum DrawButtonState
+{
+    NormalState,
+    OpenCardState
+}
+
 public class CardDeck : MonoBehaviour
 {
     [Header("Grabbing Other GameObject References:")]
@@ -44,8 +50,13 @@ public class CardDeck : MonoBehaviour
     public List<Cards> _cardsThatCanBeReplacedByJoker;
 
     public List<GameObject> _openCardPrefabs;
+    public int _OpenCardNumberIndex;
     public int positionNumber = 0;
+    public int _openedCardIndex;
+    public int _openCardSlot;
     public List<int> _OpenCardSlotFilled;
+    private int mCardsOpened;
+    public List<Transform> _OpenCardTransformPoint;
 
     int newCardIndex = 0;
 
@@ -58,6 +69,7 @@ public class CardDeck : MonoBehaviour
 
     public LevelManager _levelManager;
     public BuildingManager _buildingManagerRef;
+    public MultiplayerPlayerData mMultiplayerPlayerData;
 
     ScriptedCards mCards;
     public bool mHasThreeCardMatch;
@@ -70,25 +82,67 @@ public class CardDeck : MonoBehaviour
 
     GameObject mFlotingJoker;
 
+    private OpenCards mOpenCards;
+    private bool mOpenCardTakenAlready;
+
     //[Range(0, 100)]
     [SerializeField] int mJokerProbability;
 
-    private void Start()
+    private DrawButtonState mDrawButtonState;
+
+    private void Awake()
     {
-        onceDonee = false;
-        canClick = true;
-        DrawButton.sprite = drawNormal;
-        //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        if (GameManager.Instance._SavedCardTypes.Count > 0)
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
-            //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-            foreach (int cardType in GameManager.Instance._SavedCardTypes)
-            {
-                InstantiateCard(GetScriptedCardWithCardType((CardType)cardType), true);
-            }
+            mDrawButtonState = DrawButtonState.OpenCardState;
+        }
+        else
+        {
+            mDrawButtonState = DrawButtonState.NormalState;
         }
     }
 
+    private void Start()
+    {
+        mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+        if (mDrawButtonState == DrawButtonState.NormalState)
+        {
+            onceDonee = false;
+            canClick = true;
+            DrawButton.sprite = drawNormal;
+
+            
+            //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            if (GameManager.Instance._SavedCardTypes.Count > 0)
+            {
+                //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+                foreach (int cardType in GameManager.Instance._SavedCardTypes)
+                {
+                    InstantiateCard(GetScriptedCardWithCardType((CardType)cardType), true);
+                }
+            }
+        }
+        else
+        {
+            mOpenCardTakenAlready = false;
+            mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
+        }
+
+        Invoke("OpenCard", .5f);
+    }
+
+
+    void OpenCard()
+    {
+        //_OpenCardSlotFilled = GameManager.Instance.OpenedCardSlot;
+        ////Debug.Log(_OpenCardSlotFilled);
+        ////Opencards
+        for (int i = 0; i <= GameManager.Instance.OpenCardDetails.Count && i <= GameManager.Instance.OpenedCardSlot.Count; i++)
+        {
+            //int j = _OpenCardSlotFilled.Count;
+            Instantiate(_openCardPrefabs[GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard], _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]].position, _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]].rotation, _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]]);
+        }
+    }
     private void DestroyCardList()
     {
         int i = 8;
@@ -120,91 +174,125 @@ public class CardDeck : MonoBehaviour
 
     private void Update()
     {
-        if (clicks == 8 && !mHasThreeCardMatch)
-        {
-            clicks = 0;
-            Invoke(nameof(DestroyCardList), 2f);
-        }
+        //OpenCard
+        _OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
+        _OpenCardSlotFilled = MultiplayerManager.Instance.OpenedCardSlot;
 
-        time = Mathf.Clamp(time, 0f, mMaxHoldTime);
+
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
-
-        if (take_Multi_Card_Joker_Pair_Input)
+        if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            Vector2 selectionCardPosOne = _CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-            Vector2 selectionCardPosTwo = _CardList[mSelectionCards[1]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (_CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>().rect.Contains(selectionCardPosOne))
-                {
-                    SelectCardPairOfIndex(0, 1);
-                }
-                else if (_CardList[mSelectionCards[1]].gameObject.GetComponent<RectTransform>().rect.Contains(selectionCardPosTwo))
-                {
-                    SelectCardPairOfIndex(1, 0);
-                }
-            }
-        }
-
-        if (GameManager.Instance._energy > 0)
-        {
-            if (canClick == true)
+            if (!mOpenCardTakenAlready)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (_drawButtonRectTransform.rect.Contains(localMousePosition) && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
+                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                     {
-                        mMakeDrawBtnEnable = false;
+                        //mMakeDrawBtnEnable = false;
 
-                        time = 0;
-                        DrawCard();
-                    }
-                    else
-                    {
-                        BackToNormalState();
-                    }
+                        //time = 0;
 
+                        OpenHandCardAdder();
+                        mOpenCardTakenAlready = true;
+                    }
                 }
+            }
+        }
+        if(mDrawButtonState == DrawButtonState.NormalState)
+        { 
+            if (clicks == 8 && !mHasThreeCardMatch)
+            {
+                clicks = 0;
+                Invoke(nameof(DestroyCardList), 2f);
+            }
 
-                if (!mOnceDone)
+            time = Mathf.Clamp(time, 0f, mMaxHoldTime);
+
+            if (take_Multi_Card_Joker_Pair_Input)
+            {
+                Vector2 selectionCardPosOne = _CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
+                Vector2 selectionCardPosTwo = _CardList[mSelectionCards[1]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (Input.GetMouseButton(0))
+                    if (_CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>().rect.Contains(selectionCardPosOne))
                     {
-                        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                        SelectCardPairOfIndex(0, 1);
+                    }
+                    else if (_CardList[mSelectionCards[1]].gameObject.GetComponent<RectTransform>().rect.Contains(selectionCardPosTwo))
+                    {
+                        SelectCardPairOfIndex(1, 0);
+                    }
+                }
+            }
+
+            if (GameManager.Instance._energy > 0)
+            {
+                if (canClick == true)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (_drawButtonRectTransform.rect.Contains(localMousePosition) && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
                         {
-                            if (!mAutomaticDrawModeOn)
+                            mMakeDrawBtnEnable = false;
+
+                            time = 0;
+
+                            DrawCard();
+
+                            //else
+                            //{
+                            //    OpenHandCardAdder();
+                            //}
+                        }
+                        else
+                        {
+                            BackToNormalState();
+                        }
+
+                    }
+
+
+
+                    if (!mOnceDone)
+                    {
+                        if (Input.GetMouseButton(0))
+                        {
+                            if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                             {
-                                DrawButton.color = new Color32(200, 200, 200, 255);
-                            }
+                                if (!mAutomaticDrawModeOn)
+                                {
+                                    DrawButton.color = new Color32(200, 200, 200, 255);
+                                }
 
-                            time += Time.deltaTime;
-                            var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
-                            //CircleOutlineFiller();
-                            _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
+                                time += Time.deltaTime;
+                                var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
+                                //CircleOutlineFiller();
+                                _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
 
 
-                            if (time >= mMaxHoldTime)
-                            {
-                                ChangeSprites();
+                                if (time >= mMaxHoldTime)
+                                {
+                                    ChangeSprites();
 
-                                mOnceDone = true;
-                                mAutomaticDrawModeOn = true;
-                                mAutoCardDraw = true;
-                                StartCoroutine(AutomaticCardDrawing());
+                                    mOnceDone = true;
+                                    mAutomaticDrawModeOn = true;
+                                    mAutoCardDraw = true;
+                                    StartCoroutine(AutomaticCardDrawing());
+                                }
                             }
                         }
                     }
-                }
 
-                if (Input.GetMouseButtonUp(0))
-                {
-                    _drawButtonFillerImage.fillAmount = 0;
-                    DrawButton.color = new Color32(255, 255, 255, 255);
-                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                    if (Input.GetMouseButtonUp(0))
                     {
-                        time = 0;
-                    }
+                        _drawButtonFillerImage.fillAmount = 0;
+                        DrawButton.color = new Color32(255, 255, 255, 255);
+                        if (_drawButtonRectTransform.rect.Contains(localMousePosition))
+                        {
+                            time = 0;
+                        }
 
+                    }
                 }
             }
         }
@@ -747,6 +835,7 @@ public class CardDeck : MonoBehaviour
         //    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
         //}
         //int Something;
+        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
         if (positionNumber == 4)
         {
             positionNumber = 0;
@@ -758,11 +847,17 @@ public class CardDeck : MonoBehaviour
             {
                 positionNumber += 1;
             }
-            int RandomCard = Random.Range(0, _openCardPrefabs.Count);
-            GameObject OpenCards = Instantiate(_openCardPrefabs[RandomCard], _levelManager.OpenHandCardsPositions[positionNumber].position, _levelManager.OpenHandCardsPositions[positionNumber].rotation, _levelManager.OpenHandCardsPositions[positionNumber]);
-            OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = RandomCard;
-            OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
-            _OpenCardSlotFilled.Add(positionNumber);
+            if (mCardsOpened < 1)
+            {
+               // int RandomCard = Random.Range(0, _openCardPrefabs.Count);
+                _openedCardIndex= Random.Range(0, _openCardPrefabs.Count);
+                GameObject OpenCards = Instantiate(_openCardPrefabs[_openedCardIndex], mOpenCards._OpenCardTransformPoint[positionNumber].position, mOpenCards._OpenCardTransformPoint[positionNumber].rotation, mOpenCards._OpenCardTransformPoint[positionNumber]);
+                OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
+                OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
+                _openCardSlot = positionNumber;
+                _OpenCardSlotFilled.Add(positionNumber);
+                mCardsOpened += 1;
+            }
         }
         else
         {

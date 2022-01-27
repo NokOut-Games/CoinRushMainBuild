@@ -511,22 +511,21 @@ public class AttackManager : MonoBehaviour
             yield return 0;
         }
     }
-<<<<<<< HEAD
 
-    public void BackButton()
-    {
-        ChangeEnemyBuildingData();
-        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
-        MultiplayerManager.Instance.ReadMyData();
-        Invoke("BackToGame", 2.5f);
-    }
-    public void BackToGame()
-    {
-        LevelLoadManager.instance.BacktoHome();
-    }
 
-=======
->>>>>>> Balaji's-Branch-7
+    //public void BackButton()
+    //{
+    //    ChangeEnemyBuildingData();
+    //    MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
+    //    MultiplayerManager.Instance.ReadMyData();
+    //    Invoke("BackToGame", 2.5f);
+    //}
+    //public void BackToGame()
+    //{
+    //    LevelLoadManager.instance.BacktoHome();
+    //}
+
+
     public void ChangeEnemyBuildingData()
     {
         if (isDataChanging)
@@ -563,9 +562,9 @@ public class AttackManager : MonoBehaviour
         MultiplayerManager.Instance.ReadMyData();
         ChangeEnemyBuildingData();
     }
-    void WriteData()
-    {
-        MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
-    }
+    //void WriteData()
+    //{
+    //    MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
+    //}
 }
 

@@ -49,7 +49,7 @@ public class CameraController : MonoBehaviour
     private Vector3 initialVector = Vector3.forward;
     private Vector2 mMouseDownPosition = Vector2.zero;
 
-
+    //private DrawButtonState mDrawButtonState;
 
     //New Changes
     Vector3 mPreTouchMovementVector;
@@ -96,7 +96,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-
+        Debug.Log("<b>"+_DrawButtonClicked+"</b>");
         //if(_currentView == _views[0])
         //{
         //    Debug.Log("CurrentView = " + "<color=red>  Normal-View  </color>");

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1366,8 +1366,13 @@ MonoBehaviour:
   _currentPlayerId: 
   _currentPlayerName: 
   _currentPlayerPhotoURL: 
-  _enemyPlayerID: tyJBxBDWFEdVNPOsBoyD2SXnxNV2
+  _enemyPlayerID: 7wJq25iCVsdchgQFfJv9Qhrp0At2
+  _enemyTitle: 
+  OpenCardDetails: []
+  OpenedPlayerPhotoURL: []
+  OpenedCardSlot: 
   mOpenCardsManager: {fileID: 0}
+  _cardDeck: {fileID: 0}
   mPlayerNameData: 
   mPlayerIDData: 
   mCoinData: 
@@ -1668,13 +1673,14 @@ MonoBehaviour:
   _attackedPlayerPhotoURL: 
   _attackedBuildingName: 
   AttackedPlayerImageTexture: {fileID: 0}
+  OpenCardDetails: []
+  OpenedPlayerPhotoURL: []
+  OpenedCardSlot: 
   mLevelPrefix: Level
   CurrentPlayerImageTexture: {fileID: 0}
   userTitle: Guest Users
   canWrite: 0
-  CanUpgradeToFacebook: 0
   readUserData: 0
-  _GuestUpgradeButton: {fileID: 0}
 --- !u!4 &1266492673
 Transform:
   m_ObjectHideFlags: 0
@@ -1696,12 +1702,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266492671}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da30945ff5a6564ea5f95aaa64b045a, type: 3}
+  m_Script: {fileID: 11500000, guid: ffd0561fd0ab247299ad0b61354ab592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _playerList: []
+  _randomEnemyID: 
 --- !u!1 &1308610049
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,10 @@ public class FirebaseManager : MonoBehaviour
     public string _attackedPlayerName,_attackedPlayerPhotoURL,_attackedBuildingName;
     public Texture AttackedPlayerImageTexture;
 
-   // public string _openedPlayerName, _openedPlayerPhotoURL, _openedCardIndex,_openedCardSlot, _openedPlayerID; 
+    public List<OpenCardData> OpenCardDetails;
+    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    public List<int> OpenedCardSlot = new List<int>();
+    // public string _openedPlayerName, _openedPlayerPhotoURL, _openedCardIndex,_openedCardSlot, _openedPlayerID; 
 
     private GameManager mGameManager;
     private LevelLoadManager mLevelLoadManager;
@@ -38,9 +41,9 @@ public class FirebaseManager : MonoBehaviour
 
    public bool canWrite;
 
-    public bool CanUpgradeToFacebook = false;
+   // public bool CanUpgradeToFacebook = false;
     public bool readUserData;
-    public GameObject _GuestUpgradeButton;
+    //public GameObject _GuestUpgradeButton;
     //Time
     DateTime crntDateTime;
 
@@ -118,30 +121,32 @@ public class FirebaseManager : MonoBehaviour
 
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
-              
 
-                readUserData = true;
-              
-                //AttackedPlayerInfo  
-                _attackedPlayerName = snapshot.Child("AttackedPlayer").Child("_attackedPlayerName").Value.ToString();
-                _attackedBuildingName= snapshot.Child("AttackedPlayer").Child("_attackedBuildingName").Value.ToString();
-                _attackedPlayerPhotoURL = snapshot.Child("AttackedPlayer").Child("_attackedPlayerPhotoURL").Value.ToString(); //After getting details it goes to Update().
+                    //OpencardInfo
+                    OpenedCardSlot.Clear();
+                    OpenCardDetails = new List<OpenCardData>();
+                    for (int i = 0; i < snapshot.Child("OpenCards").ChildrenCount; i++)
+                    {
+                        OpenCardData CardData = new OpenCardData();
+                        CardData._openedPlayerName = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
+                        CardData._openedPlayerID = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
+                        CardData._openedPlayerPhotoURL = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
+                        CardData._openedCardSlot = int.Parse(snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
+                        CardData._openedCardSelectedCard = int.Parse(snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
+                        OpenCardDetails.Add(CardData);
+                        OpenedCardSlot.Add(CardData._openedCardSlot);
+                        OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+                    }
+                    mGameManager.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
 
-                //OpencardInfo
-                List<GameManagerOpenCardDetails> openCardDetails = new List<GameManagerOpenCardDetails>();
-                for (int i = 0; i < snapshot.Child("OpenCards").ChildrenCount; i++)
-                {
-                    GameManagerOpenCardDetails CardData = new GameManagerOpenCardDetails();
+                ////AttackedPlayerInfo  
+                //_attackedPlayerName = snapshot.Child("AttackedPlayer").Child("_attackedPlayerName").Value.ToString();
+                //_attackedBuildingName= snapshot.Child("AttackedPlayer").Child("_attackedBuildingName").Value.ToString();
+                //_attackedPlayerPhotoURL = snapshot.Child("AttackedPlayer").Child("_attackedPlayerPhotoURL").Value.ToString(); //After getting details it goes to Update().
 
-                    CardData._openedPlayerID = snapshot.Child("OpenCards").Child("_openedPlayerID").Value.ToString(); ;
-                    CardData._openedPlayerName = snapshot.Child("OpenCards").Child("_openedPlayerName").Value.ToString(); ;
-                    CardData._openedPlayerPhotoURL = snapshot.Child("OpenCards").Child("_openedPlayerphotoURL").Value.ToString();
-                    CardData._openedCardSlot = int.Parse(snapshot.Child("OpenCards").Child("_openedCardSlot").Value.ToString());
-                    CardData._openedCardIndex = int.Parse(snapshot.Child("OpenCards").Child("_openedCardIndex").Value.ToString());
 
-                    openCardDetails.Add(CardData);
-                }
-                mGameManager.UpdateOpenCardDetails(openCardDetails);
+
+                readUserData = true; // Works only if it gets all data ,otherwise it wont work
 
                 //Time difference Calculation
                 var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
@@ -176,7 +181,7 @@ public class FirebaseManager : MonoBehaviour
 
             //WritePlayerDataToFirebase();
 
-            CanUpgradeToFacebook = true;
+            //CanUpgradeToFacebook = true;
         }
         else
         {
@@ -195,7 +200,7 @@ public class FirebaseManager : MonoBehaviour
             CurrentPlayerID = auth.CurrentUser.UserId;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
-            CanUpgradeToFacebook = true;
+            //CanUpgradeToFacebook = true;
             readUserData = true;
            // canWrite = true;
         });
@@ -291,24 +296,24 @@ public class FirebaseManager : MonoBehaviour
             LoadToTheCurrentLevel(mGameManager._playerCurrentLevel);
         }
 
-        _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
+       // _GuestUpgradeButton = FindInActiveObjectByName("FacebookUpgrade");
        // _FacebookInfo = FindInActiveObjectByName("FacebookInformation");
         //_FacebookPicture = FindObjectOfType<RawImage>();
 
-        if (CanUpgradeToFacebook)
-        {
-            _GuestUpgradeButton.SetActive(true);
-        }
-        else
-        {
-            //if (_FacebookInfo != null)
-            //{
-            //    _FacebookInfo.SetActive(true);
+        //if (CanUpgradeToFacebook)
+        //{
+        //    _GuestUpgradeButton.SetActive(true);
+        //}
+        //else
+        //{
+        //    //if (_FacebookInfo != null)
+        //    //{
+        //    //    _FacebookInfo.SetActive(true);
 
-            //    Invoke("DisplayFacebookInformation", 0.7f);
-            //}
+        //    //    Invoke("DisplayFacebookInformation", 0.7f);
+        //    //}
 
-        }
+        //}
 
         if (_attackedPlayerPhotoURL != null)
         {
@@ -397,37 +402,60 @@ public class FirebaseManager : MonoBehaviour
 
 
     }
-     private void OnApplicationFocus(bool focus)
-     {
-         if (!focus)
-         {
-            WriteCardDataToFirebase();
-            CalculateLogOutTime();
-            WriteBuildingDataToFirebase();
-                 WritePlayerDataToFirebase();
+    // private void OnApplicationFocus(bool focus)
+    // {
+    //     if (!focus)
+    //     {
+    //        WriteCardDataToFirebase();
+    //        CalculateLogOutTime();
+    //        WriteBuildingDataToFirebase();
+    //             WritePlayerDataToFirebase();
 
-         }
-     }
-     private void OnApplicationPause(bool pause)
-     {
-         if (pause)
-         {
-            WriteCardDataToFirebase();
-            CalculateLogOutTime();
-            WriteBuildingDataToFirebase();
-             WritePlayerDataToFirebase();
-         }
-     }
+    //     }
+    // }
+    // private void OnApplicationPause(bool pause)
+    // {
+    //     if (pause)
+    //     {
+    //        WriteCardDataToFirebase();
+    //        CalculateLogOutTime();
+    //        WriteBuildingDataToFirebase();
+    //         WritePlayerDataToFirebase();
+    //     }
+    // }
+
+    //private void OnApplicationQuit()
+    //{
+    //    CalculateLogOutTime();
+
+    //        WriteCardDataToFirebase();
+    //        WriteBuildingDataToFirebase();
+    //        WritePlayerDataToFirebase();
+
+
+    //}
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            WriteAllDataToFireBase();
+        }
+    }
 
     private void OnApplicationQuit()
     {
-        CalculateLogOutTime();
-        
-            WriteCardDataToFirebase();
-            WriteBuildingDataToFirebase();
-            WritePlayerDataToFirebase();
-        
+        WriteAllDataToFireBase();
+    }
 
+
+    public void WriteAllDataToFireBase()
+    {
+        WriteCardDataToFirebase();
+        CalculateLogOutTime();
+        WriteBuildingDataToFirebase();
+        WritePlayerDataToFirebase();
+        //WriteMapDataToFirebase();
     }
 }
 
