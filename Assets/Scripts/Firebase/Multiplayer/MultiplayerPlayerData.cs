@@ -36,12 +36,15 @@ public class MultiplayerPlayerData : MonoBehaviour
     [SerializeField] private GameObject mTransformPoint;
     public List<Transform> _enemyBuildingsTransformList;
 
-    
+    public List<OpenCardData> OpenCardDetails;
+    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    public List<int> OpenedCardSlot = new List<int>();
+
+
     public void Start()
     {
         onceDone = false;
     }
-
 
     public void Update()
     {
@@ -71,6 +74,14 @@ public class MultiplayerPlayerData : MonoBehaviour
         _enemyName = inPlayerName;
         _enemyPhotoURL = inPlayerPhotoURL;
     }
+
+    public void UpdateOpenCardDetails(List<OpenCardData> inOpenCardDetails, List<int> inOpenCardSlot, List<string> inOpenedPlayerPhotoURL)
+    {
+        OpenCardDetails = inOpenCardDetails;
+        OpenedCardSlot = inOpenCardSlot;
+        OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
+    }
+
     IEnumerator DownloadFacebookImage(string MediaUrl)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);

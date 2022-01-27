@@ -1,13 +1,9 @@
-using UnityEngine;
-using Firebase.Database;
-using TMPro;
-using UnityEngine.SceneManagement;
 using Firebase.Auth;
-using System.Collections.Generic;
+using Firebase.Database;
 using System.Collections;
-using System;
-using UnityEngine.UI;
-using UnityEngine.Networking;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 public class AttackedPlayerInformation
 {
     public string _attackedPlayerID;
@@ -56,14 +52,14 @@ public class MultiplayerManager : MonoBehaviour
     public OpenCardsManager mOpenCardsManager;
     public CardDeck _cardDeck;
     AttackManager mAttackManager;
-    public  string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mOpenCardData, mPlayerPhotoURLData;
+    public string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mOpenCardData, mPlayerPhotoURLData;
     [SerializeField] string mLevelPrefix = "Level";
     private string mLevelName;
     public float _dataBaseFetchTime;
 
     public List<GameObject> _enemyBuildingDetails;
 
-    
+
 
     // Start is called before the first frame update
     private void Awake()
@@ -85,7 +81,7 @@ public class MultiplayerManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
-        
+
     }
     // Update is called once per frame
     void Update()
@@ -100,7 +96,7 @@ public class MultiplayerManager : MonoBehaviour
             mOpenCardsManager = FindObjectOfType<OpenCardsManager>();
             _cardDeck = FindObjectOfType<CardDeck>();
         }
-        if(SceneManager.GetActiveScene().name == "ATTACK")
+        if (SceneManager.GetActiveScene().name == "ATTACK")
         {
             mAttackManager = FindObjectOfType<AttackManager>();
         }
@@ -166,6 +162,7 @@ public class MultiplayerManager : MonoBehaviour
                     mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
                     // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
 
+
                     List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
                     for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
                     {
@@ -182,14 +179,15 @@ public class MultiplayerManager : MonoBehaviour
                     mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
 
 
-                    if (snapshot.Child(_enemyPlayerID).HasChild("OpenCards") == true)
+
+                    if (snapshot.Child("Facebook Users").Child(_enemyPlayerID).HasChild("OpenCards") == true)
                     {
 
-                        //OpencardInfo
-                        OpenedCardSlot.Clear();
+                        //    //OpencardInfo
+                        //    //OpenedCardSlot.Clear();
+                        //    //OpenCardDetails = new List<OpenCardData>();
                         OpenCardDetails = new List<OpenCardData>();
-
-                        for (int i = 0; i < snapshot.Child("OpenCards").ChildrenCount; i++)
+                        for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").ChildrenCount; i++)
                         {
                             OpenCardData CardData = new OpenCardData();
 
@@ -203,6 +201,9 @@ public class MultiplayerManager : MonoBehaviour
                             OpenedCardSlot.Add(CardData._openedCardSlot);
                             OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
                         }
+                        mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
+
+
                     }
                 }
                 else if (snapshot.Child("Guest Users").HasChild(_enemyPlayerID) == true)
@@ -233,7 +234,7 @@ public class MultiplayerManager : MonoBehaviour
                     }
                     mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
 
-                    
+
                 }
             }
 
@@ -303,7 +304,7 @@ public class MultiplayerManager : MonoBehaviour
 
     }
 
-    public  void OnGettingAttackCard()
+    public void OnGettingAttackCard()
     {
         mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
         FirebaseManager.Instance.WriteCardDataToFirebase();
@@ -383,7 +384,7 @@ public class MultiplayerManager : MonoBehaviour
     }
 
     public void WriteDetailsOnAttackComplete()
-    {    
+    {
         int i = 0;
         foreach (MultiplayerBuildingData buildings in mMultiplayerPlayerData._buildingMultiplayerDataRef)
         {
@@ -488,14 +489,14 @@ public class MultiplayerManager : MonoBehaviour
         cardsDetails._openedCardSelectedCard = _cardDeck._openedCardIndex;
         cardsDetails._openedPlayerPhotoURL = _currentPlayerPhotoURL;
         string json = JsonUtility.ToJson(cardsDetails);
-        reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(_cardDeck._OpenCardNumberIndex.ToString()).SetRawJsonValueAsync(json).ContinueWith(task => { });
+        reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(/*_cardDeck._OpenCardNumberIndex*/_cardDeck._openCardSlot.ToString()).SetRawJsonValueAsync(json).ContinueWith(task => { });
 
-        _cardDeck._OpenCardNumberIndex += 1;
+        
 
-        if (_cardDeck._OpenCardNumberIndex <= 5)
-        {
-            reference.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").SetValueAsync(_cardDeck._OpenCardNumberIndex).ContinueWith(task => { });
-        }
+        //if (_cardDeck._OpenCardNumberIndex <= 5)
+        //{
+        //    reference.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").SetValueAsync(_cardDeck._OpenCardNumberIndex).ContinueWith(task => { });
+        //}
         ReadMyData();
     }
 

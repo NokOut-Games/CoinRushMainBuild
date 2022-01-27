@@ -5,8 +5,7 @@ using UnityEngine;
 public class OpenCards : MonoBehaviour
 {
     public List<Transform> _OpenCardTransformPoint;
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         for (int i = 0; i < this.gameObject.transform.childCount; i++)
         {

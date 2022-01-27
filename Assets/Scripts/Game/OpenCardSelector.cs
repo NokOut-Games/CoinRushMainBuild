@@ -23,6 +23,30 @@ public class OpenCardSelector : MonoBehaviour
         }
     }
 
+    //public void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        RaycastHit hitSpot;
+    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //See where the player clicks
+
+    //        if (Physics.Raycast(ray, out hitSpot))
+    //        {
+    //            if (hitSpot.collider.isTrigger == true && hitSpot.collider.gameObject.tag == "Surfers") //If its a gameOBject names surfer move it to its targetPosition
+    //            {
+    //                var storeLenght = hitSpot.transform.gameObject.transform.childCount - 1f;
+    //                for (int i = 0; i <= storeLenght; i++)
+    //                {
+    //                    if (hitSpot.transform.gameObject.transform.GetChild(i).GetComponent<PathToTravel>() != null)
+    //                    {
+    //                        hitSpot.transform.gameObject.transform.GetChild(i).GetComponent<PathToTravel>().move = true;
+    //                    }
+    //                }
+    //                Destroy(hitSpot.collider);
+    //            }
+    //        }
+    //    }
+
     public void OnMouseDown()
     {
         if (!mCameraController._isCameraInGamePlayView)
@@ -50,6 +74,8 @@ public class OpenCardSelector : MonoBehaviour
         ScriptedCards card = Resources.Load(cardName) as ScriptedCards;
         mcardDeck.InstantiateCard(card);
         Destroy(this.gameObject, .5f);
+        GameManager.Instance.OpenCardDetails.RemoveAt(_OpenCardPosition);
+        GameManager.Instance.OpenCardWritten = true;
     }
 }
 

@@ -95,23 +95,28 @@ public class CardDeck : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mDrawButtonState = DrawButtonState.OpenCardState;
+            Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
         }
         else
         {
             mDrawButtonState = DrawButtonState.NormalState;
+            PopulateOpenedCardSlotsFromFireBase();
         }
+        //PopulateOpenedCardSlotsFromFireBase();
+        //PopulateFriendsOpenCardSlotsFromFirebase();
     }
 
     private void Start()
     {
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+        mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
+
         if (mDrawButtonState == DrawButtonState.NormalState)
         {
             onceDonee = false;
             canClick = true;
             DrawButton.sprite = drawNormal;
-
-            
+            SpawnOpenCards();
             //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             if (GameManager.Instance._SavedCardTypes.Count > 0)
             {
@@ -125,24 +130,53 @@ public class CardDeck : MonoBehaviour
         else
         {
             mOpenCardTakenAlready = false;
-            mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
+            Invoke(nameof(SpawnFriendsOpenCards),.5f);
         }
+        
+            
+        
 
-        Invoke("OpenCard", .5f);
+        //Invoke("OpenCard", .5f);
     }
 
-
-    void OpenCard()
+    private void PopulateOpenedCardSlotsFromFireBase()
     {
-        //_OpenCardSlotFilled = GameManager.Instance.OpenedCardSlot;
-        ////Debug.Log(_OpenCardSlotFilled);
-        ////Opencards
-        for (int i = 0; i <= GameManager.Instance.OpenCardDetails.Count && i <= GameManager.Instance.OpenedCardSlot.Count; i++)
+        _OpenCardSlotFilled.Clear();
+        for (int i = 0; i < GameManager.Instance.OpenCardDetails.Count; i++)
         {
-            //int j = _OpenCardSlotFilled.Count;
-            Instantiate(_openCardPrefabs[GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard], _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]].position, _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]].rotation, _OpenCardTransformPoint[GameManager.Instance.OpenedCardSlot[i]]);
+            _OpenCardSlotFilled.Add(GameManager.Instance.OpenCardDetails[i]._openedCardSlot);
         }
     }
+
+    private void PopulateFriendsOpenCardSlotsFromFirebase()
+    {
+        _OpenCardSlotFilled.Clear();
+        for (int i = 0; i < mMultiplayerPlayerData.OpenCardDetails.Count; i++)
+        {
+            _OpenCardSlotFilled.Add(mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot);
+        }
+    }
+
+    private void SpawnOpenCards()
+    {
+        for (int i = 0; i < GameManager.Instance.OpenCardDetails.Count; i++)
+        {
+            GameObject savedOpenCard = Instantiate(_openCardPrefabs[GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard;
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = GameManager.Instance.OpenCardDetails[i]._openedCardSlot;
+        }
+    }
+
+    private void SpawnFriendsOpenCards()
+    {
+        for (int i = 0; i < mMultiplayerPlayerData.OpenCardDetails.Count; i++)
+        {
+            GameObject savedOpenCard = Instantiate(_openCardPrefabs[mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard;
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot;
+        }
+    }
+
     private void DestroyCardList()
     {
         int i = 8;
@@ -175,8 +209,8 @@ public class CardDeck : MonoBehaviour
     private void Update()
     {
         //OpenCard
-        _OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
-        _OpenCardSlotFilled = MultiplayerManager.Instance.OpenedCardSlot;
+        //_OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
+        //_OpenCardSlotFilled = MultiplayerManager.Instance.OpenedCardSlot;
 
 
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
@@ -198,8 +232,8 @@ public class CardDeck : MonoBehaviour
                 }
             }
         }
-        if(mDrawButtonState == DrawButtonState.NormalState)
-        { 
+        if (mDrawButtonState == DrawButtonState.NormalState)
+        {
             if (clicks == 8 && !mHasThreeCardMatch)
             {
                 clicks = 0;
@@ -401,6 +435,49 @@ public class CardDeck : MonoBehaviour
 
 
         //InstantiateCard(cards);
+    }
+
+    public void OpenHandCardAdder()
+    {
+        //Future Case
+        //if(Camera.main.GetComponent<CameraController>()._DrawButtonClicked)
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        //}
+        //int Something;
+        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+        if (positionNumber == 4)
+        {
+            positionNumber = 0;
+        }
+        if (_OpenCardSlotFilled.Count != 5)
+        {
+            positionNumber = 0;
+            while (_OpenCardSlotFilled.Contains(positionNumber))
+            {
+                positionNumber += 1;
+            }
+            if (mCardsOpened < 1)
+            {
+                // int RandomCard = Random.Range(0, _openCardPrefabs.Count);
+                _openedCardIndex = Random.Range(0, _openCardPrefabs.Count);
+                GameObject OpenCards = Instantiate(_openCardPrefabs[_openedCardIndex], mOpenCards._OpenCardTransformPoint[positionNumber].position, mOpenCards._OpenCardTransformPoint[positionNumber].rotation, mOpenCards._OpenCardTransformPoint[positionNumber]);
+                OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
+                OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
+                _openCardSlot = positionNumber;
+                _OpenCardNumberIndex += 1;
+                _OpenCardSlotFilled.Add(positionNumber);
+                mCardsOpened += 1;
+            }
+        }
+        else
+        {
+            Debug.Log("Open Hand Card Slot Filled");
+        }
     }
 
     void Instantiate2DCard()
@@ -823,47 +900,7 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    public void OpenHandCardAdder()
-    {
-        //Future Case
-        //if(Camera.main.GetComponent<CameraController>()._DrawButtonClicked)
-        //{
-        //    return;
-        //}
-        //else
-        //{
-        //    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-        //}
-        //int Something;
-        Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-        if (positionNumber == 4)
-        {
-            positionNumber = 0;
-        }
-        if (_OpenCardSlotFilled.Count != 5)
-        {
-            positionNumber = 0;
-            while (_OpenCardSlotFilled.Contains(positionNumber))
-            {
-                positionNumber += 1;
-            }
-            if (mCardsOpened < 1)
-            {
-               // int RandomCard = Random.Range(0, _openCardPrefabs.Count);
-                _openedCardIndex= Random.Range(0, _openCardPrefabs.Count);
-                GameObject OpenCards = Instantiate(_openCardPrefabs[_openedCardIndex], mOpenCards._OpenCardTransformPoint[positionNumber].position, mOpenCards._OpenCardTransformPoint[positionNumber].rotation, mOpenCards._OpenCardTransformPoint[positionNumber]);
-                OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
-                OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
-                _openCardSlot = positionNumber;
-                _OpenCardSlotFilled.Add(positionNumber);
-                mCardsOpened += 1;
-            }
-        }
-        else
-        {
-            Debug.Log("Open Hand Card Slot Filled");
-        }
-    }
+
 }
 
 
