@@ -24,7 +24,6 @@ public class BallLaunch : MonoBehaviour
     public bool BallReverse = false;
     public GameObject CrackCanvas;
     private float ShieldCameraDistance;
-    // public Vector3 offset = new Vector3 (.4f,34.4f,66.9f);
 
     public void Awake()
     {
@@ -41,7 +40,7 @@ public class BallLaunch : MonoBehaviour
         transform.LookAt(PhysicsUtil.GetParabolaNextPosition(position, Velocity, gravity, Time.deltaTime));
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (BallFlow == true)
         {
@@ -57,32 +56,53 @@ public class BallLaunch : MonoBehaviour
         }
         if (BallReverse == true)
         {
-        //    Vector3 Newdist = Camera.main.ScreenToWorldPoint(CrackCanvas.transform.GetChild(0).gameObject.transform.position);
-          //  Debug.Log(Newdist + "Panel Position");
+           // Vector3 Newdist = Camera.main.ScreenToWorldPoint(CrackCanvas.transform.GetChild(0).gameObject.transform.position);
+           // Debug.Log(Newdist + "Panel Position");
             this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, Camera.main.transform.position, Time.deltaTime * 5);
 
-            if (Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position) < (ShieldCameraDistance * .24))
+            if (Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position) < (ShieldCameraDistance * .25)) //.14))
             {
                 BallReverse = false;
-
                 this.gameObject.transform.GetChild(4).gameObject.SetActive(true);
-              // // CrackCanvas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-              //  Debug.Log(CrackCanvas);
-              ////  Debug.Log(CrackCanvas.gameObject.transform.GetChild(0).gameObject + "child Panel name");
-              //  Debug.LogError("Ball Reverse Stopped");
-              //  Debug.Log(Camera.main.ScreenToWorldPoint (CrackCanvas.transform.position) + "  Camera Panel ScreenView");
+              //  CrackCanvas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                //Debug.Log(CrackCanvas);
+                //Debug.Log(CrackCanvas.gameObject.transform.GetChild(0).gameObject + "child Panel name");
+                //Debug.LogError("Ball Reverse Stopped");
+                //Debug.Log(Camera.main.ScreenToWorldPoint (CrackCanvas.transform.position) + "  Camera Panel ScreenView");
             }
         }
+      
 
         // Simply simulate collision detection
         // if (position.y <= dest.y) enabled = false;
     }
 
+  /*  private void LateUpdate()
+    {
+        if (BallReverse == true)
+        {
+            // Vector3 Newdist = Camera.main.ScreenToWorldPoint(CrackCanvas.transform.GetChild(0).gameObject.transform.position);
+            // Debug.Log(Newdist + "Panel Position");
+            this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, Camera.main.transform.position, Time.deltaTime * 5);
+
+            if (Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position) < (ShieldCameraDistance * .25)) //.14))
+            {
+                BallReverse = false;
+                this.gameObject.transform.GetChild(4).gameObject.SetActive(true);
+                //  CrackCanvas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                //Debug.Log(CrackCanvas);
+                //Debug.Log(CrackCanvas.gameObject.transform.GetChild(0).gameObject + "child Panel name");
+                //Debug.LogError("Ball Reverse Stopped");
+                //Debug.Log(Camera.main.ScreenToWorldPoint (CrackCanvas.transform.position) + "  Camera Panel ScreenView");
+            }
+        }
+    }
+  */
     public void OnCollisionEnter(Collision col)
     {
         Debug.Log("Collision Entered");
         Debug.Log(col.gameObject.name);
-        GameObject.Find("Cannon").GetComponent<CannonShotController>().fixCameraRot = false;
+        GameObject.Find("CANNON_ANIM_1").GetComponent<CannonShotController>().fixCameraRot = false;
         _bullet = this.gameObject;
 
         if (_attackManager._Shield == true)
@@ -120,6 +140,8 @@ public class BallLaunch : MonoBehaviour
             Debug.Log(_bullet.transform.childCount + "Child Count");
             for (int i = 0; i < _bullet.transform.childCount - 2; i++)
             {
+                Debug.Log(_bullet.transform.childCount -1 + "Child Count status");
+                Debug.LogError(_bullet.transform.childCount);
                 _bullet.transform.GetChild(i).gameObject.SetActive(true);
                 _bullet.transform.GetChild(i).parent = null;
 

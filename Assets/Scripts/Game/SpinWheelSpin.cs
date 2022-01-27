@@ -25,10 +25,12 @@ public class SpinWheelSpin : MonoBehaviour
     public bool disablePanel = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
+    private LevelLoadManager mLevelLoadManager;
     public Animator mLightAnimator;
     private void Start()
     {
          mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mLevelLoadManager = mGameManager.gameObject.GetComponent<LevelLoadManager>();
 
         _uiSpinButton.onClick.AddListener(() =>
         {
@@ -51,18 +53,39 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiCoinReward.SetActive(true);
-                            coin += wheelPiece._Amount;
-                            mGameManager._coins += wheelPiece._Amount;
-                            _uiCoinValue.text = wheelPiece._Amount.ToString();
+                           
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                coin += wheelPiece._Amount;
+                                mGameManager._coins += wheelPiece._Amount;
+                                _uiCoinValue.text = wheelPiece._Amount.ToString();
+
+                            }
+                            else
+                            {
+                                coin += wheelPiece._Amount*GameManager.Instance._MultiplierValue;
+                                mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                _uiCoinValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
+                            }
 
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiEnergyReward.SetActive(true);
-                            Energy += wheelPiece._Amount;
-                            mGameManager._energy += wheelPiece._Amount;
-                            _uiEnergyValue.text = wheelPiece._Amount.ToString();
+                           
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                Energy += wheelPiece._Amount;
+                                mGameManager._energy += wheelPiece._Amount;
+                                _uiEnergyValue.text = wheelPiece._Amount.ToString();
+                            }
+                            else
+                            {
+                                Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                _uiEnergyValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
+                            }
                         }
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
                         {
@@ -84,17 +107,36 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             disablePanel = true;
                             _uiCoinReward.SetActive(true);
-                            coin += wheelPiece._Amount;
-                            mGameManager._coins += wheelPiece._Amount;
-                            _uiCoinValue.text = wheelPiece._Amount.ToString();
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                coin += wheelPiece._Amount;
+                                mGameManager._coins += wheelPiece._Amount;
+                                _uiCoinValue.text = wheelPiece._Amount.ToString();
+
+                            }
+                            else
+                            {
+                                coin += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                _uiCoinValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
+                            }
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
                             disablePanel = true;
                             _uiEnergyReward.SetActive(true);
-                            Energy += wheelPiece._Amount;
-                            mGameManager._energy += wheelPiece._Amount;
-                            _uiEnergyValue.text = wheelPiece._Amount.ToString();                                                      
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                Energy += wheelPiece._Amount;
+                                mGameManager._energy += wheelPiece._Amount;
+                                _uiEnergyValue.text = wheelPiece._Amount.ToString();
+                            }
+                            else
+                            {
+                                Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                                _uiEnergyValue.text ="Bit Multiplier "+ GameManager.Instance._MultiplierValue+"X"+"\n"+(wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
+                            }
                         }
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
                         {
@@ -128,8 +170,7 @@ public class SpinWheelSpin : MonoBehaviour
     }
     public void BackToGameScene()
     {
-        //SceneManager.LoadScene(1);
-        mGameManager.GetComponent<LevelLoadManager>().BacktoHome();
+        LevelLoadManager.instance.BacktoHome();
     }
     private void Update()
     {    if(FreeSpins<10)

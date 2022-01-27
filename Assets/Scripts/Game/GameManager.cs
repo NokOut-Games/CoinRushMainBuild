@@ -20,6 +20,8 @@ public class GameManagerBuildingData
     public int _buildingNo;
     public int _buildingCurrentLevel;
     public bool _isBuildingSpawned;
+    public bool _isBuildingShielded;
+    public bool _isBuildingDestroyed;
 }
 
 public class GameManager : MonoBehaviour
@@ -27,10 +29,17 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int _coins;
+
     public int _energy = 25;
+    public int _maxEnergy = 50;
+    public int _regenerationEnergy = 1;
+
     public int _shield;
+    public int _maxShield;
+
     public int _playerCurrentLevel=1;
-    public float _minutes;
+    public int _minutes;
+    
 
     public List<GameObject> _BuildingDetails;
     public List<BuildingTypes> _BuildingTypes;
@@ -46,27 +55,31 @@ public class GameManager : MonoBehaviour
     public Vector3[] OpenHandCardsVectorPositions;
 
     public List<GameManagerBuildingData> _buildingGameManagerDataRef;
-
-   /* public BuildingManager _buildingManagerRef;
+    public BuildingManager _buildingManagerRef;
     public int _buildingCount;
-*/
+
     public bool _IsRefreshNeeded;
 
     public bool _IsBuildingFromFBase = true;
-    public int _MaxLevelsInGame;
 
-
-    public int _maxEnergy = 50;
+    
     private bool mIsFull = true;
 
+    public List<int> _SavedCardTypes = new List<int>();
+    public int _MaxLevelsInGame;
 
+    public int _MultiplierValue=1;
 
-    public List<ScriptedCards> _SavedCards = new List<ScriptedCards>();
+    Tutorial tutorial;
+    public int _SetIndex;
+    public List<int> _CompletedLevelsInSet;
+    public bool hasChoiceInLevel;
+    public bool isInTutorial;
 
     private void Awake()
     {
         Application.targetFrameRate = 30;
-
+        
         if (Instance == null)
         {
             Instance = this;
@@ -78,23 +91,36 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       
+//        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+//        _maxShield = _buildingManagerRef._buildingData.Count;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
+            //_buildingCount = _buildingManagerRef._buildingData.Count;
+            //Debug.Log("Get The Building Manager");
+        }
         //_buildingGameManagerDataRef = new List<GameManagerBuildingData>(new GameManagerBuildingData[_buildingCount]);
         StartCoroutine(AutomaticEnergyRefiller());
         //GetBuildingManagerDetails();
     }
 
-    /*public void GetBuildingManagerDetails()
+    public void GetBuildingManagerDetails()
     {
         for (int i = 0; i < _buildingCount; i++)
         {
             _buildingGameManagerDataRef[i]._buildingName = _buildingManagerRef._buildingData[i]._buildingName;
             _buildingGameManagerDataRef[i]._buildingCurrentLevel = _buildingManagerRef._buildingData[i]._buildingLevel;
         }
-    }*/
+    }
     private void Update()
     {
-        if(EventSystem.current.IsPointerOverGameObject())
+        _shield = Mathf.Clamp(_shield, 0, _maxShield);
+        _energy = Mathf.Clamp(_energy, 0, 1000);
+        if(_energy < 0)
+        {
+            return;
+        }
+        if(EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -114,7 +140,7 @@ public class GameManager : MonoBehaviour
         while (mIsFull)
         {
             yield return new WaitForSeconds(MinutesToSecondsConverter(_minutes));
-            _energy += 1;
+            _energy += _regenerationEnergy;
         }
     }
 
@@ -123,20 +149,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="inMinutes"></param>
     /// <returns></returns>
-    private float MinutesToSecondsConverter(float inMinutes) 
+    public float MinutesToSecondsConverter(float inMinutes) 
     {
         float seconds = inMinutes * 60;
         return seconds;
     }
 
 
-    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn)
+    public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed)
     {
+        if(tutorial!=null)
+            tutorial.RegisterUserAction();
+
         _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
         //FirebaseManager.Instance.WriteBuildingDataToFirebase();
+    }
+
+    public void AddShieldToBuilding(int inBuildingIndex)
+    {
+        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
     public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel)
@@ -145,26 +180,26 @@ public class GameManager : MonoBehaviour
         _coins = inCoinData;
         _energy = inEnergyData;
         _playerCurrentLevel = inCurrentLevel;
-        
+        FirebaseManager.Instance.readUserData =true;
         _IsRefreshNeeded = true;
-        _IsBuildingFromFBase = true;     
+        _IsBuildingFromFBase = true;
+
     }
 
-
+    public bool HasEnoughCoins(int amount)
+    {
+        return (_coins >= amount);
+    }
 
     public void CurrentLevelCompleted()
     {
-        if (_playerCurrentLevel<_MaxLevelsInGame)
-        {
-            _playerCurrentLevel++;
-            _IsBuildingFromFBase = false;
-            Instance.gameObject.GetComponent<LevelLoadManager>().LoadLevelASyncOf(_playerCurrentLevel);
-            FirebaseManager.Instance.WriteBuildingDataToFirebase();
-        }
-        else
-        {
-            Debug.Log("MaxLevel");
-        }
-       
+        _IsBuildingFromFBase = false;
+        hasChoiceInLevel = true;
+        LevelLoadManager.instance.LoadLevelASyncOf("Map", 6000);
+    }
+    public void AssignTutorial(Tutorial tutorial)
+    {
+        this.tutorial = tutorial;
     }
 }
+

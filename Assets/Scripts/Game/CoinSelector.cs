@@ -49,9 +49,18 @@ public class CoinSelector : MonoBehaviour
         int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
         
         //Changing the Coinvalue
-        rewardText.text = coinValue.ToString();
-        mGameManager._coins += coinValue;
-
+        /*rewardText.text = coinValue.ToString();
+        mGameManager._coins += coinValue;*/
+        if (GameManager.Instance._MultiplierValue <= 1)
+        {
+            rewardText.text = coinValue.ToString();
+            mGameManager._coins += coinValue;
+        }
+        else
+        {
+            rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (coinValue * GameManager.Instance._MultiplierValue).ToString();
+            mGameManager._coins += coinValue* GameManager.Instance._MultiplierValue;
+        }
         //Assign it to chest which player clicks on and pass the values
         GameObject SelectedPig = this.gameObject;
         Debug.Log(SelectedPig);
@@ -97,7 +106,7 @@ public class CoinSelector : MonoBehaviour
 
         yield return new WaitForSeconds(mTimeBetweenHammerSpawnAndBreakAnimation);  //Yield to Wait for the Hammer
         inPigSelected.GetComponent<Animator>().SetTrigger("isBreaking?");
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.50f);
         PlayParticleEffects(HammerHitPigParticle, HammerHitPigSpawnPoint,2);
         
         yield return new WaitForSeconds(mTimeBetweenPigBreakAndCoinShower);
@@ -122,7 +131,7 @@ public class CoinSelector : MonoBehaviour
 
     public void BackToMainScene()
     {
-        mlevelLoadManagerRef.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+       LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }
 

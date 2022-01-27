@@ -6,4 +6,5 @@ public class BuildingDetails : MonoBehaviour
 {
     public int _buildingLevel;
     public GameObject _buildMeshBasedOnCurrentLevel;
+    public bool isUnderConstruction;
 }
