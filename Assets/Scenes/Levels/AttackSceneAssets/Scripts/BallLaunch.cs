@@ -23,9 +23,9 @@ public class BallLaunch : MonoBehaviour
     public bool BallFlow = true;
     public bool BallReverse = false;
     public GameObject CrackCanvas;
-    private float ShieldCameraDistance;
+    public float ShieldCameraDistance;
 
-    private Vector3 _ballOffseToHitTargetTransform = new Vector3(0,250,0);
+    
      
     public void Awake()
     {
@@ -36,7 +36,7 @@ public class BallLaunch : MonoBehaviour
     {
         _attackManager = GameObject.Find("AttackManager").GetComponent<AttackManager>();
         CrackCanvas = GameObject.Find("CrackCanvas");
-        dest = target.position; //+ _ballOffseToHitTargetTransform;
+        dest = target.position + _attackManager._ballAndShieldOffsetToTargetTransform;
         position = transform.position;
         Velocity = PhysicsUtil.GetParabolaInitVelocity(position, dest, gravity, hight, 0);
         transform.LookAt(PhysicsUtil.GetParabolaNextPosition(position, Velocity, gravity, Time.deltaTime));
