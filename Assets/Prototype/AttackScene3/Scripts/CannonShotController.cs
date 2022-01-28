@@ -23,7 +23,7 @@ public class CannonShotController : MonoBehaviour
 
     public Vector3 cameraTargetPos;
     private Vector3 velocity = Vector3.zero;
-
+    BallLaunch mBallLaunch;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +66,7 @@ public class CannonShotController : MonoBehaviour
                 Halfwayreached = false;
                 if (_AttackManager._Shield == true)
                 {
-                    GameObject ShieldPrefab = Instantiate(shieldPref, _TargetTransform.position, Quaternion.identity);
+                    GameObject ShieldPrefab = Instantiate(shieldPref, _TargetTransform.position + _AttackManager._ballAndShieldOffsetToTargetTransform, Quaternion.identity);
                    
                 }
                 ishalfwayreached = false;

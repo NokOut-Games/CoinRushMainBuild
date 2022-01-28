@@ -240,6 +240,7 @@ public class MultiplayerManager : MonoBehaviour
 
         });
     }
+
     public void ReadMyData()
     {
         reference.Child(FirebaseManager.Instance.userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
