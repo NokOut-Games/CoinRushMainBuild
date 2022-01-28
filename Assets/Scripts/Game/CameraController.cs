@@ -1,18 +1,18 @@
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
     [Header("Camera")]
     [SerializeField] private Transform _CameraParent;
-   
+
     [Header("Horizontal Panning")]
     //[SerializeField] private Transform mTargetToRotateAround;
     [SerializeField] private float mPanSpeed = 20f;
     [SerializeField] private float mAutoDragPanSpeed = 0f;
-    [SerializeField] private float mCameraLeftBound = 0;
-    [SerializeField] private float mCameraRightBound = 0;
-    
+    [SerializeField] public float _CameraLeftBound = 0;
+    [SerializeField] public float _CameraRightBound = 0;
+
     private Vector3 lastPanPosition;    //New Addition
     public float timeToAcceleration = 0; //New Addition
     [SerializeField] private float mTimeTakenToAutoPan;
@@ -35,11 +35,11 @@ public class CameraController : MonoBehaviour
     //State Checkers
     public bool _DrawButtonClicked = false;
     public bool _isCameraInGamePlayView = false;
-    
+
     public bool _buildButtonClicked = false;
     public bool _isCameraInConstructionView;
     public bool _inBetweenConstructionProcess = false;
-    
+
     public bool _CameraFreeRoam = true;
 
     //Script References
@@ -49,12 +49,13 @@ public class CameraController : MonoBehaviour
     private Vector3 initialVector = Vector3.forward;
     private Vector2 mMouseDownPosition = Vector2.zero;
 
-
+    //private DrawButtonState mDrawButtonState;
 
     //New Changes
     Vector3 mPreTouchMovementVector;
     float touchMovedTime;
     float touchHoldTime;
+
 
     [SerializeField] Camera uIcam;
     bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
@@ -100,6 +101,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log("<b>"+_DrawButtonClicked+"</b>");
         //if(_currentView == _views[0])
         //{
         //    Debug.Log("CurrentView = " + "<color=red>  Normal-View  </color>");
@@ -119,11 +121,11 @@ public class CameraController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                mMouseDownPosition = Input.mousePosition;
-           /*     Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
+                /*mMouseDownPosition = Input.mousePosition;
+                Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
                 Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
                 Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);*/
-                if (_isCameraInGamePlayView ) //New Addition
+                if (_isCameraInGamePlayView) //New Addition
                 {
                     if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && !OpenCardRegionClick/*mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition)*/)
                     {
@@ -135,7 +137,7 @@ public class CameraController : MonoBehaviour
                 }
                 else
                 {
-                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick&&TutorialManager.Instance.isPopUpRunning)
+                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && TutorialManager.Instance.isPopUpRunning)
                     {
                         _DrawButtonClicked = false;
                         _isCameraInGamePlayView = false;
@@ -143,10 +145,9 @@ public class CameraController : MonoBehaviour
                         mCardDeck.BackToNormalState();
                     }
                 }
-
                 if (_isCameraInConstructionView && !_isCameraInGamePlayView)
                 {
-                    if (!/*mScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition*/BuildScrollViewClick)
+                    if (!BuildScrollViewClick)
                     {
                         _buildButtonClicked = false;
                         _isCameraInConstructionView = false;
@@ -173,7 +174,7 @@ public class CameraController : MonoBehaviour
 
                     ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
                 }
-                else if(!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair&&!TutorialManager.Instance.isPopUpRunning&&!GameManager.Instance.isInTutorial)
+                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair)
                 {
                     mCardDeck.mCardHolderParent.SetActive(true);
                     mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
@@ -181,12 +182,13 @@ public class CameraController : MonoBehaviour
                     {
                         mOpenCardRegion.SetActive(false);
                         if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
-                        {                         
+                        {
+
                             ViewShifter(0, 0.1f); // 0 takes to normal view //_currentView = _views[0];
                         }
                     }
-                    
-                    HandleMouse();
+
+                    HandleTouch();
                 }
             }
 
@@ -236,53 +238,54 @@ public class CameraController : MonoBehaviour
     }
     bool IsBoundary(Touch touch)
     {
-        if (_CameraParent.transform.position.x > mCameraRightBound + 60 && -touch.deltaPosition.x > 0) return true;
-        else if (_CameraParent.transform.position.x < mCameraLeftBound - 60 && -touch.deltaPosition.x < 0) return true;
+        if (_CameraParent.transform.position.x > _CameraRightBound + 60 && -touch.deltaPosition.x > 0) return true;
+        else if (_CameraParent.transform.position.x < _CameraLeftBound - 60 && -touch.deltaPosition.x < 0) return true;
         else if (_CameraParent.transform.position.z < mCameraFarBound - 60 && -touch.deltaPosition.y < 0) return true;
         else if (_CameraParent.transform.position.z > mCameraNearBound + 60 && -touch.deltaPosition.y > 0) return true;
         else return false;
     }
     bool IsInsideBoundry()
     {
-        if (_CameraParent.transform.position.x < mCameraRightBound + 60 && _CameraParent.transform.position.x > mCameraLeftBound - 60 && _CameraParent.transform.position.z > mCameraFarBound - 60 && _CameraParent.transform.position.z < mCameraNearBound + 60) return true;
+        if (_CameraParent.transform.position.x < _CameraRightBound + 60 && _CameraParent.transform.position.x > _CameraLeftBound - 60 && _CameraParent.transform.position.z > mCameraFarBound - 60 && _CameraParent.transform.position.z < mCameraNearBound + 60) return true;
         else return false;
     }
-    void HandleMouse()
+    void HandleTouch()
     {
-        if (Input.touchCount > 0&&!GameManager.Instance.isInTutorial)
-        { 
+        if (Input.touchCount > 0)
+        {
             Touch touch = Input.GetTouch(0);
-          
+
             if (touch.phase == TouchPhase.Moved)
             {
                 touchMovedTime += Time.deltaTime;
+                //Debug.Log(touchMovedTime);
                 if (IsBoundary(touch)) return;
                 mPreTouchMovementVector = new Vector3(-touch.deltaPosition.x, 0, -touch.deltaPosition.y);
-                _CameraParent.transform.position = _CameraParent.transform.position + mPreTouchMovementVector * 0.5f;
+                _CameraParent.transform.position = _CameraParent.transform.position + mPreTouchMovementVector * 0.4f;
             }
-            if(touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended)
             {
                 if (IsBoundary(touch)) return;
                 Vector3 moveTo = _CameraParent.transform.position + mPreTouchMovementVector.normalized * (10 / touchMovedTime);
-                moveTo = new Vector3(Mathf.Clamp(moveTo.x, mCameraLeftBound - 60, mCameraRightBound + 60), moveTo.y, Mathf.Clamp(moveTo.z, mCameraFarBound - 60, mCameraNearBound + 60));
-                if (touchMovedTime < 0.15f&& touchMovedTime>0.01f) _CameraParent.transform.DOMove(moveTo, .3f);
+                moveTo = new Vector3(Mathf.Clamp(moveTo.x, _CameraLeftBound - 60, _CameraRightBound + 60), moveTo.y, Mathf.Clamp(moveTo.z, mCameraFarBound - 60, mCameraNearBound + 60));
+                if (touchMovedTime < 0.15f && touchMovedTime > 0.01f) _CameraParent.transform.DOMove(moveTo, .3f);
             }
 
-           if(touch.phase == TouchPhase.Stationary)
-           {
+            if (touch.phase == TouchPhase.Stationary)
+            {
                 touchHoldTime += Time.deltaTime;
-                if (IsInsideBoundry()&& touchHoldTime>.3f) _CameraParent.transform.Translate(mPreTouchMovementVector.normalized * 5f, Space.World);
-           }       
+                if (IsInsideBoundry() && touchHoldTime > .3f) _CameraParent.transform.Translate(mPreTouchMovementVector.normalized * 5f, Space.World);
+            }
         }
         else
         {
             touchMovedTime = 0;
             touchHoldTime = 0;
-            if (_CameraParent.transform.position.x > mCameraRightBound)
+            if (_CameraParent.transform.position.x > _CameraRightBound)
             {
                 _CameraParent.transform.Translate(Vector3.left * 5f, Space.World);
             }
-            else if (_CameraParent.transform.position.x < mCameraLeftBound)
+            else if (_CameraParent.transform.position.x < _CameraLeftBound)
             {
                 _CameraParent.transform.Translate(Vector3.right * 5f, Space.World);
             }
@@ -294,10 +297,325 @@ public class CameraController : MonoBehaviour
             {
                 _CameraParent.transform.Translate(Vector3.forward * 15f, Space.World);
             }
-        }    
+        }
     } //New Addition
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#region "Camera EX New Pan"
+//[Header("Camera")]
+//[SerializeField] private Transform _CameraParent;
+
+//[Header("Horizontal Panning")]
+////[SerializeField] private Transform mTargetToRotateAround;
+//[SerializeField] private float mPanSpeed = 20f;
+//[SerializeField] private float mAutoDragPanSpeed = 0f;
+//[SerializeField] private float mCameraLeftBound = 0;
+//[SerializeField] private float mCameraRightBound = 0;
+
+//private Vector3 lastPanPosition;    //New Addition
+//public float timeToAcceleration = 0; //New Addition
+//[SerializeField] private float mTimeTakenToAutoPan;
+
+//[Header("Vertical Zooming")]
+//[SerializeField] private float mCameraNearBound;
+//[SerializeField] private float mCameraFarBound;
+
+//[Header("Camera Views & Transition")]
+//public Transform _currentView;
+//public Transform[] _views;
+//public float _transitionSpeed;
+
+//[Header("Grab Button Rect TRansforms")]
+//[SerializeField] private RectTransform mDrawButtonRectTransform;
+//[SerializeField] private RectTransform mOpenHandRectTransform;
+//[SerializeField] private RectTransform mScrollViewRectTransform;
+//[SerializeField] private GameObject mOpenCardRegion;
+
+////State Checkers
+//public bool _DrawButtonClicked = false;
+//public bool _isCameraInGamePlayView = false;
+
+//public bool _buildButtonClicked = false;
+//public bool _isCameraInConstructionView;
+//public bool _inBetweenConstructionProcess = false;
+
+//public bool _CameraFreeRoam = true;
+
+////Script References
+//private CardDeck mCardDeck;
+//public MenuUI mMenuUI;
+
+//private Vector3 initialVector = Vector3.forward;
+//private Vector2 mMouseDownPosition = Vector2.zero;
+
+//private void Start()
+//{
+//    mCardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
+//    mMenuUI = GameObject.Find("GameCanvas").GetComponent<MenuUI>();
+
+//    _CameraParent = transform.parent;
+//    _currentView = _views[0];
+//}
+
+///// <summary>
+///// Makes _BuildButtonClicked = true & takes us to constructionview
+///// </summary>
+//public void BuildButtonClicked()
+//{
+//    _buildButtonClicked = true;
+//    transform.localEulerAngles = Vector3.zero;
+//    transform.localPosition = Vector3.zero;
+//    _CameraFreeRoam = false;
+//}
+
+///// <summary>
+///// Makes _DrawBUttonClicked = true & takes us to gameplay view
+///// </summary>
+//public void DrawButtonClicked()
+//{
+//    _DrawButtonClicked = true;
+//    transform.localEulerAngles = Vector3.zero;
+//    transform.localPosition = Vector3.zero;
+//    _CameraFreeRoam = false;
+//}
+
+//public void SetCameraFreeRoam()
+//{
+//    _CameraFreeRoam = true;
+//}
+
+//private void Update()
+//{
+//    //if(_currentView == _views[0])
+//    //{
+//    //    Debug.Log("CurrentView = " + "<color=red>  Normal-View  </color>");
+//    //}
+//    //else if(_currentView == _views[1])
+//    //{
+//    //    Debug.Log("CurrentView = " + "<color=blue> Gameplay-View </color>");
+//    //}
+//    //else if (_currentView == _views[2])
+//    //{
+//    //    Debug.Log("CurrentView = " + "<color=yellow> Build-View </color>");
+//    //}
+
+//    //Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
+
+//    if (!_inBetweenConstructionProcess)
+//    {
+//        if (Input.GetMouseButtonDown(0))
+//        {
+//            mMouseDownPosition = Input.mousePosition;
+//            Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
+//            Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
+//            Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);
+//            if (_isCameraInGamePlayView) //New Addition
+//            {
+//                if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition) && !mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition))
+//                {
+//                    _DrawButtonClicked = false;
+//                    _isCameraInGamePlayView = false;
+//                    Invoke("SetCameraFreeRoam", 0.11f);
+//                    mCardDeck.BackToNormalState();
+//                }
+//            }
+//            else
+//            {
+//                if (!mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition))
+//                {
+//                    _DrawButtonClicked = false;
+//                    _isCameraInGamePlayView = false;
+//                    Invoke("SetCameraFreeRoam", 0.11f);
+//                    mCardDeck.BackToNormalState();
+//                }
+//            }
+
+//            if (_isCameraInConstructionView && !_isCameraInGamePlayView)
+//            {
+//                if (!mScrollViewRectTransform.rect.Contains(BuildingScrollViewLocalPosition))
+//                {
+//                    _buildButtonClicked = false;
+//                    _isCameraInConstructionView = false;
+//                    Invoke("SetCameraFreeRoam", 0.11f);
+//                    mMenuUI.CloseBuildButton();
+//                }
+//            }
+//        }
+
+//        if (_CameraFreeRoam && !Input.GetMouseButton(0))
+//        {
+//            _CameraFreeRoam = false;
+//        }
+
+
+//        if (!_buildButtonClicked)
+//        {
+//            if (_DrawButtonClicked)
+//            {
+//                mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", false);
+
+//                _isCameraInGamePlayView = true;
+//                mOpenCardRegion.SetActive(true);
+
+//                ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
+//            }
+//            else
+//            {
+//                mCardDeck.mCardHolderParent.SetActive(true);
+//                mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
+//                if (!_CameraFreeRoam)
+//                {
+//                    mOpenCardRegion.SetActive(false);
+//                    if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
+//                    {
+
+//                        ViewShifter(0, 0.1f); // 0 takes to normal view //_currentView = _views[0];
+//                    }
+//                }
+//                HandleMouse();
+//            }
+//        }
+
+//        if (!_DrawButtonClicked)
+//        {
+//            if (_buildButtonClicked)
+//            {
+//                if (_DrawButtonClicked == true)
+//                {
+//                    _DrawButtonClicked = false;
+//                }
+//                mCardDeck.mCardHolderParent.SetActive(false);
+//                _isCameraInConstructionView = true;
+//                ViewShifter(2, 0.1f); // 2 takes to construction view
+//            }
+//            else
+//            {
+//                mCardDeck.mCardHolderParent.SetActive(true);
+//                mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
+//                if (!_CameraFreeRoam)
+//                {
+//                    mOpenCardRegion.SetActive(false);
+//                    if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
+//                    {
+//                        ViewShifter(0, Time.fixedDeltaTime * _transitionSpeed); // 0 takes to normal view
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+//void InvokeViewShifting()
+//{
+
+//}
+
+//private void ViewShifter(int inViewNumber, float inTransitionSpeed)
+//{
+//    _currentView = _views[inViewNumber];
+//    //Debug.Log("Current View Changed To: " + _currentView);
+//    _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);
+
+//    Vector3 currentAngle = new Vector3(
+//        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, 0.1f),// Time.deltaTime * _transitionSpeed),
+//        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, 0.1f),//Time.deltaTime * _transitionSpeed),
+//        Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, 0.1f));//Time.deltaTime * _transitionSpeed));
+
+//    _CameraParent.eulerAngles = currentAngle;
+
+//}
+
+//void HandleMouse()
+//{
+//    if (Input.GetMouseButtonDown(0))
+//    {
+//        lastPanPosition = Input.mousePosition;
+//    }
+//    else if (Input.GetMouseButton(0))
+//    {
+//        timeToAcceleration += 1 * Time.deltaTime;
+//        if (timeToAcceleration > mTimeTakenToAutoPan)
+//        {
+//            PanCamera(Input.mousePosition, mAutoDragPanSpeed, 0);
+//        }
+//        else
+//        {
+//            PanCamera(Input.mousePosition, mPanSpeed, 1);
+//        }
+//    }
+//    if (Input.GetMouseButtonUp(0))
+//    {
+//        timeToAcceleration = 0;
+//    }
+
+//    if (!Input.GetMouseButton(0))
+//    {
+//        if (_CameraParent.transform.position.x < mCameraLeftBound)
+//        {
+//            _CameraParent.transform.position = Vector3.Lerp(_CameraParent.transform.position, new Vector3(mCameraLeftBound, _CameraParent.transform.position.y, _CameraParent.transform.position.z), 4 * Time.deltaTime);
+//        }
+//        else if (_CameraParent.transform.position.x > mCameraRightBound)
+//        {
+//            _CameraParent.transform.position = Vector3.Lerp(_CameraParent.transform.position, new Vector3(mCameraRightBound, _CameraParent.transform.position.y, _CameraParent.transform.position.z), 4 * Time.deltaTime);
+//        }
+//        if (_CameraParent.transform.position.z > mCameraNearBound)
+//        {
+//            _CameraParent.transform.position = Vector3.Lerp(_CameraParent.transform.position, new Vector3(_CameraParent.transform.position.x, _CameraParent.transform.position.y, mCameraNearBound), 4 * Time.deltaTime);
+//        }
+//        else if (_CameraParent.transform.position.z < mCameraFarBound)
+//        {
+//            _CameraParent.transform.position = Vector3.Lerp(_CameraParent.transform.position, new Vector3(_CameraParent.transform.position.x, _CameraParent.transform.position.y, mCameraFarBound), 4 * Time.deltaTime);
+//        }
+//    }
+//} //New Addition
+
+//void PanCamera(Vector3 inNewPanPosition, float inPanSpeed, int inCameraMode)
+//{
+//    Vector3 offset = this.gameObject.GetComponent<Camera>().ScreenToViewportPoint(lastPanPosition - inNewPanPosition);
+//    Vector3 move = new Vector3(offset.x * inPanSpeed, offset.y, offset.y * inPanSpeed);
+//    Vector3 pos = _CameraParent.transform.position;
+//    if (pos.x > mCameraLeftBound + (-60) && pos.x < mCameraRightBound + 60 && pos.z < mCameraNearBound + 60 && pos.z > mCameraFarBound - 60)
+//    {
+//        _CameraParent.transform.Translate(move, Space.World);
+//    }
+
+//    //pos.x = Mathf.Clamp(_CameraParent.transform.position.x, mCameraLeftBound, mCameraRightBound);
+//    //pos.z = Mathf.Clamp(_CameraParent.transform.position.z, mCameraFarBound, mCameraNearBound);
+//    //_CameraParent.transform.position = pos;
+
+//    if (inCameraMode == 1)
+//    {
+//        lastPanPosition = inNewPanPosition;
+//    }
+//}
+#endregion
 #region "OLD CAMERA"
 //[Header("Camera")]
 //public Transform _CameraParent;
@@ -654,7 +972,6 @@ public class CameraController : MonoBehaviour
 //    }
 //}
 #endregion
-
 //if (!_DrawButtonClicked || !_buildButtonClicked)
 //{
 //    if (!_CameraFreeRoam)
@@ -677,16 +994,6 @@ public class CameraController : MonoBehaviour
 //    HorizontalPanning();
 //    VerticalZooming();
 //}
-
-
-
-
-
-
-
-
-
-
 /// <summary>
 /// Responsible for Making the camera move right & left along with rotation.
 /// 1. We store first touch position as previous position or initial position when we click mouseButtonDown
@@ -726,9 +1033,6 @@ public class CameraController : MonoBehaviour
 //    }
 
 //}
-
-
-
 /// <summary>
 /// Reset the camera position when touch is released, to set it back to its closest bound, either far or near. 
 /// </summary>

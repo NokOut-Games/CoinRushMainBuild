@@ -12,33 +12,31 @@ using UnityEngine.Networking;
 public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
-
     DatabaseReference reference;
     FirebaseAuth auth;
 
-    private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData;
+    private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mPlayerPhotoURLData, mOpenCardData;
+    public string CurrentPlayerID;
+    public string CurrentPlayerName;
+    public string CurrentPlayerPhotoURL;
 
-    private GameManager mGameManager;
-    private LevelLoadManager mLevelLoadManager;
+    public string _attackedPlayerName,_attackedPlayerPhotoURL,_attackedBuildingName;
+    public Texture AttackedPlayerImageTexture;
+
+    public List<OpenCardData> OpenCardDetails;
+    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    public List<int> OpenedCardSlot = new List<int>();
 
     [SerializeField] string mLevelPrefix = "Level";
 
-    private GameObject _FacebookInfo;
-    private RawImage _FacebookPicture;
-    public Texture FbImg;
+    public Texture CurrentPlayerImageTexture;
 
     public string userTitle = "Guest Users";
-
-    public bool CanUpgradeToFacebook = false;
     public bool readUserData;
-    public GameObject _GuestUpgradeButton;
-    //Time
     DateTime crntDateTime;
 
     private void Awake()
     {
-        mGameManager = FindObjectOfType<GameManager>();
-        mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
         auth = FirebaseAuth.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         crntDateTime = System.DateTime.Now;
@@ -53,23 +51,23 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-      /*  if (!auth.CurrentUser.IsAnonymous)
+        if (!auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
             ReadData();
-            StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
-        }*/
+            CurrentPlayerID = auth.CurrentUser.UserId;
+            //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+        }
         if (!PlayerPrefs.HasKey("MadeHisChoice"))
         {
             //readUserData = true;
             LevelLoadManager.instance.GoToMapScreen(true);
         }
-
-
     }
 
-    void ReadData()
+    public void ReadData()
     {
+        
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
@@ -80,14 +78,15 @@ public class FirebaseManager : MonoBehaviour
                 mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
                 mCoinData = snapshot.Child("UserDetails").Child("_coins").Value.ToString();
                 mEnergyData = snapshot.Child("UserDetails").Child("_energy").Value.ToString();
-
-
-                /*mGameManager._coins = int.Parse(mCoinData);
-                 mGameManager._energy = int.Parse(mEnergyData);
-                 mGameManager._playerCurrentLevel = int.Parse(mPlayerCurrentLevelData);*/
+                mOpenCardData = snapshot.Child("UserDetails").Child("_openedCards").Value.ToString();
+                mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
+               
+                CurrentPlayerPhotoURL = mPlayerPhotoURLData;
+                CurrentPlayerName = mPlayerNameData;
 
                 GameManager.Instance._SavedCardTypes.Clear();
-                GameManager.Instance._SetIndex =int.Parse( snapshot.Child("MapData").Child("SetIndex").Value.ToString());
+
+                GameManager.Instance._SetIndex = int.Parse(snapshot.Child("MapData").Child("SetIndex").Value.ToString());
                 for (int i = 0; i < snapshot.Child("MapData").Child("LevelsInSet").ChildrenCount; i++)
                 {
                     GameManager.Instance._CompletedLevelsInSet.Add(int.Parse(snapshot.Child("MapData").Child("LevelsInSet").Child("" + i).Value.ToString()));//Get map  Details From Firebase
@@ -117,40 +116,65 @@ public class FirebaseManager : MonoBehaviour
                     BuildingDetails.Add(builddata);
 
                 }
-                mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData));
-                
-                 //Time difference Calculation
+                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
+
+
+                //if (snapshot.Child(userTitle).Child(auth.CurrentUser.UserId).HasChild("OpenCards") == true)
+                {   //OpencardInfo
+                    OpenedCardSlot.Clear();
+                    OpenCardDetails = new List<OpenCardData>();
+                    for (int i = 0; i < snapshot.Child("OpenCards").ChildrenCount; i++)
+                    {
+                        OpenCardData CardData = new OpenCardData();
+                        CardData._openedPlayerName = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
+                        CardData._openedPlayerID = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
+                        CardData._openedPlayerPhotoURL = snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
+                        CardData._openedCardSlot = int.Parse(snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
+                        CardData._openedCardSelectedCard = int.Parse(snapshot.Child("OpenCards").Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
+                        OpenCardDetails.Add(CardData);
+                        OpenedCardSlot.Add(CardData._openedCardSlot);
+                        OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+                    }
+                    GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
+                }
+                //Time difference Calculation
                 var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
                 int value = difference.Minutes;
                 Debug.Log("The Time Diff is: " + value);
 
-                if (value >= mGameManager._minutes)
+                if (value >= GameManager.Instance._minutes)
                 {
-                    int energyAmount = value / mGameManager._minutes;
+                    int energyAmount = value / GameManager.Instance._minutes;
                     Mathf.Ceil(energyAmount);
                     Debug.Log("The energy amount gained is : " + energyAmount);
-                    mGameManager._energy += energyAmount;
+                    GameManager.Instance._energy += energyAmount;
                 }
                 readUserData = true;
-
+                //canWrite = true;
+                Debug.LogError("I have read the data from firebase succesfully");
             }
         });
 
     }
 
+   
+
+
     public void GuestLogin()
     {
         if (auth.CurrentUser != null)
         {
-            if(PlayerPrefs.HasKey("MadeHisChoice"))
-               ReadData();
+            if (PlayerPrefs.HasKey("MadeHisChoice"))
+            {
+                CurrentPlayerID = auth.CurrentUser.UserId;
+                ReadData();
+
+            }
             else
             {
                 readUserData = true;
                 LevelLoadManager.instance.GoToMapScreen(true);
-
             }
-
         }
         else
         {
@@ -166,16 +190,16 @@ public class FirebaseManager : MonoBehaviour
             newUser = task.Result;
             Player newPlayer = new Player(newUser.UserId);
             Debug.Log(newUser.UserId);
+            CurrentPlayerID = auth.CurrentUser.UserId;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
-            CanUpgradeToFacebook = true;
             LevelLoadManager.instance.GoToMapScreen(true);
         });
     }
 
     public void CreateNewFBUser(string inAccessToken)
     {
-        Firebase.Auth.Credential credential = Firebase.Auth.FacebookAuthProvider.GetCredential(inAccessToken);
+       Credential credential = Firebase.Auth.FacebookAuthProvider.GetCredential(inAccessToken);
 
         auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
         {
@@ -186,6 +210,9 @@ public class FirebaseManager : MonoBehaviour
             reference.GetValueAsync().ContinueWith(task =>
             {
                 DataSnapshot snapshot = task.Result;
+                //DataSnapshot GuestUsers = snapshot.Child("Guest Users");
+                //var some = GuestUsers.Children;
+                //Debug.Log(some);
                 if (snapshot.Child("Facebook Users").HasChild(newId) == true)
                 {
                     ReadData();
@@ -195,6 +222,7 @@ public class FirebaseManager : MonoBehaviour
                 {
                     Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
                     Debug.Log(newFBUser.UserId);
+                    CurrentPlayerID = auth.CurrentUser.UserId;
                     SaveNewUserInFirebase(newPlayer);
                     WriteBuildingDataToFirebase();
                     StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
@@ -205,15 +233,15 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-   
-
     public void WritePlayerDataToFirebase()
     {
         Player playerDetails = new Player(auth.CurrentUser.UserId, auth.CurrentUser.DisplayName);
 
-        playerDetails._coins = mGameManager._coins;
-        playerDetails._energy = mGameManager._energy;
-        playerDetails._playerCurrentLevel = mGameManager._playerCurrentLevel;
+        playerDetails._coins = GameManager.Instance._coins;
+        playerDetails._energy = GameManager.Instance._energy;
+        playerDetails._playerCurrentLevel = GameManager.Instance._playerCurrentLevel;
+        playerDetails._playerPhotoURL = auth.CurrentUser.PhotoUrl.ToString();
+        playerDetails._openedCards = GameManager.Instance._openedCards;
         string json = JsonUtility.ToJson(playerDetails);
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>
         {
@@ -229,11 +257,11 @@ public class FirebaseManager : MonoBehaviour
     {
 
         int i = 0;
-        foreach (GameManagerBuildingData buildings in mGameManager._buildingGameManagerDataRef)
+        foreach (GameManagerBuildingData buildings in GameManager.Instance._buildingGameManagerDataRef)
         {
 
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("Buildings").Child(mLevelPrefix + mGameManager._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -242,11 +270,25 @@ public class FirebaseManager : MonoBehaviour
             });
             i++;
         }
-
-
     }
-   
 
+    public void WriteopenCardData()
+    {
+        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").RemoveValueAsync();
+        int i = 0;
+        foreach (OpenCardData cards in GameManager.Instance.OpenCardDetails)
+        {
+            string json = JsonUtility.ToJson(cards);
+            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    //  Debug.Log("Write Successful");
+                }
+            });
+            i++;
+        }
+    }
 
     public void SaveNewUserInFirebase(Player inPlayerDataToSave)
     {
@@ -256,6 +298,21 @@ public class FirebaseManager : MonoBehaviour
         //canWrite = true;
         GameManager.Instance._IsBuildingFromFBase = false;
     }
+
+    private void Update()
+    { 
+
+        if (_attackedPlayerPhotoURL != null)
+        {
+            //StartCoroutine(DownloadOtherPlayerFacebookImage(_attackedPlayerPhotoURL));
+        }
+    }
+
+    //void DisplayFacebookInformation()
+    //{
+    //   // _FacebookPicture.texture = FbImg;
+    //}
+
     IEnumerator DownloadFacebookImage(string MediaUrl)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
@@ -264,11 +321,21 @@ public class FirebaseManager : MonoBehaviour
             Debug.Log(request.error);
         else
         {
-            FbImg = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            CurrentPlayerImageTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
     }
-
-    GameObject FindInActiveObjectByName(string name)
+    IEnumerator DownloadOtherPlayerFacebookImage(string MediaUrl)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
+        yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+            Debug.Log(request.error);
+        else
+        {
+            AttackedPlayerImageTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+    }
+    /*GameObject FindInActiveObjectByName(string name)
     {
         Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
         for (int i = 0; i < objs.Length; i++)
@@ -282,7 +349,7 @@ public class FirebaseManager : MonoBehaviour
             }
         }
         return null;
-    }
+    }*/
 
 
     public void CalculateLogOutTime()
@@ -314,7 +381,6 @@ public class FirebaseManager : MonoBehaviour
 
 
     }
-
     void WriteMapDataToFirebase()
     {
 
@@ -333,13 +399,13 @@ public class FirebaseManager : MonoBehaviour
             }
         });
     }
-     private void OnApplicationPause(bool pause)
-     {
-         if (pause)
-         {
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
             WriteAllDataToFireBase();
-         }
-     }
+        }
+    }
 
     private void OnApplicationQuit()
     {
@@ -347,7 +413,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
 
-   public void WriteAllDataToFireBase()
+    public void WriteAllDataToFireBase()
     {
         WriteCardDataToFirebase();
         CalculateLogOutTime();

@@ -28,7 +28,7 @@ public class MenuUI : MonoBehaviour
 
     [SerializeField] private BuildMenuUI mBuildMenuUI;
 
-    private CameraController mCameraController;
+    [SerializeField] CameraController mCameraController;
     public bool BuildModeOn;
 
     public bool isButtonGenerated = false;
@@ -41,7 +41,7 @@ public class MenuUI : MonoBehaviour
         isButtonGenerated = false;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mCanvasAnimator = GetComponent<Animator>();
-        mCameraController = Camera.main.GetComponent<CameraController>();
+        //mCameraController = Camera.main.GetComponent<CameraController>();
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
@@ -72,34 +72,35 @@ public class MenuUI : MonoBehaviour
     {
         mCanvasAnimator.SetBool("GetOut", true);
         buildPanelGameObject.SetActive(true);
-        buildPanelGameObject.GetComponent<Animator>().SetBool("Show", true);
-        Camera.main.GetComponent<CameraController>().BuildButtonClicked();
+        mCameraController.BuildButtonClicked();
         //Camera.main.GetComponent<TestScript>().BuildButtonClicked();
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
         OpenCards.SetActive(false);
         QuitButton.SetActive(false);
 
-        if (isButtonGenerated == false)
-        {
-            mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
-            mBuildMenuUI.SetUpgradeButtons();
-            isButtonGenerated = true;
-        }
+       // mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+        mBuildMenuUI.SetUpgradeButtons();
+
+        //if (isButtonGenerated == false)
+        //{
+        //    mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
+        //    mBuildMenuUI.SetUpgradeButtons();
+        //    isButtonGenerated = true;
+        //}
     }
 
     public void CloseBuildButton()
     {
         mCanvasAnimator.SetBool("GetOut", false);
-        buildPanelGameObject.GetComponent<Animator>().SetBool("Show", false);
 
-
-        //buildPanelGameObject.SetActive(false);
+        buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
         OpenCards.SetActive(true);
         QuitButton.SetActive(true);
     }
+
 
     public void OnOptionButtonPress(bool inActivate)
     {
@@ -120,6 +121,7 @@ public class MenuUI : MonoBehaviour
 
         var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
         _energyText.text = energyBarMax.ToString("D2");
+
         _Shield.text = "" + GameManager.Instance._shield;
 
         if (mGameManager._energy > mGameManager._maxEnergy)
@@ -144,7 +146,6 @@ public class MenuUI : MonoBehaviour
         levelCompletedPanel.SetActive(true);
     }
 
-    public void MakeCanvasScreenIn(bool inActive) =>mCanvasAnimator.SetBool("AllOut", !inActive);
+    public void MakeCanvasScreenIn(bool inActive) => mCanvasAnimator.SetBool("AllOut", !inActive);
     public void UIElementActivate(int Index, bool activate) => UIElements[Index].SetActive(activate);
-
 }

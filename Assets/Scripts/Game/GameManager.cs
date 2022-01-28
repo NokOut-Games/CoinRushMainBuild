@@ -24,6 +24,15 @@ public class GameManagerBuildingData
     public bool _isBuildingDestroyed;
 }
 
+//[System.Serializable]
+//public class GameManagerOpenCardDetails
+//{
+//    public string _openedPlayerID;
+//    public string _openedPlayerName;
+//    public string _openedPlayerPhotoURL;
+//    public int _openedCardSlot;
+//    public int _openedCardIndex;
+//}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -37,9 +46,16 @@ public class GameManager : MonoBehaviour
     public int _shield;
     public int _maxShield;
 
-    public int _playerCurrentLevel=1;
+    public int _playerCurrentLevel = 1;
     public int _minutes;
-    
+    public int _openedCards;
+    public string _playerFBPhotoURL;
+
+    public string _attackedPlayerName;
+    public Texture _attackedPlayerImageTexture;
+    public string _attackedBuildingName;
+
+    public GameObject AttackedCard;
 
     public List<GameObject> _BuildingDetails;
     public List<BuildingTypes> _BuildingTypes;
@@ -49,6 +65,16 @@ public class GameManager : MonoBehaviour
     public List<int> _BuildingCost;
     public List<bool> _BuildingShield;
     public List<Vector3> _TargetMarkPost;
+
+    //[Space]
+    //[Header("OpenCardDetails")]
+    //public string _openedPlayerID, _openedPlayerName, _openedPlayerPhotoURL; 
+    //public int _openedSlot, _openedIndex;
+    //[Space]
+
+    public List<OpenCardData> OpenCardDetails;
+    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    public List<int> OpenedCardSlot = new List<int>();
 
     public Transform[] OpenHandCardsPositions;
     /*(or)*/
@@ -68,18 +94,22 @@ public class GameManager : MonoBehaviour
     public List<int> _SavedCardTypes = new List<int>();
     public int _MaxLevelsInGame;
 
-    public int _MultiplierValue=1;
+    public bool OpenCardWritten = false;
 
-    Tutorial tutorial;
+    [Header("Multiplier")]
+    public int _MultiplierValue = 1;
+
+    [Header("Map Screen Values")]
     public int _SetIndex;
     public List<int> _CompletedLevelsInSet;
     public bool hasChoiceInLevel;
+
+    [Header("Tutorial Values")]
+    Tutorial tutorial;
     public bool isInTutorial;
 
     private void Awake()
-    {
-        Application.targetFrameRate = 30;
-        
+    {     
         if (Instance == null)
         {
             Instance = this;
@@ -91,27 +121,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-//        _buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
-//        _maxShield = _buildingManagerRef._buildingData.Count;
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            //_buildingManagerRef = GameObject.Find("BuildingManager").GetComponent<BuildingManager>();
-            //_buildingCount = _buildingManagerRef._buildingData.Count;
-            //Debug.Log("Get The Building Manager");
-        }
-        //_buildingGameManagerDataRef = new List<GameManagerBuildingData>(new GameManagerBuildingData[_buildingCount]);
         StartCoroutine(AutomaticEnergyRefiller());
-        //GetBuildingManagerDetails();
     }
 
-    public void GetBuildingManagerDetails()
-    {
-        for (int i = 0; i < _buildingCount; i++)
-        {
-            _buildingGameManagerDataRef[i]._buildingName = _buildingManagerRef._buildingData[i]._buildingName;
-            _buildingGameManagerDataRef[i]._buildingCurrentLevel = _buildingManagerRef._buildingData[i]._buildingLevel;
-        }
-    }
     private void Update()
     {
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
@@ -120,7 +132,7 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        if(EventSystem.current!=null&&EventSystem.current.IsPointerOverGameObject())
+        if(EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
@@ -134,6 +146,12 @@ public class GameManager : MonoBehaviour
         {
             mIsFull = true;
         }
+
+        if(OpenCardWritten)
+        {
+            FirebaseManager.Instance.WriteopenCardData();
+            OpenCardWritten = false;
+        }
     }
     private IEnumerator AutomaticEnergyRefiller()
     {
@@ -143,12 +161,6 @@ public class GameManager : MonoBehaviour
             _energy += _regenerationEnergy;
         }
     }
-
-    /// <summary>
-    /// Converts the minutes given at Inspector into seconds and passes it to the coroutine function
-    /// </summary>
-    /// <param name="inMinutes"></param>
-    /// <returns></returns>
     public float MinutesToSecondsConverter(float inMinutes) 
     {
         float seconds = inMinutes * 60;
@@ -158,15 +170,13 @@ public class GameManager : MonoBehaviour
 
     public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed)
     {
-        if(tutorial!=null)
+        if (tutorial != null)
             tutorial.RegisterUserAction();
-
         _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
-        //FirebaseManager.Instance.WriteBuildingDataToFirebase();
     }
 
     public void AddShieldToBuilding(int inBuildingIndex)
@@ -174,18 +184,30 @@ public class GameManager : MonoBehaviour
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
-    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel)
+    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel, int inOpenedCards, string inPlayerPhotoURL)
     {
         _buildingGameManagerDataRef = inBuildingData;
         _coins = inCoinData;
         _energy = inEnergyData;
         _playerCurrentLevel = inCurrentLevel;
-        FirebaseManager.Instance.readUserData =true;
+
         _IsRefreshNeeded = true;
         _IsBuildingFromFBase = true;
-
+        _openedCards = inOpenedCards;
+        _playerFBPhotoURL = inPlayerPhotoURL;
+        FirebaseManager.Instance.readUserData = true;
+    }
+    public void UpdateOpenCardDetails(List<OpenCardData> inOpenCardDetails, List<int> inOpenCardSlot, List<string> inOpenedPlayerPhotoURL)
+    {
+        OpenCardDetails = inOpenCardDetails;
+        OpenedCardSlot = inOpenCardSlot;
+        OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
     }
 
+    // void DisplayAttackedEnemyDetails()
+    //{
+    //    Debug.Log("Attacked Enemy Details Here.." + _attackedPlayerName);
+    //}
     public bool HasEnoughCoins(int amount)
     {
         return (_coins >= amount);

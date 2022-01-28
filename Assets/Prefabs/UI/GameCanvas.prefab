@@ -9886,7 +9886,8 @@ MonoBehaviour:
   _energyText: {fileID: 4524371248214831255}
   _extraEnergytext: {fileID: 6070671843812827486}
   _Shield: {fileID: 4218873719502390700}
-  mBuildMenuUI: {fileID: 0}
+  mBuildMenuUI: {fileID: 4316013464354854173}
+  mCameraController: {fileID: 0}
   BuildModeOn: 0
   isButtonGenerated: 0
   Optionanimator: {fileID: 2000272681}
@@ -10610,7 +10611,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CardDeck, Assembly-CSharp
-        m_MethodName: OpenCardAdder
+        m_MethodName: OpenHandCardAdder
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12371,7 +12372,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7918069828464997410, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 310
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7918069828464997411, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_Spacing
@@ -12383,7 +12384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7918069828617268913, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7918069828617268918, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_Pivot.x
@@ -12499,14 +12500,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 185
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7918069829578724515, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -150
+      value: -245
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+--- !u!114 &4316013464354854173 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7918069828617268919, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}
+  m_PrefabInstance: {fileID: 6198973913898482602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4316013464354854171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d49674b39525b6f47b78d1e413e71de7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4316013464354854172 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7918069828617268918, guid: deb1aae0ded3d9947a27bb784aaa6519, type: 3}

@@ -50,6 +50,7 @@ public class LevelLoadManager : MonoBehaviour
     public void GoToMapScreen(bool hasChoise =false)
     {
         GameManager.Instance.hasChoiceInLevel = hasChoise;
+        GameManager.Instance._IsRefreshNeeded = true ;
         SceneManager.LoadScene("Map");
 
     }

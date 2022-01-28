@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8026521174156452493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8026521174156452490}
+  - component: {fileID: 8026521174156452489}
+  - component: {fileID: 8026521174156452488}
+  - component: {fileID: 8026521174156452495}
+  m_Layer: 0
+  m_Name: CardDeck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8026521174156452490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026521174156452493}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 43}
+  m_LocalScale: {x: 1.7895, y: 1.7895, z: 1.7895}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8026521174156452489
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026521174156452493}
+  m_Mesh: {fileID: 845593311261876761, guid: 710610442c8c43c40b42cc98940e7b10, type: 3}
+--- !u!23 &8026521174156452488
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026521174156452493}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 450c73b3803117c468857f6f7792c509, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8026521174156452495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026521174156452493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef4ae37a7091064c94f26cac5d2f874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCardHolderParent: {fileID: 0}
+  clicks: 0
+  _playerHandPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  mScriptedCards:
+  - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
+  - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
+  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
+  - {fileID: 11400000, guid: 40daae7ed65653649a08e2626aaba052, type: 2}
+  - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
+  - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
+  - {fileID: 11400000, guid: 25dd4160bcc872b448a49f88d1a4931c, type: 2}
+  _CardList: []
+  mCardListGameObject: []
+  DrawButton: {fileID: 0}
+  drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
+  drawAutomatic: {fileID: -2653432678774402417, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
+  _drawButtonRectTransform: {fileID: 0}
+  mMaxHoldTime: 2
+  timeForCardAnimation: 2
+  time: 0
+  maxTime: 5
+  _drawButtonFillerImage: {fileID: 0}
+  _jokerList: []
+  onceDonee: 0
+  mHowManyCardSetsAreActive: 0
+  _cardsThatCanBeReplacedByJoker: []
+  _openCardPrefabs:
+  - {fileID: 8048051998541067576, guid: 3e7a3b571d3239548a6c6f5c1907dd8d, type: 3}
+  - {fileID: 6233861162172181354, guid: 2d82b0d3d6cbeb54da26f8b771fab9a3, type: 3}
+  - {fileID: 6233861162172181354, guid: 9a4b56bf88c4b1c419bace01edb263a2, type: 3}
+  - {fileID: 6233861162172181354, guid: 95d11c86e12945a46a8f406ae97e01b7, type: 3}
+  - {fileID: 6233861162172181354, guid: 136ce179237474d499b227e5a3735fac, type: 3}
+  - {fileID: 6233861162172181354, guid: 132ac5598b885b940b6aacd29aeec522, type: 3}
+  - {fileID: 6233861162172181354, guid: 1975f6a77c017e64396d4ef132f830c4, type: 3}
+  positionNumber: 0
+  _OpenCardSlotFilled: 
+  cardDeckAnimation2D: {fileID: 0}
+  cardDeckAnimation3D: {fileID: 0}
+  backToDeckAnimation3D: {fileID: 0}
+  blackOutScreen: {fileID: 0}
+  _levelManager: {fileID: 0}
+  _buildingManagerRef: {fileID: 0}
+  mHasThreeCardMatch: 0
+  mJokerFindWithMultiCardPair: 0
+  mJokerProbability: 0
