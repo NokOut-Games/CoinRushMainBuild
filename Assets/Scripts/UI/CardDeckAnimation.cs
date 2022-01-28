@@ -38,7 +38,7 @@ public class CardDeckAnimation : MonoBehaviour
         Keyframe[] Scale;
         Scale = new Keyframe[2];
         Scale[0] = new Keyframe(.5f, 1.5f);
-        Scale[1] = new Keyframe(1.0f, .4f);
+        Scale[1] = new Keyframe(1.0f, .5f);
 
         CurveScale = new AnimationCurve(Scale);
 
@@ -51,9 +51,11 @@ public class CardDeckAnimation : MonoBehaviour
         anim.Play(clip.name);
 
     }
-    public void PlayOnDropAnimation(Vector3 lastPos, float rotationZ)
+    public void PlayOnDropAnimation(Vector3 lastPos, float rotationZ,CardType type)
     {
         effects.SetActive(true);
+        //effects.GetComponent<Animation>().Play(type.ToString());
+        effects.GetComponent<Animator>().Play(type.ToString());
         Invoke(nameof(OffEffect), .4f);
         rotationZ = (rotationZ > 180) ? rotationZ - 360 : rotationZ;
         //a.SampleAnimation;
@@ -138,6 +140,6 @@ public class CardDeckAnimation : MonoBehaviour
     private void OffEffect()
     {
         effects.SetActive(false);
-
+      
     }
 }
