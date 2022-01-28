@@ -103,30 +103,13 @@ public class Slots : MonoBehaviour
                         //Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins":
-                       
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "5000 Coins";
-                            mGameManager._coins += 5000;
-                        }
-                        else
-                        {
-                            _rewardText.text = "5000 Coins"+"\n"+"Bit Multiplier" +GameManager.Instance._MultiplierValue+"X"+"\n"+ 5000 * GameManager.Instance._MultiplierValue+" Coins";
-                            mGameManager._coins += 5000* GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "5000 Coins";
+                        mGameManager._coins += 5000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "10 Energy";
-                            mGameManager._energy += 10;
-                        }
-                        else
-                        {
-                            _rewardText.text = "10 Energy" + "\n" + "Bit Multiplier" + GameManager.Instance._MultiplierValue + "X" + "\n" + 10 * GameManager.Instance._MultiplierValue + " Energy";
-                            mGameManager._energy += 10 * GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "10 Energy";
+                        mGameManager._energy += 10;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
@@ -151,29 +134,13 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "3000 Coins";
-                            mGameManager._coins += 3000;
-                        }
-                        else
-                        {
-                            _rewardText.text = "3000 Coins" + "\n" + "Bit Multiplier" + GameManager.Instance._MultiplierValue + "X" + "\n" + 3000 * GameManager.Instance._MultiplierValue + " Coins";
-                            mGameManager._coins += 3000 * GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "3000 Coins";
+                        mGameManager._coins += 3000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "5 Energy";
-                            mGameManager._energy += 5;
-                        }
-                        else
-                        {
-                            _rewardText.text = "5 Energy" + "\n" + "Bit Multiplier" + GameManager.Instance._MultiplierValue + "X" + "\n" + 5 * GameManager.Instance._MultiplierValue + " Energy";
-                             mGameManager._energy += 5 * GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "5 Energy";
+                        mGameManager._energy += 5;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
@@ -197,29 +164,13 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "3000 Coins";
-                            mGameManager._coins += 3000;
-                        }
-                        else
-                        {
-                            _rewardText.text = "3000 Coins" + "\n" + "Bit Multiplier" + GameManager.Instance._MultiplierValue + "X" + "\n" + 3000 * GameManager.Instance._MultiplierValue + " Coins";
-                            mGameManager._coins += 3000 * GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "3000 Coins";
+                        mGameManager._coins += 3000;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardText.text = "5 Energy";
-                            mGameManager._energy += 5;
-                        }
-                        else
-                        {
-                            _rewardText.text = "5 Energy" + "\n" + "Bit Multiplier" + GameManager.Instance._MultiplierValue + "X" + "\n" + 5 * GameManager.Instance._MultiplierValue + " Energy";
-                            mGameManager._energy += 5 * GameManager.Instance._MultiplierValue;
-                        }
+                        _rewardText.text = "5 Energy";
+                        mGameManager._energy += 5;
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
