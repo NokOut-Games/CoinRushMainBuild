@@ -65,6 +65,7 @@ public class CardDeck : MonoBehaviour
     public GameObject backToDeckAnimation3D;
     public GameObject blackOutScreen;
     public GameObject threeCardEffect;
+    public Animator shieldAnimation;
 
     bool mMakeDrawBtnEnable = true;
 
@@ -88,7 +89,7 @@ public class CardDeck : MonoBehaviour
 
     [SerializeField] int mJokerProbability;
 
-    private DrawButtonState mDrawButtonState;
+    [SerializeField] DrawButtonState mDrawButtonState;
 
     public Multiplier _Multiplier;
     Tutorial tutorial;
@@ -102,7 +103,7 @@ public class CardDeck : MonoBehaviour
 
     private void Awake()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
+       /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mDrawButtonState = DrawButtonState.OpenCardState;
             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
@@ -111,13 +112,28 @@ public class CardDeck : MonoBehaviour
         {
             mDrawButtonState = DrawButtonState.NormalState;
             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-        }
+        }*/
         //PopulateOpenedCardSlotsFromFireBase();
         //PopulateFriendsOpenCardSlotsFromFirebase();
     }
 
+    void ShieldAnimation()
+    {
+        shieldAnimation.gameObject.SetActive(true);
+        shieldAnimation.Play("Anim");
+    }
+
     private void Start()
     {
+
+        if(mDrawButtonState == DrawButtonState.NormalState)
+        {
+            PopulateOpenedCardSlotsFromFireBase();
+        }
+        else
+        {
+            Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
+        }
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
         mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
 
@@ -342,6 +358,7 @@ public class CardDeck : MonoBehaviour
             mHasJoker = false;
             mNumOfPairCards--;
             mMakeDrawBtnEnable = true;
+            Invoke(nameof(ShieldAnimation), 3.5f);
         }
         else
         {
@@ -619,6 +636,8 @@ public class CardDeck : MonoBehaviour
                 Destroy(_CardList[jokerIndex].gameObject, 3.25f);
                 Invoke(nameof(DelayBalckOut), 3.25f);
                 mHasJoker = false;
+                Invoke(nameof(ShieldAnimation), 3.5f);
+
 
             }
             else
@@ -709,7 +728,7 @@ public class CardDeck : MonoBehaviour
         {
             if (!mJokerFindWithMultiCardPair)
             {
-                cardDeckAnimation2D.GetComponent<CardDeckAnimation>().PlayOnDropAnimation(_PositionList[newCardIndex], _RotationList[newCardIndex].z);
+                cardDeckAnimation2D.GetComponent<CardDeckAnimation>().PlayOnDropAnimation(_PositionList[newCardIndex], _RotationList[newCardIndex].z,_CardList[newCardIndex]._cardType);
                 Invoke(nameof(CardShufflingDelay), .6f);
                 Invoke(nameof(CardGenerationDelay), 1f);
             }
@@ -827,12 +846,14 @@ public class CardDeck : MonoBehaviour
             Destroy(_CardList[mThreeCardMatchIndex + 1].gameObject, 3.5f);
             Destroy(_CardList[mThreeCardMatchIndex + 2].gameObject, 3.5f);
             Invoke(nameof(DelayBalckOut), 3.25f);
+            Invoke(nameof(ShieldAnimation), 3.5f);
+
         }
         else
         {
             mCardHolderParent.transform.parent.SetAsLastSibling();
         }
-        Invoke("ThreeCardEffectActivate", 3.2f);
+        Invoke(nameof(ThreeCardEffectActivate), 3.2f);
 
         _CardList.RemoveRange(mThreeCardMatchIndex, 3);
         clicks -= 3;
@@ -861,6 +882,10 @@ public class CardDeck : MonoBehaviour
         {
             Shield();
             canClick = true;
+        }
+        else if (inType == CardType.ATTACK)
+        {
+            MultiplayerManager.Instance.OnGettingAttackCard();
         }
         else
         {

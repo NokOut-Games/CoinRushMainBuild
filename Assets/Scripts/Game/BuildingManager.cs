@@ -150,17 +150,8 @@ public class BuildingManager : MonoBehaviour
             GameManager.Instance._IsRefreshNeeded = false;
 
             GetCurrentBuildingDetails();
-           // DestroyPreviousBuildings();
             SpawningBuilding();
         }
-    }
-    void DestroyPreviousBuildings()
-    {
-        foreach (GameObject building in _buildings)
-        {
-            Destroy(building);
-        }
-        _buildings.Clear();
     }
     private void ManageCameraStatesBasedOnBuildingConstruction()
     {

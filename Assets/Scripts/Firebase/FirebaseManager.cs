@@ -23,6 +23,8 @@ public class FirebaseManager : MonoBehaviour
     public string _attackedPlayerName,_attackedPlayerPhotoURL,_attackedBuildingName;
     public Texture AttackedPlayerImageTexture;
 
+    public List<GameManagerBuildingData> BuildingDetailsaa = new List<GameManagerBuildingData>();
+
     public List<OpenCardData> OpenCardDetails;
     public List<string> OpenedPlayerPhotoURL = new List<string>();
     public List<int> OpenedCardSlot = new List<int>();
@@ -83,6 +85,28 @@ public class FirebaseManager : MonoBehaviour
                
                 CurrentPlayerPhotoURL = mPlayerPhotoURLData;
                 CurrentPlayerName = mPlayerNameData;
+                GameManager.Instance._buildingGameManagerDataRef.Clear();
+
+                List<GameManagerBuildingData> BuildingDetails = new List<GameManagerBuildingData>();
+                for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+                {
+
+                    GameManagerBuildingData builddata = new GameManagerBuildingData();
+
+                    builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
+
+                    BuildingDetails.Add(builddata);
+                    BuildingDetailsaa.Add(builddata);
+
+                }
+                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
+
+                readUserData = true;
+
 
                 GameManager.Instance._SavedCardTypes.Clear();
 
@@ -98,28 +122,12 @@ public class FirebaseManager : MonoBehaviour
                 }
 
                 string levelName = mLevelPrefix + mPlayerCurrentLevelData;
-                GameManager.Instance._buildingGameManagerDataRef.Clear();
 
 
-                List<GameManagerBuildingData> BuildingDetails = new List<GameManagerBuildingData>();
-                for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-                {
-
-                    GameManagerBuildingData builddata = new GameManagerBuildingData();
-
-                    builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-
-                    BuildingDetails.Add(builddata);
-
-                }
-                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
+               
 
 
-                //if (snapshot.Child(userTitle).Child(auth.CurrentUser.UserId).HasChild("OpenCards") == true)
+               if (snapshot.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").Exists == true)
                 {   //OpencardInfo
                     OpenedCardSlot.Clear();
                     OpenCardDetails = new List<OpenCardData>();
@@ -149,7 +157,6 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log("The energy amount gained is : " + energyAmount);
                     GameManager.Instance._energy += energyAmount;
                 }
-                readUserData = true;
                 //canWrite = true;
                 Debug.LogError("I have read the data from firebase succesfully");
             }
@@ -240,7 +247,7 @@ public class FirebaseManager : MonoBehaviour
         playerDetails._coins = GameManager.Instance._coins;
         playerDetails._energy = GameManager.Instance._energy;
         playerDetails._playerCurrentLevel = GameManager.Instance._playerCurrentLevel;
-        playerDetails._playerPhotoURL = auth.CurrentUser.PhotoUrl.ToString();
+        playerDetails._playerPhotoURL = "";// auth.CurrentUser.PhotoUrl.ToString();
         playerDetails._openedCards = GameManager.Instance._openedCards;
         string json = JsonUtility.ToJson(playerDetails);
         reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>

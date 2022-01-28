@@ -22,6 +22,7 @@ public class Cards : MonoBehaviour
     Vector2 prePos;
     float preRotationZ;
     float preScale;
+    [SerializeField] GameObject cardParticle;
 
     public void PlayTwoCardMatchAnim()
     {
@@ -199,7 +200,7 @@ public class Cards : MonoBehaviour
 
     public void PlayThreeCardMatchAnim(float inPosX, Sprite s = null)
     {
-
+        if (inPosX == 0&&_cardType!=CardType.SHIELD) Invoke(nameof(SpawnParticle), 3f);
         Animation anim = GetComponent<Animation>();
 
         AnimationCurve CurvePosY;
@@ -283,5 +284,17 @@ public class Cards : MonoBehaviour
         anim.AddClip(clip, clip.name);
         anim.Play(clip.name);
     }
+
+
+    void SpawnParticle()
+    {
+        GameObject go = Instantiate(cardParticle, this.transform);
+        //go.GetComponent<CardParticle>()._Init(this.transform);
+        go.transform.SetAsFirstSibling();
+        go.SetActive(true);
+    }
+
+
+
 }
 

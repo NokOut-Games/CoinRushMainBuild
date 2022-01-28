@@ -26,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8026521174156452493}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 43}
   m_LocalScale: {x: 1.7895, y: 1.7895, z: 1.7895}
   m_Children: []
@@ -115,18 +115,18 @@ MonoBehaviour:
   mScriptedCards:
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
   - {fileID: 11400000, guid: 669db0c61da4b9c42b4d0007a2a6d964, type: 2}
-  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
   - {fileID: 11400000, guid: 40daae7ed65653649a08e2626aaba052, type: 2}
+  - {fileID: 11400000, guid: f6fd902d963f95949a74cd50d573cd3b, type: 2}
   - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 25dd4160bcc872b448a49f88d1a4931c, type: 2}
   _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 0}
-  drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
-  drawAutomatic: {fileID: -2653432678774402417, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
+  drawNormal: {fileID: 21300000, guid: c6940694b5d5f99478c6e9ca15f2b491, type: 3}
+  drawAutomatic: {fileID: 21300000, guid: c9d981c79550a864897bcbf846588af8, type: 3}
   _drawButtonRectTransform: {fileID: 0}
-  mMaxHoldTime: 2
+  mMaxHoldTime: 1
   timeForCardAnimation: 2
   time: 0
   maxTime: 5
@@ -143,14 +143,34 @@ MonoBehaviour:
   - {fileID: 6233861162172181354, guid: 136ce179237474d499b227e5a3735fac, type: 3}
   - {fileID: 6233861162172181354, guid: 132ac5598b885b940b6aacd29aeec522, type: 3}
   - {fileID: 6233861162172181354, guid: 1975f6a77c017e64396d4ef132f830c4, type: 3}
+  _OpenCardNumberIndex: 0
   positionNumber: 0
+  _openedCardIndex: 0
+  _openCardSlot: 0
   _OpenCardSlotFilled: 
+  _OpenCardTransformPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
   blackOutScreen: {fileID: 0}
+  threeCardEffect: {fileID: 0}
   _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
+  mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
   mJokerFindWithMultiCardPair: 0
   mJokerProbability: 0
+  mDrawButtonState: 0
+  _Multiplier: {fileID: 0}
+  uIcam: {fileID: 0}
+  drawBtnParticle: {fileID: 0}
+  jokerPairCardTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

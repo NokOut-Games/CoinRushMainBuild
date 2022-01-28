@@ -10,13 +10,16 @@ public class GuestLogin : MonoBehaviour
         FirebaseManager.Instance.GuestLogin();
         gustLogInBtn.interactable = false;
         gustLogInBtn.transform.GetChild(0).GetComponent<TMPro.TMP_Text>().text = "Loading...";
-        Invoke(nameof(MakeReadDataTrue), 3f);
+        //Invoke(nameof(MakeReadDataTrue), 3f);
     }
 
     private void Update()
     {
         if (FirebaseManager.Instance.readUserData)
+        {
             LevelLoadManager.instance.LoadLevelOf(GameManager.Instance._playerCurrentLevel);
+            GameManager.Instance._IsBuildingFromFBase = true;
+        }
     }
     void MakeReadDataTrue()
     {

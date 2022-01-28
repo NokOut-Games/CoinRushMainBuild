@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5094012158766175564}
   - component: {fileID: -8726318161251122388}
   - component: {fileID: 8062636220831683680}
-  m_Layer: 0
+  - component: {fileID: 7419171010307374200}
+  m_Layer: 5
   m_Name: Attack
   m_TagString: Attack
   m_Icon: {fileID: 2800000, guid: ed2ac2f54538cd24ca4f3f619f20d399, type: 3}
@@ -92,6 +93,7 @@ MonoBehaviour:
   _cardID: 0
   _cardType: 0
   _Position: {x: 0, y: 0, z: 0}
+  cardParticle: {fileID: 6212104380293437259, guid: 7b5c63b52449c41458c9aacd18f973f6, type: 3}
 --- !u!111 &8062636220831683680
 Animation:
   m_ObjectHideFlags: 0
@@ -107,3 +109,14 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!210 &7419171010307374200
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5094012158766175565}
+  m_Enabled: 1
+  m_SortingLayerID: -708070861
+  m_SortingLayer: 2
+  m_SortingOrder: 10

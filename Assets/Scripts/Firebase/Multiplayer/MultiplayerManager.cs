@@ -102,144 +102,143 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    //IEnumerator ReadEnemyData()
-    //{
-    //    yield return new WaitForSeconds(_dataBaseFetchTime);
-
-    //    reference.Child("Facebook Users").Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
-    //    {
-
-    //        if (task.IsCompleted)
-    //        {
-    //            DataSnapshot snapshot = task.Result;
-    //            mPlayerNameData = snapshot.Child("UserDetails").Child("_playerName").Value.ToString();
-    //            mPlayerIDData = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
-    //            mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-    //            mOpenCardData = snapshot.Child("UserDetails").Child("_openedCards").Value.ToString();
-    //            mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
-
-    //            mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-    //            // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
-
-    //            List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
-    //            for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-    //            {
-
-    //                MultiplayerBuildingData builddata = new MultiplayerBuildingData();
-    //                builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-    //                builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-    //                builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-    //                builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-    //                builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-
-    //                BuildingDetails.Add(builddata);
-    //            }
-    //            mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
-    //        }
-    //    });
-    //}
     IEnumerator ReadEnemyData()
     {
         yield return new WaitForSeconds(_dataBaseFetchTime);
 
-        reference/*.Child("Facebook Users").Child(_enemyPlayerID)*/.GetValueAsync().ContinueWith(task =>
+        reference.Child("Facebook Users").Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
         {
 
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
+                mPlayerNameData = snapshot.Child("UserDetails").Child("_playerName").Value.ToString();
+                mPlayerIDData = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
+                mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
+                mOpenCardData = snapshot.Child("UserDetails").Child("_openedCards").Value.ToString();
+                mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
-                if (snapshot.Child("Facebook Users").HasChild(_enemyPlayerID) == true)
+                mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+                // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
+
+                List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
+                for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
                 {
-                    Debug.Log("Visiting Facebook user");
-                    _enemyTitle = "Facebook Users";
-                    mPlayerNameData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerName").Value.ToString();
-                    mPlayerIDData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerID").Value.ToString();
-                    mPlayerCurrentLevelData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-                    mOpenCardData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").Value.ToString();
-                    mPlayerPhotoURLData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
-                    mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-                    // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
+                    MultiplayerBuildingData builddata = new MultiplayerBuildingData();
+                    builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
 
-
-                    List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
-                    for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-                    {
-
-                        MultiplayerBuildingData builddata = new MultiplayerBuildingData();
-                        builddata._buildingName = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                        builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                        builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-                        builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                        builddata._isBuildingShielded = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-
-                        BuildingDetails.Add(builddata);
-                    }
-                    mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
-
-
-
-                    if (snapshot.Child("Facebook Users").Child(_enemyPlayerID).HasChild("OpenCards") == true)
-                    {
-
-                        //    //OpencardInfo
-                        //    //OpenedCardSlot.Clear();
-                        //    //OpenCardDetails = new List<OpenCardData>();
-                        OpenCardDetails = new List<OpenCardData>();
-                        for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").ChildrenCount; i++)
-                        {
-                            OpenCardData CardData = new OpenCardData();
-
-                            CardData._openedPlayerName = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
-                            CardData._openedPlayerID = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-                            CardData._openedPlayerPhotoURL = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
-                            CardData._openedCardSlot = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
-                            CardData._openedCardSelectedCard = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
-
-                            OpenCardDetails.Add(CardData);
-                            OpenedCardSlot.Add(CardData._openedCardSlot);
-                            OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
-                        }
-                        mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
-
-
-                    }
+                    BuildingDetails.Add(builddata);
                 }
-                else if (snapshot.Child("Guest Users").HasChild(_enemyPlayerID) == true)
-                {
-                    Debug.Log("Visiting Guest user");
-                    _enemyTitle = "Guest Users";
-                    mPlayerNameData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerName").Value.ToString();
-                    mPlayerIDData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerID").Value.ToString();
-                    mPlayerCurrentLevelData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-                    mOpenCardData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").Value.ToString();
-                    mPlayerPhotoURLData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
-
-                    mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-                    // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
-
-                    List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
-                    for (int i = 0; i < snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-                    {
-
-                        MultiplayerBuildingData builddata = new MultiplayerBuildingData();
-                        builddata._buildingName = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                        builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                        builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-                        builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                        builddata._isBuildingShielded = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-
-                        BuildingDetails.Add(builddata);
-                    }
-                    mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
-
-
-                }
+                mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
             }
-
         });
     }
+    //IEnumerator ReadEnemyData()
+    //{
+    //    yield return new WaitForSeconds(_dataBaseFetchTime);
+
+    //    reference/*.Child("Facebook Users").Child(_enemyPlayerID)*/.GetValueAsync().ContinueWith(task =>
+    //    {
+
+    //        if (task.IsCompleted)
+    //        {
+    //            DataSnapshot snapshot = task.Result;
+
+    //            if (snapshot.Child("Facebook Users").HasChild(_enemyPlayerID) == true)
+    //            {
+    //                Debug.Log("Visiting Facebook user");
+    //                _enemyTitle = "Facebook Users";
+    //                mPlayerNameData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerName").Value.ToString();
+    //                mPlayerIDData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerID").Value.ToString();
+    //                mPlayerCurrentLevelData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
+    //                mPlayerPhotoURLData = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
+
+    //                mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+    //                // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
+
+
+    //                List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
+    //                for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+    //                {
+
+    //                    MultiplayerBuildingData builddata = new MultiplayerBuildingData();
+    //                    builddata._buildingName = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+    //                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+    //                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+    //                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+    //                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
+
+    //                    BuildingDetails.Add(builddata);
+    //                }
+    //                mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
+
+
+
+    //                if (snapshot.Child("Facebook Users").Child(_enemyPlayerID).HasChild("OpenCards") == true)
+    //                {
+
+    //                    //    //OpencardInfo
+    //                    //    //OpenedCardSlot.Clear();
+    //                    //    //OpenCardDetails = new List<OpenCardData>();
+    //                    OpenCardDetails = new List<OpenCardData>();
+    //                    for (int i = 0; i < snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").ChildrenCount; i++)
+    //                    {
+    //                        OpenCardData CardData = new OpenCardData();
+
+    //                        CardData._openedPlayerName = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
+    //                        CardData._openedPlayerID = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
+    //                        CardData._openedPlayerPhotoURL = snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
+    //                        CardData._openedCardSlot = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
+    //                        CardData._openedCardSelectedCard = int.Parse(snapshot.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
+
+    //                        OpenCardDetails.Add(CardData);
+    //                        OpenedCardSlot.Add(CardData._openedCardSlot);
+    //                        OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+    //                    }
+    //                    mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
+
+
+    //                }
+    //            }
+    //            else if (snapshot.Child("Guest Users").HasChild(_enemyPlayerID) == true)
+    //            {
+    //                Debug.Log("Visiting Guest user");
+    //                _enemyTitle = "Guest Users";
+    //                mPlayerNameData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerName").Value.ToString();
+    //                mPlayerIDData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerID").Value.ToString();
+    //                mPlayerCurrentLevelData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
+    //                mOpenCardData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").Value.ToString();
+    //                mPlayerPhotoURLData = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
+
+    //                mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+    //                // mManager_Multiplayer._buildingMultiplayerDataRef.Clear(); 
+
+    //                List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
+    //                for (int i = 0; i < snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+    //                {
+
+    //                    MultiplayerBuildingData builddata = new MultiplayerBuildingData();
+    //                    builddata._buildingName = snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+    //                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+    //                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+    //                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+    //                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Guest Users").Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
+
+    //                    BuildingDetails.Add(builddata);
+    //                }
+    //                mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
+
+
+    //            }
+    //        }
+
+    //    });
+    //}
     public void ReadMyData()
     {
         reference.Child(FirebaseManager.Instance.userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
@@ -317,42 +316,9 @@ public class MultiplayerManager : MonoBehaviour
     {
         SceneManager.LoadScene("ATTACK");
     }
-    //public void CheckAndWriteAttackData()
-    //{
-    //    reference.Child("Facebook Users").Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
-    //    {
-    //        if (task.IsCompleted)
-    //        {
-    //            DataSnapshot snapshot = task.Result;
-    //            mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-    //            if (int.Parse(mPlayerCurrentLevelData) == mMultiplayerPlayerData._enemyPlayerLevel)
-    //            {
-    //                List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
-    //                for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-    //                {
-    //                    MultiplayerBuildingData builddata = new MultiplayerBuildingData();
-    //                    builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-    //                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-    //                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-    //                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-    //                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-    //                    BuildingDetails.Add(builddata);
-    //                }
-    //                mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
-    //            }
-    //            else
-    //            {
-    //               ReadMyData();
-    //                mAttackManager.isDataChanging = false;
-    //            }
-    //        }
-    //    });
-    //    Invoke("BackToGame", 3f);
-    //}
-
     public void CheckAndWriteAttackData()
     {
-        reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
+        reference.Child("Facebook Users").Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -382,6 +348,39 @@ public class MultiplayerManager : MonoBehaviour
         });
         Invoke("BackToGame", 3f);
     }
+
+    /* public void CheckAndWriteAttackData()
+     {
+         reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
+         {
+             if (task.IsCompleted)
+             {
+                 DataSnapshot snapshot = task.Result;
+                 mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
+                 if (int.Parse(mPlayerCurrentLevelData) == mMultiplayerPlayerData._enemyPlayerLevel)
+                 {
+                     List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
+                     for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+                     {
+                         MultiplayerBuildingData builddata = new MultiplayerBuildingData();
+                         builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+                         builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+                         builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                         builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                         builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
+                         BuildingDetails.Add(builddata);
+                     }
+                     mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerNameData, mPlayerPhotoURLData);
+                 }
+                 else
+                 {
+                     ReadMyData();
+                     mAttackManager.isDataChanging = false;
+                 }
+             }
+         });
+         Invoke("BackToGame", 3f);
+     }*/
 
     public void WriteDetailsOnAttackComplete()
     {

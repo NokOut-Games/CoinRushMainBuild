@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18386897, g: 0.22901562, b: 0.30311126, a: 1}
+  m_IndirectSpecularColor: {r: 0.18386964, g: 0.22901678, b: 0.30311275, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -465,6 +465,10 @@ MonoBehaviour:
   - {fileID: 1013236357}
   - {fileID: 1013236356}
   - {fileID: 1013236355}
+  _buildingSinkPositionAmount: -50
+  _buildingTiltRotationAmount: -25
+  _destroyedSmokeEffectVFX: {fileID: 0}
+  _otherBuildings: []
 --- !u!4 &410275821
 Transform:
   m_ObjectHideFlags: 0
@@ -1869,6 +1873,10 @@ PrefabInstance:
       propertyPath: DrawButton
       value: 
       objectReference: {fileID: 387602404}
+    - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
+      propertyPath: mDrawButtonState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: mCardHolderParent
       value: 
