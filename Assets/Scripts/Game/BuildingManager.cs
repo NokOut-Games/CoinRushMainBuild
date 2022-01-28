@@ -178,6 +178,7 @@ public class BuildingManager : MonoBehaviour
             GameManager.Instance._buildingGameManagerDataRef.Add(data);
             //GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive,_buildingData[i].isBuildingDamaged);
         }
+        FirebaseManager.Instance.WriteAllDataToFireBase();
     }
 
    

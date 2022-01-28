@@ -8,6 +8,7 @@ public class LevelLoadManager : MonoBehaviour
     [SerializeField] GameObject mCanvas;
     [SerializeField] Animator mCloudAnimator;
     string levelPrefix = "Level";
+    Tutorial tutorial;
     private void Awake()
     {
         if (instance == null)
@@ -61,14 +62,18 @@ public class LevelLoadManager : MonoBehaviour
         await System.Threading.Tasks.Task.Delay(1000);
         do
         {
-            await System.Threading.Tasks.Task.Delay(1000);
+            //await System.Threading.Tasks.Task.Delay(1000);
         } while (scene.progress < 0.9f);
-        scene.allowSceneActivation = true;
         await System.Threading.Tasks.Task.Delay(1000);
+        scene.allowSceneActivation = true;
+        await System.Threading.Tasks.Task.Delay(2000);
         mCloudAnimator.SetBool("Loaded", true);
+        if (tutorial != null)
+            tutorial.RegisterUserAction();
         await System.Threading.Tasks.Task.Delay(1000);
         mCanvas.SetActive(false);
         mCloudAnimator.SetBool("Loaded", false);
+      
 
 
 
@@ -93,6 +98,10 @@ public class LevelLoadManager : MonoBehaviour
         mCanvas.SetActive(false);
         mCloudAnimator.SetBool("Loaded", false);
         //Make the GameToLoad GameManager Data
+    }
+    public void AssignTutorial(Tutorial tutorial)
+    {
+        this.tutorial = tutorial;
     }
 
 }

@@ -29,8 +29,6 @@ public class FirebaseManager : MonoBehaviour
 
     public string userTitle = "Guest Users";
 
-   public bool canWrite;
-
     public bool CanUpgradeToFacebook = false;
     public bool readUserData;
     public GameObject _GuestUpgradeButton;
@@ -61,7 +59,7 @@ public class FirebaseManager : MonoBehaviour
             ReadData();
             StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
-      // WriteAllDataToFireBase();
+       // WriteAllDataToFireBase();
 
 
     }
@@ -130,7 +128,6 @@ public class FirebaseManager : MonoBehaviour
                     mGameManager._energy += energyAmount;
                 }
                 readUserData = true;
-                //canWrite = true;
 
             }
         });
@@ -141,12 +138,15 @@ public class FirebaseManager : MonoBehaviour
     {
         if (auth.CurrentUser != null)
         {
+            if(PlayerPrefs.HasKey("MadeHisChoice"))
+               ReadData();
+            else
+            {
+                readUserData = true;
+                LevelLoadManager.instance.GoToMapScreen(true);
 
-            ReadData();
-            
-            //WritePlayerDataToFirebase();
+            }
 
-            CanUpgradeToFacebook = true;
         }
         else
         {
@@ -165,9 +165,7 @@ public class FirebaseManager : MonoBehaviour
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
             CanUpgradeToFacebook = true;
-            //readUserData = true;
             LevelLoadManager.instance.GoToMapScreen(true);
-           // canWrite = true;
         });
     }
 
@@ -196,6 +194,7 @@ public class FirebaseManager : MonoBehaviour
                     SaveNewUserInFirebase(newPlayer);
                     WriteBuildingDataToFirebase();
                     StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+                    readUserData = true;
                     LevelLoadManager.instance.GoToMapScreen(true);
                 }
             });
@@ -344,7 +343,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
 
-    void WriteAllDataToFireBase()
+   public void WriteAllDataToFireBase()
     {
         WriteCardDataToFirebase();
         CalculateLogOutTime();

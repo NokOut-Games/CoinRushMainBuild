@@ -74,7 +74,8 @@ public class CardDeck : MonoBehaviour
     Tutorial tutorial;
     [SerializeField] Camera uIcam;
     [SerializeField] ParticleSystem drawBtnParticle;
-    bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(_drawButtonRectTransform, Input.mousePosition, uIcam);
+    bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(_drawButtonRectTransform, Input.mousePosition, uIcam)&&!TutorialManager.Instance.isPopUpRunning;
+
    [SerializeField] Transform[] jokerPairCardTransforms = new Transform[4];
     
 
@@ -153,19 +154,21 @@ public class CardDeck : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonDown(0) && drawButtonClick && DrawButton.gameObject.activeInHierarchy == true) drawBtnParticle.Play();
+
         if (GameManager.Instance._energy > 0)
         {
             if (canClick)
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (/*_drawButtonRectTransform.rect.Contains(localMousePosition)*/ drawButtonClick && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
+
+                    if (drawButtonClick && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
                     {
                         mMakeDrawBtnEnable = false;
+                        
 
                         time = 0;
-                        drawBtnParticle.Play();
-
                         DrawCard();
                     }
                     else
@@ -265,7 +268,7 @@ public class CardDeck : MonoBehaviour
             ChangeSprites();
             mOnceDone = false;
             mAutoCardDraw = false;
-            StopCoroutine(AutomaticCardDrawing());
+           // StopCoroutine(AutomaticCardDrawing());
         }
     }
 
@@ -298,8 +301,12 @@ public class CardDeck : MonoBehaviour
         //}
         while (mAutoCardDraw)
         {
-            if (canClick)
+            if (canClick&& mMakeDrawBtnEnable)
+            {
+                mMakeDrawBtnEnable = false;
                 DrawCard();
+
+            }
             yield return new WaitForSeconds(timeForCardAnimation);
         }
     }
@@ -787,18 +794,17 @@ public class CardDeck : MonoBehaviour
     {
         this.tutorial = tutorial;
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-
-        if (card != CardType.JOKER)
-        {
-            ScriptedCards[] newCards = new ScriptedCards[2];
-            newCards[0] = GetScriptedCardWithCardType(CardType.JOKER);
-            newCards[1] = GetScriptedCardWithCardType(card);
-            mScriptedCards.Clear();
-            mScriptedCards.Add(newCards[0]);
-            mScriptedCards.Add(newCards[1]);
-            mJokerProbability = 0;
-
-        }
+        Camera.main.GetComponent<CameraController>()._buildButtonClicked = false;
+        Camera.main.GetComponent<CameraController>()._inBetweenConstructionProcess = false;
+        mCardHolderParent.SetActive(true);
+        if (card == CardType.JOKER) return;     
+        ScriptedCards[] newCards = new ScriptedCards[2];
+        newCards[0] = GetScriptedCardWithCardType(CardType.JOKER);
+        newCards[1] = GetScriptedCardWithCardType(card);
+        mScriptedCards.Clear();
+        mScriptedCards.Add(newCards[0]);
+        mScriptedCards.Add(newCards[1]);
+        mJokerProbability = 0; 
     }
 
 

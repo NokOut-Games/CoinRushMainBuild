@@ -14,7 +14,11 @@ public class MapSceneManager : MonoBehaviour
 
     private void Start()
     {
-
+        if (!PlayerPrefs.HasKey("MadeHisChoice"))
+        {
+            TutorialManager.Instance.StartNextTutorial(0);
+            GameManager.Instance.isInTutorial = true;
+        }
         backBtn.onClick.AddListener(()=>{ LevelLoadManager.instance.BacktoHome(); });
         if (GameManager.Instance.hasChoiceInLevel) backBtn.gameObject.SetActive(false);
         if (GameManager.Instance._SetIndex < levelSets.Length-1&&IsSetCompleted(GameManager.Instance._SetIndex) )
@@ -36,7 +40,7 @@ public class MapSceneManager : MonoBehaviour
         mCameraController._EndBoundary = unlockedLevel;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit)&& !TutorialManager.Instance.isPopUpRunning)
         {
             if (hit.collider.CompareTag("MapTarget"))
             {
@@ -47,6 +51,8 @@ public class MapSceneManager : MonoBehaviour
                 GameManager.Instance._CompletedLevelsInSet.Add(hit.collider.transform.parent.GetComponent<Level>().levelIndex);
                 hit.collider.transform.parent.GetChild(0).GetComponent<Animator>().SetBool("OpenCloud", true);
                 GameManager.Instance._playerCurrentLevel = hit.collider.transform.parent.GetComponent<Level>().levelNO;
+                PlayerPrefs.SetInt("MadeHisChoice", 1);
+                GameManager.Instance._IsBuildingFromFBase = false;
                 LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name,2000);               
             }
         }

@@ -11,52 +11,39 @@ public class ActionTutorial : Tutorial
     int numberOfPlayerClicks;
     public override bool GetUserInput()
     {
-        switch (actionType)
-        {
-            case TutorialActionType.Card:
-                if (numberOfPlayerClicks >= MaxPlayerClick)
-                    return true;
-
-                break;
-            case TutorialActionType.Building:
-                if (numberOfPlayerClicks >= MaxPlayerClick)
-                {
-                    //GameObject.Find("GameCanvas").GetComponent<MenuUI>().CloseBuildButton();
-                    Camera.main.GetComponent<CameraController>().DrawButtonClicked();
-                    return true;
-                }
-
-
-                break;
-            case TutorialActionType.Multiplier:
-
-                if (numberOfPlayerClicks >= MaxPlayerClick)
-                {
-                    return true;
-                }
-                break;
-            default:
-                break;
-        }
-        return false;
+        if (numberOfPlayerClicks >= MaxPlayerClick)
+            return true;
+        else
+            return false;
 
     }
     public override void SetUpTutorialTask()
     {
         switch (actionType)
         {
+            case TutorialActionType.UIAnim:
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(1,false);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(2,false);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(3,false);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(5, false);
+
+                break;
+
             case TutorialActionType.Card:
                 GameObject.Find("CardDeck").GetComponent<CardDeck>().AssignTutorial(this, cardType);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().CloseBuildButton();
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(5,true);
+
                 break;
             case TutorialActionType.Building:
                 GameManager.Instance.AssignTutorial(this);
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().BuildButton();
                 break;
             case TutorialActionType.Multiplier:
-                GameObject.Find("CardDeck").GetComponent<CardDeck>().AssignTutorial(this,CardType.JOKER);
-                
-
-
+                GameObject.Find("CardDeck").GetComponent<CardDeck>().AssignTutorial(this,CardType.JOKER);              
+                break;
+            case TutorialActionType.SceneSwitch:
+                LevelLoadManager.instance.AssignTutorial(this);
                 break;
             default:
                 break;
@@ -77,7 +64,10 @@ public class ActionTutorial : Tutorial
 
 public enum TutorialActionType
 {
+    NONE,
     Card,
     Building,
-    Multiplier
+    Multiplier,
+    SceneSwitch,
+    UIAnim
 }

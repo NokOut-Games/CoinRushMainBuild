@@ -17,9 +17,9 @@ public class TutorialManager : MonoBehaviour
 
     Tutorial currentTutorial;
     int currentTutorialIndex = 0;
+    public bool isPopUpRunning;
     private void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
@@ -31,16 +31,13 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");
-        StartNextTutorial(0);
-        GameManager.Instance.isInTutorial = true;
+        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");       
     }
     public void StartNextTutorial(int tutorialIndex)
     {
         if (tutorialIndex >= Tutorials.Length)
         {
             GameManager.Instance.isInTutorial = false;
-
             return;
         }
         currentTutorialIndex = tutorialIndex;
@@ -49,7 +46,7 @@ public class TutorialManager : MonoBehaviour
         currentTutorial.ResetTheTutorial();
         currentTutorial.SetUpTutorialTask();
        
-
+        
         currentTutorial.OnTutorialComplete += OnTutorialComplete;
         currentTutorial.OnTimerRanOut += OnTimerFinish;
 
@@ -57,14 +54,14 @@ public class TutorialManager : MonoBehaviour
         TutorialImage.sprite = currentTutorial.TutorialImage;
         TutorialContentTxt.text = currentTutorial.TutorialContent;
         TutorialUICanvas.SetActive(true);
+        isPopUpRunning = true;
     }
     void OnTutorialComplete()
     {
         TutorialHintTxt.gameObject.SetActive(false);
         TutorialUICanvas.SetActive(false);
+        isPopUpRunning = false;
         StartNextTutorial(currentTutorialIndex + 1);
-       
-
     }
     void OnTimerFinish()
     {

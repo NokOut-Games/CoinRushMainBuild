@@ -34,6 +34,7 @@ public class MenuUI : MonoBehaviour
     public bool isButtonGenerated = false;
     Animator mCanvasAnimator;
     [SerializeField] Animator Optionanimator;
+    [SerializeField] GameObject[] UIElements;
 
     private void Start()
     {
@@ -93,7 +94,7 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.GetComponent<Animator>().SetBool("Show", false);
 
 
-       //buildPanelGameObject.SetActive(false);
+        //buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
         OpenCards.SetActive(true);
@@ -119,7 +120,7 @@ public class MenuUI : MonoBehaviour
 
         var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
         _energyText.text = energyBarMax.ToString("D2");
-        _Shield.text =""+ GameManager.Instance._shield;
+        _Shield.text = "" + GameManager.Instance._shield;
 
         if (mGameManager._energy > mGameManager._maxEnergy)
         {
@@ -134,14 +135,16 @@ public class MenuUI : MonoBehaviour
     }
 
 
-    public  IEnumerator ShowLevelCompletedParticlesCoroutine()
+    public IEnumerator ShowLevelCompletedParticlesCoroutine()
     {
         buildPanelGameObject.GetComponent<Animator>().SetBool("Show", false);
         mCanvasAnimator.SetBool("AllOut", true);
         Camera.main.GetComponent<CameraController>().BuildButtonClicked();
         yield return new WaitForSeconds(1f);
-        levelCompletedPanel.SetActive(true);   
+        levelCompletedPanel.SetActive(true);
     }
 
+    public void MakeCanvasScreenIn(bool inActive) =>mCanvasAnimator.SetBool("AllOut", !inActive);
+    public void UIElementActivate(int Index, bool activate) => UIElements[Index].SetActive(activate);
 
 }

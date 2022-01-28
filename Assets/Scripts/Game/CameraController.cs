@@ -120,9 +120,9 @@ public class CameraController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 mMouseDownPosition = Input.mousePosition;
-                Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
+           /*     Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
                 Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
-                Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);
+                Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);*/
                 if (_isCameraInGamePlayView ) //New Addition
                 {
                     if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && !OpenCardRegionClick/*mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition)*/)
@@ -173,7 +173,7 @@ public class CameraController : MonoBehaviour
 
                     ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
                 }
-                else if(!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair)
+                else if(!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair&&!TutorialManager.Instance.isPopUpRunning&&!GameManager.Instance.isInTutorial)
                 {
                     mCardDeck.mCardHolderParent.SetActive(true);
                     mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
@@ -181,8 +181,7 @@ public class CameraController : MonoBehaviour
                     {
                         mOpenCardRegion.SetActive(false);
                         if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
-                        {
-                          
+                        {                         
                             ViewShifter(0, 0.1f); // 0 takes to normal view //_currentView = _views[0];
                         }
                     }
@@ -203,7 +202,7 @@ public class CameraController : MonoBehaviour
                     _isCameraInConstructionView = true;
                     ViewShifter(2, 0.1f); // 2 takes to construction view
                 }
-                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair)
+                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial)
                 {
                     mCardDeck.mCardHolderParent.SetActive(true);
                     mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
@@ -257,7 +256,6 @@ public class CameraController : MonoBehaviour
             if (touch.phase == TouchPhase.Moved)
             {
                 touchMovedTime += Time.deltaTime;
-                //Debug.Log(touchMovedTime);
                 if (IsBoundary(touch)) return;
                 mPreTouchMovementVector = new Vector3(-touch.deltaPosition.x, 0, -touch.deltaPosition.y);
                 _CameraParent.transform.position = _CameraParent.transform.position + mPreTouchMovementVector * 0.5f;
