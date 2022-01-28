@@ -69,8 +69,6 @@ public class AttackManager : MonoBehaviour
 
     public List<int> _buildingCost = new List<int>(9);
 
-    public Vector3 _ballAndShieldOffsetToTargetTransform = new Vector3(0, 50, 0);
-
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
