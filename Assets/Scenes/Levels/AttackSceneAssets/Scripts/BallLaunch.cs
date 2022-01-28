@@ -23,8 +23,10 @@ public class BallLaunch : MonoBehaviour
     public bool BallFlow = true;
     public bool BallReverse = false;
     public GameObject CrackCanvas;
-    private float ShieldCameraDistance;
+    public float ShieldCameraDistance;
 
+    
+     
     public void Awake()
     {
         
@@ -34,7 +36,7 @@ public class BallLaunch : MonoBehaviour
     {
         _attackManager = GameObject.Find("AttackManager").GetComponent<AttackManager>();
         CrackCanvas = GameObject.Find("CrackCanvas");
-        dest = target.position;
+        dest = target.position + _attackManager._ballAndShieldOffsetToTargetTransform;
         position = transform.position;
         Velocity = PhysicsUtil.GetParabolaInitVelocity(position, dest, gravity, hight, 0);
         transform.LookAt(PhysicsUtil.GetParabolaNextPosition(position, Velocity, gravity, Time.deltaTime));
@@ -100,8 +102,7 @@ public class BallLaunch : MonoBehaviour
   */
     public void OnCollisionEnter(Collision col)
     {
-        Debug.Log("Collision Entered");
-        Debug.Log(col.gameObject.name);
+       
         GameObject.Find("CANNON_ANIM_1").GetComponent<CannonShotController>().fixCameraRot = false;
         _bullet = this.gameObject;
 
@@ -110,47 +111,61 @@ public class BallLaunch : MonoBehaviour
             if (col.gameObject.tag == "Shield Protection")
             {
                 BallFlow = false;
-                Debug.LogError(col.transform.position + "ball Last Position");
-                Debug.LogError(col.transform.localPosition + "ball Last Position");
+                
                 
                 Camera.main.transform.parent = null;
                // this.gameObject.GetComponent<Rigidbody>().useGravity = false;
                 this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
               //  this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                Debug.LogError(col.transform.position + "ball Last Position");
-                Debug.Log(this.gameObject.transform.position + "  Ball Last hit position");
-                Debug.Log(Camera.main.transform.position + " Camera last position");
+               
 
 
                 //BallReverse = true;
                 //Invoke("BallReturnDelay", .5f);
                 BallReverse = true;
                 ShieldCameraDistance = Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position);
-                Debug.Log(ShieldCameraDistance + "  Shield Camera Distance");
-                Debug.Log(ShieldCameraDistance / 2 + " Shield Camera Halfway Distance");
-                Debug.Log(ShieldCameraDistance / 3 + " Shield Camera Quaterway Distance");
+               
                 //  this.gameObject.transform.position = Vector3.Lerp(this.gameObject.transform.position, Camera.main.transform.position, Time.deltaTime);
 
-                Debug.Log("SHIELD PROTECTED");
+             
             }
         }
         else if (_attackManager._Shield == false)
         {
-            Debug.Log("Shield Disabled");
-            Debug.Log(_bullet.transform.childCount + "Child Count");
-            for (int i = 0; i < _bullet.transform.childCount - 2; i++)
-            {
-                Debug.Log(_bullet.transform.childCount -1 + "Child Count status");
-                Debug.LogError(_bullet.transform.childCount);
-                _bullet.transform.GetChild(i).gameObject.SetActive(true);
-                _bullet.transform.GetChild(i).parent = null;
 
-                Debug.Log(_bullet.transform.GetChild(i).gameObject.name);
-            }
+            GameObject attackedBuilding = _attackManager._TargetTransform.gameObject;
+            _bullet.transform.GetChild(4).transform.parent = null;
             Camera.main.transform.parent = null;
 
+           
+
+
+            for (int i = 0; i < _bullet.transform.childCount; i++)
+            {
+               
+                _bullet.transform.GetChild(i).gameObject.SetActive(true);
+                //  _bullet.transform.GetChild(i).parent = null;
+            }
+
+            attackedBuilding.transform.position = new Vector3(attackedBuilding.transform.position.x, _attackManager._buildingSinkPositionAmount, attackedBuilding.transform.position.z);
+            attackedBuilding.transform.rotation = Quaternion.Euler(attackedBuilding.transform.eulerAngles.x, attackedBuilding.transform.eulerAngles.y, _attackManager._buildingTiltRotationAmount);
+            Instantiate(_attackManager._destroyedSmokeEffectVFX, attackedBuilding.transform.position, Quaternion.identity, attackedBuilding.transform);
+
+            // Tilt the building.
+            // Camera.main.transform.parent = null;
+            while (_bullet.transform.childCount > 0)
+            {
+                foreach (Transform child in _bullet.transform)
+                {
+                    child.gameObject.transform.parent = null;
+                }
+            }
+
+          
             _bullet.SetActive(false);
+            //_bullet.SetActive(false);
         }
+
         // Camera.main.transform.parent = null;
 
         // _bullet.SetActive(false);

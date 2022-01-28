@@ -49,9 +49,18 @@ public class CoinSelector : MonoBehaviour
         int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
         
         //Changing the Coinvalue
-        rewardText.text = coinValue.ToString();
-        mGameManager._coins += coinValue;
-
+        /*rewardText.text = coinValue.ToString();
+        mGameManager._coins += coinValue;*/
+        if (GameManager.Instance._MultiplierValue <= 1)
+        {
+            rewardText.text = coinValue.ToString();
+            mGameManager._coins += coinValue;
+        }
+        else
+        {
+            rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (coinValue * GameManager.Instance._MultiplierValue).ToString();
+            mGameManager._coins += coinValue* GameManager.Instance._MultiplierValue;
+        }
         //Assign it to chest which player clicks on and pass the values
         GameObject SelectedPig = this.gameObject;
         Debug.Log(SelectedPig);

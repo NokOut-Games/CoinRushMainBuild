@@ -41,11 +41,10 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private GameObject HitSmokeEffect;
     [SerializeField] private GameObject HitSmokeRingEffect;
 
-    private LevelLoadManager mLevelLoadManagerRef;
 
     private void Start()
     {
-        mLevelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
+       // mLevelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
         isCollided = false; 
         isCanInstantiated = false;
     }
@@ -98,21 +97,60 @@ public class BoxReactor : MonoBehaviour
                             can = Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-                            rewardText.text = crateValueRef._value.ToString() + " Energies";
+
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                rewardText.text = crateValueRef._value.ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value;
+
+                            }
+                            else
+                            {
+                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value*GameManager.Instance._MultiplierValue;
+
+                            }
+
+
                             Invoke("InvokeKinematic", .75f);
                             break;
                         case 25:
                             can = Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-                            rewardText.text = crateValueRef._value.ToString() + " Energies";
+
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                rewardText.text = crateValueRef._value.ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value;
+
+                            }
+                            else
+                            {
+                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
+
+                            }
                             Invoke("InvokeKinematic", .75f);
                             break;
                         case 100:
                             can = Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-                            rewardText.text = crateValueRef._value.ToString() + " Energies";
+
+                            if (GameManager.Instance._MultiplierValue <= 1)
+                            {
+                                rewardText.text = crateValueRef._value.ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value;
+
+                            }
+                            else
+                            {
+                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
+
+                            }
+
                             Invoke("InvokeKinematic", .75f);
                             break;
                     }
