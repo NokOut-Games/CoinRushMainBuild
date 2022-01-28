@@ -135,7 +135,7 @@ public class CameraController : MonoBehaviour
                 }
                 else
                 {
-                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick)
+                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick&&TutorialManager.Instance.isPopUpRunning)
                     {
                         _DrawButtonClicked = false;
                         _isCameraInGamePlayView = false;

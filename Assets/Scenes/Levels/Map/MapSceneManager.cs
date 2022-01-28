@@ -44,6 +44,8 @@ public class MapSceneManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("MapTarget"))
             {
+                FirebaseManager.Instance.readUserData = true;
+
                 hit.collider.transform.parent.GetChild(2).gameObject.SetActive(false);
                 GameManager.Instance.hasChoiceInLevel = false;
                 hit.collider.transform.parent.GetComponent<Level>().UnlockLevel();
@@ -52,8 +54,9 @@ public class MapSceneManager : MonoBehaviour
                 hit.collider.transform.parent.GetChild(0).GetComponent<Animator>().SetBool("OpenCloud", true);
                 GameManager.Instance._playerCurrentLevel = hit.collider.transform.parent.GetComponent<Level>().levelNO;
                 PlayerPrefs.SetInt("MadeHisChoice", 1);
+                LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name,2000); 
                 GameManager.Instance._IsBuildingFromFBase = false;
-                LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name,2000);               
+
             }
         }
     }

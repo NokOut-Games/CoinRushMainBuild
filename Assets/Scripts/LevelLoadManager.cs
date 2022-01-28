@@ -51,6 +51,7 @@ public class LevelLoadManager : MonoBehaviour
     {
         GameManager.Instance.hasChoiceInLevel = hasChoise;
         SceneManager.LoadScene("Map");
+
     }
     public async void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0)
     {
@@ -66,16 +67,13 @@ public class LevelLoadManager : MonoBehaviour
         } while (scene.progress < 0.9f);
         await System.Threading.Tasks.Task.Delay(1000);
         scene.allowSceneActivation = true;
-        await System.Threading.Tasks.Task.Delay(2000);
+        await System.Threading.Tasks.Task.Delay(3000);
         mCloudAnimator.SetBool("Loaded", true);
         if (tutorial != null)
             tutorial.RegisterUserAction();
         await System.Threading.Tasks.Task.Delay(1000);
         mCanvas.SetActive(false);
         mCloudAnimator.SetBool("Loaded", false);
-      
-
-
 
     }
     public async void BacktoHome()
