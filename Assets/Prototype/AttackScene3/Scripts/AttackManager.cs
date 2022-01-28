@@ -206,7 +206,7 @@ public class AttackManager : MonoBehaviour
 
         Invoke(nameof(TargetInstantiation), 0.5f);
         //MultiplierInstantiation();
-        InvokeRepeating("DoMultiplierSwitching", 0f, _MultiplierSwitchTime);
+        InvokeRepeating("DoMultiplierSwitching", 0.5f, _MultiplierSwitchTime);
         ShuffleBuildingCostList();
     }
 
@@ -266,8 +266,6 @@ public class AttackManager : MonoBehaviour
 
         _spawnedTargetPoints[cachedTargetPoint].GetComponentInChildren<Animator>().SetBool("CanPlay", true);
         Invoke("ResetAnim", 0.25f);
-
-
     }
 
 

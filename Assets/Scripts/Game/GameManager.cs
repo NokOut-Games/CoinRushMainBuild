@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
     public List<int> _SavedCardTypes = new List<int>();
     public int _MaxLevelsInGame;
 
+    public bool OpenCardWritten = false;
+
     private void Awake()
     {
         Application.targetFrameRate = 30;
@@ -153,6 +155,11 @@ public class GameManager : MonoBehaviour
             mIsFull = true;
         }
 
+        if(OpenCardWritten)
+        {
+            FirebaseManager.Instance.WriteopenCardData();
+            OpenCardWritten = false;
+        }
         //Debug.Log("buidlName+>"+ _buildingGameManagerDataRef[0]._buildingName);
 
         //_attackedPlayerName = FirebaseManager.Instance._attackedPlayerName;

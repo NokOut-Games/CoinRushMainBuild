@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -8440240268678017909}
   - component: {fileID: 6816768501844202346}
   - component: {fileID: -7985683909159250433}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: OpenCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mcardDeck: {fileID: 0}
-  mcameraController: {fileID: 0}
+  mCameraController: {fileID: 0}
+  mCardSpawnDelay: 1
+  _OpenCardSelectedCard: 0
+  _OpenCardPosition: 0
 --- !u!65 &6816768501844202346
 BoxCollider:
   m_ObjectHideFlags: 0

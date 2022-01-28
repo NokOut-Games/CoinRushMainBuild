@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: -2519542092416544103}
   - component: {fileID: 8283806379573451026}
   - component: {fileID: 693778743334564456}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Joker
-  m_TagString: Untagged
+  m_TagString: OpenCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -99,7 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mcardDeck: {fileID: 0}
-  mcameraController: {fileID: 0}
+  mCameraController: {fileID: 0}
+  mCardSpawnDelay: 1
+  _OpenCardSelectedCard: 0
+  _OpenCardPosition: 0
 --- !u!65 &8283806379573451026
 BoxCollider:
   m_ObjectHideFlags: 0

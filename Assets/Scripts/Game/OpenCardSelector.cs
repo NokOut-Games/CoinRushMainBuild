@@ -23,6 +23,31 @@ public class OpenCardSelector : MonoBehaviour
         }
     }
 
+    //public void Update()
+    //{
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        RaycastHit hitSpot;
+    //        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //See where the player clicks
+
+    //        if (Physics.Raycast(ray, out hitSpot))
+    //        {
+    //            if (hitSpot.collider.gameObject.tag == "OpenCard") //If its a gameOBject names surfer move it to its targetPosition
+    //            {
+    //                if (!mCameraController._isCameraInGamePlayView)
+    //                {
+    //                    mCameraController.DrawButtonClicked();
+    //                    Invoke(nameof(CardSpawnDelay), mCardSpawnDelay);
+    //                }
+    //                else 
+    //                {
+    //                    CardSpawnDelay();
+    //                    return;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     public void OnMouseDown()
     {
         if (!mCameraController._isCameraInGamePlayView)
@@ -50,6 +75,31 @@ public class OpenCardSelector : MonoBehaviour
         ScriptedCards card = Resources.Load(cardName) as ScriptedCards;
         mcardDeck.InstantiateCard(card);
         Destroy(this.gameObject, .5f);
+        //GameManager.Instance.OpenCardDetails.RemoveAt(_OpenCardPosition);
+        
+        CheckingCondition(_OpenCardPosition); //1
+    }
+
+    void CheckingCondition(int inPosition) //1
+    {
+        for (int i = 0; i < GameManager.Instance.OpenCardDetails.Count; i++) //3
+        {
+            if (GameManager.Instance.OpenCardDetails[i]._openedCardSlot == inPosition)
+            {
+                GameManager.Instance.OpenCardDetails.RemoveAt(i);
+                GameManager.Instance.OpenCardWritten = true;
+            }
+            else
+            {
+                continue;
+            }
+
+            //GameManager.Instance.OpenCardDetails[_OpenCardPosition]._openedCardSlot;
+
+            //GameManager.Instance.OpenCardDetails.RemoveAt(_OpenCardPosition);
+
+            //}
+        }
     }
 }
 

@@ -122,7 +122,10 @@ public class FirebaseManager : MonoBehaviour
                 }
                 mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mOpenCardData), mPlayerPhotoURLData);
 
-                    //OpencardInfo
+                readUserData = true; // Works only if it gets all data ,otherwise it wont work
+
+                //if (snapshot.Child(userTitle).Child(auth.CurrentUser.UserId).HasChild("OpenCards") == true)
+                {   //OpencardInfo
                     OpenedCardSlot.Clear();
                     OpenCardDetails = new List<OpenCardData>();
                     for (int i = 0; i < snapshot.Child("OpenCards").ChildrenCount; i++)
@@ -138,7 +141,7 @@ public class FirebaseManager : MonoBehaviour
                         OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
                     }
                     mGameManager.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
-
+                }
                 ////AttackedPlayerInfo  
                 //_attackedPlayerName = snapshot.Child("AttackedPlayer").Child("_attackedPlayerName").Value.ToString();
                 //_attackedBuildingName= snapshot.Child("AttackedPlayer").Child("_attackedBuildingName").Value.ToString();
@@ -146,7 +149,7 @@ public class FirebaseManager : MonoBehaviour
 
 
 
-                readUserData = true; // Works only if it gets all data ,otherwise it wont work
+                
 
                 //Time difference Calculation
                 var difference = crntDateTime - DateTime.Parse(snapshot.Child("UserDetails").Child("LogOutTime").Value.ToString());
@@ -279,7 +282,25 @@ public class FirebaseManager : MonoBehaviour
             i++;
         }
     }
-   
+
+    public void WriteopenCardData()
+    {
+        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").RemoveValueAsync();
+        int i = 0;
+        foreach (OpenCardData cards in mGameManager.OpenCardDetails)
+        {
+            string json = JsonUtility.ToJson(cards);
+            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    //  Debug.Log("Write Successful");
+                }
+            });
+            i++;
+        }
+    }
+
     public void SaveNewUserInFirebase(Player inPlayerDataToSave)
     {
         var LoggedInUser = FirebaseAuth.DefaultInstance.CurrentUser;

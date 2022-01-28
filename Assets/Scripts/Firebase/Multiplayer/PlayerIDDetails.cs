@@ -53,7 +53,7 @@ public class PlayerIDDetails : MonoBehaviour
   
     public void GetRandomEnemyID(string inCurrentPlayerID)
     {
-        _playerList.Remove("7wJq25iCVsdchgQFfJv9Qhrp0At2"); _playerList.Remove("sYdMBt1kxaRtQ1oQkAoumilB5Bj1"); _playerList.Remove("xi1RMoQJWPMSxiThnmWTTs6XofP2"); 
+        /*_playerList.Remove("7wJq25iCVsdchgQFfJv9Qhrp0At2");*/ _playerList.Remove("sYdMBt1kxaRtQ1oQkAoumilB5Bj1"); _playerList.Remove("xi1RMoQJWPMSxiThnmWTTs6XofP2"); 
         _playerList.Remove(inCurrentPlayerID); //FirebaseManager.Instance.CurrentPlayerID);
         _randomEnemyID = _playerList[UnityEngine.Random.Range(0, _playerList.Count)];
     }
