@@ -23,7 +23,7 @@ public class CannonShotController : MonoBehaviour
 
     public Vector3 cameraTargetPos;
     private Vector3 velocity = Vector3.zero;
-    BallLaunch mBallLaunch;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +39,8 @@ public class CannonShotController : MonoBehaviour
             Camera.main.transform.LookAt(_TargetTransform);
             if (Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .85))
             {
-                
+                Debug.Log("Quaterway reached");
+                Debug.Log(CannonTargetDistance / 3);
 
                 //cameraTargetPos = Camera.main.transform.position + Time.deltaTime * BulletSpeed * Vector3.back;
 
@@ -48,7 +49,7 @@ public class CannonShotController : MonoBehaviour
                 Camera.main.transform.position += Time.fixedDeltaTime * BulletSpeed * Vector3.back;
                 BulletSpeed += deceleration * Time.fixedDeltaTime;
                 
-                
+                Debug.Log(" Speed " + BulletSpeed);
 
                 ////  fixCameraRot = false;
                 //if ((Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .5)) && ( Halfwayreached == true))
@@ -62,15 +63,16 @@ public class CannonShotController : MonoBehaviour
             }
             if ((Vector3.Distance(_bullet.transform.position, _TargetTransform.position) < (CannonTargetDistance * .65)) && ishalfwayreached == true)
             {
-                
+                Debug.Log("halfway region entered");
                 Halfwayreached = false;
                 if (_AttackManager._Shield == true)
                 {
-                    GameObject ShieldPrefab = Instantiate(shieldPref, _TargetTransform.position + _AttackManager._ballAndShieldOffsetToTargetTransform, Quaternion.identity);
-                   
+                    GameObject ShieldPrefab = Instantiate(shieldPref, _TargetTransform.position, Quaternion.identity);
+                    Debug.LogError(shieldPref.name + "shield Name");
                 }
                 ishalfwayreached = false;
-               
+                Debug.Log(CannonTargetDistance / 2);
+                Debug.Log("Halfway region false");
 
             }
         }
@@ -103,7 +105,7 @@ public class CannonShotController : MonoBehaviour
         Vector3 result = _distanceXZ.normalized;
         result *= Vxz;
         result.y = Vy;
-        
+        Debug.Log("Vector3 value" + result);
         return result;
 
     }
@@ -114,7 +116,7 @@ public class CannonShotController : MonoBehaviour
     /// <param name="tran"></param>
     public void AssignPos(Transform tran)
     {
-        
+        Debug.LogError("cannon shift " + tran);
         _TargetTransform = tran;
         this.transform.position = new Vector3(_TargetTransform.position.x, CannonAttackPosition.y, CannonAttackPosition.z);
         this.gameObject.SetActive(true);
@@ -125,7 +127,7 @@ public class CannonShotController : MonoBehaviour
     {
         _bullet = Instantiate(_bulletPrefab, _shotPoint.position, Quaternion.identity);
         _bullet.GetComponent<BallLaunch>().target = _TargetTransform;
-       
+        Debug.Log("Cannon fired");
         
           Invoke("FollowCamera", .1f);
         // Invoke("DetachCamera",1.5f);
@@ -140,7 +142,9 @@ public class CannonShotController : MonoBehaviour
         // rot = Camera.main.transform.rotation;
         Camera.main.transform.parent = _bullet.transform;
         CannonTargetDistance = Vector3.Distance(this.gameObject.transform.position, _TargetTransform.position);
-       
+        Debug.Log(this.gameObject.transform.position);
+        Debug.Log(_TargetTransform.position);
+        Debug.Log(CannonTargetDistance + " display distance values");
 
         //Quaternion smooth = Quaternion.Lerp(_bullet.transform.rotation, Camera.main.transform.rotation, Time.deltaTime * 1f);
         //Camera.main.transform.rotation = rot;
