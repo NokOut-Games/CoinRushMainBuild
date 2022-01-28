@@ -45,15 +45,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _buildingData:
   - _buildingName: 
-    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 0}
+    _cameraFocusPoint: {fileID: 0}
+    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages: []
-    UpgradeLevels:
-    - {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
+    UpgradeLevels: []
     UpgradeCosts: 
+    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -61,15 +62,16 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: 
-    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 0}
+    _cameraFocusPoint: {fileID: 0}
+    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages: []
-    UpgradeLevels:
-    - {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
+    UpgradeLevels: []
     UpgradeCosts: 
+    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -77,15 +79,16 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: 
-    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 0}
+    _cameraFocusPoint: {fileID: 0}
+    _initialBuildingGameObject: {fileID: 7829799822873293668, guid: 242b72c08b4f047a192d9e69b03b515b, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages: []
-    UpgradeLevels:
-    - {fileID: 7829799822873293668, guid: 242b72c08b4f047a192d9e69b03b515b, type: 3}
+    UpgradeLevels: []
     UpgradeCosts: 
+    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -93,15 +96,16 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: 
-    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 0}
+    _cameraFocusPoint: {fileID: 0}
+    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages: []
-    UpgradeLevels:
-    - {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
+    UpgradeLevels: []
     UpgradeCosts: 
+    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
@@ -109,21 +113,23 @@ MonoBehaviour:
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
   - _buildingName: 
-    _buildingDisplayName: 
     _buildingLevel: 0
     _buildingMaxLevel: 5
     _buildingSpawnPoint: {fileID: 0}
+    _cameraFocusPoint: {fileID: 0}
+    _initialBuildingGameObject: {fileID: 7160578299545730863, guid: b30b87eb32ee64cf6889a262008abeb7, type: 3}
     currentLevelGameObject: {fileID: 0}
     NextUpgradeImages: []
-    UpgradeLevels:
-    - {fileID: 7829799822873293668, guid: 242b72c08b4f047a192d9e69b03b515b, type: 3}
+    UpgradeLevels: []
     UpgradeCosts: 
+    destroyedVersions: []
     _respectiveBuildingButtons: {fileID: 0}
     isBuildingSpawnedAndActive: 0
     isBuildingDamaged: 0
     isBuildingShielded: 0
     didBuildingReachMaxLevel: 0
     _isUnderConstruction: 0
+  _buildings: []
   mCameraParentRef: {fileID: 0}
   mBuildingConstructionVFX: {fileID: 7473104587106121702, guid: fb20ece43a4144530a620b8a819d303a, type: 3}
   mCameraFocusSpeed: 0.5
@@ -134,9 +140,7 @@ MonoBehaviour:
   newBuildingSpawnScale: {x: 0.25, y: 0.25, z: 0.25}
   mSizeToDecrease: 0.25
   mTimeDelayFromNewBuildingToCameraDefaultState: 1
+  _isAnotherBuildingInConstruction: 0
+  mCoroutineIsInProcess: 0
+  tempCheck: 0
   _shieldedBuildings: 
-  _buildingSinkPositionAmount: -50
-  _buildingTiltRotationAmount: -25
-  _destroyedSmokeEffectVFX: {fileID: 7167539000141572787, guid: a9dc5275ad69b4a0088e3b473d86bc6f, type: 3}
-  _destroyedPlayerPlunkCard: {fileID: 2878525332875178298, guid: cfa6fa32bac7950419afbbbae5a1aab3, type: 3}
-  _DestroyedBuildingPlunkOffsetFromBuilding: {x: 0, y: 50, z: -100}
