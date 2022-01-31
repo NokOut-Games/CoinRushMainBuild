@@ -67,7 +67,6 @@ public class BoxReactor : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        
         if (!isCollided)
         {
             if (other.gameObject.tag == "EnergyChestBox")
@@ -171,7 +170,6 @@ public class BoxReactor : MonoBehaviour
                 //Invoke("ActiveRewardPanel", 3f);
             }
         }
-        StopCoroutine(energySelector.energyCoroutine);
     }
 
     IEnumerator CanGameObjectZoomIn(GameObject inCan)

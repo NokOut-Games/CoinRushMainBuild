@@ -398,10 +398,9 @@ public class BuildingManager : MonoBehaviour
 
     IEnumerator LevelCompletedCoroutine()
     {
-
         yield return new WaitForSeconds(3.6f);
         StartCoroutine(menuUI.ShowLevelCompletedParticlesCoroutine());
-       // GameManager.Instance.CurrentLevelCompleted();
+        GameManager.Instance.CurrentLevelCompleted();
     }
 
 }

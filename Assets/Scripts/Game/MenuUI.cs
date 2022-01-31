@@ -112,15 +112,6 @@ public class MenuUI : MonoBehaviour
     {
         LevelLoadManager.instance.GoToMapScreen();
     }
-    public void BackToHome()
-    {
-        LevelLoadManager.instance.BacktoHome();
-
-    }
-    public void MapScreen()
-    {
-        GameManager.Instance.CurrentLevelCompleted();
-    }
 
 
     private void UpdateCoinAndEnergyTextFields()

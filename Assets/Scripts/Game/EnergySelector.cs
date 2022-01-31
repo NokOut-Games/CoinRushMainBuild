@@ -15,8 +15,6 @@ public class EnergySelector : MonoBehaviour
     [SerializeField] private GameObject CloudFrontRef;
     public bool EnergyFalling = true;
 
-    public IEnumerator energyCoroutine;
-
 
     [Header("Other References: ")]
     [SerializeField] private GameManager mGameManager;
@@ -45,8 +43,7 @@ public class EnergySelector : MonoBehaviour
         GameObject Chest = this.gameObject;
         Chest.GetComponent<ChestValue>()._value = energyValue;
 
-        energyCoroutine = CameraZoomAndFollowEnergy(Chest);
-        StartCoroutine(energyCoroutine);
+        StartCoroutine(CameraZoomAndFollowEnergy(Chest));
 
         //Destroy other chests Colliders except the ones clicked
         for (int i = 0; i < mEnergyChests.Length; i++)

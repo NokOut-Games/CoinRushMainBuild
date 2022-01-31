@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
     {
         _IsBuildingFromFBase = false;
         hasChoiceInLevel = true;
-        LevelLoadManager.instance.LoadLevelASyncOf("Map", 1000);
+        LevelLoadManager.instance.LoadLevelASyncOf("Map", 6000);
     }
     public void AssignTutorial(Tutorial tutorial)
     {
