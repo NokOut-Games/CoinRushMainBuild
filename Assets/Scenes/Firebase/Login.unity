@@ -542,7 +542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _shield
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _minutes
@@ -1057,6 +1057,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3859917340867848066, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
 --- !u!1 &371898791
@@ -1374,6 +1378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoadManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7157291616783984424, guid: e14850b38e73047a585aebae912f8d7b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e14850b38e73047a585aebae912f8d7b, type: 3}
 --- !u!1 &1012865287
@@ -1423,11 +1431,16 @@ MonoBehaviour:
   _currentPlayerId: 
   _currentPlayerName: 
   _currentPlayerPhotoURL: 
-  _enemyPlayerID: 7wJq25iCVsdchgQFfJv9Qhrp0At2
+  _enemyPlayerID: A7fvPom16RdBCW6EYyvg2OqgnX73
   _enemyTitle: 
   OpenCardDetails: []
   OpenedPlayerPhotoURL: []
   OpenedCardSlot: 
+  AttackCount: 0
+  attackedplayerIDList: []
+  attackedplayerNameList: []
+  CurrenetPlayerAttackData: []
+  MultiplayerBuildingDetails: []
   mOpenCardsManager: {fileID: 0}
   _cardDeck: {fileID: 0}
   mPlayerNameData: 
@@ -1435,7 +1448,7 @@ MonoBehaviour:
   mCoinData: 
   mEnergyData: 
   mPlayerCurrentLevelData: 
-  mOpenCardData: 
+  mNumberOfTimesGotAttacked: 
   mPlayerPhotoURLData: 
   mLevelPrefix: Level
   _dataBaseFetchTime: 1.5
@@ -1456,7 +1469,7 @@ MonoBehaviour:
   _enemyName: 
   _enemyPhotoURL: 
   _enemyPlayerLevel: 1
-  _openCardInfo: 0
+  _attackInfo: 0
   _buildingMultiplayerDataRef: []
   _buildingManagerRef: {fileID: 0}
   _buildingCount: 0
@@ -1734,6 +1747,8 @@ MonoBehaviour:
   _attackedPlayerPhotoURL: 
   _attackedBuildingName: 
   AttackedPlayerImageTexture: {fileID: 0}
+  CurrenetPlayerAttackData: []
+  BuildingDetailsaa: []
   OpenCardDetails: []
   OpenedPlayerPhotoURL: []
   OpenedCardSlot: 
@@ -2003,6 +2018,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9becefe473b94924ac8957d6eefa9ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friendsTextPrefab: {fileID: 7511734645543031146, guid: 15dd60c0eb50063409e99a791ce44fff, type: 3}
+  GetFriendPos: {fileID: 0}
+  FBFriendsButton: {fileID: 0}
+  onceDone: 0
+  mFbInitialized: 0
 --- !u!4 &1601156767
 Transform:
   m_ObjectHideFlags: 0

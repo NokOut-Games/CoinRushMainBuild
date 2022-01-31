@@ -9,8 +9,13 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private TextMeshProUGUI rewardText;
 
     [SerializeField] private GameObject EnergyCanSmall;
+
     [SerializeField] private GameObject EnergyCanMedium;
     [SerializeField] private GameObject EnergyCanLarge;
+
+    [SerializeField] private GameObject EnergyCanSmallParticle;
+    [SerializeField] private GameObject EnergyCanMediumParticle;
+    [SerializeField] private GameObject EnergyCanLargeParticle;
 
     private GameObject canSpawnLocation;
 
@@ -95,6 +100,8 @@ public class BoxReactor : MonoBehaviour
                     {
                         case 10:
                             can = Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
+                            StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
+
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
 
@@ -116,6 +123,8 @@ public class BoxReactor : MonoBehaviour
                             break;
                         case 25:
                             can = Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
+                            StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
+
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
 
@@ -135,6 +144,7 @@ public class BoxReactor : MonoBehaviour
                             break;
                         case 100:
                             can = Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
+                            StartCoroutine(SpawnParticleCoroutine(EnergyCanLargeParticle,2,-10));
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
 
@@ -186,6 +196,13 @@ public class BoxReactor : MonoBehaviour
     void InvokeKinematic()
     {
         can.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
+
+    IEnumerator SpawnParticleCoroutine(GameObject g, float a,float z)
+    {
+        yield return new WaitForSeconds(a);
+        Instantiate(g, canSpawnLocation.transform.position+new Vector3(0,10,z), Quaternion.identity);
     }
 
     void ActiveRewardPanel()

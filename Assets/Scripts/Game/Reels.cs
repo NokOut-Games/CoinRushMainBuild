@@ -34,9 +34,12 @@ public class Reels : MonoBehaviour
     private UnityAction<ReelElement> mOnReelRollEndEvent;
     public int[] _imageFillPosition = new int[4];
 
+    public GameObject coinParticle;
+    public GameObject energyPaticle;
+
     private void Start()
     {
-        mSpeed = Random.Range(2000, 4000);
+        mSpeed = Random.Range(400, 600);
         for (int i = 0; i < _reelElements.Length; i++)
         {
             accumalatedY += _reelElements[i]._slotElementGameObject.GetComponent<RectTransform>().sizeDelta.y;
@@ -130,6 +133,10 @@ public class Reels : MonoBehaviour
     /// </summary>
     public void Spin()
     {
+        energyPaticle.SetActive(false);
+        coinParticle.SetActive(false);
+
+
         int index = GetRandomEnergyIndexBasedOnProbability();
         ReelElement mReel = _reelElements[index];
         float TargetPosition = -(mReel._slotElementGameObject.transform.localPosition.y);
@@ -141,6 +148,19 @@ public class Reels : MonoBehaviour
         {
             mSpinOver = true;
             _roll = false;
+
+
+          /*  if (_reelElements[index]._slotElementGameObject.name == "Energy")
+            {
+                energyPaticle.SetActive(true);
+            }
+            else if (_reelElements[index]._slotElementGameObject.name == "Coins")
+            {
+                coinParticle.SetActive(true);
+            }
+*/
+
+
             if (mOnReelRollEndEvent != null)
             {
                 mOnReelRollEndEvent(mReel);

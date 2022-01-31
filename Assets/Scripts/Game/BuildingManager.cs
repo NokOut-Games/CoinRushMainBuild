@@ -49,6 +49,7 @@ public class BuildingManager : MonoBehaviour
     [SerializeField] private GameObject mCameraParentRef;
 
     [SerializeField] private GameObject mBuildingConstructionVFX;
+    [SerializeField] private GameObject mBuildingConstructionMaxVFX;
     [Tooltip("Speed the building should be focused when the upgrade of that button is being clicked")]
     [SerializeField] private float mCameraFocusSpeed;
     [Tooltip("Delay time to spawn the next upgrade")]
@@ -204,6 +205,7 @@ public class BuildingManager : MonoBehaviour
             GameManager.Instance._buildingGameManagerDataRef.Add(data);
             //GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive,_buildingData[i].isBuildingDamaged);
         }
+        FirebaseManager.Instance.WriteAllDataToFireBase();
     }
     
     void SpawningBuilding()
@@ -285,7 +287,11 @@ public class BuildingManager : MonoBehaviour
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = true;
         //Upgrading Scenario Starts Here
         Destroy(goRef, 1.25f);
-        GameObject smokeVFX = Instantiate(mBuildingConstructionVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
+        GameObject smokeVFX;
+        if (_buildingData[inBuildingsElementNumber]._buildingMaxLevel == inBuildingLevel)
+           smokeVFX = Instantiate(mBuildingConstructionMaxVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
+        else
+           smokeVFX = Instantiate(mBuildingConstructionVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
         mCameraParentRef.transform.DOMove(inBuildingSpawnPoint.position + mCameraOffSetFromBuilding, mCameraFocusSpeed, false);//.OnComplete(()=> { mCameraParentRef.transform.parent = inPanPoint.transform; });
         goRef.transform.DOScale(mSizeToDecrease, mBuildingShrinkAndEnlargeTime);
        
@@ -313,7 +319,10 @@ public class BuildingManager : MonoBehaviour
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
 
-        Destroy(smokeVFX,1.5f);
+        if (_buildingData[inBuildingsElementNumber]._buildingMaxLevel == inBuildingLevel)
+            Destroy(smokeVFX,5f);
+        else
+            Destroy(smokeVFX,1.5f);
         yield return new WaitForSeconds(2f);
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
         if(inBuildingLevel == 5)

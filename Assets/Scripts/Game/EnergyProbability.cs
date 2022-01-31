@@ -28,7 +28,7 @@ public class EnergyProbability : MonoBehaviour
     private double mTotalToughnessMeter;
     private System.Random mRandomValue = new System.Random();
 
-    private float mChanceA = 90, mChanceB = 20, mChanceC = 1;
+    private float mChanceA = 90, mChanceB = 30, mChanceC = 1;
 
     private Energy mEnergy;
 

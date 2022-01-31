@@ -123,8 +123,8 @@ public class OpenCardsManager : MonoBehaviour
     }
     private void Update()
     {
-        _OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
-        mPositionNumber = mMultiplayerPlayerData._openCardInfo;
+       // _OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
+     //   mPositionNumber = mMultiplayerPlayerData._openCardInfo;
 
     }
 

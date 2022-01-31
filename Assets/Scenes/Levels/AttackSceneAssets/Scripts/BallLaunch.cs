@@ -65,8 +65,9 @@ public class BallLaunch : MonoBehaviour
             if (Vector3.Distance(this.gameObject.transform.position, Camera.main.transform.position) < (ShieldCameraDistance * .25)) //.14))
             {
                 BallReverse = false;
-                this.gameObject.transform.GetChild(4).gameObject.SetActive(true);
-              //  CrackCanvas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+             
+                this.gameObject.transform.GetChild(6).gameObject.SetActive(true);
+                //  CrackCanvas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 //Debug.Log(CrackCanvas);
                 //Debug.Log(CrackCanvas.gameObject.transform.GetChild(0).gameObject + "child Panel name");
                 //Debug.LogError("Ball Reverse Stopped");
@@ -132,27 +133,26 @@ public class BallLaunch : MonoBehaviour
         }
         else if (_attackManager._Shield == false)
         {
+            Debug.Log("Shield Disabled");
+            Debug.Log(_bullet.transform.childCount + "Child Count Before");
 
-            GameObject attackedBuilding = _attackManager._TargetTransform.gameObject;
-            _bullet.transform.GetChild(4).transform.parent = null;
+            _bullet.transform.GetChild(6).transform.parent = null;
             Camera.main.transform.parent = null;
 
-           
+            Debug.Log(_bullet.transform.childCount + "Child Count After");
 
 
             for (int i = 0; i < _bullet.transform.childCount; i++)
             {
-               
+                Debug.Log(_bullet.transform.childCount + "Child Count status");
+                Debug.LogError(_bullet.transform.childCount);
                 _bullet.transform.GetChild(i).gameObject.SetActive(true);
-                //  _bullet.transform.GetChild(i).parent = null;
+                //_bullet.transform.GetChild(i).parent = null;
+
+                Debug.Log(_bullet.transform.GetChild(i).gameObject.name);
             }
-
-            attackedBuilding.transform.position = new Vector3(attackedBuilding.transform.position.x, _attackManager._buildingSinkPositionAmount, attackedBuilding.transform.position.z);
-            attackedBuilding.transform.rotation = Quaternion.Euler(attackedBuilding.transform.eulerAngles.x, attackedBuilding.transform.eulerAngles.y, _attackManager._buildingTiltRotationAmount);
-            Instantiate(_attackManager._destroyedSmokeEffectVFX, attackedBuilding.transform.position, Quaternion.identity, attackedBuilding.transform);
-
-            // Tilt the building.
             // Camera.main.transform.parent = null;
+
             while (_bullet.transform.childCount > 0)
             {
                 foreach (Transform child in _bullet.transform)
@@ -161,9 +161,9 @@ public class BallLaunch : MonoBehaviour
                 }
             }
 
-          
+            Debug.LogError("Bullet Disabled");
+
             _bullet.SetActive(false);
-            //_bullet.SetActive(false);
         }
 
         // Camera.main.transform.parent = null;

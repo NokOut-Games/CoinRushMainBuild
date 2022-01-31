@@ -111,7 +111,7 @@ public class CoinSelector : MonoBehaviour
         
         yield return new WaitForSeconds(mTimeBetweenPigBreakAndCoinShower);
         PlayParticleEffects(CoinShowerParticleEffect , CoinShowerSpawnPoint,2);
-        Invoke("DisplayRewardAndInvokeScene", 2f);
+        Invoke("DisplayRewardAndInvokeScene", 3f);
         //Spawn ParticleEffect
 
     }
@@ -119,7 +119,7 @@ public class CoinSelector : MonoBehaviour
     void PlayParticleEffects(GameObject inParticleEffectGameObject, Transform inParticleSpawnPosition , float DestroySeconds)
     {
         GameObject ParticleRef = Instantiate(inParticleEffectGameObject, inParticleSpawnPosition.position, Quaternion.identity);
-        Destroy(ParticleRef, DestroySeconds);
+        //Destroy(ParticleRef, DestroySeconds);
         //Play the particles
     }
 
