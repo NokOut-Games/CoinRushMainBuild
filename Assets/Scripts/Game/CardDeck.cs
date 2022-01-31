@@ -893,10 +893,6 @@ public class CardDeck : MonoBehaviour
             Shield();
             canClick = true;
         }
-        else if (inType == CardType.ATTACK)
-        {
-            MultiplayerManager.Instance.OnGettingAttackCard();
-        }
         else
         {
             int waitTime = 3000;
@@ -915,8 +911,14 @@ public class CardDeck : MonoBehaviour
                 waitTime += 500;
             }
             GameManager.Instance._IsBuildingFromFBase = true;
-
-            LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
+            if (inType == CardType.ATTACK)
+            {
+                MultiplayerManager.Instance.OnGettingAttackCard();
+            }
+            else
+            {
+                LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
+            }
         }
     }
     public void AssignTutorial(Tutorial tutorial, CardType card)
