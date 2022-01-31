@@ -3489,6 +3489,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 919945655}
     m_Modifications:
+    - target: {fileID: 362436579, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ad1379bcaee739846be2d614ce948684, type: 3}
+    - target: {fileID: 778226416, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ff4c3c0bf6ceacb458bf6cbd1bff618f, type: 3}
     - target: {fileID: 954001547745636984, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3496,14 +3504,14 @@ PrefabInstance:
     - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 857858354632380887}
+      objectReference: {fileID: 412256765}
     - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenCardAdder
+      value: ViewIsland
       objectReference: {fileID: 0}
     - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CardDeck, Assembly-CSharp
+      value: OpenCardsViewisland, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -3613,6 +3621,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 256457918}
+    - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 60d73725bc1cbe241b8401d61854ce15, type: 3}
+    - target: {fileID: 6430323925759262619, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1025c807c07a02d45b48de9bc40272a8, type: 3}
     - target: {fileID: 7694686296529763768, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 360
@@ -3688,6 +3704,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a993ddaa4bc4eef4da46fe067d2f0d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &412256765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1713503945, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821dae0283267f74795ee79ed889ba95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &416097092 stripped
@@ -5511,11 +5538,11 @@ PrefabInstance:
       objectReference: {fileID: 1350716501}
     - target: {fileID: 4949187401440061606, guid: b29ff627f30bd4acb95a93c12fd56daf, type: 3}
       propertyPath: _CameraLeftBound
-      value: -100
+      value: -155
       objectReference: {fileID: 0}
     - target: {fileID: 4949187401440061606, guid: b29ff627f30bd4acb95a93c12fd56daf, type: 3}
       propertyPath: _CameraRightBound
-      value: 100
+      value: 155
       objectReference: {fileID: 0}
     - target: {fileID: 4949187401440061606, guid: b29ff627f30bd4acb95a93c12fd56daf, type: 3}
       propertyPath: mAutoDragPanSpeed
@@ -9088,7 +9115,7 @@ PrefabInstance:
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: drawAutomatic
       value: 
-      objectReference: {fileID: 21300000, guid: c9d981c79550a864897bcbf846588af8, type: 3}
+      objectReference: {fileID: 21300000, guid: 6ecab77b53148cd4989d6e013a52f942, type: 3}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: blackOutScreen
       value: 
@@ -9131,7 +9158,7 @@ PrefabInstance:
       objectReference: {fileID: 502668290}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: mScriptedCards.Array.size
-      value: 7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: _openCardPrefabs.Array.size
@@ -9373,7 +9400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859917340793945488, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_RootOrder
@@ -11187,7 +11214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_RootOrder
