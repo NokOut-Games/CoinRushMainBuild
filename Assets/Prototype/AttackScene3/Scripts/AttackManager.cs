@@ -524,6 +524,7 @@ public class AttackManager : MonoBehaviour
     }
     public void BackButton()
     {
+        _ScorePanel.GetComponentInChildren<Button>().interactable = false;
         MultiplayerManager.Instance.CheckAttackDataFromFirebase();
         MultiplayerManager.Instance.ReadMyData();
         ChangeEnemyBuildingData();

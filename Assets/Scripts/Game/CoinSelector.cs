@@ -98,7 +98,6 @@ public class CoinSelector : MonoBehaviour
             GameObject HammerRef = Instantiate(HammerPrefab, HammerSpawnPoint.position, HammerSpawnPoint.rotation);
             //Debug.Log(HammerRef);
             Destroy(HammerRef, 1f);
-            Debug.Log("I read all the above lines");
         });
         
         //To Prevent Clicking Other Pigs in the background
@@ -111,7 +110,8 @@ public class CoinSelector : MonoBehaviour
         
         yield return new WaitForSeconds(mTimeBetweenPigBreakAndCoinShower);
         PlayParticleEffects(CoinShowerParticleEffect , CoinShowerSpawnPoint,2);
-        Invoke("DisplayRewardAndInvokeScene", 3f);
+        yield return new WaitForSeconds(3f);
+        DisplayRewardAndInvokeScene();
         //Spawn ParticleEffect
 
     }

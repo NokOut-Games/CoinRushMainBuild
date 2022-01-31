@@ -327,7 +327,7 @@ public class MultiplayerManager : MonoBehaviour
         else
         {
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 5f);
+            Invoke(nameof(LoadAttackScene), 2f);
             isRevenging = false;
         }
 
@@ -368,7 +368,7 @@ public class MultiplayerManager : MonoBehaviour
                 }
             }
         });
-        Invoke("BackToGame", 3.5f);
+        Invoke("BackToGame", 2.5f);
     }
 
     public void WriteDetailsOnAttackComplete()

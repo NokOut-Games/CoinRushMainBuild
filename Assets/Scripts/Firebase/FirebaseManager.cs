@@ -70,6 +70,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void ReadData()
     {
+        PlayerPrefs.SetInt("MadeHisChoice", 1);
         if (userTitle == "Facebook Users")
         {
             reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
