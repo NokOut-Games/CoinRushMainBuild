@@ -41,7 +41,7 @@ public class MenuUI : MonoBehaviour
         isButtonGenerated = false;
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mCanvasAnimator = GetComponent<Animator>();
-        //mCameraController = Camera.main.GetComponent<CameraController>();
+        mCameraController = Camera.main.GetComponent<CameraController>();
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);

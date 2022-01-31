@@ -32,7 +32,7 @@ public class ActionTutorial : Tutorial
             case TutorialActionType.Card:
                 GameObject.Find("CardDeck").GetComponent<CardDeck>().AssignTutorial(this, cardType);
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().CloseBuildButton();
-                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(5,true);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(5,cardType!=CardType.JOKER);
 
                 break;
             case TutorialActionType.Building:

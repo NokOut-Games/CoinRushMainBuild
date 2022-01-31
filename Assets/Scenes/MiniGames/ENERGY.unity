@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 273936757}
-  m_IndirectSpecularColor: {r: 0.09026869, g: 0.21291287, b: 0.5742061, a: 1}
+  m_IndirectSpecularColor: {r: 0.09021769, g: 0.21301094, b: 0.57453686, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14013,6 +14013,67 @@ Transform:
   m_Father: {fileID: 486370593}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1142110586
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
 --- !u!1 &1185880947
 GameObject:
   m_ObjectHideFlags: 0
@@ -16600,6 +16661,9 @@ MonoBehaviour:
   EnergyCanSmall: {fileID: 774371272166543383, guid: 358dfba0181e6e74db1dd681176b5007, type: 3}
   EnergyCanMedium: {fileID: 7333906914809265232, guid: b2afbc22b33d91845ba6ab9659ff2e74, type: 3}
   EnergyCanLarge: {fileID: 1449879326826623210, guid: 9574f87793fde5045aa69879466397d7, type: 3}
+  EnergyCanSmallParticle: {fileID: 794158564776122622, guid: e63d9ec144ab882429b3a9b869b04d06, type: 3}
+  EnergyCanMediumParticle: {fileID: 794158564776122622, guid: e63d9ec144ab882429b3a9b869b04d06, type: 3}
+  EnergyCanLargeParticle: {fileID: 794158564776122622, guid: e63d9ec144ab882429b3a9b869b04d06, type: 3}
   RewardDisplayInvokeTime: 3
   can: {fileID: 0}
   mDuration: 1
@@ -16806,6 +16870,9 @@ MonoBehaviour:
   EnergyCanSmall: {fileID: 774371272166543383, guid: 358dfba0181e6e74db1dd681176b5007, type: 3}
   EnergyCanMedium: {fileID: 7333906914809265232, guid: b2afbc22b33d91845ba6ab9659ff2e74, type: 3}
   EnergyCanLarge: {fileID: 1449879326826623210, guid: 9574f87793fde5045aa69879466397d7, type: 3}
+  EnergyCanSmallParticle: {fileID: 0}
+  EnergyCanMediumParticle: {fileID: 0}
+  EnergyCanLargeParticle: {fileID: 0}
   RewardDisplayInvokeTime: 3
   can: {fileID: 0}
   mDuration: 1

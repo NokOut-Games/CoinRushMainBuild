@@ -22,6 +22,10 @@ public class Slots : MonoBehaviour
 
     public List<ReelElement> _elementsName;
 
+
+    public GameObject coinShower;
+    public GameObject energyShower;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -30,7 +34,7 @@ public class Slots : MonoBehaviour
         {
             for (int i = 0; i < _reels.Length; i++)
             {
-                _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
+               _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
                 _reels[i].mSpinOver = false;
             }
             if (spin > 0)
@@ -83,6 +87,8 @@ public class Slots : MonoBehaviour
 
     private void ResultChecker()
     {
+        coinShower.SetActive(false);
+        energyShower.SetActive(false);
         for (int i = 0; i < _elementsName.Count - 2; i++)
         {
             if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
@@ -103,7 +109,8 @@ public class Slots : MonoBehaviour
                         //Invoke(nameof(ActiveLevelInvoke), 2f);
                         break;
                     case "Coins":
-                       
+                        coinShower.SetActive(true);
+
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "5000 Coins";
@@ -117,6 +124,7 @@ public class Slots : MonoBehaviour
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
+                        energyShower.SetActive(true);
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "10 Energy";
@@ -151,6 +159,17 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
+                        if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name)
+                        {
+                            _reels[i].coinParticle.SetActive(true);
+                            _reels[i+1].coinParticle.SetActive(true);
+                        }else if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i].coinParticle.SetActive(true);
+                            _reels[i + 2].coinParticle.SetActive(true);
+                        }
+
+
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "3000 Coins";
@@ -164,6 +183,16 @@ public class Slots : MonoBehaviour
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
+                        if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name)
+                        {
+                            _reels[i].energyPaticle.SetActive(true);
+                            _reels[i + 1].energyPaticle.SetActive(true);
+                        }
+                        else if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i].energyPaticle.SetActive(true);
+                            _reels[i + 2].energyPaticle.SetActive(true);
+                        }
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "5 Energy";
@@ -197,6 +226,16 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
+                        if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i+1].coinParticle.SetActive(true);
+                            _reels[i + 1].coinParticle.SetActive(true);
+                        }
+                        else if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i+1].coinParticle.SetActive(true);
+                            _reels[i + 2].coinParticle.SetActive(true);
+                        }
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "3000 Coins";
@@ -210,6 +249,16 @@ public class Slots : MonoBehaviour
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
+                        if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i+1].energyPaticle.SetActive(true);
+                            _reels[i + 2].energyPaticle.SetActive(true);
+                        }
+                        else if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        {
+                            _reels[i+1].energyPaticle.SetActive(true);
+                            _reels[i + 2].energyPaticle.SetActive(true);
+                        }
                         if (GameManager.Instance._MultiplierValue <= 1)
                         {
                             _rewardText.text = "5 Energy";
