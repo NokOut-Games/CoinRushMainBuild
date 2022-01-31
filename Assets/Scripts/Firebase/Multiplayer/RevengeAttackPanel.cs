@@ -48,7 +48,7 @@ public class RevengeAttackPanel : MonoBehaviour
             EnemyList.Add(EnemySlot);
 
             EnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FilteredAttackedName[i];
-            EnemyList[i].transform.GetChild(2).GetComponent<Text>().text = FilteredAttackedPlayerID[i];
+            EnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID/*.GetComponent<Text>().text*/ = FilteredAttackedPlayerID[i];
         }
 
     }
