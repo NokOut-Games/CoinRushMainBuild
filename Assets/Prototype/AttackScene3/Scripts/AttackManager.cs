@@ -558,7 +558,7 @@ public class AttackManager : MonoBehaviour
     }
     public void BackButton()
     {
-        MultiplayerManager.Instance.CheckAndWriteAttackData();
+        MultiplayerManager.Instance.CheckAttackDataFromFirebase();
         MultiplayerManager.Instance.ReadMyData();
         ChangeEnemyBuildingData();
     }

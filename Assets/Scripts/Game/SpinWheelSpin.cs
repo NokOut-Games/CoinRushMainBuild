@@ -25,15 +25,18 @@ public class SpinWheelSpin : MonoBehaviour
     public bool disablePanel = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
-    private LevelLoadManager mLevelLoadManager;
     public Animator mLightAnimator;
+
+    [SerializeField] GameObject CoinParticle;
+    [SerializeField] GameObject EnergyParticle;
     private void Start()
     {
          mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        mLevelLoadManager = mGameManager.gameObject.GetComponent<LevelLoadManager>();
 
         _uiSpinButton.onClick.AddListener(() =>
         {
+            CoinParticle.SetActive(false);
+            EnergyParticle.SetActive(false);
             _uiSpinButton.interactable = false;
 
             spinWheel.OnSpinEnd(wheelPiece =>
@@ -53,6 +56,7 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiCoinReward.SetActive(true);
+                            CoinParticle.SetActive(true);
                            
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -73,6 +77,7 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             _uiEnergyReward.SetActive(true);
+                            EnergyParticle.SetActive(true);
                            
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -107,6 +112,7 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             disablePanel = true;
                             _uiCoinReward.SetActive(true);
+                            CoinParticle.SetActive(true);
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 coin += wheelPiece._Amount;
@@ -125,6 +131,7 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             disablePanel = true;
                             _uiEnergyReward.SetActive(true);
+                            EnergyParticle.SetActive(true);
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 Energy += wheelPiece._Amount;
@@ -188,4 +195,5 @@ public class SpinWheelSpin : MonoBehaviour
             disablePanel = false;
         }
     }
+
 }

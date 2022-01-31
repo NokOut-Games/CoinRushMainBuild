@@ -38,6 +38,7 @@ public class TutorialManager : MonoBehaviour
         if (tutorialIndex >= Tutorials.Length)
         {
             GameManager.Instance.isInTutorial = false;
+            FirebaseManager.Instance.WriteAllDataToFireBase();
             return;
         }
         currentTutorialIndex = tutorialIndex;

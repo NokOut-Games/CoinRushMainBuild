@@ -50,7 +50,7 @@ public class LevelLoadManager : MonoBehaviour
     public void GoToMapScreen(bool hasChoise =false)
     {
         GameManager.Instance.hasChoiceInLevel = hasChoise;
-        GameManager.Instance._IsRefreshNeeded = true ;
+       // GameManager.Instance._IsRefreshNeeded = true ;
         SceneManager.LoadScene("Map");
 
     }
@@ -68,7 +68,7 @@ public class LevelLoadManager : MonoBehaviour
         } while (scene.progress < 0.9f);
         await System.Threading.Tasks.Task.Delay(1000);
         scene.allowSceneActivation = true;
-        await System.Threading.Tasks.Task.Delay(3000);
+        await System.Threading.Tasks.Task.Delay(2000);
         mCloudAnimator.SetBool("Loaded", true);
         if (tutorial != null)
             tutorial.RegisterUserAction();

@@ -19,7 +19,7 @@ public class MultiplayerPlayerData : MonoBehaviour
     public string _enemyName;
     public string _enemyPhotoURL;
     public int _enemyPlayerLevel = 1;
-    public int _openCardInfo;
+    public int _attackInfo;
     public List<MultiplayerBuildingData> _buildingMultiplayerDataRef;
     public BuildingManager _buildingManagerRef;
     public int _buildingCount;
@@ -48,10 +48,10 @@ public class MultiplayerPlayerData : MonoBehaviour
 
     public void Update()
     {
-        if (_enemyPhotoURL != null)
+       /* if (_enemyPhotoURL != null)
         {
             StartCoroutine(DownloadFacebookImage(_enemyPhotoURL));
-        }
+        }*/
     }
 
     public void GetBuildingManagerDetails()
@@ -70,7 +70,7 @@ public class MultiplayerPlayerData : MonoBehaviour
     {
         _buildingMultiplayerDataRef = inBuildingData;
         _enemyPlayerLevel = inCurrentLevel;
-        _openCardInfo = inOpenCardData;
+        _attackInfo = inOpenCardData;
         _enemyName = inPlayerName;
         _enemyPhotoURL = inPlayerPhotoURL;
     }

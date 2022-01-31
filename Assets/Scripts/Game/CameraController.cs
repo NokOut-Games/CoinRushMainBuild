@@ -174,7 +174,7 @@ public class CameraController : MonoBehaviour
 
                     ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
                 }
-                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair)
+                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial)
                 {
                     mCardDeck.mCardHolderParent.SetActive(true);
                     mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);

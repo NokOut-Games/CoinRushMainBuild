@@ -9,6 +9,7 @@ public class MapSceneManager : MonoBehaviour
     [SerializeField] int unlockedLevel;
     [SerializeField] MapCameraController mCameraController;
     [SerializeField]Button backBtn;
+    [SerializeField] GameObject AllLevelCompleted;
 
 
 
@@ -20,12 +21,19 @@ public class MapSceneManager : MonoBehaviour
             GameManager.Instance.isInTutorial = true;
         }
         backBtn.onClick.AddListener(()=>{ LevelLoadManager.instance.BacktoHome(); });
+
         if (GameManager.Instance.hasChoiceInLevel) backBtn.gameObject.SetActive(false);
-        if (GameManager.Instance._SetIndex < levelSets.Length-1&&IsSetCompleted(GameManager.Instance._SetIndex) )
+
+        if (GameManager.Instance._SetIndex < levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex) )
         {
             GameManager.Instance._CompletedLevelsInSet.Clear();
 
             GameManager.Instance._SetIndex++;
+        }
+        else if(GameManager.Instance._SetIndex >= levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex))
+        {
+            backBtn.gameObject.SetActive(true);
+            AllLevelCompleted.SetActive(true);
         }
         // Debug.LogError(GameManager.Instance._SetIndex);
         MakeSetCompletedUntilIndex(GameManager.Instance._SetIndex,GameManager.Instance._CompletedLevelsInSet);

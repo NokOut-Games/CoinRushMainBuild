@@ -66,6 +66,7 @@ public class CardDeck : MonoBehaviour
     public GameObject blackOutScreen;
     public GameObject threeCardEffect;
     public Animator shieldAnimation;
+    public ParticleSystem shieldParticle;
 
     bool mMakeDrawBtnEnable = true;
 
@@ -121,6 +122,7 @@ public class CardDeck : MonoBehaviour
     {
         shieldAnimation.gameObject.SetActive(true);
         shieldAnimation.Play("Anim");
+        shieldParticle.Play();
     }
 
     private void Start()
@@ -331,15 +333,23 @@ public class CardDeck : MonoBehaviour
                         }
                     }
 
-                    if (Input.GetMouseButtonUp(0))
+                   
+                }
+                if (Input.GetMouseButtonUp(0))
+                {
+                    _drawButtonFillerImage.fillAmount = 0;
+                    DrawButton.color = new Color32(255, 255, 255, 255);
+                    if (drawButtonClick)
                     {
-                        _drawButtonFillerImage.fillAmount = 0;
-                        DrawButton.color = new Color32(255, 255, 255, 255);
-                        if (drawButtonClick)
-                        {
-                            time = 0;
-                        }
+                        time = 0;
+                    }
 
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (drawButtonClick && mAutoCardDraw)
+                    {
+                        BackToNormalState();
                     }
                 }
             }
