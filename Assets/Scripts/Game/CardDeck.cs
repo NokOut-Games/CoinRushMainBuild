@@ -104,7 +104,7 @@ public class CardDeck : MonoBehaviour
 
     private void Awake()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
+       /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mDrawButtonState = DrawButtonState.OpenCardState;
             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
@@ -113,7 +113,7 @@ public class CardDeck : MonoBehaviour
         {
             mDrawButtonState = DrawButtonState.NormalState;
             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-        }
+        }*/
         //PopulateOpenedCardSlotsFromFireBase();
         //PopulateFriendsOpenCardSlotsFromFirebase();
     }
@@ -248,7 +248,7 @@ public class CardDeck : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (drawButtonClick)//_drawButtonRectTransform.rect.Contains(localMousePosition))
+                    if (_drawButtonRectTransform.rect.Contains(localMousePosition))
                     {
                         //mMakeDrawBtnEnable = false;
 

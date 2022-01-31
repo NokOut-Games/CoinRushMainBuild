@@ -77,17 +77,17 @@ public class FacebookLogin : MonoBehaviour
     private void Update()
     {
         //if (!onceDone && UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex != 0)
-        //if (/*!onceDone &&*/ UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="ATTACK")
-        //{
-        //    FBFriendsButton = GameObject.Find("FBFriends").GetComponent<Button>();
-        //    GetFriendPos = GameObject.Find("FriendList").transform;
-        //    FBFriendsButton.onClick.AddListener(() =>
-        //    {
-        //        GetFriendsPlayingTheGame();
-        //        Debug.Log("HI");
-        //    });
-        //    //onceDone = true;
-      //  }
+        if (/*!onceDone &&*/ UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="ATTACK")
+        {
+            FBFriendsButton = GameObject.Find("FBFriends").GetComponent<Button>();
+            GetFriendPos = GameObject.Find("FriendList").transform;
+            FBFriendsButton.onClick.AddListener(() =>
+            {
+                GetFriendsPlayingTheGame();
+                Debug.Log("HI");
+            });
+            //onceDone = true;
+        }
     }
 
     public void GetFriendsPlayingTheGame()

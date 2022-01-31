@@ -45,7 +45,6 @@ public class MultiplayerManager : MonoBehaviour
 
     public List<MultiplayerBuildingData> MultiplayerBuildingDetails = new List<MultiplayerBuildingData>();
 
-    public bool isRevenging;
 
     DatabaseReference reference;
     FirebaseAuth auth;
@@ -92,7 +91,7 @@ public class MultiplayerManager : MonoBehaviour
         _currentPlayerName = FirebaseManager.Instance.CurrentPlayerName;
         _currentPlayerId = FirebaseManager.Instance.CurrentPlayerID;
         _currentPlayerPhotoURL = FirebaseManager.Instance.CurrentPlayerPhotoURL;
-       // _enemyPlayerID = mplayerIDDetails._randomEnemyID;
+        _enemyPlayerID = mplayerIDDetails._randomEnemyID;
 
         if (SceneManager.GetActiveScene().name == "OPENCARD")
         {
@@ -314,27 +313,16 @@ public class MultiplayerManager : MonoBehaviour
 
     public void OnGettingAttackCard()
     {
-        if (!isRevenging)
-        {
-            mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
-            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
-            FirebaseManager.Instance.WriteCardDataToFirebase();
-            FirebaseManager.Instance.WriteBuildingDataToFirebase();
-            FirebaseManager.Instance.WritePlayerDataToFirebase();
-            StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 5f);
-        }
-        else
-        {
-            StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 5f);
-            isRevenging = false;
-        }
-
+        mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+        FirebaseManager.Instance.WriteCardDataToFirebase();
+        FirebaseManager.Instance.WriteBuildingDataToFirebase();
+        FirebaseManager.Instance.WritePlayerDataToFirebase();
+        StartCoroutine(ReadEnemyData());
+        Invoke(nameof(LoadAttackScene), 4f);
     }
     void LoadAttackScene()
     {
-        LevelLoadManager.instance.LoadLevelASyncOf("ATTACK");
+        SceneManager.LoadScene("ATTACK");
     }
 
 
