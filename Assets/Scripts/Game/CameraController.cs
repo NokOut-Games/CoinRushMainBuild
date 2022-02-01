@@ -62,6 +62,7 @@ public class CameraController : MonoBehaviour
     bool OpenCardRegionClick => RectTransformUtility.RectangleContainsScreenPoint(mOpenHandRectTransform, Input.mousePosition, uIcam);
     bool BuildScrollViewClick => RectTransformUtility.RectangleContainsScreenPoint(mScrollViewRectTransform, Input.mousePosition, uIcam);
 
+    public bool openCardSelected;
 
     private void Start()
     {
@@ -99,6 +100,10 @@ public class CameraController : MonoBehaviour
         _CameraFreeRoam = true;
     }
 
+    public void SetOpenCardSelectedFalse()
+    {
+        openCardSelected = false;
+    }
     private void Update()
     {
         //Debug.Log("<b>"+_DrawButtonClicked+"</b>");
@@ -116,43 +121,45 @@ public class CameraController : MonoBehaviour
         //}
 
         //Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
-
-        if (!_inBetweenConstructionProcess)
+        if(!openCardSelected)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!_inBetweenConstructionProcess)
             {
-                /*mMouseDownPosition = Input.mousePosition;
-                Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
-                Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
-                Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);*/
-                if (_isCameraInGamePlayView) //New Addition
+                if (Input.GetMouseButtonDown(0))
                 {
-                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && !OpenCardRegionClick/*mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition)*/)
+                    /*mMouseDownPosition = Input.mousePosition;
+                    Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
+                    Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
+                    Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);*/
+                    if (_isCameraInGamePlayView) //New Addition
                     {
-                        _DrawButtonClicked = false;
-                        _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mCardDeck.BackToNormalState();
+                        if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && !OpenCardRegionClick/*mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition)*/)
+                        {
+                            _DrawButtonClicked = false;
+                            _isCameraInGamePlayView = false;
+                            Invoke("SetCameraFreeRoam", 0.11f);
+                            mCardDeck.BackToNormalState();
+                        }
                     }
-                }
-                else
-                {
-                    if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && TutorialManager.Instance.isPopUpRunning)
+                    else
                     {
-                        _DrawButtonClicked = false;
-                        _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mCardDeck.BackToNormalState();
+                        if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && TutorialManager.Instance.isPopUpRunning)
+                        {
+                            _DrawButtonClicked = false;
+                            _isCameraInGamePlayView = false;
+                            Invoke("SetCameraFreeRoam", 0.11f);
+                            mCardDeck.BackToNormalState();
+                        }
                     }
-                }
-                if (_isCameraInConstructionView && !_isCameraInGamePlayView)
-                {
-                    if (!BuildScrollViewClick)
+                    if (_isCameraInConstructionView && !_isCameraInGamePlayView)
                     {
-                        _buildButtonClicked = false;
-                        _isCameraInConstructionView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mMenuUI.CloseBuildButton();
+                        if (!BuildScrollViewClick)
+                        {
+                            _buildButtonClicked = false;
+                            _isCameraInConstructionView = false;
+                            Invoke("SetCameraFreeRoam", 0.11f);
+                            mMenuUI.CloseBuildButton();
+                        }
                     }
                 }
             }

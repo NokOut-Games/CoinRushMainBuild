@@ -50,10 +50,15 @@ public class OpenCardSelector : MonoBehaviour
     //}
     public void OnMouseDown()
     {
+        
         if (!mCameraController._isCameraInGamePlayView)
         {
-            //mCameraController.DrawButtonClicked();
+            mCameraController.openCardSelected = true;
+            mCameraController.DrawButtonClicked();
+            //Debug.LogError(this.gameObject.name);
             Invoke(nameof(CardSpawnDelay), mCardSpawnDelay);
+            mCameraController.openCardSelected = false;
+            
         }
         else
         {
@@ -69,6 +74,8 @@ public class OpenCardSelector : MonoBehaviour
 
     private void CardSpawnDelay()
     {
+        //Debug.LogError(this.gameObject.name);
+
         mcardDeck._OpenCardSlotFilled.Remove(_OpenCardPosition);
         string cardName = this.gameObject.name;
         cardName = cardName.Remove(cardName.Length - 7);
@@ -76,7 +83,7 @@ public class OpenCardSelector : MonoBehaviour
         mcardDeck.InstantiateCard(card);
         Destroy(this.gameObject, .5f);
         //GameManager.Instance.OpenCardDetails.RemoveAt(_OpenCardPosition);
-        
+
         CheckingCondition(_OpenCardPosition); //1
     }
 
