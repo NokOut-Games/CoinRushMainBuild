@@ -10,10 +10,18 @@ public class TutorialManager : MonoBehaviour
     public static TutorialManager Instance;
     [SerializeField] Tutorial[] Tutorials;
     public object[] Tutorialsw;
-    [SerializeField] GameObject TutorialUICanvas;
+    [SerializeField] GameObject TutorialUIPopUp;
+    [SerializeField] GameObject TutorialLogInPopUp;
+    [SerializeField] GameObject TutorialNamePopUp;
+
+
+
     [SerializeField] Image TutorialImage;
     [SerializeField] TMP_Text TutorialContentTxt;
     [SerializeField] TMP_Text TutorialHintTxt;
+
+
+    [SerializeField] TMP_InputField nameIF;
 
     Tutorial currentTutorial;
     int currentTutorialIndex = 0;
@@ -39,6 +47,8 @@ public class TutorialManager : MonoBehaviour
         {
             GameManager.Instance.isInTutorial = false;
             FirebaseManager.Instance.WriteAllDataToFireBase();
+            if (!FirebaseManager.Instance.auth.CurrentUser.IsAnonymous) return;
+            TutorialLogInPopUp.SetActive(true);
             return;
         }
         currentTutorialIndex = tutorialIndex;
@@ -54,13 +64,13 @@ public class TutorialManager : MonoBehaviour
         if (currentTutorial.TutorialImage == null) return;
         TutorialImage.sprite = currentTutorial.TutorialImage;
         TutorialContentTxt.text = currentTutorial.TutorialContent;
-        TutorialUICanvas.SetActive(true);
+        TutorialUIPopUp.SetActive(true);
         isPopUpRunning = true;
     }
     void OnTutorialComplete()
     {
         TutorialHintTxt.gameObject.SetActive(false);
-        TutorialUICanvas.SetActive(false);
+        TutorialUIPopUp.SetActive(false);
         isPopUpRunning = false;
         StartNextTutorial(currentTutorialIndex + 1);
     }
@@ -71,5 +81,20 @@ public class TutorialManager : MonoBehaviour
     private void Update()
     {
         if (currentTutorial != null) currentTutorial.CheckCompletion();
+    }
+    public void SavePlayerName()
+    {
+        if (nameIF.text == "") return;
+        FirebaseManager.Instance.CurrentPlayerName = nameIF.text;
+        FirebaseManager.Instance.WriteAllDataToFireBase();
+        TutorialNamePopUp.SetActive(false);
+    }
+
+
+
+    public void ConnectToFacebook()
+    {
+        FacebookLogin.Instance.OnClickFacebookLogin();
+        TutorialLogInPopUp.SetActive(false);
     }
 }

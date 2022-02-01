@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
-using Firebase.Auth;
-using Firebase.Database;
-using Facebook.Unity.Example;
 using Facebook.MiniJSON;
 using UnityEngine.UI;
 public class FacebookLogin : MonoBehaviour
