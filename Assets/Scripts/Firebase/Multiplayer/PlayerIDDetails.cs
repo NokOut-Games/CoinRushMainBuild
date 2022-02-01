@@ -33,13 +33,13 @@ public class PlayerIDDetails : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
                 _playerList = new List<string>();
 
-                //Show Results in a list
-                foreach (var dataSnapshot in snapshot.Child("Facebook Users").Children)
-                {
-                    mPlayerUserId = dataSnapshot.Key;
-                    _playerList.Add(mPlayerUserId);
-                    // _playerList.Remove("Facebook Users"); _playerList.Remove("Guest Users"); _playerList.Remove("Timestamp");
-                }
+                ////Show Results in a list
+                //foreach (var dataSnapshot in snapshot.Child("Facebook Users").Children)
+                //{
+                //    mPlayerUserId = dataSnapshot.Key;
+                //    _playerList.Add(mPlayerUserId);
+                //    // _playerList.Remove("Facebook Users"); _playerList.Remove("Guest Users"); _playerList.Remove("Timestamp");
+                //}
 
                 //foreach (var dataSnapshot2 in snapshot.Child("Guest Users").Children)
                 //{
@@ -47,10 +47,40 @@ public class PlayerIDDetails : MonoBehaviour
                 //    _playerList.Add(mPlayerUserId);
                 //}
 
+                /* using (var sequenceThroughFacebookChildren = snapshot.Child("Facebook Users").Children.GetEnumerator())
+                 {
+                     for (int i = 0; i < snapshot.Child("Facebook Users").ChildrenCount; i++)
+                     {
+                         while(sequenceThroughFacebookChildren.MoveNext())
+                         {
+                             string facebookUserIds = sequenceThroughFacebookChildren.Current.Key;
+                             _playerList.Add(facebookUserIds);
+                         }
+                     }
+                 }*/
+                AddUsersToList(snapshot, "Facebook Users", _playerList);
+                AddUsersToList(snapshot, "Guest Users", _playerList);
+
             }
         });
     }
   
+
+
+    void AddUsersToList(DataSnapshot snapshot,string userTitle,List<string> playerList)
+    {
+        using (var sequenceThroughFacebookChildren = snapshot.Child(userTitle).Children.GetEnumerator())
+        {
+            for (int i = 0; i < snapshot.Child(userTitle).ChildrenCount; i++)
+            {
+                while (sequenceThroughFacebookChildren.MoveNext())
+                {
+                    string facebookUserIds = sequenceThroughFacebookChildren.Current.Key;
+                    playerList.Add(facebookUserIds);
+                }
+            }
+        }
+    }
     public void GetRandomEnemyID(string inCurrentPlayerID)
     {
         _playerList.Remove(inCurrentPlayerID); //FirebaseManager.Instance.CurrentPlayerID);

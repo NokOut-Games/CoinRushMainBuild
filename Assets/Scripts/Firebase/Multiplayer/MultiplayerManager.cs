@@ -317,7 +317,7 @@ public class MultiplayerManager : MonoBehaviour
         if (!isRevenging)
         {
             mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
-            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
+           // _enemyPlayerID = mplayerIDDetails._randomEnemyID;
             FirebaseManager.Instance.WriteCardDataToFirebase();
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
             FirebaseManager.Instance.WritePlayerDataToFirebase();
