@@ -13,7 +13,7 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
     DatabaseReference reference;
-    FirebaseAuth auth;
+    public FirebaseAuth auth;
 
     private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mPlayerPhotoURLData, mNumberOfTimesGotAttacked;
     public string CurrentPlayerID;
@@ -53,16 +53,15 @@ public class FirebaseManager : MonoBehaviour
     }
 
     private void Start()
-    {
-        
-        if (!auth.CurrentUser.IsAnonymous)
+    {     
+        if (auth.CurrentUser!=null && !auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
             ReadData();
             CurrentPlayerID = auth.CurrentUser.UserId;
             //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
-        if (!PlayerPrefs.HasKey("MadeHisChoice"))
+        else if (!PlayerPrefs.HasKey("MadeHisChoice"))
         {
             //readUserData = true;
             LevelLoadManager.instance.GoToMapScreen(true);
@@ -72,6 +71,7 @@ public class FirebaseManager : MonoBehaviour
     public void ReadData()
     {
         PlayerPrefs.SetInt("MadeHisChoice", 1);
+        Debug.Log("ReadData");
         if (userTitle == "Facebook Users")
         {
             reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
@@ -119,7 +119,6 @@ public class FirebaseManager : MonoBehaviour
 
                 CurrentPlayerPhotoURL = mPlayerPhotoURLData;
                 CurrentPlayerName = mPlayerNameData;
-                Debug.LogError("Got USer Details");
 
                 List<GameManagerBuildingData> BuildingDetails = new List<GameManagerBuildingData>();
                 for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
@@ -134,7 +133,6 @@ public class FirebaseManager : MonoBehaviour
 
                     BuildingDetails.Add(builddata);
                     BuildingDetailsaa.Add(builddata);
-                    Debug.LogError("Getting Building Details");
                 }
                 GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerPhotoURLData);
                 readUserData = true;
@@ -163,7 +161,6 @@ public class FirebaseManager : MonoBehaviour
                 {
                     GameManager.Instance._SavedCardTypes.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
                 }
-                Debug.LogError("Got Saved Cards");
             }
         });
     }
@@ -248,7 +245,6 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log("The energy amount gained is : " + energyAmount);
                     GameManager.Instance._energy += energyAmount;
                 }
-                Debug.LogError("I have read the data from firebase succesfully");
             }
         });
 
@@ -316,8 +312,7 @@ public class FirebaseManager : MonoBehaviour
                     Debug.Log(newFBUser.UserId);
                     CurrentPlayerID = auth.CurrentUser.UserId;
                     SaveNewUserInFirebase(newPlayer);
-                    WriteBuildingDataToFirebase();
-                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+                   // StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
                     readUserData = true;
                     LevelLoadManager.instance.GoToMapScreen(true);
                 }
@@ -327,7 +322,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void WritePlayerDataToFirebase()
     {
-        Player playerDetails = new Player(auth.CurrentUser.UserId, auth.CurrentUser.DisplayName==""?"Guest": auth.CurrentUser.DisplayName);
+        Player playerDetails = new Player(auth.CurrentUser.UserId, CurrentPlayerName);
 
         playerDetails._coins = GameManager.Instance._coins;
         playerDetails._energy = GameManager.Instance._energy;
