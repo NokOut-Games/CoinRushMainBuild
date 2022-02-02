@@ -46,10 +46,6 @@ public class CameraController : MonoBehaviour
     private CardDeck mCardDeck;
     public MenuUI mMenuUI;
 
-    private Vector3 initialVector = Vector3.forward;
-    private Vector2 mMouseDownPosition = Vector2.zero;
-
-    //private DrawButtonState mDrawButtonState;
 
     //New Changes
     Vector3 mPreTouchMovementVector;
@@ -61,6 +57,7 @@ public class CameraController : MonoBehaviour
     bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
     bool OpenCardRegionClick => RectTransformUtility.RectangleContainsScreenPoint(mOpenHandRectTransform, Input.mousePosition, uIcam);
     bool BuildScrollViewClick => RectTransformUtility.RectangleContainsScreenPoint(mScrollViewRectTransform, Input.mousePosition, uIcam);
+    bool GetToNormalView => !_buildButtonClicked && !_DrawButtonClicked && !mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial;
 
     public bool openCardSelected;
 
@@ -106,131 +103,79 @@ public class CameraController : MonoBehaviour
     }
     private void Update()
     {
-        //Debug.Log("<b>"+_DrawButtonClicked+"</b>");
-        //if(_currentView == _views[0])
-        //{
-        //    Debug.Log("CurrentView = " + "<color=red>  Normal-View  </color>");
-        //}
-        //else if(_currentView == _views[1])
-        //{
-        //    Debug.Log("CurrentView = " + "<color=blue> Gameplay-View </color>");
-        //}
-        //else if (_currentView == _views[2])
-        //{
-        //    Debug.Log("CurrentView = " + "<color=yellow> Build-View </color>");
-        //}
-
-        //Debug.Log(Camera.main.ScreenToViewportPoint(Input.mousePosition));
-        if(!openCardSelected)
+        if(openCardSelected) return;
+        if (!_inBetweenConstructionProcess&&!GameManager.Instance._PauseGame)
         {
-            if (!_inBetweenConstructionProcess)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (_isCameraInGamePlayView) //New Addition
                 {
-                    /*mMouseDownPosition = Input.mousePosition;
-                    Vector2 drawButtonlocalMousePosition = mDrawButtonRectTransform.InverseTransformPoint(mMouseDownPosition);
-                    Vector2 openHandLocalMousePosition = mOpenHandRectTransform.InverseTransformPoint(mMouseDownPosition); //New Addition
-                    Vector2 BuildingScrollViewLocalPosition = mScrollViewRectTransform.InverseTransformPoint(mMouseDownPosition);*/
-                    if (_isCameraInGamePlayView) //New Addition
-                    {
-                        if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && !OpenCardRegionClick/*mOpenHandRectTransform.rect.Contains(openHandLocalMousePosition)*/)
-                        {
-                            _DrawButtonClicked = false;
-                            _isCameraInGamePlayView = false;
-                            Invoke("SetCameraFreeRoam", 0.11f);
-                            mCardDeck.BackToNormalState();
-                        }
-                    }
-                    else
-                    {
-                        if (!/*mDrawButtonRectTransform.rect.Contains(drawButtonlocalMousePosition)*/drawButtonClick && TutorialManager.Instance.isPopUpRunning)
-                        {
-                            _DrawButtonClicked = false;
-                            _isCameraInGamePlayView = false;
-                            Invoke("SetCameraFreeRoam", 0.11f);
-                            mCardDeck.BackToNormalState();
-                        }
-                    }
-                    if (_isCameraInConstructionView && !_isCameraInGamePlayView)
-                    {
-                        if (!BuildScrollViewClick)
-                        {
-                            _buildButtonClicked = false;
-                            _isCameraInConstructionView = false;
-                            Invoke("SetCameraFreeRoam", 0.11f);
-                            mMenuUI.CloseBuildButton();
-                        }
-                    }
-                }
-            }
-
-            if (_CameraFreeRoam && !Input.GetMouseButton(0))
-            {
-                _CameraFreeRoam = false;
-            }
-
-
-            if (!_buildButtonClicked)
-            {
-                if (_DrawButtonClicked)
-                {
-                    mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", false);
-
-                    _isCameraInGamePlayView = true;
-                    mOpenCardRegion.SetActive(true);
-
-                    ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
-                }
-                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial)
-                {
-                    mCardDeck.mCardHolderParent.SetActive(true);
-                    mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
-                    if (!_CameraFreeRoam)
-                    {
-                        mOpenCardRegion.SetActive(false);
-                        if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
-                        {
-
-                            ViewShifter(0, 0.1f); // 0 takes to normal view //_currentView = _views[0];
-                        }
-                    }
-
-                    HandleTouch();
-                }
-            }
-
-            if (!_DrawButtonClicked)
-            {
-                if (_buildButtonClicked)
-                {
-                    if (_DrawButtonClicked == true)
+                    if (!drawButtonClick && !OpenCardRegionClick)
                     {
                         _DrawButtonClicked = false;
+                        _isCameraInGamePlayView = false;
+                        Invoke("SetCameraFreeRoam", 0.11f);
+                        mCardDeck.BackToNormalState();
                     }
-                    mCardDeck.mCardHolderParent.SetActive(false);
-                    _isCameraInConstructionView = true;
-                    ViewShifter(2, 0.1f); // 2 takes to construction view
                 }
-                else if (!mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial)
+                else
+              /*  else
                 {
-                    mCardDeck.mCardHolderParent.SetActive(true);
-                    mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
-                    if (!_CameraFreeRoam)
+                    if (!drawButtonClick && TutorialManager.Instance.isPopUpRunning)
                     {
-                        mOpenCardRegion.SetActive(false);
-                        if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
-                        {
-                            ViewShifter(0, Time.fixedDeltaTime * _transitionSpeed); // 0 takes to normal view
-                        }
+                        _DrawButtonClicked = false;
+                        _isCameraInGamePlayView = false;
+                        Invoke("SetCameraFreeRoam", 0.11f);
+                        mCardDeck.BackToNormalState();
                     }
+                }*/
+
+                if (_isCameraInConstructionView && !BuildScrollViewClick)
+                {
+                    _buildButtonClicked = false;
+                    _isCameraInConstructionView = false;
+                    Invoke("SetCameraFreeRoam", 0.11f);
+                    mMenuUI.CloseBuildButton();
                 }
             }
+        }
+        if (_CameraFreeRoam && !Input.GetMouseButton(0))
+        {
+            _CameraFreeRoam = false;
+        }
+        if (_buildButtonClicked && !_DrawButtonClicked)
+        {
+            mCardDeck.mCardHolderParent.SetActive(false);
+            _isCameraInConstructionView = true;
+            if (_CameraFreeRoam) return;
+            ViewShifter(2, 0.1f); // 2 takes to construction view
+        }
+        else if (_DrawButtonClicked && !_buildButtonClicked)
+        {
+            mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", false);
+            _isCameraInGamePlayView = true;
+            mOpenCardRegion.SetActive(true);
+
+            ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
+        }
+        if (GetToNormalView)
+        {
+            mCardDeck.mCardHolderParent.SetActive(true);
+            mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
+            if (_CameraFreeRoam) return;
+            mOpenCardRegion.SetActive(false);
+          //  if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
+            {
+                ViewShifter(0, 0.01f/*Time.fixedDeltaTime * _transitionSpeed*/); // 0 takes to normal view //_currentView = _views[0];
+            }
+            HandleTouch();
         }
     }
 
 
     private void ViewShifter(int inViewNumber, float inTransitionSpeed)
     {
+        Debug.Log(inViewNumber + "View");
         _currentView = _views[inViewNumber];
         //Debug.Log("Current View Changed To: " + _currentView);
         _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);

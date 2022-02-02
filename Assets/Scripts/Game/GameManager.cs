@@ -91,8 +91,11 @@ public class GameManager : MonoBehaviour
     
     private bool mIsFull = true;
 
+    [Header("Card Deck Data")]
     public List<int> _SavedCardTypes = new List<int>();
-    public int _MaxLevelsInGame;
+    public bool _IsInAutoDraw;
+
+    public bool _PauseGame;
 
     public bool OpenCardWritten = false;
 

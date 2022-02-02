@@ -59,7 +59,7 @@ public class PlayerIDDetails : MonoBehaviour
                      }
                  }*/
                 AddUsersToList(snapshot, "Facebook Users", _playerList);
-                AddUsersToList(snapshot, "Guest Users", _playerList);
+                //AddUsersToList(snapshot, "Guest Users", _playerList);
 
             }
         });

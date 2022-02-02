@@ -120,6 +120,7 @@ public class MenuUI : MonoBehaviour
     public void MapScreen()
     {
         GameManager.Instance.CurrentLevelCompleted();
+        GameManager.Instance._PauseGame = false;
     }
 
 

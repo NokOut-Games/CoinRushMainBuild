@@ -103,7 +103,7 @@ public class CardDeck : MonoBehaviour
 
 
     private void Awake()
-    {
+    {/*
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mDrawButtonState = DrawButtonState.OpenCardState;
@@ -113,7 +113,7 @@ public class CardDeck : MonoBehaviour
         {
             mDrawButtonState = DrawButtonState.NormalState;
             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-        }
+        }*/
         //PopulateOpenedCardSlotsFromFireBase();
         //PopulateFriendsOpenCardSlotsFromFirebase();
     }
@@ -131,6 +131,7 @@ public class CardDeck : MonoBehaviour
         if(mDrawButtonState == DrawButtonState.NormalState)
         {
             PopulateOpenedCardSlotsFromFireBase();
+           
         }
         else
         {
@@ -143,7 +144,20 @@ public class CardDeck : MonoBehaviour
         {
             onceDonee = false;
             canClick = true;
-            DrawButton.sprite = drawNormal;
+            if (GameManager.Instance._IsInAutoDraw)
+            {
+                Camera.main.GetComponent<CameraController>().DrawButtonClicked();
+                DrawButton.sprite = drawAutomatic;
+                mOnceDone = true;
+                mAutomaticDrawModeOn = true;
+                mAutoCardDraw = true;
+                StartCoroutine(AutomaticCardDrawing(2f));
+            }
+            else
+            {
+                DrawButton.sprite = drawNormal;
+
+            }
             SpawnOpenCards();
             //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             if (GameManager.Instance._SavedCardTypes.Count > 0)
@@ -236,10 +250,8 @@ public class CardDeck : MonoBehaviour
 
     private void Update()
     {
-        //OpenCard
-        //_OpenCardNumberIndex = mMultiplayerPlayerData._openCardInfo;
-        //_OpenCardSlotFilled = MultiplayerManager.Instance.OpenedCardSlot;
 
+        if (GameManager.Instance._PauseGame) return;
 
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
@@ -327,6 +339,7 @@ public class CardDeck : MonoBehaviour
                                     mOnceDone = true;
                                     mAutomaticDrawModeOn = true;
                                     mAutoCardDraw = true;
+                                    GameManager.Instance._IsInAutoDraw = true;
                                     StartCoroutine(AutomaticCardDrawing());
                                 }
                             }
@@ -401,6 +414,8 @@ public class CardDeck : MonoBehaviour
             ChangeSprites();
             mOnceDone = false;
             mAutoCardDraw = false;
+            GameManager.Instance._IsInAutoDraw = false;
+
             StopCoroutine(AutomaticCardDrawing());
         }
     }
@@ -418,8 +433,9 @@ public class CardDeck : MonoBehaviour
         }
     }
 
-    private IEnumerator AutomaticCardDrawing()
+    private IEnumerator AutomaticCardDrawing(float delay = 0)
     {
+        yield return new WaitForSeconds(delay);
         while (mAutoCardDraw)
         {
             if (canClick && mMakeDrawBtnEnable)
