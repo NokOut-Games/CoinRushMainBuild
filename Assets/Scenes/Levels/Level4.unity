@@ -5609,6 +5609,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1657605069}
+    - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -550.00006
+      objectReference: {fileID: 0}
     - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -15168,7 +15172,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 412256757}
   shieldAnimation: {fileID: 286110486}
   shieldParticle: {fileID: 2046146802}
-  _levelManager: {fileID: 865159930}
   _buildingManagerRef: {fileID: 349220986}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -15183,6 +15186,11 @@ MonoBehaviour:
   - {fileID: 412256760}
   - {fileID: 412256759}
   - {fileID: 412256758}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 412256764}
 --- !u!1001 &1522990545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16829,6 +16837,7 @@ MonoBehaviour:
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
   uIcam: {fileID: 0}
+  openCardSelected: 0
 --- !u!1 &1625840898
 GameObject:
   m_ObjectHideFlags: 0
@@ -19341,7 +19350,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -19356,6 +19364,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0
@@ -22562,7 +22575,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 865159930}
   _buildingManagerRef: {fileID: 349220986}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -22577,6 +22589,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!1 &919132148165148767
 GameObject:
   m_ObjectHideFlags: 0

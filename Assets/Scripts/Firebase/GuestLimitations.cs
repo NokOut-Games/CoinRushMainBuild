@@ -10,11 +10,11 @@ public class GuestLimitations : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(FirebaseManager.Instance.userTitle == "Guest Users")
+        /*if(FirebaseManager.Instance.userTitle == "Guest Users")
         {
             OpenCardButton.SetActive(false);
             //GuestUpgradeButton.SetActive(true);
-        }
+        }*/
     }
 
 }

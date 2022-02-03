@@ -25491,6 +25491,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: ff4c3c0bf6ceacb458bf6cbd1bff618f, type: 3}
+    - target: {fileID: 840573812, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713980255, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997208097, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: mCameraController
       value: 
@@ -25591,6 +25603,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1094142182}
+    - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -550.00006
+      objectReference: {fileID: 0}
     - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -61971,6 +61987,10 @@ PrefabInstance:
       value: CardDeck
       objectReference: {fileID: 0}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
+      propertyPath: menu
+      value: 
+      objectReference: {fileID: 412256785}
+    - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: uIcam
       value: 
       objectReference: {fileID: 1094142182}
@@ -76154,6 +76174,7 @@ MonoBehaviour:
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
   uIcam: {fileID: 0}
+  openCardSelected: 0
 --- !u!1001 &1626795347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83897,7 +83918,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -83912,6 +83932,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0
@@ -97186,7 +97211,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 52435181}
   _buildingManagerRef: {fileID: 1879450403}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -97201,6 +97225,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!1 &919132148165148767
 GameObject:
   m_ObjectHideFlags: 0

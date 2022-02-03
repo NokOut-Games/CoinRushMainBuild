@@ -55,6 +55,30 @@ public class Cards : MonoBehaviour
         anim.AddClip(clip, clip.name);
         anim.Play(clip.name);
     }
+
+
+    public void PlaySceneChangeAnimation()
+    {
+        Animation anim = GetComponent<Animation>();
+
+        AnimationCurve CurvePosY;
+
+        AnimationClip clip = new AnimationClip();
+        clip.legacy = true;
+
+
+        Keyframe[] PosY;
+        PosY = new Keyframe[3];
+        PosY[0] = new Keyframe(0f, transform.localPosition.y);
+        PosY[1] = new Keyframe(1f, transform.localPosition.y);
+        PosY[2] = new Keyframe(2f, -1500);
+
+        CurvePosY = new AnimationCurve(PosY);
+
+        clip.SetCurve("", typeof(Transform), "localPosition.y", CurvePosY);
+        anim.AddClip(clip, clip.name);
+        anim.Play(clip.name);
+    }
     void ChangeSprite()
     {
         gameObject.GetComponent<Image>().sprite = changeSprite;
@@ -229,12 +253,11 @@ public class Cards : MonoBehaviour
         }
 
         Keyframe[] PosY;
-        PosY = new Keyframe[5];
+        PosY = new Keyframe[4];
         PosY[0] = new Keyframe(0f, transform.localPosition.y);
         PosY[1] = new Keyframe(1f, 716);
         PosY[2] = new Keyframe(3.2f, 716);//716
         PosY[3] = new Keyframe(6.5f, 716);//716
-        PosY[4] = new Keyframe(7.5f, -1100);
 
         CurvePosY = new AnimationCurve(PosY);
 

@@ -175,7 +175,7 @@ public class CameraController : MonoBehaviour
 
     private void ViewShifter(int inViewNumber, float inTransitionSpeed)
     {
-        Debug.Log(inViewNumber + "View");
+      //  Debug.Log(inViewNumber + "View");
         _currentView = _views[inViewNumber];
         //Debug.Log("Current View Changed To: " + _currentView);
         _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);// Time.deltaTime * _transitionSpeed);

@@ -549,17 +549,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
---- !u!114 &52435181 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 612471264391210442, guid: c8a859319e2a0ab4295e5aa3fc9c3dfe, type: 3}
-  m_PrefabInstance: {fileID: 52435180}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caf2825b287544045817e8ca0db0c291, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &70448204
 GameObject:
   m_ObjectHideFlags: 0
@@ -3449,6 +3438,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 14.861
       objectReference: {fileID: 0}
+    - target: {fileID: 840573812, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1713980255, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997208097, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1330795130403927144, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -3557,6 +3558,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1983817684}
+    - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -550.00006
+      objectReference: {fileID: 0}
     - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3759,6 +3764,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 821dae0283267f74795ee79ed889ba95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &412256788 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a993ddaa4bc4eef4da46fe067d2f0d51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &425053956
@@ -16042,6 +16058,7 @@ MonoBehaviour:
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
   uIcam: {fileID: 1983817684}
+  openCardSelected: 0
 --- !u!1 &1624352238
 GameObject:
   m_ObjectHideFlags: 0
@@ -17741,7 +17758,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -17756,6 +17772,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0
@@ -21273,7 +21294,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 412256786}
   shieldAnimation: {fileID: 412256785}
   shieldParticle: {fileID: 412256784}
-  _levelManager: {fileID: 52435181}
   _buildingManagerRef: {fileID: 1879450403}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -21288,6 +21308,11 @@ MonoBehaviour:
   - {fileID: 412256781}
   - {fileID: 412256780}
   - {fileID: 412256779}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 412256788}
 --- !u!1 &919132148165148767
 GameObject:
   m_ObjectHideFlags: 0

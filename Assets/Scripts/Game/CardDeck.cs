@@ -34,6 +34,7 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private int mMaxHoldTime = 5;
     [SerializeField] private float timeForCardAnimation = 2f;
     [SerializeField] private float time = 0, maxTime = 5;
+
     private bool mAutoCardDraw = false;
     private bool mAutomaticDrawModeOn = false;
     private bool mOnceDone = false;
@@ -70,7 +71,6 @@ public class CardDeck : MonoBehaviour
 
     bool mMakeDrawBtnEnable = true;
 
-    public LevelManager _levelManager;
     public BuildingManager _buildingManagerRef;
     public MultiplayerPlayerData mMultiplayerPlayerData;
 
@@ -99,6 +99,11 @@ public class CardDeck : MonoBehaviour
     bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(_drawButtonRectTransform, Input.mousePosition, uIcam) && !TutorialManager.Instance.isPopUpRunning;
 
     [SerializeField] Transform[] jokerPairCardTransforms = new Transform[4];
+
+
+
+    [SerializeField] Cards[] matchedCards = new Cards[3];
+    [SerializeField] MenuUI menu;
 
 
 
@@ -159,10 +164,8 @@ public class CardDeck : MonoBehaviour
 
             }
             SpawnOpenCards();
-            //mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
             if (GameManager.Instance._SavedCardTypes.Count > 0)
             {
-                //Camera.main.GetComponent<CameraController>().DrawButtonClicked();
                 foreach (int cardType in GameManager.Instance._SavedCardTypes)
                 {
                     InstantiateCard(GetScriptedCardWithCardType((CardType)cardType), true);
@@ -260,12 +263,8 @@ public class CardDeck : MonoBehaviour
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (drawButtonClick)//_drawButtonRectTransform.rect.Contains(localMousePosition))
+                    if (drawButtonClick)
                     {
-                        //mMakeDrawBtnEnable = false;
-
-                        //time = 0;
-
                         OpenHandCardAdder();
                         mOpenCardTakenAlready = true;
                     }
@@ -284,8 +283,6 @@ public class CardDeck : MonoBehaviour
 
             if (take_Multi_Card_Joker_Pair_Input)
             {
-              /*  Vector2 selectionCardPosOne = _CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
-                Vector2 selectionCardPosTwo = _CardList[mSelectionCards[1]].gameObject.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);*/
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (RectTransformUtility.RectangleContainsScreenPoint(_CardList[mSelectionCards[0]].gameObject.GetComponent<RectTransform>(), Input.mousePosition, uIcam))
@@ -393,6 +390,11 @@ public class CardDeck : MonoBehaviour
         mFlotingJoker.GetComponent<Cards>().PlayThreeCardMatchAnim(0, _CardList[mSelectionCards[inSelectedIndex]].gameObject.GetComponent<Image>().sprite);
         _CardList[mSelectionCards[inSelectedIndex]].PlayThreeCardMatchAnim(320);
 
+
+        matchedCards[0] = _CardList[mSelectionCards[inSelectedIndex] - 1];
+        matchedCards[1] = mFlotingJoker.GetComponent<Cards>();
+        matchedCards[2] = _CardList[mSelectionCards[inSelectedIndex]];
+
         _CardList[mSelectionCards[inUnSelectedIndex] - 1].PlayJokerSelectionPairGetBackAnim();
         _CardList[mSelectionCards[inUnSelectedIndex]].PlayJokerSelectionPairGetBackAnim();
         _CardList.RemoveAt(mSelectionCards[inSelectedIndex] - 1);
@@ -404,6 +406,8 @@ public class CardDeck : MonoBehaviour
         take_Multi_Card_Joker_Pair_Input = false;
         ReplacementOfCards(true);
     }
+
+
 
     public void BackToNormalState()
     {
@@ -488,7 +492,6 @@ public class CardDeck : MonoBehaviour
             }
             if (mCardsOpened < 1)
             {
-                // int RandomCard = Random.Range(0, _openCardPrefabs.Count);
                 _openedCardIndex = Random.Range(0, _openCardPrefabs.Count);
                 GameObject OpenCards = Instantiate(_openCardPrefabs[_openedCardIndex], mOpenCards._OpenCardTransformPoint[positionNumber].position, mOpenCards._OpenCardTransformPoint[positionNumber].rotation, mOpenCards._OpenCardTransformPoint[positionNumber]);
                 OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
@@ -606,10 +609,6 @@ public class CardDeck : MonoBehaviour
         mSelectionCards[0] = GetTwoPairCardIndex()[0] + 1;
         mSelectionCards[1] = GetTwoPairCardIndex()[1] + 1;
 
-        /*_CardList[GetTwoPairCardIndex()[0]].PlayJokerSelectionPairAnim(true, 0);
-        _CardList[GetTwoPairCardIndex()[0] + 1].PlayJokerSelectionPairAnim(true, 1);
-        _CardList[GetTwoPairCardIndex()[1]].PlayJokerSelectionPairAnim(false, 1);
-        _CardList[GetTwoPairCardIndex()[1] + 1].PlayJokerSelectionPairAnim(false, 0);*/
         _CardList[GetTwoPairCardIndex()[0]].PlayJokerSelectionPairAnim(jokerPairCardTransforms[0]);
         _CardList[GetTwoPairCardIndex()[0] + 1].PlayJokerSelectionPairAnim(jokerPairCardTransforms[1]);
         _CardList[GetTwoPairCardIndex()[1]].PlayJokerSelectionPairAnim(jokerPairCardTransforms[2]);
@@ -651,10 +650,19 @@ public class CardDeck : MonoBehaviour
 
 
             CardType matchCardType = _CardList[newCardIndex]._cardType;
+
             _CardList[newCardIndex].PlayThreeCardMatchAnim(-320);
-            _CardList[newCardIndex + 1].PlayThreeCardMatchAnim(320);
             int jokerIndex = FindJokerIndex();
             _CardList[jokerIndex].PlayThreeCardMatchAnim(0, _CardList[newCardIndex].gameObject.GetComponent<Image>().sprite);
+            _CardList[newCardIndex + 1].PlayThreeCardMatchAnim(320);
+           
+
+
+            matchedCards[0] = _CardList[newCardIndex];
+            matchedCards[1] = _CardList[jokerIndex];
+            matchedCards[2] = _CardList[newCardIndex + 1]; 
+
+
             if (_CardList[newCardIndex]._cardType == CardType.SHIELD)
             {
                 Destroy(_CardList[newCardIndex].gameObject, 3.25f);
@@ -663,8 +671,6 @@ public class CardDeck : MonoBehaviour
                 Invoke(nameof(DelayBalckOut), 3.25f);
                 mHasJoker = false;
                 Invoke(nameof(ShieldAnimation), 3.5f);
-
-
             }
             else
             {
@@ -815,11 +821,19 @@ public class CardDeck : MonoBehaviour
                 mHasThreeCardMatch = true;
                 canClick = false;
                 CardType matchedCard = _CardList[i]._cardType;
+
+                matchedCards[0] = _CardList[i];
+                matchedCards[1] = _CardList[i+1];
+                matchedCards[2] = _CardList[i+2];
+
                 Invoke(nameof(PlayThreeCardAnimation), 1.5f);
                 StartCoroutine(DelayedSceneLoader(matchedCard, 5f));
             }
             else if (mHasJoker && (_CardList[i]._cardType == _CardList[i + 2]._cardType && _CardList[i + 1]._cardType == CardType.JOKER))
             {
+                matchedCards[0] = _CardList[i];
+                matchedCards[1] = _CardList[i + 1];
+                matchedCards[2] = _CardList[i + 2];
 
                 Debug.Log("Pair with joker");
                 mThreeCardMatchIndex = i;
@@ -848,6 +862,7 @@ public class CardDeck : MonoBehaviour
             _buildingManagerRef._shieldedBuildings.Add(randomNumber);
             _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
             GameManager.Instance.AddShieldToBuilding(randomNumber);
+            StartCoroutine(menu.UpDateShieldInUICoroutine(.5f));
         }
         else
         {
@@ -904,6 +919,8 @@ public class CardDeck : MonoBehaviour
     private IEnumerator DelayedSceneLoader(CardType inType, float delayTime = 3f)
     {
         yield return new WaitForSeconds(delayTime);
+        //blackOutScreen.transform.SetAsLastSibling();
+
         if (inType == CardType.SHIELD)
         {
             Shield();
@@ -911,6 +928,8 @@ public class CardDeck : MonoBehaviour
         }
         else
         {
+            menu.MakeCanvasScreenIn(false);
+
             int waitTime = 3000;
             if (GameManager.Instance._energy >= 3)
             {
@@ -918,8 +937,7 @@ public class CardDeck : MonoBehaviour
                 _Multiplier.gameObject.SetActive(true);
                 _Multiplier.AssignTutorial(tutorial);
                 _Multiplier.transform.SetAsLastSibling();
-                _Multiplier.InitiateMulitiplier();
-                Destroy(_Multiplier.gameObject, 3.1f);
+                _Multiplier.InitiateMulitiplier(inType,matchedCards);
                 waitTime = 3000;
             }
             if (mHasJoker || mJokerFindWithMultiCardPair)
@@ -927,14 +945,18 @@ public class CardDeck : MonoBehaviour
                 waitTime += 500;
             }
             GameManager.Instance._IsBuildingFromFBase = true;
-            if (inType == CardType.ATTACK)
+            foreach (Cards card in _CardList)
             {
-                MultiplayerManager.Instance.OnGettingAttackCard();
+                if (card._cardType != matchedCards[0]._cardType) card.gameObject.SetActive(false);
             }
-            else
-            {
-                LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
-            }
+            /* if (inType == CardType.ATTACK)
+             {
+                 //MultiplayerManager.Instance.OnGettingAttackCard();
+             }
+             else
+             {
+                 //LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
+             }*/
         }
     }
     public void AssignTutorial(Tutorial tutorial, CardType card)

@@ -18,6 +18,7 @@ public class MenuUI : MonoBehaviour
     public TextMeshProUGUI _energyText;
     public TextMeshProUGUI _extraEnergytext;
     public TMP_Text _Shield;
+    public GameObject shieldMaxMark;
 
     private float mRegenerationTimer;
     private float mNextRegenTimer;
@@ -45,6 +46,7 @@ public class MenuUI : MonoBehaviour
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
+       StartCoroutine(UpDateShieldInUICoroutine(0));
     }
 
     private void Update()
@@ -132,7 +134,6 @@ public class MenuUI : MonoBehaviour
         var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
         _energyText.text = energyBarMax.ToString("D2");
 
-        _Shield.text = "" + GameManager.Instance._shield;
 
         if (mGameManager._energy > mGameManager._maxEnergy)
         {
@@ -158,4 +159,16 @@ public class MenuUI : MonoBehaviour
 
     public void MakeCanvasScreenIn(bool inActive) => mCanvasAnimator.SetBool("AllOut", !inActive);
     public void UIElementActivate(int Index, bool activate) => UIElements[Index].SetActive(activate);
+
+
+    public IEnumerator UpDateShieldInUICoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        bool isMax = GameManager.Instance._shield >= GameManager.Instance._maxShield;
+
+        _Shield.gameObject.SetActive(!isMax);
+        shieldMaxMark.SetActive(isMax);
+
+        _Shield.text = "" + GameManager.Instance._shield;
+    }
 }
