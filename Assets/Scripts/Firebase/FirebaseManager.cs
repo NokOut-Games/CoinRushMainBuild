@@ -53,15 +53,16 @@ public class FirebaseManager : MonoBehaviour
     }
 
     private void Start()
-    {     
-        if (auth.CurrentUser!=null && !auth.CurrentUser.IsAnonymous)
+    {
+        if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
             ReadData();
             CurrentPlayerID = auth.CurrentUser.UserId;
             //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
         }
-        else if (!PlayerPrefs.HasKey("MadeHisChoice"))
+        /*else*/
+        if (!PlayerPrefs.HasKey("MadeHisChoice"))
         {
             //readUserData = true;
             LevelLoadManager.instance.GoToMapScreen(true);
