@@ -6,6 +6,8 @@ using Facebook.MiniJSON;
 using UnityEngine.UI;
 public class FacebookLogin : MonoBehaviour
 {
+    [SerializeField] Text friendsList;
+
     public GameObject friendsTextPrefab;
     public Transform GetFriendPos;
 
@@ -57,7 +59,7 @@ public class FacebookLogin : MonoBehaviour
     public void OnClickFacebookLogin()
     {
             FirebaseManager.Instance.userTitle = "Facebook Users";
-            var permission = new List<string>() { "public_profile", "email" };
+            var permission = new List<string>() { "public_profile", "email","user_friends" };
             FB.LogInWithReadPermissions(permission, AuthCallBack);
     }
     private void AuthCallBack(ILoginResult result)
@@ -67,6 +69,8 @@ public class FacebookLogin : MonoBehaviour
             var aToken = AccessToken.CurrentAccessToken;
             Debug.Log(aToken.TokenString);
             FirebaseManager.Instance.CreateNewFBUser(aToken.TokenString);
+
+           // FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
         }
     }
 
@@ -99,11 +103,24 @@ public class FacebookLogin : MonoBehaviour
             OnFbInit();
         }
     }
-
+    public void GetFriendsPlayingThisGame()
+    {
+        string query = "/me/friends";
+        FB.API(query, HttpMethod.GET, result =>
+        {
+            var dictionary = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
+            var friendslist = (List<object>)dictionary["data"];
+           // friendsList.text = string.Empty;
+            foreach (var dict in friendslist)
+            {
+                friendsList.text += ((Dictionary<string, object>)dict)["name"];
+                Debug.Log(((Dictionary<string, object>)dict)["name"]);
+            }
+        });
+    }
 
     void OnFbInit()
     {
-        {
             Debug.Log("Loged in");
             string query = "/me/friends";
             FB.API(query, HttpMethod.GET, result =>
@@ -125,7 +142,6 @@ public class FacebookLogin : MonoBehaviour
                     offset += new Vector3(0, -50, 0);
                 }
             });
-        }
     }
 
     void LoginFB(ILoginResult result)

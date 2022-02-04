@@ -50,6 +50,7 @@ public class CardDeck : MonoBehaviour
     public int mHowManyCardSetsAreActive;
     public List<Cards> _cardsThatCanBeReplacedByJoker;
 
+    public List<string> _OpenedCardPlayerID = new List<string>();
     public List<GameObject> _openCardPrefabs;
     public int _OpenCardNumberIndex;
     public int positionNumber = 0;
@@ -108,8 +109,8 @@ public class CardDeck : MonoBehaviour
 
 
     private void Awake()
-    {/*
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
+    {
+       /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mDrawButtonState = DrawButtonState.OpenCardState;
             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
@@ -118,9 +119,9 @@ public class CardDeck : MonoBehaviour
         {
             mDrawButtonState = DrawButtonState.NormalState;
             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-        }*/
+        }
         //PopulateOpenedCardSlotsFromFireBase();
-        //PopulateFriendsOpenCardSlotsFromFirebase();
+        //PopulateFriendsOpenCardSlotsFromFirebase();*/
     }
 
     void ShieldAnimation()
@@ -265,8 +266,11 @@ public class CardDeck : MonoBehaviour
                 {
                     if (drawButtonClick)
                     {
-                        OpenHandCardAdder();
-                        mOpenCardTakenAlready = true;
+                        if (!MultiplayerManager.Instance.OpenedPlayerID.Contains(MultiplayerManager.Instance._currentPlayerId))
+                        {
+                            OpenHandCardAdder();
+                            mOpenCardTakenAlready = true;
+                        }
                     }
                 }
             }
@@ -307,7 +311,7 @@ public class CardDeck : MonoBehaviour
                         {
                             mMakeDrawBtnEnable = false;
                             time = 0;
-                            DrawCard();                   
+                            DrawCard();
                         }
                         else
                         {
@@ -343,7 +347,7 @@ public class CardDeck : MonoBehaviour
                         }
                     }
 
-                   
+
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
@@ -363,6 +367,7 @@ public class CardDeck : MonoBehaviour
                     }
                 }
             }
+            else BackToNormalState();
         }
     }
 
@@ -442,7 +447,7 @@ public class CardDeck : MonoBehaviour
         yield return new WaitForSeconds(delay);
         while (mAutoCardDraw)
         {
-            if (canClick && mMakeDrawBtnEnable)
+            if (canClick && mMakeDrawBtnEnable && GameManager.Instance._energy > 0)
             {
                 mMakeDrawBtnEnable = false;
                 DrawCard();
@@ -497,9 +502,11 @@ public class CardDeck : MonoBehaviour
                 OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
                 OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
                 _openCardSlot = positionNumber;
-                _OpenCardNumberIndex += 1;
+                //_OpenCardNumberIndex += 1;
+                _OpenCardSlotFilled.Clear();
                 _OpenCardSlotFilled.Add(positionNumber);
                 mCardsOpened += 1;
+                MultiplayerManager.Instance.isReWriting = true;
             }
         }
         else
@@ -862,12 +869,13 @@ public class CardDeck : MonoBehaviour
             _buildingManagerRef._shieldedBuildings.Add(randomNumber);
             _buildingManagerRef._buildingData[randomNumber].isBuildingShielded = true;
             GameManager.Instance.AddShieldToBuilding(randomNumber);
-            StartCoroutine(menu.UpDateShieldInUICoroutine(.5f));
         }
         else
         {
             GameManager.Instance._energy += 3;
         }
+        StartCoroutine(menu.UpDateShieldInUICoroutine(.5f));
+
         mHasThreeCardMatch = false;
     }
 
@@ -931,6 +939,10 @@ public class CardDeck : MonoBehaviour
             menu.MakeCanvasScreenIn(false);
 
             int waitTime = 3000;
+            if (mHasJoker || mJokerFindWithMultiCardPair)
+            {
+                waitTime += 500;
+            }
             if (GameManager.Instance._energy >= 3)
             {
                 _drawButtonRectTransform.parent.SetAsFirstSibling();
@@ -940,23 +952,24 @@ public class CardDeck : MonoBehaviour
                 _Multiplier.InitiateMulitiplier(inType,matchedCards);
                 waitTime = 3000;
             }
-            if (mHasJoker || mJokerFindWithMultiCardPair)
+            else
             {
-                waitTime += 500;
+                if (inType == CardType.ATTACK)
+                {
+                    MultiplayerManager.Instance.OnGettingAttackCard();
+                }
+                else
+                {
+                    LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
+                }
             }
+           
             GameManager.Instance._IsBuildingFromFBase = true;
             foreach (Cards card in _CardList)
             {
                 if (card._cardType != matchedCards[0]._cardType) card.gameObject.SetActive(false);
             }
-            /* if (inType == CardType.ATTACK)
-             {
-                 //MultiplayerManager.Instance.OnGettingAttackCard();
-             }
-             else
-             {
-                 //LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
-             }*/
+            
         }
     }
     public void AssignTutorial(Tutorial tutorial, CardType card)

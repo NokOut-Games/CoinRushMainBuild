@@ -16,6 +16,6 @@ public class QuitGame : MonoBehaviour
     public void AppQuit()
     {
         Debug.Log("Application is Quitting");
-        Application.Quit();
+        FirebaseManager.Instance.auth.SignOut();
     }
 }

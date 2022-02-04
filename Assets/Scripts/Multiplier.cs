@@ -35,7 +35,8 @@ public class Multiplier : MonoBehaviour
         if (tutorial != null) tutorial.RegisterUserAction();
         GameManager.Instance._MultiplierValue = Mathf.RoundToInt(value);
         sliderHandle.sprite = multiplieImages[GameManager.Instance._MultiplierValue-1];
-        energyTxt.text = ""+crntEnergy;
+        /*int reduseEnergy = (GameManager.Instance._MultiplierValue * 3) - 3;*/
+        energyTxt.text = ""+ crntEnergy/*(GameManager.Instance._energy - reduseEnergy)*/;
         energyFiller.fillAmount = crntEnergy>50?50:crntEnergy /50;
         timerImage.gameObject.SetActive(false);
         timerIsRunning = false;
@@ -74,6 +75,7 @@ public class Multiplier : MonoBehaviour
                 else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 1000);
                 //this.gameObject.SetActive(false);
                 animator.SetBool("GetOut", true);
+                MultiplierEnergyReduse();
 
                 timerIsRunning = false;
                 sceneLoaded = true;
@@ -89,6 +91,7 @@ public class Multiplier : MonoBehaviour
             if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
             else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 1000);
             animator.SetBool("GetOut", true);
+            MultiplierEnergyReduse();
 
             //this.gameObject.SetActive(false);
         }
@@ -96,11 +99,11 @@ public class Multiplier : MonoBehaviour
 
     public void InitiateMulitiplier(CardType card,Cards[] matchcards)
     {
+        GameManager.Instance._PauseGame = true;
         if (tutorial != null) tutorial.RegisterUserAction();
         multiplierSlider.maxValue = GetMaxMultiplierValue();
         GameManager.Instance._MultiplierValue = 1;
         multiplierSlider.value = 1;
-        Invoke(nameof(MultiplierEnergyReduse), 3f);
         timerImage.fillAmount = 1;
         energyTxt.text =""+GameManager.Instance._energy;
         energyFiller.fillAmount = crntEnergy > 50 ? 50 : crntEnergy / 50;

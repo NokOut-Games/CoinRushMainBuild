@@ -56,6 +56,7 @@ public class LevelLoadManager : MonoBehaviour
     }
     public async void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0)
     {
+        GameManager.Instance._PauseGame = false;
         await System.Threading.Tasks.Task.Delay(delayInMilisec);
 
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);

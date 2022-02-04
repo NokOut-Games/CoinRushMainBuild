@@ -37,6 +37,9 @@ public class MultiplayerManager : MonoBehaviour
     public List<OpenCardData> OpenCardDetails;
     public List<string> OpenedPlayerPhotoURL = new List<string>();
     public List<int> OpenedCardSlot = new List<int>();
+    public List<string> OpenedPlayerID = new List<string>();
+
+    public bool isReWriting;
 
     public int AttackCount;
     public List<string> attackedplayerIDList = new List<string>();
@@ -102,6 +105,23 @@ public class MultiplayerManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "ATTACK")
         {
             mAttackManager = FindObjectOfType<AttackManager>();
+        }
+
+        //Writing OpenCards Details to a list in Multiplayer Manager
+        if (isReWriting)
+        {
+            for (int i = 0; i < _cardDeck._OpenCardSlotFilled.Count; i++)
+            {
+                OpenCardData card = new OpenCardData();
+                card._openedPlayerID = _currentPlayerId;
+                card._openedPlayerName = _currentPlayerName;
+                card._openedCardSlot = _cardDeck._openCardSlot;
+                card._openedCardSelectedCard = _cardDeck._openedCardIndex;
+                card._openedPlayerPhotoURL = _currentPlayerPhotoURL;
+
+                OpenCardDetails.Add(card);
+                isReWriting = false;
+            }
         }
     }
 
@@ -210,6 +230,7 @@ public class MultiplayerManager : MonoBehaviour
                         OpenCardDetails.Add(CardData);
                         OpenedCardSlot.Add(CardData._openedCardSlot);
                         OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+                        OpenedPlayerID.Add(CardData._openedPlayerID);
                     }
                     mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
                 }
@@ -409,6 +430,7 @@ public class MultiplayerManager : MonoBehaviour
     public void OnClickViewIslandToOpenCard()
     {
         mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+        _enemyPlayerID = mplayerIDDetails._randomOpencardID;
         FirebaseManager.Instance.WriteCardDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();
@@ -477,14 +499,20 @@ public class MultiplayerManager : MonoBehaviour
     public void WriteOpenCardDataToFirebase()
     {
         Invoke("BackToGame", 3f);
-        OpenCardData cardsDetails = new OpenCardData();
-        cardsDetails._openedPlayerID = _currentPlayerId;
-        cardsDetails._openedPlayerName = _currentPlayerName;
-        cardsDetails._openedCardSlot = _cardDeck._openCardSlot;
-        cardsDetails._openedCardSelectedCard = _cardDeck._openedCardIndex;
-        cardsDetails._openedPlayerPhotoURL = _currentPlayerPhotoURL;
-        string json = JsonUtility.ToJson(cardsDetails);
-        reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(_cardDeck._openCardSlot.ToString()).SetRawJsonValueAsync(json).ContinueWith(task => { });
+        reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").RemoveValueAsync();
+        int i = 0;
+        foreach (OpenCardData cards in OpenCardDetails)
+        {
+            string json = JsonUtility.ToJson(cards);
+            reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            {
+                if (task.IsCompleted)
+                {
+                    Debug.Log("Open Card Write Successful");
+                }
+            });
+            i++;
+        }
 
         ReadMyData();
     }

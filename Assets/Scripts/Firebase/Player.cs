@@ -14,15 +14,8 @@ public class Player
     public Player(string inPlayerID, string inPlayerName = "Guest")
     {
         _playerID = inPlayerID;
-        if(_playerName != "")
-        {
-            _playerName = inPlayerName;
-        }
-        else
-        {
-            _playerName = "Guest";
-        }
-        
+
+        _playerName = inPlayerName;
     }
     public Player()
     {

@@ -36,6 +36,7 @@ public class MenuUI : MonoBehaviour
     Animator mCanvasAnimator;
     [SerializeField] Animator Optionanimator;
     [SerializeField] GameObject[] UIElements;
+    [SerializeField] Animator shieldToEnergyAnim;
 
     private void Start()
     {
@@ -46,7 +47,7 @@ public class MenuUI : MonoBehaviour
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
-       StartCoroutine(UpDateShieldInUICoroutine(0));
+       StartCoroutine(UpDateShieldInUICoroutine(0,true));
     }
 
     private void Update()
@@ -72,6 +73,7 @@ public class MenuUI : MonoBehaviour
 
     public void BuildButton()
     {
+        if (GameManager.Instance._PauseGame) return;
         mCanvasAnimator.SetBool("GetOut", true);
         buildPanelGameObject.SetActive(true);
         mCameraController.BuildButtonClicked();
@@ -106,6 +108,7 @@ public class MenuUI : MonoBehaviour
 
     public void OnOptionButtonPress(bool inActivate)
     {
+        if (GameManager.Instance._PauseGame) return;
         Optionanimator.SetBool("Show", inActivate);
     }
 
@@ -161,7 +164,7 @@ public class MenuUI : MonoBehaviour
     public void UIElementActivate(int Index, bool activate) => UIElements[Index].SetActive(activate);
 
 
-    public IEnumerator UpDateShieldInUICoroutine(float delay)
+    public IEnumerator UpDateShieldInUICoroutine(float delay,bool startCall=false)
     {
         yield return new WaitForSeconds(delay);
         bool isMax = GameManager.Instance._shield >= GameManager.Instance._maxShield;
@@ -170,5 +173,6 @@ public class MenuUI : MonoBehaviour
         shieldMaxMark.SetActive(isMax);
 
         _Shield.text = "" + GameManager.Instance._shield;
+       if(isMax&&!startCall) shieldToEnergyAnim.Play("Anim");
     }
 }

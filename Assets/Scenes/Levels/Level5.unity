@@ -3541,6 +3541,10 @@ PrefabInstance:
       propertyPath: mCameraController
       value: 
       objectReference: {fileID: 725235823}
+    - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: shieldToEnergyAnim
+      value: 
+      objectReference: {fileID: 412256766}
     - target: {fileID: 4316013464354854173, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: buildingManagerRef
       value: 
@@ -3741,6 +3745,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821dae0283267f74795ee79ed889ba95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &412256766 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6350764252389893127, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+  m_PrefabInstance: {fileID: 412256753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &416097092 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6962121340648890636, guid: 8f7b3b8fcc198094ba39b3d7b4d0643f, type: 3}
@@ -9428,7 +9437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859917340793945488, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_RootOrder
@@ -11242,7 +11251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_RootOrder

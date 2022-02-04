@@ -16,6 +16,7 @@ public class PlayerIDDetails : MonoBehaviour
     public List<string> _playerList;
     private string mPlayerUserId;
     public string _randomEnemyID;
+    public string _randomOpencardID;
 
     void Start()
     {
@@ -85,6 +86,7 @@ public class PlayerIDDetails : MonoBehaviour
     {
         _playerList.Remove(inCurrentPlayerID); //FirebaseManager.Instance.CurrentPlayerID);
         _randomEnemyID = _playerList[UnityEngine.Random.Range(0, _playerList.Count)];
+        _randomOpencardID= _playerList[UnityEngine.Random.Range(0, _playerList.Count)];
     }
 
 }

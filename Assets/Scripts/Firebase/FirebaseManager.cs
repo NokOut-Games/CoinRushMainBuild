@@ -37,6 +37,7 @@ public class FirebaseManager : MonoBehaviour
     public string userTitle = "Guest Users";
     public bool readUserData;
     DateTime crntDateTime;
+    public bool loadMapScene;
 
     private void Awake()
     {
@@ -54,24 +55,24 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-        if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
-        {
-            userTitle = "Facebook Users";
-            ReadData();
-            CurrentPlayerID = auth.CurrentUser.UserId;
-            //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
-        }
-        /*else*/
-        if (!PlayerPrefs.HasKey("MadeHisChoice"))
+        //auth.SignOut();
+        if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             //readUserData = true;
+            CreateNewGuestUser();
             LevelLoadManager.instance.GoToMapScreen(true);
+        }
+        else if(auth.CurrentUser!=null && !auth.CurrentUser.IsAnonymous)
+        {
+            CurrentPlayerID = auth.CurrentUser.UserId;
+            userTitle ="Facebook Users";
+            ReadData();
+
         }
     }
 
     public void ReadData()
     {
-        PlayerPrefs.SetInt("MadeHisChoice", 1);
         Debug.Log("ReadData");
         if (userTitle == "Facebook Users")
         {
@@ -285,7 +286,7 @@ public class FirebaseManager : MonoBehaviour
             CurrentPlayerID = auth.CurrentUser.UserId;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
-            LevelLoadManager.instance.GoToMapScreen(true);
+            loadMapScene = true;
         });
     }
 
@@ -296,32 +297,46 @@ public class FirebaseManager : MonoBehaviour
         {
             FirebaseUser newFBUser;
             newFBUser = task.Result;
-            string newId = newFBUser.UserId.ToString();
-            Debug.Log(newId);
-            reference.GetValueAsync().ContinueWith(task =>
-            {
-                DataSnapshot snapshot = task.Result;
 
-                if (snapshot.Child("Facebook Users").HasChild(newId) == true)
-                {
-                    ReadData();
-                    StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
-                }
-                else
-                {
-                    Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
-                    Debug.Log(newFBUser.UserId);
-                    CurrentPlayerID = auth.CurrentUser.UserId;
-                    SaveNewUserInFirebase(newPlayer);
-                   // StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
-                    readUserData = true;
-                    LevelLoadManager.instance.GoToMapScreen(true);
-                }
-            });
+           if(task.IsCompleted) CheckFbUser(newFBUser);
+
         });
     }
 
-    public void WritePlayerDataToFirebase()
+    void CheckFbUser(FirebaseUser newFBUser)
+    {
+        Debug.Log(newFBUser.UserId);
+        reference.Child("Facebook Users").Child(newFBUser.UserId.ToString()).GetValueAsync().ContinueWith(task =>
+        {
+            DataSnapshot snapshot = task.Result;
+            if(task.IsCompleted)
+            {
+                Debug.Log("asgaj");
+                if (snapshot.Exists)
+                {
+                    Debug.Log("yess bro");
+                    ReadData();
+                }
+                else
+                {
+                    //LevelLoadManager.instance.GoToMapScreen(true);
+
+                    Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
+                    Debug.Log("This is creating new fb user" + newFBUser.UserId);
+                    CurrentPlayerID = auth.CurrentUser.UserId;
+                    CurrentPlayerName = auth.CurrentUser.DisplayName;
+                    SaveNewUserInFirebase(newPlayer);
+                    //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
+                    WriteBuildingDataToFirebase();
+                    //GameManager.Instance.hasChoiceInLevel = true;
+                    loadMapScene = true;
+                }
+            }
+           
+        });
+    }
+
+        public void WritePlayerDataToFirebase()
     {
         Player playerDetails = new Player(auth.CurrentUser.UserId, CurrentPlayerName);
 
@@ -386,6 +401,7 @@ public class FirebaseManager : MonoBehaviour
         //canWrite = true;
         GameManager.Instance._IsBuildingFromFBase = false;
         WriteAllDataToFireBase();
+
     }
 
     private void Update()
