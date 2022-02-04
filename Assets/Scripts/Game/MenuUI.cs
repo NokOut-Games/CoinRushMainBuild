@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class MenuUI : MonoBehaviour
@@ -38,6 +39,12 @@ public class MenuUI : MonoBehaviour
     [SerializeField] GameObject[] UIElements;
     [SerializeField] Animator shieldToEnergyAnim;
 
+
+
+    [Header("Option Screen")]
+    [SerializeField]Image profileImage;
+    [SerializeField]TMP_Text profileName;
+
     private void Start()
     {
         isButtonGenerated = false;
@@ -48,6 +55,9 @@ public class MenuUI : MonoBehaviour
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
        StartCoroutine(UpDateShieldInUICoroutine(0,true));
+
+        profileImage.sprite = FirebaseManager.Instance.CurrentPlayerPhotoSprite;
+        profileName.text = FirebaseManager.Instance.CurrentPlayerName;
     }
 
     private void Update()
@@ -85,13 +95,6 @@ public class MenuUI : MonoBehaviour
 
        // mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
         mBuildMenuUI.SetUpgradeButtons();
-
-        //if (isButtonGenerated == false)
-        //{
-        //    mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
-        //    mBuildMenuUI.SetUpgradeButtons();
-        //    isButtonGenerated = true;
-        //}
     }
 
     public void CloseBuildButton()

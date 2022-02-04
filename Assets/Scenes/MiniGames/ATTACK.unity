@@ -4389,7 +4389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 573285005142074439, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 952278789213218885, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
@@ -4573,7 +4573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4796466367982091570, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 5517214166628332800, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
@@ -4625,7 +4625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9204509447902013841, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
@@ -22045,6 +22045,7 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
@@ -22059,7 +22060,6 @@ MonoBehaviour:
   threeCardEffect: {fileID: 0}
   shieldAnimation: {fileID: 0}
   shieldParticle: {fileID: 0}
-  _levelManager: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mMultiplayerPlayerData: {fileID: 0}
   mHasThreeCardMatch: 0
@@ -22074,6 +22074,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  matchedCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!4 &1803622837
 Transform:
   m_ObjectHideFlags: 0

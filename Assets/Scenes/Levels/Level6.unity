@@ -3459,6 +3459,10 @@ PrefabInstance:
       value: ViewIsland
       objectReference: {fileID: 0}
     - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: mCameraController
+      value: 
+      objectReference: {fileID: 1622744566}
+    - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: shieldToEnergyAnim
       value: 
       objectReference: {fileID: 412256789}
@@ -6926,6 +6930,10 @@ PrefabInstance:
       propertyPath: _buildingData.Array.size
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: mBuildingConstructionMaxVFX
+      value: 
+      objectReference: {fileID: 7473104587106121702, guid: f67b8f447180a5d4287d87df169a1ba4, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingName
       value: CloudCity_LeftPillar_
@@ -17422,6 +17430,67 @@ Transform:
   m_Father: {fileID: 973052125}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1759440536
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3859917340793945488, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_Name
+      value: TutorialManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945488, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 557.5772
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 395.88675
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 257.9109
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340793945490, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
 --- !u!1 &1763176544
 GameObject:
   m_ObjectHideFlags: 0
@@ -17753,6 +17822,7 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
@@ -19860,7 +19930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1354200235954174197, guid: c117283c5b6ca7742a295af1c7467160, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 1354200235954174197, guid: c117283c5b6ca7742a295af1c7467160, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21289,6 +21359,7 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs: []
   _OpenCardNumberIndex: 0
   positionNumber: 0

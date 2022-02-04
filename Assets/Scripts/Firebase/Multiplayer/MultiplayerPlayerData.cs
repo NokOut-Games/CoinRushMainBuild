@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 [System.Serializable]
 public class MultiplayerBuildingData
@@ -48,10 +49,7 @@ public class MultiplayerPlayerData : MonoBehaviour
 
     public void Update()
     {
-       /* if (_enemyPhotoURL != null)
-        {
-            StartCoroutine(DownloadFacebookImage(_enemyPhotoURL));
-        }*/
+       
     }
 
     public void GetBuildingManagerDetails()
@@ -82,7 +80,7 @@ public class MultiplayerPlayerData : MonoBehaviour
         OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
     }
 
-    IEnumerator DownloadFacebookImage(string MediaUrl)
+    IEnumerator DownloadFacebookImage(string MediaUrl,Action<Texture> Picture)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
         yield return request.SendWebRequest();
@@ -90,7 +88,7 @@ public class MultiplayerPlayerData : MonoBehaviour
             Debug.Log(request.error);
         else
         {
-            _enemyImageTexture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Picture(((DownloadHandlerTexture)request.downloadHandler).texture);
             Debug.Log("Getting texture");
         }
     }

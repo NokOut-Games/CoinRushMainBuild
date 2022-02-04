@@ -59,7 +59,7 @@ public class FacebookLogin : MonoBehaviour
     public void OnClickFacebookLogin()
     {
             FirebaseManager.Instance.userTitle = "Facebook Users";
-            var permission = new List<string>() { "public_profile", "email","user_friends" };
+            var permission = new List<string>() { "public_profile", "email"};
             FB.LogInWithReadPermissions(permission, AuthCallBack);
     }
     private void AuthCallBack(ILoginResult result)
@@ -103,21 +103,21 @@ public class FacebookLogin : MonoBehaviour
             OnFbInit();
         }
     }
-    public void GetFriendsPlayingThisGame()
-    {
-        string query = "/me/friends";
-        FB.API(query, HttpMethod.GET, result =>
-        {
-            var dictionary = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
-            var friendslist = (List<object>)dictionary["data"];
-           // friendsList.text = string.Empty;
-            foreach (var dict in friendslist)
-            {
-                friendsList.text += ((Dictionary<string, object>)dict)["name"];
-                Debug.Log(((Dictionary<string, object>)dict)["name"]);
-            }
-        });
-    }
+    //public void GetFriendsPlayingThisGame()
+    //{
+    //    string query = "/me/friends";
+    //    FB.API(query, HttpMethod.GET, result =>
+    //    {
+    //        var dictionary = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
+    //        var friendslist = (List<object>)dictionary["data"];
+    //        friendsList.text = string.Empty;
+    //        foreach (var dict in friendslist)
+    //        {
+    //            friendsList.text += ((Dictionary<string, object>)dict)["name"];
+    //            Debug.Log(((Dictionary<string, object>)dict)["name"]);
+    //        }
+    //    });
+    //}
 
     void OnFbInit()
     {

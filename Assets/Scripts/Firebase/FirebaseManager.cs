@@ -16,9 +16,13 @@ public class FirebaseManager : MonoBehaviour
     public FirebaseAuth auth;
 
     private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mPlayerPhotoURLData, mNumberOfTimesGotAttacked;
+
     public string CurrentPlayerID;
     public string CurrentPlayerName;
     public string CurrentPlayerPhotoURL;
+
+    public Sprite CurrentPlayerPhotoSprite;
+
 
     public string _attackedPlayerName,_attackedPlayerPhotoURL,_attackedBuildingName;
     public Texture AttackedPlayerImageTexture;
@@ -39,6 +43,8 @@ public class FirebaseManager : MonoBehaviour
     DateTime crntDateTime;
     public bool loadMapScene;
 
+    [SerializeField] Sprite[] guestImages;
+
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
@@ -50,22 +56,22 @@ public class FirebaseManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject); //Singleton
             return;
         }
-
+        CurrentPlayerPhotoSprite = guestImages[0]; 
     }
 
     private void Start()
     {
-        //auth.SignOut();
+       // auth.SignOut();
         if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             //readUserData = true;
             CreateNewGuestUser();
             LevelLoadManager.instance.GoToMapScreen(true);
         }
-        else if(auth.CurrentUser!=null && !auth.CurrentUser.IsAnonymous)
+        else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
             CurrentPlayerID = auth.CurrentUser.UserId;
-            userTitle ="Facebook Users";
+            userTitle = "Facebook Users";
             ReadData();
 
         }
@@ -283,12 +289,14 @@ public class FirebaseManager : MonoBehaviour
             newUser = task.Result;
             Player newPlayer = new Player(newUser.UserId);
             Debug.Log(newUser.UserId);
-            CurrentPlayerID = auth.CurrentUser.UserId;
+            CurrentPlayerID = newUser.UserId;
+            CurrentPlayerName = "Guest" + 123;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
             loadMapScene = true;
         });
     }
+    
 
     public void CreateNewFBUser(string inAccessToken)
     {

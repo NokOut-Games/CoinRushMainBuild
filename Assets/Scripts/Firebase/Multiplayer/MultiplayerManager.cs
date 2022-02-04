@@ -126,7 +126,7 @@ public class MultiplayerManager : MonoBehaviour
     }
 
 
-    IEnumerator ReadEnemyData()
+    IEnumerator ReadEnemyData(System.Action readBuildingData = null)
     {
         yield return new WaitForSeconds(_dataBaseFetchTime);
 
@@ -141,7 +141,7 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     _enemyTitle = "Facebook Users";
                     GetUserDetails();
-                    GetBuildingDetails();
+                    GetBuildingDetails(readBuildingData);
                     GetAttackData();
                     GetOpenCardsDetails();
                 }
@@ -149,7 +149,7 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     _enemyTitle = "Guest Users";
                     GetUserDetails();
-                    GetBuildingDetails();
+                    GetBuildingDetails(readBuildingData);
                     GetAttackData();
                 }
             }
@@ -175,7 +175,7 @@ public class MultiplayerManager : MonoBehaviour
         });
     }
 
-    void GetBuildingDetails()
+    void GetBuildingDetails(System.Action readBuildingData=null)
     {
         reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
         {
@@ -198,6 +198,7 @@ public class MultiplayerManager : MonoBehaviour
                     MultiplayerBuildingDetails.Add(builddata);
                 }
                 mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerNameData, mPlayerPhotoURLData);
+                readBuildingData();
             }
         });
     }
@@ -356,6 +357,45 @@ public class MultiplayerManager : MonoBehaviour
     void LoadAttackScene()
     {
         LevelLoadManager.instance.LoadLevelASyncOf("ATTACK");
+    }
+
+
+
+
+    //new 
+    public void OnGettingAttackCard(System.Action gotAnEnemy)
+    {
+        if (!isRevenging)
+        {
+            mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
+            FirebaseManager.Instance.WriteCardDataToFirebase();
+            FirebaseManager.Instance.WriteBuildingDataToFirebase();
+            FirebaseManager.Instance.WritePlayerDataToFirebase();
+            System.Action OnReadEnemyBuildingDetails =() =>
+            {
+                Debug.Log("data");
+                gotAnEnemy();
+
+                if (MultiplayerBuildingDetails == null || MultiplayerBuildingDetails.Count <= 0)
+                {
+                    mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+                    _enemyPlayerID = mplayerIDDetails._randomEnemyID;
+                    StartCoroutine(ReadEnemyData());
+                }
+            };
+
+
+
+            StartCoroutine(ReadEnemyData(OnReadEnemyBuildingDetails));
+            //Invoke(nameof(LoadAttackScene), 5f);
+        }
+        else
+        {
+            StartCoroutine(ReadEnemyData());
+           // Invoke(nameof(LoadAttackScene), 2f);
+            isRevenging = false;
+        }
     }
 
 

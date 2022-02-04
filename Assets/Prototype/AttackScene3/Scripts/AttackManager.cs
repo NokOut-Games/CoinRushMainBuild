@@ -74,17 +74,19 @@ public class AttackManager : MonoBehaviour
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
 
-        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture; 
+       /* _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture; 
         _enemyName.text = mMultiplayerPlayerData._enemyName;
         _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
 
 
         InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
 
-        Invoke(nameof(InstantiateBuildingBasedOnLevel), 0f);
+        Invoke(nameof(InstantiateBuildingBasedOnLevel), 0f);*/
     }
+    
 
     void InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints()
     {
@@ -161,6 +163,16 @@ public class AttackManager : MonoBehaviour
         mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
         cam = Camera.main;
         mCameraController = cam.GetComponent<AttackCameraController>();
+
+
+        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
+        _enemyName.text = mMultiplayerPlayerData._enemyName;
+        _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+
+
+        InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
+
+        Invoke(nameof(InstantiateBuildingBasedOnLevel), 0f);
 
         Invoke(nameof(UpdateCamerHorizontalBounds), 0.5f);
         Debug.Log(Application.targetFrameRate + "Target Fram Rate ");

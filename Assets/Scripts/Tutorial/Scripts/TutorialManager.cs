@@ -12,7 +12,7 @@ public class TutorialManager : MonoBehaviour
     public object[] Tutorialsw;
     [SerializeField] GameObject TutorialUIPopUp;
     [SerializeField] GameObject TutorialLogInPopUp;
-    [SerializeField] GameObject TutorialNamePopUp;
+    //[SerializeField] GameObject TutorialNamePopUp;
 
 
 
@@ -87,14 +87,14 @@ public class TutorialManager : MonoBehaviour
         if (nameIF.text == "") return;
         FirebaseManager.Instance.CurrentPlayerName = nameIF.text;
         FirebaseManager.Instance.WriteAllDataToFireBase();
-        TutorialNamePopUp.SetActive(false);
+        //TutorialNamePopUp.SetActive(false);
     }
 
 
 
     public void ConnectToFacebook()
     {
-        FacebookLogin.Instance.OnClickFacebookLogin();
+        FacebookManager.Instance.LoginWithFB();
         TutorialLogInPopUp.SetActive(false);
     }
 }

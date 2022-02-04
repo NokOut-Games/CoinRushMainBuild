@@ -283,7 +283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 214361718}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,7 +907,7 @@ GameObject:
   - component: {fileID: 551131230}
   - component: {fileID: 551131232}
   - component: {fileID: 551131231}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MultiplierTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1249,7 +1249,7 @@ GameObject:
   - component: {fileID: 840573812}
   - component: {fileID: 840573814}
   - component: {fileID: 840573813}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1274,7 +1274,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 40, y: 37}
   m_SizeDelta: {x: 135, y: 100.283295}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1402,7 +1402,7 @@ GameObject:
   - component: {fileID: 958880959}
   - component: {fileID: 958880961}
   - component: {fileID: 958880960}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2340,7 +2340,7 @@ GameObject:
   - component: {fileID: 5794104709256151894}
   - component: {fileID: 5272416746217251644}
   - component: {fileID: 7589972814889459526}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2771,7 +2771,7 @@ GameObject:
   - component: {fileID: 1713980255}
   - component: {fileID: 1713980257}
   - component: {fileID: 1713980256}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2793,7 +2793,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0.70700073}
   m_SizeDelta: {x: 0.00049591, y: -4.366}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3082,7 +3082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 500}
+  m_AnchoredPosition: {x: 0, y: -553}
   m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997208099
@@ -8226,7 +8226,7 @@ GameObject:
   - component: {fileID: 4390496927785771177}
   - component: {fileID: 687048040462497793}
   - component: {fileID: 3939261512433018669}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: EnergyVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8920,7 +8920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6051207500975118662}
   - component: {fileID: 1290704571722335110}
-  - component: {fileID: 3542832885319894007}
+  - component: {fileID: 8934872315070431079}
   m_Layer: 5
   m_Name: FBDP
   m_TagString: Untagged
@@ -8955,7 +8955,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908351364367069538}
   m_CullTransparentMesh: 1
---- !u!114 &3542832885319894007
+--- !u!114 &8934872315070431079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8964,7 +8964,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1908351364367069538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -8975,13 +8975,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: e7ec3340202c146438f4406d0c3f4cea, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2010206801091239866
 GameObject:
   m_ObjectHideFlags: 0
@@ -14351,7 +14354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -550.00006, y: 0}
+  m_AnchoredPosition: {x: -550.0001, y: 0}
   m_SizeDelta: {x: 1108.5824, y: 1895.7476}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1138413194095611083
@@ -15811,6 +15814,9 @@ MonoBehaviour:
   - {fileID: 6228436610989736436}
   - {fileID: 8925042665820918776}
   - {fileID: 9163738164028224674}
+  shieldToEnergyAnim: {fileID: 6350764252389893127}
+  profileImage: {fileID: 8934872315070431079}
+  profileName: {fileID: 1053250143}
 --- !u!114 &288163758273134067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16442,7 +16448,7 @@ GameObject:
   - component: {fileID: 3094301439410826665}
   - component: {fileID: 6226879403776112133}
   - component: {fileID: 3081010647225344136}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16685,7 +16691,7 @@ GameObject:
   - component: {fileID: 8436731197783506952}
   - component: {fileID: 1020190498945178298}
   - component: {fileID: 6576275394640806656}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimerSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17789,7 +17795,7 @@ GameObject:
   - component: {fileID: 5910279667049401923}
   - component: {fileID: 2520742398334209167}
   - component: {fileID: 7548485475670147910}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Extra
   m_TagString: Untagged
   m_Icon: {fileID: 0}

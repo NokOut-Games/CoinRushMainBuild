@@ -18,7 +18,7 @@ public class Multiplier : MonoBehaviour
     [SerializeField] Image energyFiller;
 
     Tutorial tutorial;
-    float waitTime = 3f;
+    float waitTime = 5f;
     float crntEnergy=> (GameManager.Instance._energy - ((GameManager.Instance._MultiplierValue * 3) - 3));
     [SerializeField]bool timerIsRunning;
     [SerializeField]float timeRemaining = 2;
@@ -58,6 +58,7 @@ public class Multiplier : MonoBehaviour
     private void Update()
     {
         timerImage.fillAmount -= 1.0f / waitTime * Time.deltaTime;
+
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
@@ -71,7 +72,7 @@ public class Multiplier : MonoBehaviour
                 {
                     cards.PlaySceneChangeAnimation();
                 }
-                if(cardType==CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
+                if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
                 else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 1000);
                 //this.gameObject.SetActive(false);
                 animator.SetBool("GetOut", true);

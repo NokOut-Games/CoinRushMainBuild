@@ -56,8 +56,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] Camera uIcam;
     bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
     bool OpenCardRegionClick => RectTransformUtility.RectangleContainsScreenPoint(mOpenHandRectTransform, Input.mousePosition, uIcam);
-    bool BuildScrollViewClick => RectTransformUtility.RectangleContainsScreenPoint(mScrollViewRectTransform, Input.mousePosition, uIcam);
+    bool BuildScrollViewClick =>!GameManager.Instance._PauseGame&& RectTransformUtility.RectangleContainsScreenPoint(mScrollViewRectTransform, Input.mousePosition, uIcam);
     bool GetToNormalView => !_buildButtonClicked && !_DrawButtonClicked && !mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial;
+    float TouchTime = 0.11f;
 
     public bool openCardSelected;
 
@@ -104,6 +105,8 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         if(openCardSelected) return;
+
+        if (_CameraFreeRoam) HandleTouch();
         if (!_inBetweenConstructionProcess&&!GameManager.Instance._PauseGame)
         {
             if (Input.GetMouseButtonDown(0))
@@ -114,28 +117,20 @@ public class CameraController : MonoBehaviour
                     {
                         _DrawButtonClicked = false;
                         _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
+                       // Invoke("SetCameraFreeRoam", 0.11f);
                         mCardDeck.BackToNormalState();
+                        TouchTime = .11f;
+
                     }
                 }
-                else
-              /*  else
-                {
-                    if (!drawButtonClick && TutorialManager.Instance.isPopUpRunning)
-                    {
-                        _DrawButtonClicked = false;
-                        _isCameraInGamePlayView = false;
-                        Invoke("SetCameraFreeRoam", 0.11f);
-                        mCardDeck.BackToNormalState();
-                    }
-                }*/
-
-                if (_isCameraInConstructionView && !BuildScrollViewClick)
+                else if (_isCameraInConstructionView && !BuildScrollViewClick)
                 {
                     _buildButtonClicked = false;
                     _isCameraInConstructionView = false;
-                    Invoke("SetCameraFreeRoam", 0.11f);
+                    //Invoke("SetCameraFreeRoam", 0.11f);
                     mMenuUI.CloseBuildButton();
+                    TouchTime = .11f;
+
                 }
             }
         }
@@ -143,6 +138,7 @@ public class CameraController : MonoBehaviour
         {
             _CameraFreeRoam = false;
         }
+
         if (_buildButtonClicked && !_DrawButtonClicked)
         {
             mCardDeck.mCardHolderParent.SetActive(false);
@@ -155,6 +151,7 @@ public class CameraController : MonoBehaviour
             mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", false);
             _isCameraInGamePlayView = true;
             mOpenCardRegion.SetActive(true);
+            if (_CameraFreeRoam) return;
 
             ViewShifter(1, 0.1f);   // 1 takes to gameplay view //_currentView = _views[1];
         }
@@ -164,17 +161,23 @@ public class CameraController : MonoBehaviour
             mCardDeck.mCardHolderParent.GetComponent<Animator>().SetBool("Shrink", true);
             if (_CameraFreeRoam) return;
             mOpenCardRegion.SetActive(false);
-          //  if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
+            //  if (Mathf.Floor(_CameraParent.rotation.eulerAngles.x) != _views[0].rotation.eulerAngles.x)
             {
                 ViewShifter(0, 0.01f/*Time.fixedDeltaTime * _transitionSpeed*/); // 0 takes to normal view //_currentView = _views[0];
             }
-            HandleTouch();
+
         }
+
     }
 
 
     private void ViewShifter(int inViewNumber, float inTransitionSpeed)
     {
+        TouchTime -= Time.deltaTime;
+        if (TouchTime <= 0)
+        {
+            _CameraFreeRoam = true;
+        }
       //  Debug.Log(inViewNumber + "View");
         _currentView = _views[inViewNumber];
         //Debug.Log("Current View Changed To: " + _currentView);
@@ -205,6 +208,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.touchCount > 0)
         {
+            _CameraFreeRoam = true;
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Moved)

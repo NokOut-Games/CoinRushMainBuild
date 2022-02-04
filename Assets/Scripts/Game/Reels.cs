@@ -39,7 +39,7 @@ public class Reels : MonoBehaviour
 
     private void Start()
     {
-        mSpeed = Random.Range(400, 600);
+        mSpeed = Random.Range(200, 400);
         for (int i = 0; i < _reelElements.Length; i++)
         {
             accumalatedY += _reelElements[i]._slotElementGameObject.GetComponent<RectTransform>().sizeDelta.y;
