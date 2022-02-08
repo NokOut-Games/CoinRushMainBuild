@@ -76,8 +76,9 @@ public class FirebaseManager : MonoBehaviour
         else
         {
             userTitle = "Guest Users";
+            CurrentPlayerID = auth.CurrentUser.UserId;
+
         }
-        CurrentPlayerID = PlayerPrefs.GetString("id");
     }
 
     public void ReadData()

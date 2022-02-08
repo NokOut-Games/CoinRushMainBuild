@@ -42,10 +42,10 @@ public class MenuUI : MonoBehaviour
 
 
     [Header("Option Screen")]
-    [SerializeField]Image profileImage;
-    [SerializeField]TMP_Text profileName;
+    [SerializeField] Image profileImage;
+    [SerializeField] TMP_Text profileName;
     [SerializeField] RectTransform optionScreen;
-    bool isOptionactivate;
+    [SerializeField] bool isOptionactivate;
 
     [Header("Friends Screen")]
     [SerializeField] GameObject friendScreen;
@@ -92,7 +92,7 @@ public class MenuUI : MonoBehaviour
         UpdateCoinAndEnergyTextFields();
 
 
-        if (Input.touchCount > 0&& !isInoptionScreen && isOptionactivate)
+        if (Input.touchCount > 0 && !isInoptionScreen && isOptionactivate&& optionScreen.gameObject.activeInHierarchy)
         {
             OnOptionButtonPress(false);
         }
