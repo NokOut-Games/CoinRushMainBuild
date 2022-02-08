@@ -395,7 +395,7 @@ public class FirebaseManager : MonoBehaviour
         foreach (OpenCardData cards in GameManager.Instance.OpenCardDetails)
         {
             string json = JsonUtility.ToJson(cards);
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
