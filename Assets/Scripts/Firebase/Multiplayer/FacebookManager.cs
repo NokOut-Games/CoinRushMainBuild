@@ -123,6 +123,8 @@ public class FacebookManager : MonoBehaviour
 		{
 			//TextID.text = "ID is: " + result.ResultDictionary["id"];
 			FirebaseManager.Instance.CurrentPlayerID = "" + result.ResultDictionary["id"];
+			PlayerPrefs.SetString("id", "" + result.ResultDictionary["id"]);
+
 		}
 	}
 	void DispName(IResult result)
@@ -174,6 +176,16 @@ public class FacebookManager : MonoBehaviour
 /*				go.transform.SetParent(GetFriendPos.transform, false);*/
 				offset += new Vector3(0, -50, 0);
 			}
+		});
+	}
+
+
+
+	public void GetProfilePictureWithId(string inId,Action<Sprite> picture)
+    {
+		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+		{
+			 picture(Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100));
 		});
 	}
 }

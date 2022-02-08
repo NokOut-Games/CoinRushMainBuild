@@ -15,7 +15,7 @@ public class FirebaseManager : MonoBehaviour
     DatabaseReference reference;
     public FirebaseAuth auth;
 
-    private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mPlayerPhotoURLData, mNumberOfTimesGotAttacked;
+    private string mPlayerNameData, mPlayerIDData, mCoinData, mEnergyData, mPlayerCurrentLevelData, mNumberOfTimesGotAttacked;
 
     public string CurrentPlayerID;
     public string CurrentPlayerName;
@@ -71,6 +71,7 @@ public class FirebaseManager : MonoBehaviour
         else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
+            CurrentPlayerID = PlayerPrefs.GetString("id");
             // ReadData();
         }
         else
@@ -78,7 +79,9 @@ public class FirebaseManager : MonoBehaviour
             userTitle = "Guest Users";
             CurrentPlayerID = auth.CurrentUser.UserId;
 
+
         }
+
     }
 
     public void ReadData()
@@ -127,9 +130,7 @@ public class FirebaseManager : MonoBehaviour
                 mCoinData = snapshot.Child("UserDetails").Child("_coins").Value.ToString();
                 mEnergyData = snapshot.Child("UserDetails").Child("_energy").Value.ToString();
                 mNumberOfTimesGotAttacked = snapshot.Child("UserDetails").Child("_numberOfTimesGotAttacked").Value.ToString();
-                mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
-                CurrentPlayerPhotoURL = mPlayerPhotoURLData;
                 CurrentPlayerName = mPlayerNameData;
 
                 List<GameManagerBuildingData> BuildingDetails = new List<GameManagerBuildingData>();
@@ -146,7 +147,7 @@ public class FirebaseManager : MonoBehaviour
                     BuildingDetails.Add(builddata);
                     BuildingDetailsaa.Add(builddata);
                 }
-                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerPhotoURLData);
+                GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked));
                 readUserData = true;
 
             }
@@ -356,10 +357,9 @@ public class FirebaseManager : MonoBehaviour
         playerDetails._coins = GameManager.Instance._coins;
         playerDetails._energy = GameManager.Instance._energy;
         playerDetails._playerCurrentLevel = GameManager.Instance._playerCurrentLevel;
-        playerDetails._playerPhotoURL = "";// auth.CurrentUser.PhotoUrl.ToString();
         playerDetails._numberOfTimesGotAttacked = GameManager.Instance._openedCards;
         string json = JsonUtility.ToJson(playerDetails);
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -482,7 +482,7 @@ public class FirebaseManager : MonoBehaviour
          {
              long currentTimestamp = (long)(task.Result.Value);
              var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Math.Round(currentTimestamp / 1000d)).ToLocalTime();
-             reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("UserDetails").Child("LogOutTime").SetValueAsync(dt.ToString());
+             reference.Child(userTitle).Child(CurrentPlayerID).Child("UserDetails").Child("LogOutTime").SetValueAsync(dt.ToString());
          });
     }
 

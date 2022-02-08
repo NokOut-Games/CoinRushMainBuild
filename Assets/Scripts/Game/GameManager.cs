@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
     public int _playerCurrentLevel = 1;
     public int _minutes;
     public int _openedCards;
-    public string _playerFBPhotoURL;
 
     public string _attackedPlayerName;
     public Texture _attackedPlayerImageTexture;
@@ -187,7 +186,7 @@ public class GameManager : MonoBehaviour
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
-    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel, int inOpenedCards, string inPlayerPhotoURL)
+    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel, int inOpenedCards)
     {
         _buildingGameManagerDataRef = inBuildingData;
         _coins = inCoinData;
@@ -197,7 +196,6 @@ public class GameManager : MonoBehaviour
         _IsRefreshNeeded = true;
         _IsBuildingFromFBase = true;
         _openedCards = inOpenedCards;
-        _playerFBPhotoURL = inPlayerPhotoURL;
         FirebaseManager.Instance.readUserData = true;
     }
     public void UpdateOpenCardDetails(List<OpenCardData> inOpenCardDetails, List<int> inOpenCardSlot, List<string> inOpenedPlayerPhotoURL)
