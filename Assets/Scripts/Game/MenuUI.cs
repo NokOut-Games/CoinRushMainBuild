@@ -44,7 +44,23 @@ public class MenuUI : MonoBehaviour
     [Header("Option Screen")]
     [SerializeField]Image profileImage;
     [SerializeField]TMP_Text profileName;
+    [SerializeField] RectTransform optionScreen;
+    bool isOptionactivate;
 
+    [Header("Friends Screen")]
+    [SerializeField] GameObject friendScreen;
+    [SerializeField] Transform content;
+    [SerializeField] Camera uIcam;
+
+    bool isInoptionScreen => RectTransformUtility.RectangleContainsScreenPoint(optionScreen, Input.mousePosition, uIcam);
+
+
+
+    private void OnEnable()
+    {
+        FacebookManager.UserProfileName += UpdateName;
+        FacebookManager.UserProfilePic += UpdateProfilePic;
+    }
     private void Start()
     {
         isButtonGenerated = false;
@@ -60,9 +76,26 @@ public class MenuUI : MonoBehaviour
         profileName.text = FirebaseManager.Instance.CurrentPlayerName;
     }
 
+     void UpdateName(string name)
+     { 
+         profileName.text = name; 
+     }
+    void UpdateProfilePic(Sprite pic)
+    {
+        profileImage.sprite = pic;
+    }
+
+   
+
     private void Update()
     {
         UpdateCoinAndEnergyTextFields();
+
+
+        if (Input.touchCount > 0&& !isInoptionScreen && isOptionactivate)
+        {
+            OnOptionButtonPress(false);
+        }
     }
 
     void DisplayTime(float inTimeToDisplay)
@@ -111,8 +144,9 @@ public class MenuUI : MonoBehaviour
 
     public void OnOptionButtonPress(bool inActivate)
     {
-        if (GameManager.Instance._PauseGame) return;
+        isOptionactivate = inActivate;
         Optionanimator.SetBool("Show", inActivate);
+        GameManager.Instance._PauseGame = inActivate;
     }
 
 
@@ -177,5 +211,17 @@ public class MenuUI : MonoBehaviour
 
         _Shield.text = "" + GameManager.Instance._shield;
        if(isMax&&!startCall) shieldToEnergyAnim.Play("Anim");
+    }
+
+    public void OnViewFriendsButtonClick(bool inActivate)
+    {
+        friendScreen.SetActive(inActivate);
+        if (inActivate) FacebookManager.Instance.GetFriends(content);
+
+    }
+    private void OnDisable()
+    {
+        FacebookManager.UserProfileName -= UpdateName;
+        FacebookManager.UserProfilePic -= UpdateProfilePic;
     }
 }

@@ -128,10 +128,13 @@ public class LevelLoadManager : MonoBehaviour
         await System.Threading.Tasks.Task.Delay(1000);
         mCloudAnimator.SetBool("Loaded", true);
         await System.Threading.Tasks.Task.Delay(1000);
+        GameManager.Instance._PauseGame = false;
+
         mCanvas.SetActive(false);
         if (tutorial != null)
             tutorial.RegisterUserAction();
         mCloudAnimator.SetBool("Loaded", false);
+
         //Make the GameToLoad GameManager Data
     }
     public void AssignTutorial(Tutorial tutorial)

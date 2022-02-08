@@ -260,20 +260,15 @@ public class CardDeck : MonoBehaviour
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            if (!mOpenCardTakenAlready)
+            if (!mOpenCardTakenAlready && !MultiplayerManager.Instance.OpenedPlayerID.Contains(MultiplayerManager.Instance._currentPlayerId))
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && drawButtonClick)
                 {
-                    if (drawButtonClick)
-                    {
-                        if (!MultiplayerManager.Instance.OpenedPlayerID.Contains(MultiplayerManager.Instance._currentPlayerId))
-                        {
-                            OpenHandCardAdder();
-                            mOpenCardTakenAlready = true;
-                        }
-                    }
+                    OpenHandCardAdder();
+                    mOpenCardTakenAlready = true;
                 }
             }
+            else menu.UIElementActivate(5, false);
         }
         if (mDrawButtonState == DrawButtonState.NormalState)
         {
@@ -416,9 +411,11 @@ public class CardDeck : MonoBehaviour
 
     public void BackToNormalState()
     {
+        if(_drawButtonFillerImage!=null)
+           _drawButtonFillerImage.fillAmount = 0;
+
         if (mAutomaticDrawModeOn)
         {
-            _drawButtonFillerImage.fillAmount = 0;
             mAutomaticDrawModeOn = false;
             ChangeSprites();
             mOnceDone = false;

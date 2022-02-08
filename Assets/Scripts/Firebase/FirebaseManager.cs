@@ -56,7 +56,7 @@ public class FirebaseManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject); //Singleton
             return;
         }
-        CurrentPlayerPhotoSprite = guestImages[0]; 
+       // CurrentPlayerPhotoSprite = guestImages[0]; 
     }
 
     private void Start()
@@ -70,11 +70,14 @@ public class FirebaseManager : MonoBehaviour
         }
         else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
-            CurrentPlayerID = auth.CurrentUser.UserId;
             userTitle = "Facebook Users";
-            ReadData();
-
+            // ReadData();
         }
+        else
+        {
+            userTitle = "Guest Users";
+        }
+        CurrentPlayerID = PlayerPrefs.GetString("id");
     }
 
     public void ReadData()
@@ -82,7 +85,7 @@ public class FirebaseManager : MonoBehaviour
         Debug.Log("ReadData");
         if (userTitle == "Facebook Users")
         {
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
+            reference.Child(userTitle).Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -97,7 +100,7 @@ public class FirebaseManager : MonoBehaviour
         }
         else if (userTitle == "Guest Users")
         {
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
+            reference.Child(userTitle).Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -112,7 +115,7 @@ public class FirebaseManager : MonoBehaviour
 
     void GetUserDetailsAndBuildingDetails()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -151,7 +154,7 @@ public class FirebaseManager : MonoBehaviour
 
     void GetMapDataAndSavedCards()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -175,7 +178,7 @@ public class FirebaseManager : MonoBehaviour
 
     void GetOpenCardsDetails()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").GetValueAsync().ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -210,7 +213,7 @@ public class FirebaseManager : MonoBehaviour
 
     void GetAttackData()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
         {
 
             if (task.IsCompleted)
@@ -236,7 +239,7 @@ public class FirebaseManager : MonoBehaviour
     }
     void GetTimeCalculations()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -290,13 +293,14 @@ public class FirebaseManager : MonoBehaviour
             Player newPlayer = new Player(newUser.UserId);
             Debug.Log(newUser.UserId);
             CurrentPlayerID = newUser.UserId;
-            CurrentPlayerName = "Guest" + 123;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
             loadMapScene = true;
         });
+        CurrentPlayerName = "Guest" + UnityEngine.Random.Range(100000,999999);
+
     }
-    
+
 
     public void CreateNewFBUser(string inAccessToken)
     {
@@ -314,7 +318,7 @@ public class FirebaseManager : MonoBehaviour
     void CheckFbUser(FirebaseUser newFBUser)
     {
         Debug.Log(newFBUser.UserId);
-        reference.Child("Facebook Users").Child(newFBUser.UserId.ToString()).GetValueAsync().ContinueWith(task =>
+        reference.Child("Facebook Users").Child(CurrentPlayerID).GetValueAsync().ContinueWith(task =>
         {
             DataSnapshot snapshot = task.Result;
             if(task.IsCompleted)
@@ -329,10 +333,10 @@ public class FirebaseManager : MonoBehaviour
                 {
                     //LevelLoadManager.instance.GoToMapScreen(true);
 
-                    Player newPlayer = new Player(newFBUser.UserId, newFBUser.DisplayName);
+                    Player newPlayer = new Player(CurrentPlayerID, newFBUser.DisplayName);
                     Debug.Log("This is creating new fb user" + newFBUser.UserId);
-                    CurrentPlayerID = auth.CurrentUser.UserId;
-                    CurrentPlayerName = auth.CurrentUser.DisplayName;
+                    //CurrentPlayerID = auth.CurrentUser.UserId;
+                    //CurrentPlayerName = auth.CurrentUser.DisplayName;
                     SaveNewUserInFirebase(newPlayer);
                     //StartCoroutine(DownloadFacebookImage(auth.CurrentUser.PhotoUrl.ToString()));
                     WriteBuildingDataToFirebase();
@@ -346,7 +350,7 @@ public class FirebaseManager : MonoBehaviour
 
         public void WritePlayerDataToFirebase()
     {
-        Player playerDetails = new Player(auth.CurrentUser.UserId, CurrentPlayerName);
+        Player playerDetails = new Player(CurrentPlayerID, CurrentPlayerName);
 
         playerDetails._coins = GameManager.Instance._coins;
         playerDetails._energy = GameManager.Instance._energy;
@@ -372,7 +376,7 @@ public class FirebaseManager : MonoBehaviour
         {
 
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(userTitle).Child(CurrentPlayerID).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -385,7 +389,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void WriteopenCardData()
     {
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("OpenCards").RemoveValueAsync();
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").RemoveValueAsync();
         int i = 0;
         foreach (OpenCardData cards in GameManager.Instance.OpenCardDetails)
         {
@@ -405,7 +409,7 @@ public class FirebaseManager : MonoBehaviour
     {
         var LoggedInUser = FirebaseAuth.DefaultInstance.CurrentUser;
         string json = JsonUtility.ToJson(inPlayerDataToSave);
-        reference.Child(userTitle).Child(LoggedInUser.UserId).Child("UserDetails").SetRawJsonValueAsync(json);
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("UserDetails").SetRawJsonValueAsync(json);
         //canWrite = true;
         GameManager.Instance._IsBuildingFromFBase = false;
         WriteAllDataToFireBase();
@@ -484,7 +488,7 @@ public class FirebaseManager : MonoBehaviour
     public void WriteCardDataToFirebase()
     {
 
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("SaveCards").SetValueAsync(GameManager.Instance._SavedCardTypes).ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("SaveCards").SetValueAsync(GameManager.Instance._SavedCardTypes).ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -497,14 +501,14 @@ public class FirebaseManager : MonoBehaviour
     void WriteMapDataToFirebase()
     {
 
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("MapData").Child("SetIndex").SetValueAsync(GameManager.Instance._SetIndex).ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("MapData").Child("SetIndex").SetValueAsync(GameManager.Instance._SetIndex).ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
                 Debug.Log("Write Successful");
             }
         });
-        reference.Child(userTitle).Child(auth.CurrentUser.UserId).Child("MapData").Child("LevelsInSet").SetValueAsync(GameManager.Instance._CompletedLevelsInSet).ContinueWith(task =>
+        reference.Child(userTitle).Child(CurrentPlayerID).Child("MapData").Child("LevelsInSet").SetValueAsync(GameManager.Instance._CompletedLevelsInSet).ContinueWith(task =>
         {
             if (task.IsCompleted)
             {

@@ -91,6 +91,7 @@ public class BuildingManager : MonoBehaviour
         if (!GameManager.Instance._IsBuildingFromFBase)
         {
             PutCurrentLevelBuildingdetails();
+            DestroyAllBuildings();
             SpawningBuilding();
         }
 
@@ -149,8 +150,8 @@ public class BuildingManager : MonoBehaviour
         if (GameManager.Instance._IsRefreshNeeded)
         {
             GameManager.Instance._IsRefreshNeeded = false;
-
             GetCurrentBuildingDetails();
+            DestroyAllBuildings();
             SpawningBuilding();
         }
     }
@@ -207,6 +208,14 @@ public class BuildingManager : MonoBehaviour
         }
         FirebaseManager.Instance.WriteAllDataToFireBase();
     }
+
+    void DestroyAllBuildings()
+    {
+        foreach (GameObject building in _buildings)
+        {
+            Destroy(building);
+        }
+    }
     
     void SpawningBuilding()
     {
@@ -222,6 +231,7 @@ public class BuildingManager : MonoBehaviour
                     GORef.name = _buildingData[i]._buildingName;
                     GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].NextUpgradeImages[4];
                     _buildingData[i].isBuildingSpawnedAndActive = true;
+                    _buildings.Add(GORef);
            
                 }
                 else
@@ -233,7 +243,9 @@ public class BuildingManager : MonoBehaviour
                     Instantiate(_destroyedSmokeEffectVFX, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity, GORef.transform);
                     Instantiate(_destroyedPlayerPlunkCard, _buildingData[i]._buildingSpawnPoint.position + _DestroyedBuildingPlunkOffsetFromBuilding, Quaternion.identity, GORef.transform);
                     GORef.name = _buildingData[i]._buildingName;
-                    
+                    _buildings.Add(GORef);
+
+
                 }
             }
             else /*if (!GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingDestroyed && _buildingData[i]._buildingLevel > 0)*/  // But if there are buildings already spawned and active the grab the information from Game Manager
@@ -246,6 +258,8 @@ public class BuildingManager : MonoBehaviour
                     {
                         _buildingData[i].didBuildingReachMaxLevel = true;
                     }
+                    _buildings.Add(GORef);
+
                 }
                 else
                 {
@@ -259,6 +273,8 @@ public class BuildingManager : MonoBehaviour
                     {
                         _buildingData[i].didBuildingReachMaxLevel = true;
                     }
+                    _buildings.Add(GORef);
+
                 }
                 //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
                 //GORef.name = _buildingData[i]._buildingName;
