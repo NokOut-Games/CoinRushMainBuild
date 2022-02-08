@@ -92,7 +92,7 @@ public class MenuUI : MonoBehaviour
         UpdateCoinAndEnergyTextFields();
 
 
-        if (Input.touchCount > 0&& !isInoptionScreen && isOptionactivate)
+        if (Input.touchCount > 0&& !isInoptionScreen && isOptionactivate && optionScreen.gameObject.activeInHierarchy)
         {
             OnOptionButtonPress(false);
         }

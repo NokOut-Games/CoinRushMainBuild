@@ -167,7 +167,6 @@ public class MultiplayerManager : MonoBehaviour
                 mPlayerIDData = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
                 mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
                 mNumberOfTimesGotAttacked = snapshot.Child("UserDetails").Child("_numberOfTimesGotAttacked").Value.ToString();
-                mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
                 AttackCount = int.Parse(mNumberOfTimesGotAttacked);
                 mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
@@ -283,7 +282,6 @@ public class MultiplayerManager : MonoBehaviour
                 mCoinData = snapshot.Child("UserDetails").Child("_coins").Value.ToString();
                 mEnergyData = snapshot.Child("UserDetails").Child("_energy").Value.ToString();
                 mNumberOfTimesGotAttacked = snapshot.Child("UserDetails").Child("mNumberOfTimesGotAttacked").Value.ToString();
-                mPlayerPhotoURLData = snapshot.Child("UserDetails").Child("_playerPhotoURL").Value.ToString();
 
                 GameManager.Instance._SavedCardTypes.Clear();
 
@@ -308,7 +306,7 @@ public class MultiplayerManager : MonoBehaviour
                     builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
                     BuildingDetails.Add(builddata);
                 }
-                mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerPhotoURLData);
+                mGameManager.UpdateUserDetails(BuildingDetails, int.Parse(mCoinData), int.Parse(mEnergyData), int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked));
 
                 if (snapshot.Child(FirebaseManager.Instance.userTitle).Child(auth.CurrentUser.UserId).HasChild("OpenCards") == true)
                 {

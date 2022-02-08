@@ -9,7 +9,6 @@ public class Player
     public int _playerCurrentLevel = 1;
     public int _coins = 1000;
     public int _energy = 25;
-    public string _playerPhotoURL;
     public int _numberOfTimesGotAttacked;
     public Player(string inPlayerID, string inPlayerName = "Guest")
     {
