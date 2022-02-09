@@ -14,6 +14,7 @@ public class PlayerIDDetails : MonoBehaviour
     DatabaseReference mReference;
     FirebaseAuth mAuth;
     public List<string> _playerList;
+    public List<string> _fbPlayerList;
     private string mPlayerUserId;
     public string _randomEnemyID;
     public string _randomOpencardID;
@@ -22,7 +23,7 @@ public class PlayerIDDetails : MonoBehaviour
     {
         mAuth = FirebaseAuth.DefaultInstance;
         mReference = FirebaseDatabase.DefaultInstance.RootReference;
-        Invoke("FetchDetails",1f);
+        Invoke(nameof(FetchDetails),2f);
     }
 
    public void FetchDetails()
@@ -34,32 +35,21 @@ public class PlayerIDDetails : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
                 _playerList = new List<string>();
 
-                ////Show Results in a list
-                //foreach (var dataSnapshot in snapshot.Child("Facebook Users").Children)
-                //{
-                //    mPlayerUserId = dataSnapshot.Key;
-                //    _playerList.Add(mPlayerUserId);
-                //    // _playerList.Remove("Facebook Users"); _playerList.Remove("Guest Users"); _playerList.Remove("Timestamp");
-                //}
+                //Show Results in a list
+                foreach (var dataSnapshot in snapshot.Child("Facebook Users").Children)
+                {
+                    mPlayerUserId = dataSnapshot.Key;
+                    _playerList.Add(mPlayerUserId);
+                    // _playerList.Remove("Facebook Users"); _playerList.Remove("Guest Users"); _playerList.Remove("Timestamp");
+                }
 
-                //foreach (var dataSnapshot2 in snapshot.Child("Guest Users").Children)
-                //{
-                //    mPlayerUserId = dataSnapshot2.Key;
-                //    _playerList.Add(mPlayerUserId);
-                //}
+                foreach (var dataSnapshot2 in snapshot.Child("Guest Users").Children)
+                {
+                    mPlayerUserId = dataSnapshot2.Key;
+                    _playerList.Add(mPlayerUserId);
+                }
 
-                /* using (var sequenceThroughFacebookChildren = snapshot.Child("Facebook Users").Children.GetEnumerator())
-                 {
-                     for (int i = 0; i < snapshot.Child("Facebook Users").ChildrenCount; i++)
-                     {
-                         while(sequenceThroughFacebookChildren.MoveNext())
-                         {
-                             string facebookUserIds = sequenceThroughFacebookChildren.Current.Key;
-                             _playerList.Add(facebookUserIds);
-                         }
-                     }
-                 }*/
-                AddUsersToList(snapshot, "Facebook Users", _playerList);
+                AddUsersToList(snapshot, "Facebook Users", _fbPlayerList);
                 //AddUsersToList(snapshot, "Guest Users", _playerList);
 
             }
@@ -84,9 +74,9 @@ public class PlayerIDDetails : MonoBehaviour
     }
     public void GetRandomEnemyID(string inCurrentPlayerID)
     {
-        _playerList.Remove(inCurrentPlayerID); //FirebaseManager.Instance.CurrentPlayerID);
+        _playerList.Remove(inCurrentPlayerID); _fbPlayerList.Remove(inCurrentPlayerID);//FirebaseManager.Instance.CurrentPlayerID);
         _randomEnemyID = _playerList[UnityEngine.Random.Range(0, _playerList.Count)];
-        _randomOpencardID= _playerList[UnityEngine.Random.Range(0, _playerList.Count)];
+        _randomOpencardID= _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
     }
 
 }

@@ -210,6 +210,13 @@ public class CardDeck : MonoBehaviour
             GameObject savedOpenCard = Instantiate(_openCardPrefabs[GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard;
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = GameManager.Instance.OpenCardDetails[i]._openedCardSlot;
+
+            System.Action<Sprite> OnGettingPicture = (pic) =>
+            {
+                savedOpenCard.transform.localPosition = Vector3.zero;
+                savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
+            };
+            FacebookManager.Instance.GetProfilePictureWithId(GameManager.Instance.OpenCardDetails[i]._openedPlayerID,OnGettingPicture);
         }
     }
 
@@ -220,6 +227,12 @@ public class CardDeck : MonoBehaviour
             GameObject savedOpenCard = Instantiate(_openCardPrefabs[mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard;
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot;
+            System.Action<Sprite> OnGettingPicture = (pic) =>
+            {
+                savedOpenCard.transform.localPosition = Vector3.zero;
+                savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
+            };
+            FacebookManager.Instance.GetProfilePictureWithId(mMultiplayerPlayerData.OpenCardDetails[i]._openedPlayerID, OnGettingPicture);
         }
     }
 
@@ -498,6 +511,13 @@ public class CardDeck : MonoBehaviour
                 GameObject OpenCards = Instantiate(_openCardPrefabs[_openedCardIndex], mOpenCards._OpenCardTransformPoint[positionNumber].position, mOpenCards._OpenCardTransformPoint[positionNumber].rotation, mOpenCards._OpenCardTransformPoint[positionNumber]);
                 OpenCards.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = _openedCardIndex;
                 OpenCards.GetComponent<OpenCardSelector>()._OpenCardPosition = positionNumber;
+                
+                System.Action<Sprite> OnGettingPicture = (pic) =>
+                {
+                    OpenCards.transform.localPosition = Vector3.zero;
+                    OpenCards.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
+                };
+                FacebookManager.Instance.GetProfilePictureWithId(FirebaseManager.Instance.CurrentPlayerID, OnGettingPicture);
                 _openCardSlot = positionNumber;
                 //_OpenCardNumberIndex += 1;
                 _OpenCardSlotFilled.Clear();

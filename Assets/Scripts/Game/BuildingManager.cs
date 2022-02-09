@@ -241,7 +241,15 @@ public class BuildingManager : MonoBehaviour
                     GORef.transform.position = new Vector3(GORef.transform.position.x, _buildingSinkPositionAmount, GORef.transform.position.z);
                     GORef.transform.rotation = Quaternion.Euler(GORef.transform.eulerAngles.x, GORef.transform.eulerAngles.y, -(_buildingTiltRotationAmount)); //Adjusting the model problem #### IMPORTANT ####
                     Instantiate(_destroyedSmokeEffectVFX, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity, GORef.transform);
-                    Instantiate(_destroyedPlayerPlunkCard, _buildingData[i]._buildingSpawnPoint.position + _DestroyedBuildingPlunkOffsetFromBuilding, Quaternion.identity, GORef.transform);
+                    GameObject pluckCard = Instantiate(_destroyedPlayerPlunkCard, _buildingData[i]._buildingSpawnPoint.position + _DestroyedBuildingPlunkOffsetFromBuilding, Quaternion.identity, GORef.transform);
+                    //
+                    System.Action<Sprite> OnGettingAttackedPlayerImage = (image) =>
+                    {
+                        pluckCard.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = image;
+                    };
+                    CheckIsBuildingAttack(_buildingData[i]._buildingName + _buildingData[i]._buildingLevel, OnGettingAttackedPlayerImage);
+
+
                     GORef.name = _buildingData[i]._buildingName;
                     _buildings.Add(GORef);
 
@@ -267,7 +275,12 @@ public class BuildingManager : MonoBehaviour
                     GORef.transform.position = new Vector3(GORef.transform.position.x, _buildingSinkPositionAmount, GORef.transform.position.z);
                     GORef.transform.rotation = Quaternion.Euler(GORef.transform.eulerAngles.x, GORef.transform.eulerAngles.y, _buildingTiltRotationAmount);
                     Instantiate(_destroyedSmokeEffectVFX, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity, GORef.transform);
-                    Instantiate(_destroyedPlayerPlunkCard, _buildingData[i]._buildingSpawnPoint.position + _DestroyedBuildingPlunkOffsetFromBuilding, Quaternion.identity, GORef.transform);
+                    GameObject pluckCard = Instantiate(_destroyedPlayerPlunkCard, _buildingData[i]._buildingSpawnPoint.position + _DestroyedBuildingPlunkOffsetFromBuilding, Quaternion.identity, GORef.transform);
+                    System.Action<Sprite> OnGettingAttackedPlayerImage = (image) =>
+                    {
+                        pluckCard.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = image;
+                    };
+                    CheckIsBuildingAttack(_buildingData[i]._buildingName + _buildingData[i]._buildingLevel, OnGettingAttackedPlayerImage);
                     GORef.name = _buildingData[i]._buildingName;
                     if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
                     {
@@ -400,6 +413,20 @@ public class BuildingManager : MonoBehaviour
             CheckForAllBuildingMax();
         }
     }
+
+
+
+    void CheckIsBuildingAttack(string buildName,System.Action<Sprite> image)
+    {
+        foreach (AttackedPlayerInformation data in FirebaseManager.Instance.CurrenetPlayerAttackData)
+        {
+            if (data._attackedBuildingName == buildName)
+            {
+                FacebookManager.Instance.GetProfilePictureWithId(data._attackedPlayerID,image);
+            }
+        }
+    }
+
 
     void CheckForAllBuildingMax()
     {

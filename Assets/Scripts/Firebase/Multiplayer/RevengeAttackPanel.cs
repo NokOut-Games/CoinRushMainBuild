@@ -18,11 +18,15 @@ public class RevengeAttackPanel : MonoBehaviour
     public GameObject _ENemy;
 
     public GameObject FBFriendsPanel;
+    public List<RectTransform> FBTransformPoints;
+    public GameObject _FBFriends;
+    public List<GameObject> FBEnemyList = new List<GameObject>();
 
     public void Start()
-    {    /*&& attackedplayerNameList.Contains(MultiplayerManager.Instance.attackedplayerNameList[i])*/
-        // attackedplayerNameList.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
-        RawAttackedPlayerID=MultiplayerManager.Instance.attackedplayerIDList;
+    {
+        FacebookManager.Instance.GetFriends();
+
+        RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
 
         Debug.Log(RawAttackedPlayerID.Count);
         for (int i = 0; i < RawAttackedPlayerID.Count; i++)
@@ -49,6 +53,12 @@ public class RevengeAttackPanel : MonoBehaviour
 
             EnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FilteredAttackedName[i];
             EnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID/*.GetComponent<Text>().text*/ = FilteredAttackedPlayerID[i];
+            System.Action<Sprite,int> ONGettingProfilePic = (Pic,index) =>
+            {
+                EnemyList[index].transform.GetChild(3).GetComponent<Image>().sprite = Pic;
+
+            };
+            FacebookManager.Instance.GetProfilePictureWithId(FilteredAttackedPlayerID[i], ONGettingProfilePic, i);
         }
 
     }
@@ -64,6 +74,20 @@ public class RevengeAttackPanel : MonoBehaviour
     public void GoBackFromRevengeFBPanel()
     {
         FBFriendsPanel.SetActive(false);
+        for (int i = 0; i < FacebookManager.Instance.FBFriendsIDList.Count; i++)
+        {
+            GameObject FBEnemySlot = Instantiate(_FBFriends, FBTransformPoints[i].position, FBTransformPoints[i].rotation, FBTransformPoints[i].parent);
+            FBEnemyList.Add(FBEnemySlot);
+
+            FBEnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FacebookManager.Instance.FBFriendsNameList[i];
+            FBEnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID = FacebookManager.Instance.FBFriendsIDList[i];
+           // FacebookManager.Instance.GetFriendsPicture();
+            //FB.API("https" + "://graph.facebook.com/" + FacebookManager.Instance.FBFriendsIDList[i] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+            //{
+            //    Debug.Log(FacebookManager.Instance.FBFriendsIDList[i] + "Pic ID");
+            //    FBEnemyList[i].transform.GetChild(3).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
+            //});
+        }
 
     }
     public void BackToGame()

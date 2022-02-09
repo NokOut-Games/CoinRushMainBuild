@@ -97,6 +97,7 @@ public class FirebaseManager : MonoBehaviour
                     GetUserDetailsAndBuildingDetails();
                     GetMapDataAndSavedCards();
                     GetOpenCardsDetails();
+                    GetAttackData();
                     GetTimeCalculations();
                    // readUserData = true;
                 }
@@ -111,6 +112,7 @@ public class FirebaseManager : MonoBehaviour
                     DataSnapshot snapshot = task.Result;
                     GetUserDetailsAndBuildingDetails();
                     GetMapDataAndSavedCards();
+                    GetAttackData();
                     GetTimeCalculations();
                 }
             });
@@ -232,6 +234,7 @@ public class FirebaseManager : MonoBehaviour
 
                         attackData._attackedPlayerID = snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
                         attackData._attackedPlayerName = snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
+                        attackData._attackedBuildingName = snapshot.Child(i.ToString()).Child("_attackedBuildingName").Value.ToString();
 
                         CurrenetPlayerAttackData.Add(attackData);
                     }

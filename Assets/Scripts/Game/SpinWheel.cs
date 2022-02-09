@@ -109,20 +109,20 @@ public class SpinWheel : MonoBehaviour
     {
         for (int i = 0; i < _wheelPieces.Length; i++)
         {
-            GameObject wheelPiece = Instantiate(_wheelPiecePrefab, _wheelPiecesParent.position, Quaternion.identity, _wheelPiecesParent);
+            GameObject wheelPiece = Instantiate(_wheelPiecePrefab, _wheelPiecesParent.position, _wheelPiecesParent.transform.rotation, _wheelPiecesParent);
             WheelPiece piece = _wheelPieces[i];
             Transform pieceTrns = wheelPiece.transform.GetChild(0);
 
             if (i % 2 == 0 || i == 0)
             {
-                pieceTrns.GetChild(0).GetComponent<Text>().text = piece._Label;
+                pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
             }
             else
             {
-                pieceTrns.GetChild(0).GetComponent<Text>().text = piece._Label;
-                pieceTrns.GetChild(0).GetComponent<Text>().color = Color.yellow;
+                pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
+                pieceTrns.GetChild(1).GetComponent<Text>().color = Color.yellow;
             }
-            pieceTrns.GetChild(1).GetComponent<Image>().sprite = piece._Icon;
+            pieceTrns.GetChild(0).GetComponent<Image>().sprite = piece._Icon;
             //pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
 
             ResizePiece(pieceTrns);
@@ -209,7 +209,7 @@ public class SpinWheel : MonoBehaviour
             mNeedleAnim.SetBool("Spin", true);
             Invoke("SlowNeedleAnimation", _spinDuration - 1.8f);
 
-            mLightAnimator.SetBool("Spin", true);
+          //  mLightAnimator.SetBool("Spin", true);
 
             _spinnerParent.DORotate(targetRotation, _spinDuration)
             //.SetEase(Ease.InOutQuart)

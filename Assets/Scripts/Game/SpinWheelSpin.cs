@@ -25,7 +25,7 @@ public class SpinWheelSpin : MonoBehaviour
     public bool disablePanel = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
-    public Animator mLightAnimator;
+   // public Animator mLightAnimator;
 
     [SerializeField] GameObject CoinParticle;
     [SerializeField] GameObject EnergyParticle;
@@ -41,7 +41,7 @@ public class SpinWheelSpin : MonoBehaviour
 
             spinWheel.OnSpinEnd(wheelPiece =>
             {
-                mLightAnimator.SetBool("Spin",false);
+               // mLightAnimator.SetBool("Spin",false);
 
                 if (FreeSpins == 0)
                 {

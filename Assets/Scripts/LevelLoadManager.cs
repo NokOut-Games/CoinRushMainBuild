@@ -84,33 +84,7 @@ public class LevelLoadManager : MonoBehaviour
 
 
 
-    public async void GoToAttackScene(int delayInMilisec = 0)
-    {
-        await System.Threading.Tasks.Task.Delay(delayInMilisec);
-
-        AsyncOperation scene = SceneManager.LoadSceneAsync("ATTACK");
-        scene.allowSceneActivation = false;
-        mCanvas.SetActive(true);
-        await System.Threading.Tasks.Task.Delay(1000);
-        do
-        {
-            //await System.Threading.Tasks.Task.Delay(1000);
-        } while (scene.progress < 0.9f);
-        await System.Threading.Tasks.Task.Delay(1000);
-
-         System.Action  OnGettingUserData = ()  =>
-         {
-            scene.allowSceneActivation = true;
-            mCloudAnimator.SetBool("Loaded", true);
-            mCanvas.SetActive(false);
-            mCloudAnimator.SetBool("Loaded", false);
-         };
-      
-        MultiplayerManager.Instance.OnGettingAttackCard(OnGettingUserData);
-
-
-       
-    }
+ 
     public async void BacktoHome()
     {
         AsyncOperation scene = SceneManager.LoadSceneAsync(levelPrefix + GameManager.Instance._playerCurrentLevel);

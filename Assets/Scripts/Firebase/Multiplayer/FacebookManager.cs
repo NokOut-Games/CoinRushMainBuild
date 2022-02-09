@@ -22,6 +22,8 @@ public class FacebookManager : MonoBehaviour
 	public Transform GetFriendPos;
 	public string UserID;
 
+	public List<string> FBFriendsNameList = new List<string>();
+	public List<string> FBFriendsIDList = new List<string>();
 	void Awake()
 	{
 		if (Instance == null)
@@ -88,7 +90,7 @@ public class FacebookManager : MonoBehaviour
 
 	public void LoginWithFB()
 	{
-		FirebaseManager.Instance.userTitle = "Facebook Users";
+		
 		var permission = new List<string>() { "public_profile", "email" };
 		FB.LogInWithReadPermissions(permission, AuthCallback);
 	}
@@ -104,7 +106,8 @@ public class FacebookManager : MonoBehaviour
         {
             TextStatus.text = result.Error;
         }
-
+		if (result.Cancelled) return;
+		FirebaseManager.Instance.userTitle = "Facebook Users";
 		FB.API("/me?fields=name", HttpMethod.GET, DispName);
 		FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 		FB.API("/me?fields=id", HttpMethod.GET, DispID);
@@ -180,12 +183,44 @@ public class FacebookManager : MonoBehaviour
 	}
 
 
+	public void GetFriends()
+	{
+		Debug.Log("Loged in");
+		string query = "/me/friends";
+		FB.API(query, HttpMethod.GET, result =>
+		{
+			Debug.Log("the raw" + result.RawResult);
+			var localDictionary = (Dictionary<string, object>)Json.Deserialize(result.RawResult);
+			Debug.Log("Local Dictionary: " + localDictionary);
+			var friendList = (List<object>)localDictionary["data"];
+			Debug.Log(friendList);
+
+			Vector3 offset = new Vector3(0, 0, 0);
+			foreach (var dict in friendList)
+			{
+				//FB Friends List
+				FBFriendsNameList.Add(((Dictionary<string, object>)dict)["name"].ToString());
+				FBFriendsIDList.Add(((Dictionary<string, object>)dict)["id"].ToString());
+			}
+		});
+	}
+
+
+
 
 	public void GetProfilePictureWithId(string inId,Action<Sprite> picture)
     {
 		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
 		{
-			 picture(Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100));
+			 picture(Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f));
+		});
+	}
+
+	public void GetProfilePictureWithId(string inId, Action<Sprite,int> picture,int index)
+	{
+		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+		{
+			picture(Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2()),index);
 		});
 	}
 }

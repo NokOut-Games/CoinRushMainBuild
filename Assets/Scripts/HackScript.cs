@@ -12,4 +12,5 @@ public class HackScript : MonoBehaviour
     {
         GameManager.Instance._coins += coin;
     }
+    
 }

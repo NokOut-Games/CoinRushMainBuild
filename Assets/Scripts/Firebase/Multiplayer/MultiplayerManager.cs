@@ -126,7 +126,7 @@ public class MultiplayerManager : MonoBehaviour
     }
 
 
-    IEnumerator ReadEnemyData(System.Action readBuildingData = null)
+    IEnumerator ReadEnemyData()
     {
         yield return new WaitForSeconds(_dataBaseFetchTime);
 
@@ -141,7 +141,7 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     _enemyTitle = "Facebook Users";
                     GetUserDetails();
-                    GetBuildingDetails(readBuildingData);
+                    GetBuildingDetails();
                     GetAttackData();
                     GetOpenCardsDetails();
                 }
@@ -149,7 +149,7 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     _enemyTitle = "Guest Users";
                     GetUserDetails();
-                    GetBuildingDetails(readBuildingData);
+                    GetBuildingDetails();
                     GetAttackData();
                 }
             }
@@ -174,30 +174,33 @@ public class MultiplayerManager : MonoBehaviour
         });
     }
 
-    void GetBuildingDetails(System.Action readBuildingData=null)
+    void GetBuildingDetails()
     {
         reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                mMultiplayerPlayerData._buildingMultiplayerDataRef.Clear();
-                List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
-                for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+                if(snapshot.Child("Buildings").Exists)
                 {
-                    Debug.LogError("Getting Building Details");
-                    MultiplayerBuildingData builddata = new MultiplayerBuildingData();
-                    builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                    builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                    builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
-                    builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                    builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
+                    mMultiplayerPlayerData._buildingMultiplayerDataRef.Clear();
+                    List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
+                    for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
+                    {
+                        Debug.LogError("Getting Building Details");
+                        MultiplayerBuildingData builddata = new MultiplayerBuildingData();
+                        builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
+                        builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
+                        builddata._isBuildingSpawned = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingSpawned").Value.ToString());
+                        builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
+                        builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
 
-                    BuildingDetails.Add(builddata);
-                    MultiplayerBuildingDetails.Add(builddata);
+                        BuildingDetails.Add(builddata);
+                        MultiplayerBuildingDetails.Add(builddata);
+                    }
+                    mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerNameData, mPlayerPhotoURLData);
                 }
-                mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerNameData, mPlayerPhotoURLData);
-                readBuildingData();
+              
             }
         });
     }
@@ -240,7 +243,7 @@ public class MultiplayerManager : MonoBehaviour
 
     void GetAttackData()
     {
-        reference.Child(FirebaseManager.Instance.userTitle).Child(auth.CurrentUser.UserId).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
+        reference.Child(FirebaseManager.Instance.userTitle).Child(FirebaseManager.Instance.CurrentPlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
         {
 
             if (task.IsCompleted)
@@ -336,7 +339,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         if (!isRevenging)
         {
-            mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+            mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance.CurrentPlayerID);
             _enemyPlayerID = mplayerIDDetails._randomEnemyID;
             FirebaseManager.Instance.WriteCardDataToFirebase();
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
@@ -360,42 +363,7 @@ public class MultiplayerManager : MonoBehaviour
 
 
 
-    //new 
-    public void OnGettingAttackCard(System.Action gotAnEnemy)
-    {
-        if (!isRevenging)
-        {
-            mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
-            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
-            FirebaseManager.Instance.WriteCardDataToFirebase();
-            FirebaseManager.Instance.WriteBuildingDataToFirebase();
-            FirebaseManager.Instance.WritePlayerDataToFirebase();
-            System.Action OnReadEnemyBuildingDetails =() =>
-            {
-                Debug.Log("data");
-                gotAnEnemy();
-
-                if (MultiplayerBuildingDetails == null || MultiplayerBuildingDetails.Count <= 0)
-                {
-                    mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
-                    _enemyPlayerID = mplayerIDDetails._randomEnemyID;
-                    StartCoroutine(ReadEnemyData());
-                }
-            };
-
-
-
-            StartCoroutine(ReadEnemyData(OnReadEnemyBuildingDetails));
-            //Invoke(nameof(LoadAttackScene), 5f);
-        }
-        else
-        {
-            StartCoroutine(ReadEnemyData());
-           // Invoke(nameof(LoadAttackScene), 2f);
-            isRevenging = false;
-        }
-    }
-
+  
 
     public void CheckAttackDataFromFirebase()
     {
@@ -467,7 +435,7 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void OnClickViewIslandToOpenCard()
     {
-        mplayerIDDetails.GetRandomEnemyID(auth.CurrentUser.UserId);
+        mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance.CurrentPlayerID);
         _enemyPlayerID = mplayerIDDetails._randomOpencardID;
         FirebaseManager.Instance.WriteCardDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
