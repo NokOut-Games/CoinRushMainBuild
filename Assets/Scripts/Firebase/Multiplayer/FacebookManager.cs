@@ -226,13 +226,18 @@ public class FacebookManager : MonoBehaviour
 			picture(randomPicID[GetIntFromID(inId)]);
 			return;
 		}
-		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
-		{
-			Sprite s =result.Texture==null || result.Texture.height == 8 ? 
-			randomPicID[GetIntFromID(inId)] : 
-			Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-			 picture(s);
-		});
+		else
+        {
+			Debug.Log("PIC ID: "+inId);
+			FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+			{
+				Sprite s =result.Texture==null || result.Texture.height == 8 ?
+				randomPicID[GetIntFromID(inId)] :
+				Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+				picture(s);
+			});
+		}
+		
 	}
 
 	public void GetProfilePictureWithId(string inId, Action<Sprite,int> picture,int index)
@@ -255,6 +260,6 @@ public class FacebookManager : MonoBehaviour
 		string s =Regex.Match(id, @"\d+").Value;
 		int number = s[s.Length-1];
 		Debug.Log(Int32.Parse( number.ToString()));
-		return (int)number/5;
+		return (int)number/10;
 	}
 }

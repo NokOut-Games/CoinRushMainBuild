@@ -238,9 +238,9 @@ public class FirebaseManager : MonoBehaviour
                         OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
                     }
                     GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
-                    reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;//Event Handle
+                   // reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;//Event Handle
                 }
-                else
+               /* else
                 {
                     reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
                     {
@@ -251,37 +251,37 @@ public class FirebaseManager : MonoBehaviour
 
                         }
                     });
-                }
+                }*/
             }
         });
     }
 
-    private void HandleOpenCardValueChanged(object sender, ValueChangedEventArgs e)
-    {
-        if (e.Snapshot.Exists)
-        {
-            Debug.Log("OpenCardDetailsExists");
-            OpenCardDetails = new List<OpenCardData>();
-            OpenedCardSlot.Clear();
-            for (int i = 0; i < e.Snapshot.ChildrenCount; i++)
-            {
-                OpenCardData CardData = new OpenCardData();
+    //private void HandleOpenCardValueChanged(object sender, ValueChangedEventArgs e)
+    //{
+    //    if (e.Snapshot.Exists)
+    //    {
+    //        Debug.Log("OpenCardDetailsExists");
+    //        OpenCardDetails = new List<OpenCardData>();
+    //        OpenedCardSlot.Clear();
+    //        for (int i = 0; i < e.Snapshot.ChildrenCount; i++)
+    //        {
+    //            OpenCardData CardData = new OpenCardData();
 
-                CardData._openedPlayerName = e.Snapshot.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
-                CardData._openedPlayerID = e.Snapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-                CardData._openedPlayerPhotoURL = e.Snapshot.Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
-                CardData._openedCardSlot = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
-                CardData._openedCardSelectedCard = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
+    //            CardData._openedPlayerName = e.Snapshot.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
+    //            CardData._openedPlayerID = e.Snapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
+    //            CardData._openedPlayerPhotoURL = e.Snapshot.Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
+    //            CardData._openedCardSlot = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
+    //            CardData._openedCardSelectedCard = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
 
-                OpenCardDetails.Add(CardData);
-                OpenedCardSlot.Add(CardData._openedCardSlot);
-                //OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
-            }
-            GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
+    //            OpenCardDetails.Add(CardData);
+    //            OpenedCardSlot.Add(CardData._openedCardSlot);
+    //            //OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+    //        }
+    //        GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
 
-            //OpenCardValueChange?.Invoke();
-        }
-    }
+    //        //OpenCardValueChange?.Invoke();
+    //    }
+    //}
 
     void GetAttackData()
     {

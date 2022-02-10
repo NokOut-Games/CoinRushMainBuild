@@ -188,6 +188,7 @@ public class MultiplayerManager : MonoBehaviour
                 if(snapshot.Child("Buildings").Exists)
                 {
                     mMultiplayerPlayerData._buildingMultiplayerDataRef.Clear();
+                    MultiplayerBuildingDetails.Clear();
                     List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
                     for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
                     {
