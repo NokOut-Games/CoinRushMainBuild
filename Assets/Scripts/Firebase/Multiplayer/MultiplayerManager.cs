@@ -407,7 +407,7 @@ public class MultiplayerManager : MonoBehaviour
                 else
                 {
                     //ReadMyData();
-                    FirebaseManager.Instance.ReadData(false);
+                    FirebaseManager.Instance.ReadData();
                     mAttackManager.isDataChanging = false;
                 }
             }
@@ -538,7 +538,7 @@ public class MultiplayerManager : MonoBehaviour
         }
 
         //ReadMyData();
-        FirebaseManager.Instance.ReadData(false);
+        FirebaseManager.Instance.ReadData();
     }
 
     public void BackToGame()

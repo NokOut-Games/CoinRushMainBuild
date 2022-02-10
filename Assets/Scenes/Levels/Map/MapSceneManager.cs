@@ -23,14 +23,14 @@ public class MapSceneManager : MonoBehaviour
         backBtn.onClick.AddListener(()=>{ LevelLoadManager.instance.BacktoHome(); });
 
         if (GameManager.Instance.hasChoiceInLevel) backBtn.gameObject.SetActive(false);
-
+/*
         if (GameManager.Instance._SetIndex < levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex) )
         {
             GameManager.Instance._CompletedLevelsInSet.Clear();
 
             GameManager.Instance._SetIndex++;
         }
-        else if(GameManager.Instance._SetIndex >= levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex))
+        else*/ if(GameManager.Instance._SetIndex >= levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex))
         {
             backBtn.gameObject.SetActive(true);
             AllLevelCompleted.SetActive(true);
@@ -125,8 +125,8 @@ public class MapSceneManager : MonoBehaviour
         {
             if (GameManager.Instance._SetIndex < levelSets.Length)
             {
-                GameManager.Instance._SetIndex++;
                 GameManager.Instance._CompletedLevelsInSet.Clear();
+                GameManager.Instance._SetIndex++;
             }
         }
         

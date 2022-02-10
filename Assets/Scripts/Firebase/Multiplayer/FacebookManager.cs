@@ -255,6 +255,6 @@ public class FacebookManager : MonoBehaviour
 		string s =Regex.Match(id, @"\d+").Value;
 		int number = s[s.Length-1];
 		Debug.Log(Int32.Parse( number.ToString()));
-		return (int)number/5;
+		return (int)number/10;
 	}
 }

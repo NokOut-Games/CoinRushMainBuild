@@ -218,13 +218,13 @@ public class CardDeck : MonoBehaviour
             
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard;
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = GameManager.Instance.OpenCardDetails[i]._openedCardSlot;
-
-            System.Action<Sprite> OnGettingPicture = (pic) =>
-            {             
-                savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
-            };
-            FacebookManager.Instance.GetProfilePictureWithId(GameManager.Instance.OpenCardDetails[i]._openedPlayerID, OnGettingPicture);
             _openCardSpawnedObjects.Add(savedOpenCard);
+
+            System.Action<Sprite,int> OnGettingPicture = (pic,index) =>
+            {
+                _openCardSpawnedObjects[index].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
+            };
+            FacebookManager.Instance.GetProfilePictureWithId(GameManager.Instance.OpenCardDetails[i]._openedPlayerID, OnGettingPicture,i);
         }
     }
 
