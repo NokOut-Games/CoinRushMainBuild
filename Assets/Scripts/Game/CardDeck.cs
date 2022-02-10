@@ -52,6 +52,7 @@ public class CardDeck : MonoBehaviour
 
     public List<string> _OpenedCardPlayerID = new List<string>();
     public List<GameObject> _openCardPrefabs;
+    public List<GameObject> _openCardSpawnedObjects = new List<GameObject>();
     public int _OpenCardNumberIndex;
     public int positionNumber = 0;
     public int _openedCardIndex;
@@ -86,7 +87,7 @@ public class CardDeck : MonoBehaviour
 
     GameObject mFlotingJoker;
 
-    private OpenCards mOpenCards;
+    private OpenCards mOpenCards => GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
     private bool mOpenCardTakenAlready;
 
     [SerializeField] int mJokerProbability;
@@ -110,18 +111,19 @@ public class CardDeck : MonoBehaviour
 
     private void Awake()
     {
-       /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
-        {
-            mDrawButtonState = DrawButtonState.OpenCardState;
-            Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
-        }
-        else
-        {
-            mDrawButtonState = DrawButtonState.NormalState;
-            PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-        }
-        //PopulateOpenedCardSlotsFromFireBase();
-        //PopulateFriendsOpenCardSlotsFromFirebase();*/
+        /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
+         {
+             mDrawButtonState = DrawButtonState.OpenCardState;
+             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
+         }
+         else
+         {
+             mDrawButtonState = DrawButtonState.NormalState;
+             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
+         }
+         //PopulateOpenedCardSlotsFromFireBase();
+         //PopulateFriendsOpenCardSlotsFromFirebase();*/
+        GameManager.GotAnOpenCard += SpawnOpenCards;
     }
 
     void ShieldAnimation()
@@ -133,7 +135,6 @@ public class CardDeck : MonoBehaviour
 
     private void Start()
     {
-
         if(mDrawButtonState == DrawButtonState.NormalState)
         {
             PopulateOpenedCardSlotsFromFireBase();
@@ -144,7 +145,7 @@ public class CardDeck : MonoBehaviour
             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
         }
         mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
-        mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
+        //mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
 
         if (mDrawButtonState == DrawButtonState.NormalState)
         {
@@ -205,18 +206,25 @@ public class CardDeck : MonoBehaviour
 
     private void SpawnOpenCards()
     {
+        PopulateOpenedCardSlotsFromFireBase();
+        foreach (var openCard in _openCardSpawnedObjects)
+        {
+            Destroy(openCard);
+        }
+        _openCardSpawnedObjects.Clear();
         for (int i = 0; i < GameManager.Instance.OpenCardDetails.Count; i++)
         {
             GameObject savedOpenCard = Instantiate(_openCardPrefabs[GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
+            
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = GameManager.Instance.OpenCardDetails[i]._openedCardSelectedCard;
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = GameManager.Instance.OpenCardDetails[i]._openedCardSlot;
 
             System.Action<Sprite> OnGettingPicture = (pic) =>
-            {
-                savedOpenCard.transform.localPosition = Vector3.zero;
+            {             
                 savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
             };
-            FacebookManager.Instance.GetProfilePictureWithId(GameManager.Instance.OpenCardDetails[i]._openedPlayerID,OnGettingPicture);
+            FacebookManager.Instance.GetProfilePictureWithId(GameManager.Instance.OpenCardDetails[i]._openedPlayerID, OnGettingPicture);
+            _openCardSpawnedObjects.Add(savedOpenCard);
         }
     }
 
@@ -267,6 +275,11 @@ public class CardDeck : MonoBehaviour
 
     private void Update()
     {
+       /* if (GameManager.Instance.refreshForOpenCard)
+        {
+            GameManager.Instance.refreshForOpenCard = false;
+            SpawnOpenCards();
+        }*/
 
         if (GameManager.Instance._PauseGame) return;
 

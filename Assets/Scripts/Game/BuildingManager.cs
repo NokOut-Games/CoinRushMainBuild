@@ -189,6 +189,8 @@ public class BuildingManager : MonoBehaviour
 
             //Debug.Log(mGameManager._buildingGameManagerDataRef[i]._isBuildingSpawned);
         }
+        StartCoroutine(menuUI.UpDateShieldInUICoroutine(0,true));
+
     }
 
     public void PutCurrentLevelBuildingdetails()
@@ -207,6 +209,7 @@ public class BuildingManager : MonoBehaviour
             //GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive,_buildingData[i].isBuildingDamaged);
         }
         FirebaseManager.Instance.WriteAllDataToFireBase();
+        FirebaseManager.Instance.AddBuildsInLevelListner();
     }
 
     void DestroyAllBuildings()
@@ -215,8 +218,10 @@ public class BuildingManager : MonoBehaviour
         {
             Destroy(building);
         }
+        _buildings.Clear();
+
     }
-    
+
     void SpawningBuilding()
     {
         for (int i = 0; i < _buildingData.Count; i++)

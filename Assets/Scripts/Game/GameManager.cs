@@ -109,6 +109,8 @@ public class GameManager : MonoBehaviour
     [Header("Tutorial Values")]
     Tutorial tutorial;
     public bool isInTutorial;
+    public static System.Action GotAnOpenCard;
+    public bool refreshForOpenCard;
 
     private void Awake()
     {     
@@ -203,6 +205,7 @@ public class GameManager : MonoBehaviour
         OpenCardDetails = inOpenCardDetails;
         OpenedCardSlot = inOpenCardSlot;
         OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
+        GotAnOpenCard?.Invoke();
     }
 
     // void DisplayAttackedEnemyDetails()

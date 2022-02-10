@@ -1185,6 +1185,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _destroyedPlayerPlunkCard
+      value: 
+      objectReference: {fileID: 8374721087449791826, guid: 6c875d2be91e8da4289640152547bf5a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: mBuildingConstructionMaxVFX
       value: 
       objectReference: {fileID: 7473104587106121702, guid: fb20ece43a4144530a620b8a819d303a, type: 3}
@@ -1219,6 +1223,14 @@ PrefabInstance:
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[7]._buildingName
       value: Navy_Taxi_
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.z
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[5]._buildingMaxLevel
@@ -8855,6 +8867,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: uIcam
+      value: 
+      objectReference: {fileID: 2011180290}
+    - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: mCameraController
       value: 
       objectReference: {fileID: 1893548020}
@@ -8964,7 +8980,7 @@ PrefabInstance:
       objectReference: {fileID: 2011180290}
     - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -550.00006
+      value: -550
       objectReference: {fileID: 0}
     - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite

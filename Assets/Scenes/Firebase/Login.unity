@@ -2411,6 +2411,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1546953523476506937, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506937, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1601156768}
@@ -3101,6 +3105,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95cec43474806d4bab2eafe4428a3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mPlayerNameData: 
+  mPlayerIDData: 
+  mCoinData: 
+  mEnergyData: 
+  mPlayerCurrentLevelData: 
+  mNumberOfTimesGotAttacked: 
   CurrentPlayerID: 
   CurrentPlayerName: 
   CurrentPlayerPhotoURL: 
@@ -3148,6 +3158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerList: []
+  _fbPlayerList: []
   _randomEnemyID: 
   _randomOpencardID: 
 --- !u!1 &1308610049
@@ -3860,6 +3871,21 @@ MonoBehaviour:
   friendsTextPrefab: {fileID: 7458861448636885855, guid: 9e9ee214ef3e8e840ad739ad395aeead, type: 3}
   GetFriendPos: {fileID: 285475134}
   UserID: 102105239054110
+  FBFriendsNameList: []
+  FBFriendsIDList: []
+  isinFbPopup: 0
+  isFromTutorial: 0
+  randomPicID:
+  - {fileID: 21300000, guid: 110b95fe189560a46bdb2c1849ff448d, type: 3}
+  - {fileID: 21300000, guid: a0353c97aed73364dae3d979fbc8e341, type: 3}
+  - {fileID: 21300000, guid: 81c0875e45300184db9112250c12441a, type: 3}
+  - {fileID: 21300000, guid: 4b12fc7b3fc56a942a518b2853a6b2a8, type: 3}
+  - {fileID: 21300000, guid: 7df25b8ca1f1bd541938fb2cf7a9aa5b, type: 3}
+  - {fileID: 21300000, guid: ac5ebd78b88583a4499b26d58e551737, type: 3}
+  - {fileID: 21300000, guid: 50009379e81debe49880a6a569bdbc5d, type: 3}
+  - {fileID: 21300000, guid: c0316d567b5d16d459633433f9449521, type: 3}
+  - {fileID: 21300000, guid: 4b12fc7b3fc56a942a518b2853a6b2a8, type: 3}
+  - {fileID: 21300000, guid: ac5ebd78b88583a4499b26d58e551737, type: 3}
 --- !u!1 &1608694459
 GameObject:
   m_ObjectHideFlags: 0

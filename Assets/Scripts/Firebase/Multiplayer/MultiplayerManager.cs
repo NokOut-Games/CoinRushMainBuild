@@ -1,4 +1,4 @@
-using Firebase.Auth;
+//using Firebase.Auth;
 using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ public class MultiplayerManager : MonoBehaviour
     public bool isRevenging;
 
     DatabaseReference reference;
-    FirebaseAuth auth;
+    //FirebaseAuth auth;
     private PlayerIDDetails mplayerIDDetails;
     private GameManager mGameManager;
     private MultiplayerPlayerData mMultiplayerPlayerData;
@@ -84,7 +84,7 @@ public class MultiplayerManager : MonoBehaviour
         mGameManager = FindObjectOfType<GameManager>();
         mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
         mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
-        auth = FirebaseAuth.DefaultInstance;
+        //auth = FirebaseAuth.DefaultInstance;
         reference = FirebaseDatabase.DefaultInstance.RootReference;
 
 
@@ -163,13 +163,17 @@ public class MultiplayerManager : MonoBehaviour
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                mPlayerNameData = snapshot.Child("UserDetails").Child("_playerName").Value.ToString();
-                mPlayerIDData = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
-                mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-                mNumberOfTimesGotAttacked = snapshot.Child("UserDetails").Child("_numberOfTimesGotAttacked").Value.ToString();
+                if (snapshot.Child("UserDetails").Exists)
+                {
+                    mPlayerNameData = snapshot.Child("UserDetails").Child("_playerName").Value.ToString();
+                    mPlayerIDData = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
+                    mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
+                    mNumberOfTimesGotAttacked = snapshot.Child("UserDetails").Child("_numberOfTimesGotAttacked").Value.ToString();
 
-                AttackCount = int.Parse(mNumberOfTimesGotAttacked);
-                mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+                    AttackCount = int.Parse(mNumberOfTimesGotAttacked);
+                    mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+                }
+
             }
         });
     }
@@ -236,7 +240,19 @@ public class MultiplayerManager : MonoBehaviour
                         OpenedPlayerID.Add(CardData._openedPlayerID);
                     }
                     mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
+                }else
+                {
+                    reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
+                    {
+                        if (task.IsCompleted)
+                        {
+
+                            
+
+                        }
+                    });
                 }
+               
             }
         });
     }
@@ -272,7 +288,7 @@ public class MultiplayerManager : MonoBehaviour
 
 
 
-    public void ReadMyData()
+   /* public void ReadMyData()
     {
         reference.Child(FirebaseManager.Instance.userTitle).Child(auth.CurrentUser.UserId).GetValueAsync().ContinueWith(task =>
         {
@@ -333,7 +349,7 @@ public class MultiplayerManager : MonoBehaviour
             }
         });
 
-    }
+    }*/
 
     public void OnGettingAttackCard()
     {
@@ -390,7 +406,8 @@ public class MultiplayerManager : MonoBehaviour
                 }
                 else
                 {
-                    ReadMyData();
+                    //ReadMyData();
+                    FirebaseManager.Instance.ReadData(false);
                     mAttackManager.isDataChanging = false;
                 }
             }
@@ -441,7 +458,7 @@ public class MultiplayerManager : MonoBehaviour
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();
         StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadOpenCardScene), 4f);
+        Invoke(nameof(LoadOpenCardScene), 1f);
     }
 
     void LoadOpenCardScene()
@@ -520,7 +537,8 @@ public class MultiplayerManager : MonoBehaviour
             i++;
         }
 
-        ReadMyData();
+        //ReadMyData();
+        FirebaseManager.Instance.ReadData(false);
     }
 
     public void BackToGame()

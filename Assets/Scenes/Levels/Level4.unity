@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 6f775e6ad01a0444082abebca2299b87, type: 3}
   m_Sun: {fileID: 2080978785}
-  m_IndirectSpecularColor: {r: 0.082990125, g: 0.0769746, b: 0.073454395, a: 1}
+  m_IndirectSpecularColor: {r: 0.08299008, g: 0.07697447, b: 0.073454216, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4428,6 +4428,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 343195021}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _destroyedPlayerPlunkCard
+      value: 
+      objectReference: {fileID: 8374721087449791826, guid: 6c875d2be91e8da4289640152547bf5a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: mBuildingConstructionMaxVFX
       value: 
       objectReference: {fileID: 7473104587106121702, guid: f67b8f447180a5d4287d87df169a1ba4, type: 3}
@@ -4459,6 +4463,14 @@ PrefabInstance:
       propertyPath: _buildingData.Array.data[1].PlunkCardImage
       value: 
       objectReference: {fileID: 21300000, guid: 0fdbe5bf9fa4c984faaaa37af3d7e9ad, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.z
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingMaxLevel
       value: 5
@@ -5510,6 +5522,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: uIcam
+      value: 
+      objectReference: {fileID: 1657605069}
+    - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: mCameraController
       value: 
       objectReference: {fileID: 1052561977}
@@ -5615,7 +5631,7 @@ PrefabInstance:
       objectReference: {fileID: 1657605069}
     - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -550.00006
+      value: -550
       objectReference: {fileID: 0}
     - target: {fileID: 6223102609290100043, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_Sprite
@@ -15155,6 +15171,7 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs:
   - {fileID: 8048051998541067576, guid: 3e7a3b571d3239548a6c6f5c1907dd8d, type: 3}
   - {fileID: 6233861162172181354, guid: 2d82b0d3d6cbeb54da26f8b771fab9a3, type: 3}
@@ -15163,6 +15180,7 @@ MonoBehaviour:
   - {fileID: 6233861162172181354, guid: 136ce179237474d499b227e5a3735fac, type: 3}
   - {fileID: 6233861162172181354, guid: 132ac5598b885b940b6aacd29aeec522, type: 3}
   - {fileID: 6233861162172181354, guid: 1975f6a77c017e64396d4ef132f830c4, type: 3}
+  _openCardSpawnedObjects: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
   _openedCardIndex: 0
@@ -16846,6 +16864,7 @@ MonoBehaviour:
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 0}
   uIcam: {fileID: 0}
+  TouchTime: 0.11
   openCardSelected: 0
 --- !u!1 &1625840898
 GameObject:
@@ -19345,7 +19364,9 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs: []
+  _openCardSpawnedObjects: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
   _openedCardIndex: 0
@@ -22570,7 +22591,9 @@ MonoBehaviour:
   onceDonee: 0
   mHowManyCardSetsAreActive: 0
   _cardsThatCanBeReplacedByJoker: []
+  _OpenedCardPlayerID: []
   _openCardPrefabs: []
+  _openCardSpawnedObjects: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
   _openedCardIndex: 0

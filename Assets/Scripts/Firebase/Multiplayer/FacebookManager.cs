@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using Facebook.MiniJSON;
 using Facebook.Unity;
+using System.Text.RegularExpressions;
+
 public class FacebookManager : MonoBehaviour
 {
 	public static FacebookManager Instance;
@@ -24,6 +26,11 @@ public class FacebookManager : MonoBehaviour
 
 	public List<string> FBFriendsNameList = new List<string>();
 	public List<string> FBFriendsIDList = new List<string>();
+	AccessToken aToken;
+	public bool isinFbPopup;
+	public bool isFromTutorial;
+
+	public List<Sprite> randomPicID = new List<Sprite>();
 	void Awake()
 	{
 		if (Instance == null)
@@ -88,14 +95,15 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
-	public void LoginWithFB()
+	public void LoginWithFB(bool isFromTuto =false)
 	{
-		
+		isFromTutorial = isFromTuto;
 		var permission = new List<string>() { "public_profile", "email" };
 		FB.LogInWithReadPermissions(permission, AuthCallback);
+		isinFbPopup = true;
 	}
 
-	public void LogoutFromFB()
+	public void LogoutFromFB( )
 	{
 		FB.LogOut(); LoginButton.SetActive(true); //LogOutButton.SetActive(false);
 	}
@@ -107,14 +115,14 @@ public class FacebookManager : MonoBehaviour
             TextStatus.text = result.Error;
         }
 		if (result.Cancelled) return;
+		if(isFromTutorial) FirebaseManager.Instance.RemoveGuestUser(FirebaseManager.Instance.auth.CurrentUser.UserId);
 		FirebaseManager.Instance.userTitle = "Facebook Users";
 		FB.API("/me?fields=name", HttpMethod.GET, DispName);
 		FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 		FB.API("/me?fields=id", HttpMethod.GET, DispID);
-		//LoginButton.SetActive(false);
-		var aToken = AccessToken.CurrentAccessToken;
+        //LoginButton.SetActive(false);
+         aToken = AccessToken.CurrentAccessToken;
 		Debug.Log(aToken.TokenString);
-		FirebaseManager.Instance.CreateNewFBUser(aToken.TokenString);
 	}
 	void DispID(IResult result)
     {
@@ -126,8 +134,10 @@ public class FacebookManager : MonoBehaviour
 		{
 			//TextID.text = "ID is: " + result.ResultDictionary["id"];
 			FirebaseManager.Instance.CurrentPlayerID = "" + result.ResultDictionary["id"];
+			Debug.Log(FirebaseManager.Instance.CurrentPlayerID);
 			PlayerPrefs.SetString("id", "" + result.ResultDictionary["id"]);
-
+			FirebaseManager.Instance.CreateNewFBUser(aToken.TokenString);
+			isinFbPopup = false;
 		}
 	}
 	void DispName(IResult result)
@@ -208,11 +218,20 @@ public class FacebookManager : MonoBehaviour
 
 
 
-	public void GetProfilePictureWithId(string inId,Action<Sprite> picture)
+	public void GetProfilePictureWithId(string inId,Action<Sprite> picture,bool isGuest =false)
     {
+
+        if (isGuest)
+        {
+			picture(randomPicID[GetIntFromID(inId)]);
+			return;
+		}
 		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
 		{
-			 picture(Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f));
+			Sprite s =result.Texture==null || result.Texture.height == 8 ? 
+			randomPicID[GetIntFromID(inId)] : 
+			Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+			 picture(s);
 		});
 	}
 
@@ -220,7 +239,22 @@ public class FacebookManager : MonoBehaviour
 	{
 		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
 		{
-			picture(Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2()),index);
+			Sprite s = result.Texture == null || result.Texture.height == 8 ?
+			randomPicID[GetIntFromID(inId)] :
+			Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+			picture(s,index);
 		});
+	}
+
+
+
+
+	int GetIntFromID(string id)
+    {
+		
+		string s =Regex.Match(id, @"\d+").Value;
+		int number = s[s.Length-1];
+		Debug.Log(Int32.Parse( number.ToString()));
+		return (int)number/5;
 	}
 }

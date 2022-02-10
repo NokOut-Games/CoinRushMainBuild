@@ -8,7 +8,6 @@ public class QuitGame : MonoBehaviour
     {
         FirebaseManager.Instance.WritePlayerDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
-        FirebaseManager.Instance.CalculateLogOutTime();
         FirebaseManager.Instance.WriteCardDataToFirebase();
         Invoke("AppQuit", 1f);
     }

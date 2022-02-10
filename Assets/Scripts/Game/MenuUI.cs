@@ -70,7 +70,6 @@ public class MenuUI : MonoBehaviour
 
         mRegenerationTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
         mNextRegenTimer = mGameManager.MinutesToSecondsConverter(GameManager.Instance._minutes);
-       StartCoroutine(UpDateShieldInUICoroutine(0,true));
 
         profileImage.sprite = FirebaseManager.Instance.CurrentPlayerPhotoSprite;
         profileName.text = FirebaseManager.Instance.CurrentPlayerName;

@@ -6008,6 +6008,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
+      propertyPath: uIcam
+      value: 
+      objectReference: {fileID: 578107223}
+    - target: {fileID: 2603610663610381226, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: mCameraController
       value: 
       objectReference: {fileID: 1622744566}
@@ -6205,7 +6209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7738430561382973471, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7852062845870479793, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_IsActive
@@ -23808,7 +23812,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 23.41
-  m_Depth: -1
+  m_Depth: 0.1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 159
@@ -23909,6 +23913,7 @@ MonoBehaviour:
   _CameraFreeRoam: 1
   mMenuUI: {fileID: 899806324}
   uIcam: {fileID: 578107223}
+  TouchTime: 0.11
   openCardSelected: 0
 --- !u!1001 &1625634315
 PrefabInstance:
@@ -26027,6 +26032,7 @@ MonoBehaviour:
   _cardsThatCanBeReplacedByJoker: []
   _OpenedCardPlayerID: []
   _openCardPrefabs: []
+  _openCardSpawnedObjects: []
   _OpenCardNumberIndex: 0
   positionNumber: 0
   _openedCardIndex: 0
@@ -30591,6 +30597,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 343195021}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _destroyedPlayerPlunkCard
+      value: 
+      objectReference: {fileID: 8374721087449791826, guid: 6c875d2be91e8da4289640152547bf5a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: mBuildingConstructionMaxVFX
       value: 
       objectReference: {fileID: 7473104587106121702, guid: f67b8f447180a5d4287d87df169a1ba4, type: 3}
@@ -30613,6 +30623,14 @@ PrefabInstance:
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[4]._buildingName
       value: Circus_Merry_
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.z
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingSpawnPoint

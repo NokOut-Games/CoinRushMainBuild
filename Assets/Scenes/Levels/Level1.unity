@@ -44076,6 +44076,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7473104587106121702, guid: fb20ece43a4144530a620b8a819d303a, type: 3}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _destroyedPlayerPlunkCard
+      value: 
+      objectReference: {fileID: 8374721087449791826, guid: 6c875d2be91e8da4289640152547bf5a, type: 3}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: mBuildingConstructionMaxVFX
       value: 
       objectReference: {fileID: 7473104587106121702, guid: f67b8f447180a5d4287d87df169a1ba4, type: 3}
@@ -44142,6 +44146,14 @@ PrefabInstance:
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[4]._buildingLevel
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.y
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
+      propertyPath: _DestroyedBuildingPlunkOffsetFromBuilding.z
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 4207419319861627070, guid: 68b398d65487dc1438468b0d91360b93, type: 3}
       propertyPath: _buildingData.Array.data[0]._buildingMaxLevel
@@ -56132,10 +56144,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4949187401440061603, guid: b29ff627f30bd4acb95a93c12fd56daf, type: 3}
-      propertyPath: m_Depth
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 4949187401440061603, guid: b29ff627f30bd4acb95a93c12fd56daf, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 159

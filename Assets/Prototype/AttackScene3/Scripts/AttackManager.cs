@@ -538,7 +538,8 @@ public class AttackManager : MonoBehaviour
     {
         _ScorePanel.GetComponentInChildren<Button>().interactable = false;
         MultiplayerManager.Instance.CheckAttackDataFromFirebase();
-        MultiplayerManager.Instance.ReadMyData();
+        //MultiplayerManager.Instance.ReadMyData();
+        FirebaseManager.Instance.ReadData(false);
         ChangeEnemyBuildingData();
     }
     //void WriteData()

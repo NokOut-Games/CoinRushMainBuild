@@ -94,7 +94,7 @@ public class TutorialManager : MonoBehaviour
 
     public void ConnectToFacebook()
     {
-        FacebookManager.Instance.LoginWithFB();
+        FacebookManager.Instance.LoginWithFB(true);
         TutorialLogInPopUp.SetActive(false);
     }
 }
