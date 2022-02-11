@@ -123,6 +123,7 @@ public class MultiplayerManager : MonoBehaviour
                 card._openedPlayerPhotoURL = _currentPlayerPhotoURL;
 
                 OpenCardDetails.Add(card);
+                WriteOpenCardDataToFirebase();
                 isReWriting = false;
             }
         }
@@ -161,6 +162,7 @@ public class MultiplayerManager : MonoBehaviour
 
     void GetUserDetails()
     {
+        
         reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
         {
             if (task.IsCompleted)
@@ -226,10 +228,7 @@ public class MultiplayerManager : MonoBehaviour
                 if (OpenCardSnapshot.Exists)
                 {
                     Debug.Log("OpenCardDetailsExists");
-
-                    OpenedCardSlot.Clear();
-                    OpenCardDetails.Clear();
-                    OpenedPlayerID.Clear();
+                  
                     //OpenCardDetails = new List<OpenCardData>();
                     OpenCardDetails = new List<OpenCardData>();
                     for (int i = 0; i < OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.ChildrenCount; i++)
@@ -369,12 +368,12 @@ public class MultiplayerManager : MonoBehaviour
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
             FirebaseManager.Instance.WritePlayerDataToFirebase();
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 2.2f);
+            Invoke(nameof(LoadAttackScene), 2.5f);
         }
         else
         {
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 1.7f);
+            Invoke(nameof(LoadAttackScene), 2f);
             isRevenging = false;
         }
 
@@ -417,7 +416,7 @@ public class MultiplayerManager : MonoBehaviour
                 }
             }
         });
-        Invoke("BackToGame", 2.2f);
+        Invoke("BackToGame", 2.5f);
     }
 
     public void WriteDetailsOnAttackComplete()
@@ -458,13 +457,16 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void OnClickViewIslandToOpenCard()
     {
+        OpenedCardSlot.Clear();
+        OpenCardDetails.Clear();
+        OpenedPlayerID.Clear();
         mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance.CurrentPlayerID);
         _enemyPlayerID = mplayerIDDetails._randomOpencardID;
         FirebaseManager.Instance.WriteCardDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();
         StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadOpenCardScene), 0.5f);
+        Invoke(nameof(LoadOpenCardScene), 1f);
     }
 
     void LoadOpenCardScene()

@@ -20,8 +20,6 @@ public class EnemyInfoPopulator : MonoBehaviour
         };
 
         FacebookManager.Instance.GetProfilePictureWithId(MultiplayerManager.Instance._enemyPlayerID, OnGettingPicture);
-
-
     }
 
 

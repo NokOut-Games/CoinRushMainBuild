@@ -287,7 +287,6 @@ public class CardDeck : MonoBehaviour
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            MultiplayerManager.Instance.OpenedPlayerID.Clear();
             if (/*!_OpenCardTakenAlready && */!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance.CurrentPlayerID))
             {
                 if (Input.GetMouseButtonDown(0) && drawButtonClick)
@@ -539,7 +538,7 @@ public class CardDeck : MonoBehaviour
                 _OpenCardSlotFilled.Add(positionNumber);
                 mCardsOpened += 1;
                 MultiplayerManager.Instance.isReWriting = true;
-                MultiplayerManager.Instance.WriteOpenCardDataToFirebase();
+                
             }
         }
         else
