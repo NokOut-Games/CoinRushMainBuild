@@ -38,8 +38,8 @@ public class MultiplayerPlayerData : MonoBehaviour
     public List<Transform> _enemyBuildingsTransformList;
 
     public List<OpenCardData> OpenCardDetails;
-    public List<string> OpenedPlayerPhotoURL = new List<string>();
     public List<int> OpenedCardSlot = new List<int>();
+   // public List<string> OpenedPlayerPhotoURL = new List<string>();
 
 
     public void Start()
@@ -77,7 +77,7 @@ public class MultiplayerPlayerData : MonoBehaviour
     {
         OpenCardDetails = inOpenCardDetails;
         OpenedCardSlot = inOpenCardSlot;
-        OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
+        //OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
     }
 
     IEnumerator DownloadFacebookImage(string MediaUrl,Action<Texture> Picture)

@@ -237,9 +237,14 @@ public class AttackManager : MonoBehaviour
         mCameraController = cam.GetComponent<AttackCameraController>();
 
 
-        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
-        _enemyName.text = mMultiplayerPlayerData._enemyName;
-        _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+        //New Change From Multiplayer Manager
+
+       // _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
+       // _enemyName.text = mMultiplayerPlayerData._enemyName;
+       // _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+        
+        _enemyName.text = MultiplayerManager.Instance.mPlayerNameData;
+        _enemyPlayerLevel = MultiplayerManager.Instance._enemyPlayerLevel;
 
 
         InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();

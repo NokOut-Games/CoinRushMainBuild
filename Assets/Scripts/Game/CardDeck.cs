@@ -539,6 +539,7 @@ public class CardDeck : MonoBehaviour
                 _OpenCardSlotFilled.Add(positionNumber);
                 mCardsOpened += 1;
                 MultiplayerManager.Instance.isReWriting = true;
+                MultiplayerManager.Instance.WriteOpenCardDataToFirebase();
             }
         }
         else
