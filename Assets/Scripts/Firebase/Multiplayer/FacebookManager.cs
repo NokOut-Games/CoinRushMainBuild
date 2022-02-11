@@ -223,13 +223,13 @@ public class FacebookManager : MonoBehaviour
 
         if (isGuest)
         {
-			picture(randomPicID[GetIntFromID(inId)]);
+			picture(randomPicID[UnityEngine.Random.Range(0, randomPicID.Count)]);
 			return;
 		}
 		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
 		{
 			Sprite s =result.Texture==null || result.Texture.height == 8 ? 
-			randomPicID[GetIntFromID(inId)] : 
+			randomPicID[UnityEngine.Random.Range(0, randomPicID.Count)] : 
 			Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
 			 picture(s);
 		});
@@ -240,7 +240,7 @@ public class FacebookManager : MonoBehaviour
 		FB.API("https" + "://graph.facebook.com/" + inId + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
 		{
 			Sprite s = result.Texture == null || result.Texture.height == 8 ?
-			randomPicID[GetIntFromID(inId)] :
+			randomPicID[UnityEngine.Random.Range(0, randomPicID.Count)] :
 			Sprite.Create(result.Texture, new Rect(0, 0, result.Texture.width, result.Texture.height), new Vector2(0.5f, 0.5f), 100.0f);
 			picture(s,index);
 		});
@@ -250,11 +250,11 @@ public class FacebookManager : MonoBehaviour
 
 
 	int GetIntFromID(string id)
-    {
-		
+    {		
 		string s =Regex.Match(id, @"\d+").Value;
-		int number = s[s.Length-1];
-		Debug.Log(Int32.Parse( number.ToString()));
-		return (int)number/10;
+		int number = s[1];
+		Debug.Log(number);
+		Debug.Log((int)number % 50);
+		return (int)number%50;
 	}
 }

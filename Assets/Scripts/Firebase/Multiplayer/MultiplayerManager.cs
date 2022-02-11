@@ -32,6 +32,7 @@ public class MultiplayerManager : MonoBehaviour
     public string _currentPlayerName;
     public string _currentPlayerPhotoURL;
 
+    public string _enemyName;
     public string _enemyPlayerID;
     public string _enemyTitle;
     public List<OpenCardData> OpenCardDetails;
@@ -172,6 +173,7 @@ public class MultiplayerManager : MonoBehaviour
 
                     AttackCount = int.Parse(mNumberOfTimesGotAttacked);
                     mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
+                    _enemyName = mPlayerNameData;
                 }
 
             }

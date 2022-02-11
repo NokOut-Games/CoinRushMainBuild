@@ -57,8 +57,8 @@ public class MapSceneManager : MonoBehaviour
                 hit.collider.transform.parent.GetChild(2).gameObject.SetActive(false);
                 GameManager.Instance.hasChoiceInLevel = false;
                 hit.collider.transform.parent.GetComponent<Level>().UnlockLevel();
-                ArrangeSet(hit.collider.transform.parent.GetComponent<Level>().setIndex);
                 GameManager.Instance._CompletedLevelsInSet.Add(hit.collider.transform.parent.GetComponent<Level>().levelIndex);
+                ArrangeSet(hit.collider.transform.parent.GetComponent<Level>().setIndex);
                 hit.collider.transform.parent.GetChild(0).GetComponent<Animator>().SetBool("OpenCloud", true);
                 GameManager.Instance._playerCurrentLevel = hit.collider.transform.parent.GetComponent<Level>().levelNO;
                 PlayerPrefs.SetInt("MadeHisChoice", 1);
@@ -123,7 +123,7 @@ public class MapSceneManager : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance._SetIndex < levelSets.Length)
+            if (GameManager.Instance._SetIndex < levelSets.Length-1)
             {
                 GameManager.Instance._CompletedLevelsInSet.Clear();
                 GameManager.Instance._SetIndex++;

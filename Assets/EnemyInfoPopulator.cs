@@ -12,14 +12,11 @@ public class EnemyInfoPopulator : MonoBehaviour
     private void Start()
     {
 
-        nameTxt.text = MultiplayerManager.Instance.GetComponent<MultiplayerPlayerData>()._enemyName;
-
+        nameTxt.text = MultiplayerManager.Instance._enemyName;// .GetComponent<MultiplayerPlayerData>()._enemyName;
+        picture.sprite = null;
         Action<Sprite> OnGettingPicture = (Pic) =>
         {
-
-
             picture.sprite = Pic;
-
         };
 
         FacebookManager.Instance.GetProfilePictureWithId(MultiplayerManager.Instance._enemyPlayerID, OnGettingPicture);

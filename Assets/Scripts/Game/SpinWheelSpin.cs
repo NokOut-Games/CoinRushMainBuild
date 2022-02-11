@@ -29,6 +29,7 @@ public class SpinWheelSpin : MonoBehaviour
 
     [SerializeField] GameObject CoinParticle;
     [SerializeField] GameObject EnergyParticle;
+    [SerializeField] Animator chestAnimation;
     private void Start()
     {
          mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -51,12 +52,14 @@ public class SpinWheelSpin : MonoBehaviour
                 switch (DoFreeSpins)
                 {
                     case false:
-                        _uiReturnToGame.SetActive(true);
+                        //_uiReturnToGame.SetActive(true);
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
                             Debug.Log(wheelPiece._Icon.name);
-                            _uiCoinReward.SetActive(true);
-                            CoinParticle.SetActive(true);
+                            chestAnimation.SetBool("Open", true);
+                            /*_uiCoinReward.SetActive(true);
+                            CoinParticle.SetActive(true);*/
+                            Invoke(nameof(PlayCoinParticle), 1f);
                            
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -76,9 +79,12 @@ public class SpinWheelSpin : MonoBehaviour
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
                             Debug.Log(wheelPiece._Icon.name);
-                            _uiEnergyReward.SetActive(true);
-                            EnergyParticle.SetActive(true);
-                           
+                            chestAnimation.SetBool("Open", true);
+                            Invoke(nameof(PlayEnergyParticle), 1f);
+
+                            /*_uiEnergyReward.SetActive(true);
+                            EnergyParticle.SetActive(true);*/
+
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 Energy += wheelPiece._Amount;
@@ -105,14 +111,17 @@ public class SpinWheelSpin : MonoBehaviour
 
 
                     case true:
-                        _uiReturnToGame.SetActive(true);
+                        //_uiReturnToGame.SetActive(true);
                         _backButton.SetActive(false);
                         _uiSpinButton.interactable = true;
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
-                            disablePanel = true;
-                            _uiCoinReward.SetActive(true);
-                            CoinParticle.SetActive(true);
+                            //disablePanel = true;
+                            chestAnimation.SetBool("Open", true);
+                            /* _uiCoinReward.SetActive(true);
+                             CoinParticle.SetActive(true);*/
+                            Invoke(nameof(PlayCoinParticle), 1f);
+
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 coin += wheelPiece._Amount;
@@ -129,9 +138,12 @@ public class SpinWheelSpin : MonoBehaviour
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
-                            disablePanel = true;
-                            _uiEnergyReward.SetActive(true);
-                            EnergyParticle.SetActive(true);
+                            //disablePanel = true;
+                            chestAnimation.SetBool("Open", true);
+                            /* _uiEnergyReward.SetActive(true);
+                             EnergyParticle.SetActive(true);*/
+                            Invoke(nameof(PlayEnergyParticle), 1f);
+
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 Energy += wheelPiece._Amount;
@@ -179,6 +191,36 @@ public class SpinWheelSpin : MonoBehaviour
     {
         LevelLoadManager.instance.BacktoHome();
     }
+
+
+    void PlayCoinParticle()
+    {
+        CoinParticle.SetActive(true);
+        chestAnimation.SetBool("Open", false);
+        Invoke(nameof(PLayCoinEndPopUp), 1f);
+
+    }
+    void PlayEnergyParticle()
+    {
+        EnergyParticle.SetActive(true);
+        chestAnimation.SetBool("Open", false);
+
+        Invoke(nameof(PlayEnergyEndPopUP),1f);
+    }
+
+    void PlayEnergyEndPopUP()
+    {
+        _uiReturnToGame.SetActive(true);
+        //disablePanel = true;
+        _uiEnergyReward.SetActive(true);
+    }
+    void PLayCoinEndPopUp()
+    {
+        _uiReturnToGame.SetActive(true);
+        //disablePanel = true;
+        _uiCoinReward.SetActive(true);
+    }
+
     private void Update()
     {    if(FreeSpins<10)
         {
