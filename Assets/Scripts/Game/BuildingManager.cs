@@ -9,27 +9,22 @@ using TMPro;
 [System.Serializable]
 public class BuildingData
 {
-    [Header("Building Name And Level: ")]
     public string _buildingName;
     public string _buildingDisplayName;
     public int _buildingLevel = 0;
     public int _buildingMaxLevel;
     public Transform _buildingSpawnPoint;
 
-    [Header("Building's GameObject: ")]
-    //public GameObject _initialBuildingGameObject;
     public GameObject currentLevelGameObject;
     public Sprite[] NextUpgradeImages; //Future
-    [Space]
+
+
     public GameObject[] UpgradeLevels;
     public int[] UpgradeCosts;
-    [Space]
-    //public GameObject[] destroyedVersions; //Just in Case for Future
-    //public int[] _repairCosts;
+  
 
     public GameObject _respectiveBuildingButtons;
 
-    [Header("State Checkers: ")]
     public bool isBuildingSpawnedAndActive; //Just in case for Attack
     public bool isBuildingDamaged; //Just in case to check if building is damaged or not.
     public bool isBuildingShielded;
@@ -40,7 +35,7 @@ public class BuildingData
 public class BuildingManager : MonoBehaviour
 {
     public List<BuildingData> _buildingData;
-    public List<GameObject> _buildings;
+    List<GameObject> _buildings = new List<GameObject>();
 
     //Cached References
     private GameManager mGameManager;
@@ -65,9 +60,8 @@ public class BuildingManager : MonoBehaviour
 
     public float mTimeDelayFromNewBuildingToCameraDefaultState;
 
-    public List<int> _shieldedBuildings;
+    [HideInInspector]public List<int> _shieldedBuildings;
 
-    [Header("Destroyed Building Requirements: ")]
     public float _buildingSinkPositionAmount;
     public float _buildingTiltRotationAmount;
     public GameObject _destroyedSmokeEffectVFX;

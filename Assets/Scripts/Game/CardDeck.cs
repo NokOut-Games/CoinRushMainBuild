@@ -11,22 +11,16 @@ enum DrawButtonState
 
 public class CardDeck : MonoBehaviour
 {
-    [Header("Grabbing Other GameObject References:")]
-    //[SerializeField] private GameManager mGameManager;
     [SerializeField] public GameObject mCardHolderParent;
     public int clicks = 0;
     public List<Transform> _playerHandPoints;
 
-    [Space(10)]
-    [Header("Cards And Related Lists:")]
     [SerializeField] private List<ScriptedCards> mScriptedCards;
-    [SerializeField] private List<Cards> _CardList = new List<Cards>();
-    [SerializeField] public List<GameObject> mCardListGameObject;
+    private List<Cards> _CardList = new List<Cards>();
+    [HideInInspector] public List<GameObject> mCardListGameObject;
     private List<Vector3> _PositionList = new List<Vector3>();
     private List<Vector3> _RotationList = new List<Vector3>();
 
-    [Space(10)]
-    [Header("Draw Button And Its States Images with conditions:")]
     [SerializeField] private Image DrawButton;
     [SerializeField] private Sprite drawNormal, drawAutomatic;
     [SerializeField] private RectTransform _drawButtonRectTransform;
@@ -42,24 +36,15 @@ public class CardDeck : MonoBehaviour
 
     public Image _drawButtonFillerImage;
 
-    [Space(10)]
-    [Header("Joker and related things")]
-    public List<Cards> _jokerList;
-    public bool onceDonee = false;
 
-    public int mHowManyCardSetsAreActive;
-    public List<Cards> _cardsThatCanBeReplacedByJoker;
-
-    public List<string> _OpenedCardPlayerID = new List<string>();
     public List<GameObject> _openCardPrefabs;
-    public List<GameObject> _openCardSpawnedObjects = new List<GameObject>();
-    public int _OpenCardNumberIndex;
-    public int positionNumber = 0;
-    public int _openedCardIndex;
-    public int _openCardSlot;
-    public List<int> _OpenCardSlotFilled;
+    List<GameObject> _openCardSpawnedObjects = new List<GameObject>();
+
+    int positionNumber = 0;
+    [HideInInspector]public int _openedCardIndex;
+    [HideInInspector]public int _openCardSlot;
+    [HideInInspector]public List<int> _OpenCardSlotFilled;
     private int mCardsOpened;
-    public List<Transform> _OpenCardTransformPoint;
 
     int newCardIndex = 0;
 
@@ -77,18 +62,17 @@ public class CardDeck : MonoBehaviour
     public MultiplayerPlayerData mMultiplayerPlayerData;
 
     ScriptedCards mCards;
-    public bool mHasThreeCardMatch;
+    [HideInInspector] public bool mHasThreeCardMatch;
     int mThreeCardMatchIndex;
     bool mHasJoker;
     int mNumOfPairCards;
-    public bool mJokerFindWithMultiCardPair;
+    [HideInInspector] public bool mJokerFindWithMultiCardPair;
     bool take_Multi_Card_Joker_Pair_Input;
     int[] mSelectionCards = new int[2];
 
     GameObject mFlotingJoker;
 
     private OpenCards mOpenCards => GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
-    //public bool _OpenCardTakenAlready;
 
     [SerializeField] int mJokerProbability;
 
@@ -103,26 +87,13 @@ public class CardDeck : MonoBehaviour
     [SerializeField] Transform[] jokerPairCardTransforms = new Transform[4];
 
 
-
-    [SerializeField] Cards[] matchedCards = new Cards[3];
+    Cards[] matchedCards = new Cards[3];
     [SerializeField] MenuUI menu;
 
 
 
     private void Awake()
     {
-        /* if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "OPENCARD")
-         {
-             mDrawButtonState = DrawButtonState.OpenCardState;
-             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
-         }
-         else
-         {
-             mDrawButtonState = DrawButtonState.NormalState;
-             PopulateOpenedCardSlotsFromFireBase(); //Removed Comment
-         }
-         //PopulateOpenedCardSlotsFromFireBase();
-         //PopulateFriendsOpenCardSlotsFromFirebase();*/
         GameManager.GotAnOpenCard += SpawnOpenCards;
     }
 
@@ -137,8 +108,7 @@ public class CardDeck : MonoBehaviour
     {
         if(mDrawButtonState == DrawButtonState.NormalState)
         {
-            PopulateOpenedCardSlotsFromFireBase();
-           
+            PopulateOpenedCardSlotsFromFireBase();     
         }
         else
         {
@@ -149,7 +119,7 @@ public class CardDeck : MonoBehaviour
 
         if (mDrawButtonState == DrawButtonState.NormalState)
         {
-            onceDonee = false;
+            //onceDonee = false;
             canClick = true;
             if (GameManager.Instance._IsInAutoDraw)
             {
@@ -260,7 +230,7 @@ public class CardDeck : MonoBehaviour
             Destroy(card);
         }
         _CardList.Clear();
-        _jokerList.Clear();
+        //_jokerList.Clear();
         newCardIndex = 0;
         cardDeckAnimation2D.SetActive(false);
         mCardListGameObject.Clear();
@@ -276,12 +246,6 @@ public class CardDeck : MonoBehaviour
 
     private void Update()
     {
-       /* if (GameManager.Instance.refreshForOpenCard)
-        {
-            GameManager.Instance.refreshForOpenCard = false;
-            SpawnOpenCards();
-        }*/
-
         if (GameManager.Instance._PauseGame) return;
 
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
@@ -598,7 +562,7 @@ public class CardDeck : MonoBehaviour
         }
         if (inNewCard._cardType == CardType.JOKER)
         {
-            _jokerList.Add(inNewCard);
+            //_jokerList.Add(inNewCard);
             mHasJoker = true;
             if (mNumOfPairCards == 1)
             {

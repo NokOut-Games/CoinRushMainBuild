@@ -23,23 +23,16 @@ public class MapSceneManager : MonoBehaviour
         backBtn.onClick.AddListener(()=>{ LevelLoadManager.instance.BacktoHome(); });
 
         if (GameManager.Instance.hasChoiceInLevel) backBtn.gameObject.SetActive(false);
-/*
-        if (GameManager.Instance._SetIndex < levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex) )
-        {
-            GameManager.Instance._CompletedLevelsInSet.Clear();
-
-            GameManager.Instance._SetIndex++;
-        }
-        else*/ if(GameManager.Instance._SetIndex >= levelSets.Length && IsSetCompleted(GameManager.Instance._SetIndex))
-        {
-            backBtn.gameObject.SetActive(true);
-            AllLevelCompleted.SetActive(true);
-        }
+      
         // Debug.LogError(GameManager.Instance._SetIndex);
         MakeSetCompletedUntilIndex(GameManager.Instance._SetIndex,GameManager.Instance._CompletedLevelsInSet);
         SetMapScreen(GameManager.Instance.hasChoiceInLevel);
         mCameraController.transform.position = new Vector3(0, 0, GameManager.Instance._playerCurrentLevel);
-
+        if (GameManager.Instance._SetIndex >= levelSets.Length - 1 && IsSetCompleted(GameManager.Instance._SetIndex))
+        {
+            backBtn.gameObject.SetActive(true);
+            AllLevelCompleted.SetActive(true);
+        }
     }
     private void Update()
     {
