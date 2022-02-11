@@ -88,7 +88,7 @@ public class CardDeck : MonoBehaviour
     GameObject mFlotingJoker;
 
     private OpenCards mOpenCards => GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
-    private bool mOpenCardTakenAlready;
+    //public bool _OpenCardTakenAlready;
 
     [SerializeField] int mJokerProbability;
 
@@ -162,6 +162,7 @@ public class CardDeck : MonoBehaviour
             }
             else
             {
+                //_OpenCardTakenAlready = false;
                 DrawButton.sprite = drawNormal;
 
             }
@@ -176,7 +177,7 @@ public class CardDeck : MonoBehaviour
         }
         else
         {
-            mOpenCardTakenAlready = false;
+           // _OpenCardTakenAlready = false;
             Invoke(nameof(SpawnFriendsOpenCards),.5f);
         }
         
@@ -286,12 +287,13 @@ public class CardDeck : MonoBehaviour
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            if (!mOpenCardTakenAlready && !MultiplayerManager.Instance.OpenedPlayerID.Contains(MultiplayerManager.Instance._currentPlayerId))
+            MultiplayerManager.Instance.OpenedPlayerID.Clear();
+            if (/*!_OpenCardTakenAlready && */!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance.CurrentPlayerID))
             {
                 if (Input.GetMouseButtonDown(0) && drawButtonClick)
                 {
                     OpenHandCardAdder();
-                    mOpenCardTakenAlready = true;
+                    //_OpenCardTakenAlready = true;
                 }
             }
             else menu.UIElementActivate(5, false);
@@ -537,6 +539,7 @@ public class CardDeck : MonoBehaviour
                 _OpenCardSlotFilled.Add(positionNumber);
                 mCardsOpened += 1;
                 MultiplayerManager.Instance.isReWriting = true;
+                MultiplayerManager.Instance.WriteOpenCardDataToFirebase();
             }
         }
         else

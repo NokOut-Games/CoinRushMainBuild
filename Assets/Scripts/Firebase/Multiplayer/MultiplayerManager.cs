@@ -32,13 +32,13 @@ public class MultiplayerManager : MonoBehaviour
     public string _currentPlayerName;
     public string _currentPlayerPhotoURL;
 
-    public string _enemyName;
     public string _enemyPlayerID;
     public string _enemyTitle;
+    public int _enemyPlayerLevel;
     public List<OpenCardData> OpenCardDetails;
-    public List<string> OpenedPlayerPhotoURL = new List<string>();
     public List<int> OpenedCardSlot = new List<int>();
     public List<string> OpenedPlayerID = new List<string>();
+    private List<string> OpenedPlayerPhotoURL = new List<string>();
 
     public bool isReWriting;
 
@@ -173,7 +173,7 @@ public class MultiplayerManager : MonoBehaviour
 
                     AttackCount = int.Parse(mNumberOfTimesGotAttacked);
                     mLevelName = mLevelPrefix + mPlayerCurrentLevelData;
-                    _enemyName = mPlayerNameData;
+                    _enemyPlayerLevel = int.Parse(mPlayerCurrentLevelData);
                 }
 
             }
@@ -190,6 +190,7 @@ public class MultiplayerManager : MonoBehaviour
                 if(snapshot.Child("Buildings").Exists)
                 {
                     mMultiplayerPlayerData._buildingMultiplayerDataRef.Clear();
+                    MultiplayerBuildingDetails.Clear();
                     List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
                     for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
                     {
@@ -223,7 +224,9 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     Debug.Log("OpenCardDetailsExists");
 
-                    //OpenedCardSlot.Clear();
+                    OpenedCardSlot.Clear();
+                    OpenCardDetails.Clear();
+                    OpenedPlayerID.Clear();
                     //OpenCardDetails = new List<OpenCardData>();
                     OpenCardDetails = new List<OpenCardData>();
                     for (int i = 0; i < OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.ChildrenCount; i++)
@@ -232,14 +235,14 @@ public class MultiplayerManager : MonoBehaviour
 
                         CardData._openedPlayerName = OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
                         CardData._openedPlayerID = OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-                        CardData._openedPlayerPhotoURL = OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
+                      //  CardData._openedPlayerPhotoURL = OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
                         CardData._openedCardSlot = int.Parse(OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
                         CardData._openedCardSelectedCard = int.Parse(OpenCardSnapshot/*.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards")*/.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
 
                         OpenCardDetails.Add(CardData);
                         OpenedCardSlot.Add(CardData._openedCardSlot);
-                        OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
                         OpenedPlayerID.Add(CardData._openedPlayerID);
+                        //OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
                     }
                     mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
                 }else
@@ -248,9 +251,6 @@ public class MultiplayerManager : MonoBehaviour
                     {
                         if (task.IsCompleted)
                         {
-
-                            
-
                         }
                     });
                 }
@@ -270,8 +270,11 @@ public class MultiplayerManager : MonoBehaviour
 
                 if (snapshot.Exists)
                 {
+                    CurrenetPlayerAttackData.Clear();
                     CurrenetPlayerAttackData = new List<AttackedPlayerInformation>();
 
+                    attackedplayerIDList.Clear();
+                    attackedplayerNameList.Clear();
                     for (int i = 0; i < snapshot.ChildrenCount; i++)
                     {
                         AttackedPlayerInformation attackData = new AttackedPlayerInformation();
@@ -363,12 +366,12 @@ public class MultiplayerManager : MonoBehaviour
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
             FirebaseManager.Instance.WritePlayerDataToFirebase();
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 5f);
+            Invoke(nameof(LoadAttackScene), 2.2f);
         }
         else
         {
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 2f);
+            Invoke(nameof(LoadAttackScene), 1.7f);
             isRevenging = false;
         }
 
@@ -377,11 +380,6 @@ public class MultiplayerManager : MonoBehaviour
     {
         LevelLoadManager.instance.LoadLevelASyncOf("ATTACK");
     }
-
-
-
-
-  
 
     public void CheckAttackDataFromFirebase()
     {
@@ -393,6 +391,7 @@ public class MultiplayerManager : MonoBehaviour
                 mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
                 if (int.Parse(mPlayerCurrentLevelData) == mMultiplayerPlayerData._enemyPlayerLevel)
                 {
+                    MultiplayerBuildingDetails.Clear();
                     List<MultiplayerBuildingData> BuildingDetails = new List<MultiplayerBuildingData>();
                     for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
                     {
@@ -403,27 +402,29 @@ public class MultiplayerManager : MonoBehaviour
                         builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
                         builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
                         BuildingDetails.Add(builddata);
+                        MultiplayerBuildingDetails.Add(builddata);
                     }
                     mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerNameData, mPlayerPhotoURLData);
                 }
                 else
                 {
                     //ReadMyData();
-                    FirebaseManager.Instance.ReadData();
+                    FirebaseManager.Instance.ReadData(false);
                     mAttackManager.isDataChanging = false;
                 }
             }
         });
-        Invoke("BackToGame", 2.5f);
+        Invoke("BackToGame", 2.2f);
     }
 
     public void WriteDetailsOnAttackComplete()
     {
         int i = 0;
-        foreach (MultiplayerBuildingData buildings in mMultiplayerPlayerData._buildingMultiplayerDataRef)
+       // foreach (MultiplayerBuildingData buildings in mMultiplayerPlayerData._buildingMultiplayerDataRef)
+        foreach (MultiplayerBuildingData buildings in MultiplayerBuildingDetails)
         {
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mMultiplayerPlayerData._enemyPlayerLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData)/*Child(mLevelPrefix + mMultiplayerPlayerData._enemyPlayerLevel)*/.Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -460,7 +461,7 @@ public class MultiplayerManager : MonoBehaviour
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();
         StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadOpenCardScene), 1f);
+        Invoke(nameof(LoadOpenCardScene), 0.5f);
     }
 
     void LoadOpenCardScene()
@@ -500,30 +501,9 @@ public class MultiplayerManager : MonoBehaviour
     //    Invoke("BackToGame", 3f);
     //}
 
-    //public void WriteOpenCardDataToFirebase()
-    //{
-    //    Invoke("BackToGame", 3f);
-    //    OpenCardData cardsDetails = new OpenCardData();
-    //    cardsDetails._openedPlayerID = _currentPlayerId;
-    //    cardsDetails._openedPlayerName = _currentPlayerName;
-    //    cardsDetails._openedCardSlot = mMultiplayerPlayerData._openCardInfo;
-    //    cardsDetails._openedCardIndex = mOpenCardsManager._openedCardIndex;
-    //    cardsDetails._openedPlayerPhotoURL = _currentPlayerPhotoURL;
-    //    string json = JsonUtility.ToJson(cardsDetails);
-    //    reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").Child(mOpenCardsManager._OpenCardNumberIndex.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>{});
-
-    //    mOpenCardsManager._OpenCardNumberIndex += 1;
-
-    //    if(mOpenCardsManager._OpenCardNumberIndex <=5)
-    //    {
-    //      reference.Child("Facebook Users").Child(_enemyPlayerID).Child("UserDetails").Child("_openedCards").SetValueAsync(mOpenCardsManager._OpenCardNumberIndex).ContinueWith(task =>{});
-    //    }
-    //   ReadMyData();
-    //}
-
     public void WriteOpenCardDataToFirebase()
     {
-        Invoke("BackToGame", 3f);
+        //Invoke("BackToGame", 2f);
         reference.Child("Facebook Users").Child(_enemyPlayerID).Child("OpenCards").RemoveValueAsync();
         int i = 0;
         foreach (OpenCardData cards in OpenCardDetails)
@@ -540,7 +520,7 @@ public class MultiplayerManager : MonoBehaviour
         }
 
         //ReadMyData();
-        FirebaseManager.Instance.ReadData();
+       // FirebaseManager.Instance.ReadData(false);
     }
 
     public void BackToGame()

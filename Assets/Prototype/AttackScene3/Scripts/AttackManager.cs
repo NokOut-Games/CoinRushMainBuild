@@ -75,7 +75,7 @@ public class AttackManager : MonoBehaviour
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
+      //  mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
 
        /* _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture; 
         _enemyName.text = mMultiplayerPlayerData._enemyName;
@@ -88,14 +88,31 @@ public class AttackManager : MonoBehaviour
     }
     
 
+    //void InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints()
+    //{
+    //    Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
+    //    mTransformPoint = GameObject.Find("TransformPoints");
+
+    //    for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
+    //    {
+    //        bool shieldedEnemy = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded;
+    //        _shieldedEnemyBuildings.Add(shieldedEnemy);
+    //    }
+
+    //    for (int i = 0; i < mTransformPoint.transform.childCount; i++)
+    //    {
+    //        _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
+    //    }
+    //}
+
     void InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints()
     {
         Instantiate(_LevelHolder[_enemyPlayerLevel - 1], Vector3.zero, Quaternion.identity);
         mTransformPoint = GameObject.Find("TransformPoints");
 
-        for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
+        for (int i = 0; i < MultiplayerManager.Instance.MultiplayerBuildingDetails.Count; i++)
         {
-            bool shieldedEnemy = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingShielded;
+            bool shieldedEnemy = MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._isBuildingShielded;
             _shieldedEnemyBuildings.Add(shieldedEnemy);
         }
 
@@ -104,49 +121,102 @@ public class AttackManager : MonoBehaviour
             _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
         }
     }
+    //void InstantiateBuildingBasedOnLevel()
+    //{
+    //    for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
+    //    {
+    //        GameObject enemyBuilding;
+
+    //        if (!mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingDestroyed)
+    //        {
+    //            if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel != 0)
+    //            {
+    //               GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+
+    //                enemyBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
+    //                enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel;
+    //            }
+    //            else
+    //            {
+    //                GameObject building = Resources.Load("Plunk_Attack") as GameObject;
+
+    //                enemyBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
+    //                Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "Image");
+    //                enemyBuilding.GetComponentInChildren<SpriteRenderer>().sprite = BuildingImage;
+    //                enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "0";
+    //            }
+    //            _enemyBuildings.Add(enemyBuilding);
+    //        }
+    //        else
+    //        {
+    //            if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel != 0)
+    //            {
+    //                GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+    //                enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ building, _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
+    //                enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel;
+    //            }
+    //            else
+    //            {
+    //                GameObject building = Resources.Load("Plunk_Attack") as GameObject;
+    //                enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
+    //                Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "Image");
+    //                enemyBuilding.GetComponentInChildren<SpriteRenderer>().sprite = BuildingImage;
+    //                enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "0";
+
+    //            }
+    //            enemyBuilding.transform.position = new Vector3(enemyBuilding.transform.position.x, _buildingSinkPositionAmount, enemyBuilding.transform.position.z);
+    //            enemyBuilding.transform.rotation = Quaternion.Euler(enemyBuilding.transform.eulerAngles.x, enemyBuilding.transform.eulerAngles.y, _buildingTiltRotationAmount);
+    //            Instantiate(_destroyedSmokeEffectVFX, enemyBuilding.transform.position, Quaternion.identity, enemyBuilding.transform);
+    //            _enemyBuildings.Add(enemyBuilding);
+    //        }
+    //        // }
+    //    }
+    //}
+
+
 
 
     void InstantiateBuildingBasedOnLevel()
     {
-        for (int i = 0; i < mMultiplayerPlayerData._buildingMultiplayerDataRef.Count; i++)
+        for (int i = 0; i < MultiplayerManager.Instance.MultiplayerBuildingDetails.Count; i++)
         {
             GameObject enemyBuilding;
-            
-            if (!mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._isBuildingDestroyed)
+
+            if (!MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._isBuildingDestroyed)
             {
-                if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel != 0)
+                if (MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel != 0)
                 {
-                   GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+                    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel) as GameObject;
 
                     enemyBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
-                    enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel;
+                    enemyBuilding.name = MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel;
                 }
                 else
                 {
                     GameObject building = Resources.Load("Plunk_Attack") as GameObject;
 
                     enemyBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
-                    Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "Image");
+                    Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + "Image");
                     enemyBuilding.GetComponentInChildren<SpriteRenderer>().sprite = BuildingImage;
-                    enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "0";
+                    enemyBuilding.name = MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + "0";
                 }
                 _enemyBuildings.Add(enemyBuilding);
             }
             else
             {
-                if (mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel != 0)
+                if (MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel != 0)
                 {
-                    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel) as GameObject;
+                    GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel) as GameObject;
                     enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/ building, _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
-                    enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingCurrentLevel;
+                    enemyBuilding.name = MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel;
                 }
                 else
                 {
                     GameObject building = Resources.Load("Plunk_Attack") as GameObject;
                     enemyBuilding = Instantiate(/*mGameManager._BuildingDetails*/building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
-                    Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "Image");
+                    Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + "Image");
                     enemyBuilding.GetComponentInChildren<SpriteRenderer>().sprite = BuildingImage;
-                    enemyBuilding.name = mMultiplayerPlayerData._buildingMultiplayerDataRef[i]._buildingName + "0";
+                    enemyBuilding.name = MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingName + "0";
 
                 }
                 enemyBuilding.transform.position = new Vector3(enemyBuilding.transform.position.x, _buildingSinkPositionAmount, enemyBuilding.transform.position.z);
@@ -158,6 +228,8 @@ public class AttackManager : MonoBehaviour
         }
     }
 
+
+
     private void Start()
     {
         mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
@@ -165,9 +237,14 @@ public class AttackManager : MonoBehaviour
         mCameraController = cam.GetComponent<AttackCameraController>();
 
 
-        _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
-        _enemyName.text = mMultiplayerPlayerData._enemyName;
-        _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+        //New Change From Multiplayer Manager
+
+       // _enemyDisplayPicture.texture = mMultiplayerPlayerData._enemyImageTexture;
+       // _enemyName.text = mMultiplayerPlayerData._enemyName;
+       // _enemyPlayerLevel = mMultiplayerPlayerData._enemyPlayerLevel;
+        
+        _enemyName.text = MultiplayerManager.Instance.mPlayerNameData;
+        _enemyPlayerLevel = MultiplayerManager.Instance._enemyPlayerLevel;
 
 
         InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
