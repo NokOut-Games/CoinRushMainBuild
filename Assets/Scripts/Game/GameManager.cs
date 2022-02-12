@@ -14,25 +14,14 @@ public enum BuildingTypes
 }
 
 [System.Serializable]
-public class GameManagerBuildingData
+public class Building
 {
     public string _buildingName;
-    public int _buildingNo;
     public int _buildingCurrentLevel;
-    public bool _isBuildingSpawned;
     public bool _isBuildingShielded;
     public bool _isBuildingDestroyed;
 }
 
-//[System.Serializable]
-//public class GameManagerOpenCardDetails
-//{
-//    public string _openedPlayerID;
-//    public string _openedPlayerName;
-//    public string _openedPlayerPhotoURL;
-//    public int _openedCardSlot;
-//    public int _openedCardIndex;
-//}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -48,76 +37,46 @@ public class GameManager : MonoBehaviour
 
     public int _playerCurrentLevel = 1;
     public int _minutes;
-    public int _openedCards;
+    [HideInInspector] public int _openedCards;
 
-    public string _attackedPlayerName;
-    public Texture _attackedPlayerImageTexture;
-    public string _attackedBuildingName;
-
-    public GameObject AttackedCard;
-
-    public List<GameObject> _BuildingDetails;
-    public List<BuildingTypes> _BuildingTypes;
-    public List<Vector3> _PositionDetails;
-    public List<Quaternion> _RotationList;
-    public List<int> _BuildingUpgradationLevel;
-    public List<int> _BuildingCost;
-    public List<bool> _BuildingShield;
-    public List<Vector3> _TargetMarkPost;
-
-    //[Space]
-    //[Header("OpenCardDetails")]
-    //public string _openedPlayerID, _openedPlayerName, _openedPlayerPhotoURL; 
-    //public int _openedSlot, _openedIndex;
-    //[Space]
-
-    public List<OpenCardData> OpenCardDetails;
-    public List<string> OpenedPlayerPhotoURL = new List<string>();
+    [HideInInspector] public List<OpenCard> OpenCardDetails;
     public List<int> OpenedCardSlot = new List<int>();
 
-    public Transform[] OpenHandCardsPositions;
-    /*(or)*/
-    public Vector3[] OpenHandCardsVectorPositions;
-
-    public List<GameManagerBuildingData> _buildingGameManagerDataRef;
-    public BuildingManager _buildingManagerRef;
-    public int _buildingCount;
+    public List<Building> _buildingGameManagerDataRef;
 
     public bool _IsRefreshNeeded;
 
-    public bool _IsBuildingFromFBase = true;
+    [HideInInspector] public bool _IsBuildingFromFBase = true;
 
     
     private bool mIsFull = true;
 
-    [Header("Card Deck Data")]
-    public List<int> _SavedCardTypes = new List<int>();
-    public bool _IsInAutoDraw;
+    [HideInInspector] public List<int> _SavedCardTypes = new List<int>();
+    [HideInInspector] public bool _IsInAutoDraw;
 
-    public bool _PauseGame;
+    [HideInInspector] public bool _PauseGame;
 
-    public bool OpenCardWritten = false;
+    [HideInInspector] public bool OpenCardWritten = false;
 
-    [Header("Multiplier")]
-    public int _MultiplierValue = 1;
+    [HideInInspector] public int _MultiplierValue = 1;
 
-    [Header("Map Screen Values")]
-    public int _SetIndex;
-    public List<int> _CompletedLevelsInSet;
-    public bool hasChoiceInLevel;
+    [HideInInspector] public int _SetIndex;
+     public List<int> _CompletedLevelsInSet;
+    [HideInInspector] public bool hasChoiceInLevel;
 
-    [Header("Tutorial Values")]
+
+
     Tutorial tutorial;
-    public bool isInTutorial;
+    [HideInInspector] public bool isInTutorial;
     public static System.Action GotAnOpenCard;
-    public bool refreshForOpenCard;
+    [HideInInspector] public bool refreshForOpenCard;
 
     private void Awake()
     {     
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(this); //Singleton
+            DontDestroyOnLoad(this); 
             return;
         }
         Destroy(this.gameObject);
@@ -176,10 +135,8 @@ public class GameManager : MonoBehaviour
     {
         if (tutorial != null)
             tutorial.RegisterUserAction();
-        _buildingGameManagerDataRef[inBuildingIndex]._buildingNo = inBuildingIndex;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
-        _buildingGameManagerDataRef[inBuildingIndex]._isBuildingSpawned = inIsbuildingSpawn;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;
     }
 
@@ -188,7 +145,7 @@ public class GameManager : MonoBehaviour
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingShielded = true;
     }
 
-    public void UpdateUserDetails(List<GameManagerBuildingData> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel, int inOpenedCards)
+    public void UpdateUserDetails(List<Building> inBuildingData, int inCoinData, int inEnergyData, int inCurrentLevel, int inOpenedCards)
     {
         _buildingGameManagerDataRef = inBuildingData;
         _coins = inCoinData;
@@ -200,18 +157,13 @@ public class GameManager : MonoBehaviour
         _openedCards = inOpenedCards;
         FirebaseManager.Instance.readUserData = true;
     }
-    public void UpdateOpenCardDetails(List<OpenCardData> inOpenCardDetails, List<int> inOpenCardSlot, List<string> inOpenedPlayerPhotoURL)
+    public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails, List<int> inOpenCardSlot)
     {
         OpenCardDetails = inOpenCardDetails;
         OpenedCardSlot = inOpenCardSlot;
-        OpenedPlayerPhotoURL = inOpenedPlayerPhotoURL;
         GotAnOpenCard?.Invoke();
     }
 
-    // void DisplayAttackedEnemyDetails()
-    //{
-    //    Debug.Log("Attacked Enemy Details Here.." + _attackedPlayerName);
-    //}
     public bool HasEnoughCoins(int amount)
     {
         return (_coins >= amount);

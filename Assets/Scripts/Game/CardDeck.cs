@@ -12,7 +12,7 @@ enum DrawButtonState
 public class CardDeck : MonoBehaviour
 {
     [SerializeField] public GameObject mCardHolderParent;
-    public int clicks = 0;
+    int clicks = 0;
     public List<Transform> _playerHandPoints;
 
     [SerializeField] private List<ScriptedCards> mScriptedCards;
@@ -24,10 +24,10 @@ public class CardDeck : MonoBehaviour
     [SerializeField] private Image DrawButton;
     [SerializeField] private Sprite drawNormal, drawAutomatic;
     [SerializeField] private RectTransform _drawButtonRectTransform;
-    [Space(10)]
+
     [SerializeField] private int mMaxHoldTime = 5;
     [SerializeField] private float timeForCardAnimation = 2f;
-    [SerializeField] private float time = 0, maxTime = 5;
+    private float time = 0, maxTime = 5;
 
     private bool mAutoCardDraw = false;
     private bool mAutomaticDrawModeOn = false;
@@ -208,7 +208,6 @@ public class CardDeck : MonoBehaviour
             savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot;
             System.Action<Sprite> OnGettingPicture = (pic) =>
             {
-                savedOpenCard.transform.localPosition = Vector3.zero;
                 savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
             };
             FacebookManager.Instance.GetProfilePictureWithId(mMultiplayerPlayerData.OpenCardDetails[i]._openedPlayerID, OnGettingPicture);
@@ -251,7 +250,7 @@ public class CardDeck : MonoBehaviour
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            if (/*!_OpenCardTakenAlready && */!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance.CurrentPlayerID))
+            if (/*!_OpenCardTakenAlready && */!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance._PlayerID))
             {
                 if (Input.GetMouseButtonDown(0) && drawButtonClick)
                 {
@@ -495,7 +494,7 @@ public class CardDeck : MonoBehaviour
                     OpenCards.transform.localPosition = Vector3.zero;
                     OpenCards.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
                 };
-                FacebookManager.Instance.GetProfilePictureWithId(FirebaseManager.Instance.CurrentPlayerID, OnGettingPicture);
+                FacebookManager.Instance.GetProfilePictureWithId(FirebaseManager.Instance._PlayerID, OnGettingPicture);
                 _openCardSlot = positionNumber;
                 //_OpenCardNumberIndex += 1;
                 _OpenCardSlotFilled.Clear();

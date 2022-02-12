@@ -65,8 +65,8 @@ public class LevelLoadManager : MonoBehaviour
         await System.Threading.Tasks.Task.Delay(1000);
         do
         {
-            //await System.Threading.Tasks.Task.Delay(1000);
-        } while (scene.progress < 0.9f);
+        } 
+        while (scene.progress < 0.9f);
         await System.Threading.Tasks.Task.Delay(1000);
         scene.allowSceneActivation = true;
         await System.Threading.Tasks.Task.Delay(2000);
@@ -76,15 +76,11 @@ public class LevelLoadManager : MonoBehaviour
         await System.Threading.Tasks.Task.Delay(1000);
         mCanvas.SetActive(false);
         mCloudAnimator.SetBool("Loaded", false);
-
     }
 
 
 
 
-
-
- 
     public async void BacktoHome()
     {
         AsyncOperation scene = SceneManager.LoadSceneAsync(levelPrefix + GameManager.Instance._playerCurrentLevel);

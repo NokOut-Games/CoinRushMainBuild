@@ -3,55 +3,37 @@ using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
-    [Header("Camera")]
     [SerializeField] private Transform _CameraParent;
-
-    [Header("Horizontal Panning")]
-    //[SerializeField] private Transform mTargetToRotateAround;
-    [SerializeField] private float mPanSpeed = 20f;
-    [SerializeField] private float mAutoDragPanSpeed = 0f;
     [SerializeField] public float _CameraLeftBound = 0;
     [SerializeField] public float _CameraRightBound = 0;
 
-    private Vector3 lastPanPosition;    //New Addition
-    public float timeToAcceleration = 0; //New Addition
-    [SerializeField] private float mTimeTakenToAutoPan;
-
-    [Header("Vertical Zooming")]
     [SerializeField] private float mCameraNearBound;
     [SerializeField] private float mCameraFarBound;
 
-    [Header("Camera Views & Transition")]
-    public Transform _currentView;
+    Transform _currentView;
     public Transform[] _views;
-    public float _transitionSpeed;
 
-    [Header("Grab Button Rect TRansforms")]
     [SerializeField] private RectTransform mDrawButtonRectTransform;
     [SerializeField] private RectTransform mOpenHandRectTransform;
     [SerializeField] private RectTransform mScrollViewRectTransform;
     [SerializeField] private GameObject mOpenCardRegion;
 
     //State Checkers
-    public bool _DrawButtonClicked = false;
-    public bool _isCameraInGamePlayView = false;
+    [HideInInspector] public bool _DrawButtonClicked = false;
+    [HideInInspector] public bool _isCameraInGamePlayView = false;
 
-    public bool _buildButtonClicked = false;
-    public bool _isCameraInConstructionView;
-    public bool _inBetweenConstructionProcess = false;
+    [HideInInspector] public bool _buildButtonClicked = false;
+    [HideInInspector] public bool _isCameraInConstructionView;
+    [HideInInspector] public bool _inBetweenConstructionProcess = false;
 
     public bool _CameraFreeRoam = true;
 
-    //Script References
-    private CardDeck mCardDeck;
-    public MenuUI mMenuUI;
+    CardDeck mCardDeck;
+    MenuUI mMenuUI;
 
-
-    //New Changes
     Vector3 mPreTouchMovementVector;
     float touchMovedTime;
     float touchHoldTime;
-
 
     [SerializeField] Camera uIcam;
     bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
@@ -60,7 +42,7 @@ public class CameraController : MonoBehaviour
     bool GetToNormalView => !_buildButtonClicked && !_DrawButtonClicked && !mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial;
     [SerializeField]float TouchTime = 0.11f;
 
-    public bool openCardSelected;
+    [HideInInspector] public bool openCardSelected;
 
     private void Start()
     {
@@ -72,9 +54,6 @@ public class CameraController : MonoBehaviour
         GameManager.Instance._PauseGame = false;
     }
 
-    /// <summary>
-    /// Makes _BuildButtonClicked = true & takes us to constructionview
-    /// </summary>
     public void BuildButtonClicked()
     {
         _buildButtonClicked = true;
@@ -83,9 +62,7 @@ public class CameraController : MonoBehaviour
         _CameraFreeRoam = false;
     }
 
-    /// <summary>
-    /// Makes _DrawBUttonClicked = true & takes us to gameplay view
-    /// </summary>
+
     public void DrawButtonClicked()
     {
         _DrawButtonClicked = true;
@@ -254,7 +231,7 @@ public class CameraController : MonoBehaviour
                 _CameraParent.transform.Translate(Vector3.forward * 15f, Space.World);
             }
         }
-    } //New Addition
+    } 
 }
 
 

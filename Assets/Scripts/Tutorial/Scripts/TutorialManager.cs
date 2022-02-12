@@ -8,11 +8,10 @@ public class TutorialManager : MonoBehaviour
 {
 
     public static TutorialManager Instance;
-    [SerializeField] Tutorial[] Tutorials;
+    Tutorial[] Tutorials;
     public object[] Tutorialsw;
     [SerializeField] GameObject TutorialUIPopUp;
     [SerializeField] GameObject TutorialLogInPopUp;
-    //[SerializeField] GameObject TutorialNamePopUp;
 
 
 
@@ -25,7 +24,7 @@ public class TutorialManager : MonoBehaviour
 
     Tutorial currentTutorial;
     int currentTutorialIndex = 0;
-    public bool isPopUpRunning;
+    [HideInInspector] public bool isPopUpRunning;
     private void Awake()
     {
         if (Instance == null)
@@ -85,7 +84,7 @@ public class TutorialManager : MonoBehaviour
     public void SavePlayerName()
     {
         if (nameIF.text == "") return;
-        FirebaseManager.Instance.CurrentPlayerName = nameIF.text;
+        FirebaseManager.Instance._PlayerName = nameIF.text;
         FirebaseManager.Instance.WriteAllDataToFireBase();
         //TutorialNamePopUp.SetActive(false);
     }

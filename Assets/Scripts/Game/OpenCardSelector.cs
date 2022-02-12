@@ -50,6 +50,7 @@ public class OpenCardSelector : MonoBehaviour
     //}
     public void OnMouseDown()
     {
+        if (mCameraController == null) return;
         
         if (!mCameraController._isCameraInGamePlayView)
         {

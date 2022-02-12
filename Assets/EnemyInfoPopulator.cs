@@ -23,5 +23,11 @@ public class EnemyInfoPopulator : MonoBehaviour
     }
 
 
+    public void ChangeProfile(Sprite Pic,string name)
+    {
+        picture.sprite = Pic;
+        nameTxt.text = name;
+    }
+
 
 }

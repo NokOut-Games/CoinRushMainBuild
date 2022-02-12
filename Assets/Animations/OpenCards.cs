@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OpenCards : MonoBehaviour
 {
-    public List<Transform> _OpenCardTransformPoint;
+    [HideInInspector] public List<Transform> _OpenCardTransformPoint;
     private void Awake()
     {
         for (int i = 0; i < this.gameObject.transform.childCount; i++)

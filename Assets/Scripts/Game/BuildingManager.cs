@@ -21,8 +21,6 @@ public class BuildingData
 
     public GameObject[] UpgradeLevels;
     public int[] UpgradeCosts;
-  
-
     public GameObject _respectiveBuildingButtons;
 
     public bool isBuildingSpawnedAndActive; //Just in case for Attack
@@ -37,7 +35,6 @@ public class BuildingManager : MonoBehaviour
     public List<BuildingData> _buildingData;
     List<GameObject> _buildings = new List<GameObject>();
 
-    //Cached References
     private GameManager mGameManager;
     private CameraController mCameraControllerRef;
 
@@ -172,7 +169,6 @@ public class BuildingManager : MonoBehaviour
         {
             _buildingData[i]._buildingName = GameManager.Instance._buildingGameManagerDataRef[i]._buildingName;
             _buildingData[i]._buildingLevel = GameManager.Instance._buildingGameManagerDataRef[i]._buildingCurrentLevel;
-            _buildingData[i].isBuildingSpawnedAndActive = GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingSpawned;
             _buildingData[i].isBuildingDamaged = GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingDestroyed;
             _buildingData[i].isBuildingShielded = GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingShielded;
             if (_buildingData[i].isBuildingShielded)
@@ -190,17 +186,13 @@ public class BuildingManager : MonoBehaviour
     public void PutCurrentLevelBuildingdetails()
     {
         GameManager.Instance._buildingGameManagerDataRef.Clear();
-        //GameManager.Instance._buildingGameManagerDataRef = new List<GameManagerBuildingData>(_buildingData.Count);
         for (int i = 0; i < _buildingData.Count; i++)
         {
-            GameManagerBuildingData data = new GameManagerBuildingData();
+            Building data = new Building();
             data._buildingName = _buildingData[i]._buildingName;          
-            data._buildingNo = i;
             data._buildingCurrentLevel = _buildingData[i]._buildingLevel;
-            data._isBuildingSpawned = _buildingData[i].isBuildingSpawnedAndActive;
             data._isBuildingDestroyed = _buildingData[i].isBuildingDamaged;
             GameManager.Instance._buildingGameManagerDataRef.Add(data);
-            //GameManager.Instance.UpdateBuildingData(_buildingData[i]._buildingName, i, _buildingData[i]._buildingLevel, _buildingData[i].isBuildingSpawnedAndActive,_buildingData[i].isBuildingDamaged);
         }
         FirebaseManager.Instance.WriteAllDataToFireBase();
         FirebaseManager.Instance.AddBuildsInLevelListner();
@@ -288,25 +280,11 @@ public class BuildingManager : MonoBehaviour
                     _buildings.Add(GORef);
 
                 }
-                //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-                //GORef.name = _buildingData[i]._buildingName;
             }
-            
-
         }
-
-
     }
 
-    /// <summary>
-    /// Order of progression
-    /// 1. Particle & Camera Zoom-In.
-    /// 2. 
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="inBuildingsElementNumber"></param>
-    /// <param name="inBuildingLevel"></param>
-    /// <param name="inCurrentLevelsMesh"></param>
+
     public IEnumerator UpgradeOrRepairBuilding(string inBuildingName, int inBuildingsElementNumber, int inBuildingLevel, Transform inBuildingSpawnPoint)
     {
         //mCameraControllerRef._inBetweenConstructionProcess = true;
@@ -331,7 +309,6 @@ public class BuildingManager : MonoBehaviour
             newGoRef.transform.localScale = newBuildingSpawnScale;
             newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
             GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel, true, false);
-            //newGoRef.transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), .5f, 5, 0);
 
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
@@ -342,7 +319,7 @@ public class BuildingManager : MonoBehaviour
             newGoRef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[inBuildingsElementNumber].NextUpgradeImages[4];
             newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
             GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel, true, false);
-            //newGoRef.transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), .5f, 5, 0);
+
 
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
@@ -353,13 +330,6 @@ public class BuildingManager : MonoBehaviour
             Destroy(smokeVFX,1.5f);
         yield return new WaitForSeconds(2f);
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
-        if(inBuildingLevel == 5)
-        {
-            //Put in the party poppers here
-            //GameObject partyPoppers = Instantiate(mBuildingConstructionVFX, inBuildingSpawnPoint.position + mParticleOffSetFromBuilding, Quaternion.identity);
-            //Destroy(partyPoppers,2f);
-        }
-        //mCameraControllerRef._inBetweenConstructionProcess = false;
     }
 
     
@@ -417,7 +387,7 @@ public class BuildingManager : MonoBehaviour
 
     void CheckIsBuildingAttack(string buildName,System.Action<Sprite> image)
     {
-        foreach (AttackedPlayerInformation data in FirebaseManager.Instance.CurrenetPlayerAttackData)
+        foreach (AttackedPlayerInformation data in FirebaseManager.Instance.AttackedData)
         {
             if (data._attackedBuildingName == buildName)
             {
@@ -443,7 +413,6 @@ public class BuildingManager : MonoBehaviour
         GameManager.Instance._PauseGame = true;
         yield return new WaitForSeconds(3.6f);
         StartCoroutine(menuUI.ShowLevelCompletedParticlesCoroutine());
-       // GameManager.Instance.CurrentLevelCompleted();
     }
 
 }

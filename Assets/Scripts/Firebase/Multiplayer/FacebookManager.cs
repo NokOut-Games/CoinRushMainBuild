@@ -133,8 +133,8 @@ public class FacebookManager : MonoBehaviour
 		else
 		{
 			//TextID.text = "ID is: " + result.ResultDictionary["id"];
-			FirebaseManager.Instance.CurrentPlayerID = "" + result.ResultDictionary["id"];
-			Debug.Log(FirebaseManager.Instance.CurrentPlayerID);
+			FirebaseManager.Instance._PlayerID = "" + result.ResultDictionary["id"];
+			Debug.Log(FirebaseManager.Instance._PlayerID);
 			PlayerPrefs.SetString("id", "" + result.ResultDictionary["id"]);
 			FirebaseManager.Instance.CreateNewFBUser(aToken.TokenString);
 			isinFbPopup = false;
@@ -149,7 +149,7 @@ public class FacebookManager : MonoBehaviour
 		else
 		{
 			//TextStatus.text = "Hi there: " + result.ResultDictionary["name"];
-			FirebaseManager.Instance.CurrentPlayerName =""+ result.ResultDictionary["name"];
+			FirebaseManager.Instance._PlayerName =""+ result.ResultDictionary["name"];
 			UserProfileName?.Invoke(result.ResultDictionary["name"].ToString());
 		}
 	}
