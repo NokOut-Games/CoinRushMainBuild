@@ -85,7 +85,7 @@ public class AttackManager : MonoBehaviour
         _enemyName.text = MultiplayerManager.Instance.mPlayerName;
         _enemyPlayerLevel = MultiplayerManager.Instance._enemyPlayerLevel;
 
-        if (_enemyPlayerLevel != 0 && MultiplayerManager.Instance.MultiplayerBuildingDetails.Count > 0)
+        if (_enemyPlayerLevel != 0 || MultiplayerManager.Instance.MultiplayerBuildingDetails.Count > 0)
         {
             InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
 

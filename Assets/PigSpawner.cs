@@ -25,12 +25,6 @@ public class PigSpawner : MonoBehaviour
         
     }
 
-    
-    void Update()
-    {
-        
-    }
-
     private void PigShuffle()
     {
         int j = 0;
@@ -42,5 +36,9 @@ public class PigSpawner : MonoBehaviour
             _CoinPigs[i] = RandomNumber;
            
         }
+    }
+    public void BackToMainScene()
+    {
+        LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
     }
 }

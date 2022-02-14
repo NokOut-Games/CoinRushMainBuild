@@ -27,8 +27,7 @@ public class CoinSelector : MonoBehaviour
     [SerializeField] private GameObject HammerSpawnParticle;
 
     [Header("Pig Selection And Its Related Particles: ")]
-    [SerializeField] private float mHowMiddleToCameraY;
-    [SerializeField] private float mHowFarFromCameraZ;
+    [SerializeField] private Transform PigSelectedPoint;
     [SerializeField] private float mTimeBetweenHammerSpawnAndBreakAnimation;
     [SerializeField] private float mTimeBetweenPigBreakAndCoinShower;
     [SerializeField] private GameObject GodRaysParticleSystem;
@@ -38,10 +37,18 @@ public class CoinSelector : MonoBehaviour
 
     private LevelLoadManager mlevelLoadManagerRef;
 
+    [SerializeField] private float HammerImpactTime;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mlevelLoadManagerRef = mGameManager.gameObject.GetComponent<LevelLoadManager>();
+        mCoinProbability = GameObject.Find("CoinProbabalizer").GetComponent<CoinProbability>();
+        transparentBackgroundPlane = GameObject.Find("TransparentBackground");
+        RewardDisplayPanel = GameObject.Find("Canvas").transform.GetChild(0).gameObject;
+        rewardText = RewardDisplayPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        HammerSpawnPoint = GameObject.Find("HammerSpawnPoint").transform;
+        PigSelectedPoint = GameObject.Find("PigFocusedPoint").transform;
     }
 
     private void OnMouseDown()
@@ -65,10 +72,9 @@ public class CoinSelector : MonoBehaviour
         GameObject SelectedPig = this.gameObject;
         Debug.Log(SelectedPig);
         SelectedPig.GetComponent<ChestValue>()._value = coinValue;
-
-        CoinShowerSpawnPoint = SelectedPig.transform.Find("CoinShowerSpawnPoint").transform;
-        GodRaysSpawnPoint = SelectedPig.transform.Find("GodRaysParticleEffect").transform;
-        HammerHitPigSpawnPoint = SelectedPig.transform.Find("HammerHitParticleEffect").transform;
+        CoinShowerSpawnPoint = SelectedPig.transform.GetChild(0).transform;
+        GodRaysSpawnPoint = SelectedPig.transform.GetChild(2).transform;
+        HammerHitPigSpawnPoint = SelectedPig.transform.GetChild(1).transform;
 
         StartCoroutine(PiggyBankFocus(SelectedPig));
 
@@ -84,37 +90,43 @@ public class CoinSelector : MonoBehaviour
 
     private IEnumerator PiggyBankFocus(GameObject inPigSelected)
     {
+        Debug.LogError("1");
         //On Pig Selected
         Destroy(inPigSelected.GetComponent<BoxCollider>());
-        inPigSelected.GetComponent<Animator>().SetTrigger("isSelected?");
+        //inPigSelected.GetComponent<Animator>().SetTrigger("isSelected?"); //This 
         //Movement to target position
-        Vector3 targetPosition = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y - mHowMiddleToCameraY, Camera.main.transform.position.z + mHowFarFromCameraZ);
+        Vector3 targetPosition = new Vector3(PigSelectedPoint.position.x,PigSelectedPoint.position.y,PigSelectedPoint.position.z);
+        Vector3 targetRotation = new Vector3(PigSelectedPoint.eulerAngles.x, PigSelectedPoint.eulerAngles.y, PigSelectedPoint.eulerAngles.z);
         transparentBackgroundPlane.GetComponent<Renderer>().material.DOFloat(0.8f, "_alpha", mFadeTime);
+        inPigSelected.transform.DORotate(targetRotation, 1, RotateMode.Fast);
         inPigSelected.transform.DOMove(targetPosition, 1, false)
         .OnComplete(() =>
         {
             PlayParticleEffects(GodRaysParticleSystem, GodRaysSpawnPoint,1f);
-            PlayParticleEffects(HammerSpawnParticle , HammerSpawnPoint,1f);
+            //PlayParticleEffects(HammerSpawnParticle , HammerSpawnPoint,1f);
             GameObject HammerRef = Instantiate(HammerPrefab, HammerSpawnPoint.position, HammerSpawnPoint.rotation);
             //Debug.Log(HammerRef);
-            Destroy(HammerRef, 1f);
+            Destroy(HammerRef, 10f);
         });
-        
+      
         //To Prevent Clicking Other Pigs in the background
         transparentBackgroundPlane.GetComponent<BoxCollider>().enabled = true;
 
-        yield return new WaitForSeconds(mTimeBetweenHammerSpawnAndBreakAnimation);  //Yield to Wait for the Hammer
-        inPigSelected.GetComponent<Animator>().SetTrigger("isBreaking?");
-        yield return new WaitForSeconds(0.50f);
-        PlayParticleEffects(HammerHitPigParticle, HammerHitPigSpawnPoint,2);
-        
+        //yield return new WaitForSeconds(mTimeBetweenHammerSpawnAndBreakAnimation);  //Yield to Wait for the Hammer
+        //inPigSelected.GetComponent<Animator>().SetTrigger("isBreaking?"); //This
+        yield return new WaitForSeconds(HammerImpactTime);
+        PlayParticleEffects(HammerHitPigParticle, HammerHitPigSpawnPoint,100);
         yield return new WaitForSeconds(mTimeBetweenPigBreakAndCoinShower);
+        inPigSelected.gameObject.SetActive(false);
         PlayParticleEffects(CoinShowerParticleEffect , CoinShowerSpawnPoint,2);
-        yield return new WaitForSeconds(3f);
-        DisplayRewardAndInvokeScene();
-        //Spawn ParticleEffect
+
+        Invoke(nameof(DisplayRewardAndInvokeScene), 3f);
+
+  
 
     }
+
+    
 
     void PlayParticleEffects(GameObject inParticleEffectGameObject, Transform inParticleSpawnPosition , float DestroySeconds)
     {
@@ -129,10 +141,7 @@ public class CoinSelector : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
-    public void BackToMainScene()
-    {
-       LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
-    }
+   
 }
 
 

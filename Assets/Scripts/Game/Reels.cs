@@ -39,7 +39,7 @@ public class Reels : MonoBehaviour
 
     private void Start()
     {
-        mSpeed = Random.Range(200, 400);
+        mSpeed = Random.Range(150, 250);
         for (int i = 0; i < _reelElements.Length; i++)
         {
             accumalatedY += _reelElements[i]._slotElementGameObject.GetComponent<RectTransform>().sizeDelta.y;
@@ -83,8 +83,8 @@ public class Reels : MonoBehaviour
         Transform postIndexTransform = _reelElements[postIndex]._slotElementGameObject.transform;
 
         // 300 being the interval between the icons.
-        preIndexTransform.localPosition = new Vector3(preIndexTransform.localPosition.x, _reelElements[inIndex]._slotElementGameObject.transform.localPosition.y - 300, preIndexTransform.localPosition.z);
-        postIndexTransform.localPosition = new Vector3(postIndexTransform.localPosition.x, _reelElements[inIndex]._slotElementGameObject.transform.localPosition.y + 300, postIndexTransform.localPosition.z);
+        preIndexTransform.localPosition = new Vector3(preIndexTransform.localPosition.x, _reelElements[inIndex]._slotElementGameObject.transform.localPosition.y - 200, preIndexTransform.localPosition.z);
+        postIndexTransform.localPosition = new Vector3(postIndexTransform.localPosition.x, _reelElements[inIndex]._slotElementGameObject.transform.localPosition.y + 200, postIndexTransform.localPosition.z);
     }
 
     /// <summary>

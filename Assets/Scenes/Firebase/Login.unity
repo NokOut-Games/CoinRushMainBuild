@@ -385,6 +385,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 112436699}
   m_CullTransparentMesh: 1
+--- !u!114 &121563664 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1546953524037181033, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+  m_PrefabInstance: {fileID: 834815607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &275846591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -919,7 +930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &286825168
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1417,6 +1428,10 @@ PrefabInstance:
     - target: {fileID: 3859917340867848066, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3859917340867848070, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
+      propertyPath: m_Name
+      value: TutorialCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 3859917340867848070, guid: 54b3c900e9b5cc04fbf675057e94847f, type: 3}
       propertyPath: m_IsActive
@@ -2094,6 +2109,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7157291616783984428, guid: e14850b38e73047a585aebae912f8d7b, type: 3}
+      propertyPath: m_Name
+      value: LevelManagerCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157291616783984428, guid: e14850b38e73047a585aebae912f8d7b, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2113,7 +2132,7 @@ GameObject:
   - component: {fileID: 984663310}
   - component: {fileID: 984663313}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameManagerCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2431,7 +2450,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyName: 
-  _enemyPhotoURL: 
   _enemyPlayerLevel: 1
   _attackInfo: 0
   _buildingMultiplayerDataRef: []
@@ -2442,7 +2460,6 @@ MonoBehaviour:
   _enemyBuildingDetails: []
   mEnemyBuildingPrefabPopulateList: []
   _enemyBuildings: []
-  mTransformPoint: {fileID: 0}
   _enemyBuildingsTransformList: []
   OpenCardDetails: []
   OpenedCardSlot: 
@@ -2475,7 +2492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82282ddd0398e9048a649fb24849d72e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gustLogInBtn: {fileID: 0}
+  gustLogInBtn: {fileID: 121563664}
   loadingScreen: {fileID: 1608694459}
 --- !u!4 &1223172678
 Transform:

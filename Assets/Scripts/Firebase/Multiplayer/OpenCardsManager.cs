@@ -39,7 +39,7 @@ public class OpenCardsManager : MonoBehaviour
         
         _otherPlayerCurrentLevel = MultiplayerManager.Instance._enemyPlayerLevel;
 
-        if (_otherPlayerCurrentLevel != 0 && MultiplayerManager.Instance.MultiplayerBuildingDetails.Count>0)
+        if (_otherPlayerCurrentLevel != 0 || MultiplayerManager.Instance.MultiplayerBuildingDetails.Count>0)
         {
             InstantiateLevelAndPopulateTransformPoints();
             Invoke(nameof(InstantiateBuildings), 0f);
