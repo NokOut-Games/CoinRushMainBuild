@@ -8,11 +8,16 @@ public class EnemyInfoPopulator : MonoBehaviour
     [SerializeField] Image picture;
     [SerializeField] TMP_Text nameTxt;
 
+    private void Awake()
+    {
+        MultiplayerPlayerData.GotEnemyName += ChangeProfile;
+    }
+
 
     private void Start()
     {
 
-        nameTxt.text = MultiplayerManager.Instance._enemyName;// .GetComponent<MultiplayerPlayerData>()._enemyName;
+        nameTxt.text = MultiplayerManager.Instance._enemyName;
         picture.sprite = null;
         Action<Sprite> OnGettingPicture = (Pic) =>
         {
@@ -28,6 +33,10 @@ public class EnemyInfoPopulator : MonoBehaviour
         picture.sprite = Pic;
         nameTxt.text = name;
     }
+    void ChangeProfile(string name)
+    {
+        nameTxt.text = name;
 
+    }
 
 }

@@ -42,7 +42,7 @@ public class AttackCameraController : MonoBehaviour
                 //Debug.Log(touchMovedTime);
                 if (IsBoundary(touch)) return;
                 mPreTouchMovementVector = new Vector3(-touch.deltaPosition.x, 0, 0);
-                transform.position = transform.position + mPreTouchMovementVector * 0.4f;
+                transform.position = transform.position + mPreTouchMovementVector * 1f;
             }
         }
         else

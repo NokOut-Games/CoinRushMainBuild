@@ -287,12 +287,12 @@ public class MultiplayerManager : MonoBehaviour
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
             FirebaseManager.Instance.WritePlayerDataToFirebase();
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 2.5f);
+            Invoke(nameof(LoadAttackScene), 2);
         }
         else
         {
             StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 2f);
+            Invoke(nameof(LoadAttackScene), 2);
             isRevenging = false;
         }
 
@@ -383,7 +383,7 @@ public class MultiplayerManager : MonoBehaviour
         FirebaseManager.Instance.WritePlayerDataToFirebase();
 
         StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadOpenCardScene), 1f);
+        Invoke(nameof(LoadOpenCardScene), 1.5f);
     }
 
     void LoadOpenCardScene()

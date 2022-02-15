@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public List<int> _SavedCardTypes = new List<int>();
     [HideInInspector] public bool _IsInAutoDraw;
 
-    [HideInInspector] public bool _PauseGame;
+    public bool _PauseGame;
 
     [HideInInspector] public bool OpenCardWritten = false;
 

@@ -95,7 +95,6 @@ public class AttackManager : MonoBehaviour
         {
             PlayerProfile profile = PreSetPayers[Random.Range(0, PreSetPayers.Count)];
             _enemyPlayerLevel = profile.Level;
-            profileInUI.ChangeProfile(profile.Picture, profile.Name);   
 
             InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
 
@@ -105,10 +104,13 @@ public class AttackManager : MonoBehaviour
                 building._isBuildingDestroyed = Random.Range(0, 100) > 50;
                 building._isBuildingShielded = Random.Range(0, 100) > 50;
             }
+
             InstantiatePresetBuildings(profile.Buildings);
+            profileInUI.ChangeProfile(profile.Picture, profile.Name);
+
         }
-    
-       
+
+
 
         Invoke(nameof(UpdateCamerHorizontalBounds), 0.5f);
 
@@ -213,7 +215,7 @@ public class AttackManager : MonoBehaviour
             }
             else
             {
-                if (MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel != 0)
+                if (BuildingsDetails[i]._buildingCurrentLevel != 0)
                 {
                     GameObject building = Resources.Load("Level" + _enemyPlayerLevel + "/" + BuildingsDetails[i]._buildingName + BuildingsDetails[i]._buildingCurrentLevel) as GameObject;
                     otherPlayerBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, _enemyBuildingsTransformList[i].rotation);
@@ -222,7 +224,7 @@ public class AttackManager : MonoBehaviour
                 else
                 {
                     GameObject building = Resources.Load("Plunk_Attack") as GameObject;
-                    otherPlayerBuilding = Instantiate(/*mGameManager._BuildingDetails*/building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
+                    otherPlayerBuilding = Instantiate(building, _enemyBuildingsTransformList[i].position, Quaternion.identity);
                     Sprite BuildingImage = Resources.Load<Sprite>("Level" + _enemyPlayerLevel + "/" + BuildingsDetails[i]._buildingName + "Image");
                     otherPlayerBuilding.GetComponentInChildren<SpriteRenderer>().sprite = BuildingImage;
                     otherPlayerBuilding.name = BuildingsDetails[i]._buildingName + "0";
@@ -234,6 +236,7 @@ public class AttackManager : MonoBehaviour
                 _enemyBuildings.Add(otherPlayerBuilding);
             }
         }
+
     }
 
 
@@ -291,13 +294,12 @@ public class AttackManager : MonoBehaviour
     void TargetInstantiation()
     {
 
-        for (int i = 0; i < /*mGameManager._BuildingDetails*/_enemyBuildings.Count; i++)
+        for (int i = 0; i < _enemyBuildings.Count; i++)
         {
-
-            GameObject go = Instantiate(_TargetButton) as GameObject; //GameObject.Instantiate(_Button);//Instantiate(_Button, Vector3.zero, Quaternion.identity) as Button;
+            GameObject go = Instantiate(_TargetButton) as GameObject;
             go.transform.SetParent(_CanvasGO.transform);
 
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(/*mGameManager._BuildingDetails[i]*/_enemyBuildings[i].transform.position);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(_enemyBuildings[i].transform.position);
             screenPos.y = screenPos.y + HeightAdjustment;
             screenPos.z = 0;
             go.transform.position = screenPos;
@@ -311,7 +313,7 @@ public class AttackManager : MonoBehaviour
             {
                 
                 AssignTarget(_enemyBuildings[int.Parse(go.name)].transform);
-                if (_shieldedEnemyBuildings[int.Parse(go.name)] == true)
+                if (_shieldedEnemyBuildings[int.Parse(go.name)])
                     _Shield = _shieldedEnemyBuildings[int.Parse(go.name)];
 
                 TargetObjectIndex = int.Parse(go.name);
@@ -326,7 +328,6 @@ public class AttackManager : MonoBehaviour
                 for (int i = 0; i < _spawnedTargetPoints.Count; i++)
                 {
                     _spawnedTargetPoints[i].GetComponentInChildren<Image>().enabled = false;
-                    //_spawnedTargetPoints[i].GetComponent<Image>().enabled = false;
                     _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<Animator>().enabled = true;
                 }
             });
@@ -340,7 +341,7 @@ public class AttackManager : MonoBehaviour
         {
 
             GameObject go = _spawnedTargetPoints[i];
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(/*mGameManager._BuildingDetails*/_enemyBuildings[i].transform.position);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(_enemyBuildings[i].transform.position);
             screenPos.y = screenPos.y + HeightAdjustment;
             screenPos.z = 0;
             go.transform.position = screenPos;
@@ -348,22 +349,6 @@ public class AttackManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// This Helps in Instantiating the 2X Multiplier 
-    /// </summary>    
- /*   void MultiplierInstantiation()
-    {
-
-        Vector3 newMultiplier = mGameManager._TargetMarkPost[0];
-        _multiplierGameObject = Instantiate(_multiplierPrefab, newMultiplier, Quaternion.identity);
-        _multiplierGameObject.name = 0.ToString();
-    }*/
-
-
-    /// <summary>
-    /// This gets the Target mark Transform Details during on mouse Down click 
-    /// </summary>
-    /// <param name="trans"></param>
     public void AssignTarget(Transform trans)
     {
 
@@ -466,8 +451,11 @@ public class AttackManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("shield Not Activated");
+            Invoke(nameof(MakeBuildingDestroyed), 4.5f);
+
         }
+        ChangeEnemyBuildingData();
+
 
     }
 
@@ -499,7 +487,7 @@ public class AttackManager : MonoBehaviour
     {
         float t = 0.0f;
         Vector3 startingPos = Camera.main.transform.position;
-        Vector3 endPos = new Vector3(_TargetTransform.localPosition.x, CameraAttackPosition.y, CameraAttackPosition.z);
+        Vector3 endPos = new Vector3(_TargetTransform.position.x-20+63.6f , CameraAttackPosition.y+220+26, _TargetTransform.position.z - 570-427); //new Vector3(-476.4f, 316, -570);
 
 
         while (t < 1.0f)
@@ -541,9 +529,15 @@ public class AttackManager : MonoBehaviour
     public void BackButton()
     {
         _ScorePanel.GetComponentInChildren<Button>().interactable = false;
-        MultiplayerManager.Instance.CheckAttackDataFromFirebase();
-        FirebaseManager.Instance.ReadData();
-        ChangeEnemyBuildingData();
+        LevelLoadManager.instance.BacktoHome();
+    }
+
+
+    void MakeBuildingDestroyed()
+    {
+        _TargetTransform.position = new Vector3(_TargetTransform.position.x, _buildingSinkPositionAmount, _TargetTransform.position.z);
+        _TargetTransform.rotation = Quaternion.Euler(_TargetTransform.transform.eulerAngles.x, _TargetTransform.eulerAngles.y, _buildingTiltRotationAmount);
+        Instantiate(_destroyedSmokeEffectVFX, _TargetTransform.position, Quaternion.identity, _TargetTransform);
     }
 }
 

@@ -27,6 +27,7 @@ public class MultiplayerPlayerData : MonoBehaviour
     public List<OpenCard> OpenCardDetails;
     public List<int> OpenedCardSlot = new List<int>();
 
+    public static Action<string> GotEnemyName;
 
     public void Start()
     {
@@ -51,6 +52,7 @@ public class MultiplayerPlayerData : MonoBehaviour
         _enemyPlayerLevel = inCurrentLevel;
         _attackInfo = inOpenCardData;
         _enemyName = inPlayerName;
+        GotEnemyName?.Invoke(inPlayerName);
     }
 
     public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails, List<int> inOpenCardSlot)

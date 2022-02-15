@@ -24,27 +24,18 @@ public class RevengeAttackPanel : MonoBehaviour
 
     public void Start()
     {
-        FacebookManager.Instance.GetFriends();
-
         RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
-
-        Debug.Log(RawAttackedPlayerID.Count);
         for (int i = 0; i < RawAttackedPlayerID.Count; i++)
         {
-            Debug.Log("Dum"+RawAttackedPlayerID[i]);
             if (FilteredAttackedPlayerID.Contains(RawAttackedPlayerID[i])) continue;
-
             FilteredAttackedPlayerID.Add(RawAttackedPlayerID[i]);
             FilteredAttackedName.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
-            Debug.Log("Dum2" + RawAttackedPlayerID[i]);
         }
 
     }
     public void OpenRevengePanel()
     {
         _revengePanel.SetActive(true);
-
-        Debug.Log("Im here");
         EnemyList.Clear();
         for (int i = 0; i < FilteredAttackedPlayerID.Count; i++)
         {
@@ -52,7 +43,7 @@ public class RevengeAttackPanel : MonoBehaviour
             EnemyList.Add(EnemySlot);
 
             EnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FilteredAttackedName[i];
-            EnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID/*.GetComponent<Text>().text*/ = FilteredAttackedPlayerID[i];
+            EnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID = FilteredAttackedPlayerID[i];
             System.Action<Sprite,int> ONGettingProfilePic = (Pic,index) =>
             {
                 EnemyList[index].transform.GetChild(3).GetComponent<Image>().sprite = Pic;

@@ -133,25 +133,15 @@ public class BallLaunch : MonoBehaviour
         }
         else if (_attackManager._Shield == false)
         {
-            Debug.Log("Shield Disabled");
-            Debug.Log(_bullet.transform.childCount + "Child Count Before");
-
             GameObject attackedBuilding = _attackManager._TargetTransform.gameObject;
 
             _bullet.transform.GetChild(6).transform.parent = null;
             Camera.main.transform.parent = null;
 
-            Debug.Log(_bullet.transform.childCount + "Child Count After");
-
 
             for (int i = 0; i < _bullet.transform.childCount; i++)
             {
-                Debug.Log(_bullet.transform.childCount + "Child Count status");
-                Debug.LogError(_bullet.transform.childCount);
                 _bullet.transform.GetChild(i).gameObject.SetActive(true);
-                //_bullet.transform.GetChild(i).parent = null;
-
-                Debug.Log(_bullet.transform.GetChild(i).gameObject.name);
             }
             // Camera.main.transform.parent = null;
 
@@ -167,14 +157,8 @@ public class BallLaunch : MonoBehaviour
                 }
             }
 
-            Debug.LogError("Bullet Disabled");
-
             _bullet.SetActive(false);
         }
-
-        // Camera.main.transform.parent = null;
-
-        // _bullet.SetActive(false);
     }
 
     public void BallReturnDelay()

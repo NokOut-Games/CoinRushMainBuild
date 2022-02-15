@@ -22,6 +22,7 @@ public class CannonShotController : MonoBehaviour
     public Vector3 cameraTargetPos;
     private Vector3 velocity = Vector3.zero;
     BallLaunch mBallLaunch;
+    [SerializeField] Animator ballAnimation;
 
     void FixedUpdate()
     {
@@ -86,16 +87,18 @@ public class CannonShotController : MonoBehaviour
     {
         
         _TargetTransform = tran;
-        this.transform.position = new Vector3(_TargetTransform.position.x, CannonAttackPosition.y, CannonAttackPosition.z);
+        this.transform.position = new Vector3(_TargetTransform.position.x+520, CannonAttackPosition.y, _TargetTransform.position.z-427);// CannonAttackPosition.y, CannonAttackPosition.z);
         this.gameObject.SetActive(true);
-        Invoke("ShootBullet", 2.5f);
+        ballAnimation.SetBool("SHIELDED", _AttackManager._Shield);
+       // Invoke("ShootBullet", 2.5f);
     }
 
     public void ShootBullet()
     {
-        _bullet = Instantiate(_bulletPrefab, _shotPoint.position, Quaternion.identity);
-        _bullet.GetComponent<BallLaunch>().target = _TargetTransform;     
-          Invoke("FollowCamera", .1f);
+        if (_AttackManager._Shield)
+            ballAnimation.Play("ATTACK");
+        else
+            ballAnimation.Play("SHIELD");
     }
 
 

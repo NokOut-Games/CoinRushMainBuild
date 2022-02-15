@@ -25,7 +25,6 @@ public class SpinWheelSpin : MonoBehaviour
     public bool disablePanel = false;
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
-   // public Animator mLightAnimator;
 
     [SerializeField] GameObject CoinParticle;
     [SerializeField] GameObject EnergyParticle;
@@ -59,7 +58,7 @@ public class SpinWheelSpin : MonoBehaviour
                             chestAnimation.SetBool("Open", true);
                             /*_uiCoinReward.SetActive(true);
                             CoinParticle.SetActive(true);*/
-                            Invoke(nameof(PlayCoinParticle), 1f);
+                            Invoke(nameof(PlayCoinParticle), .2f);
                            
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -80,7 +79,7 @@ public class SpinWheelSpin : MonoBehaviour
                         {
                             Debug.Log(wheelPiece._Icon.name);
                             chestAnimation.SetBool("Open", true);
-                            Invoke(nameof(PlayEnergyParticle), 1f);
+                            Invoke(nameof(PlayEnergyParticle), .2f);
 
                             /*_uiEnergyReward.SetActive(true);
                             EnergyParticle.SetActive(true);*/
@@ -116,11 +115,11 @@ public class SpinWheelSpin : MonoBehaviour
                         _uiSpinButton.interactable = true;
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
-                            //disablePanel = true;
+                            disablePanel = true;
                             chestAnimation.SetBool("Open", true);
                             /* _uiCoinReward.SetActive(true);
                              CoinParticle.SetActive(true);*/
-                            Invoke(nameof(PlayCoinParticle), 1f);
+                            Invoke(nameof(PlayCoinParticle), .2f);
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -138,11 +137,11 @@ public class SpinWheelSpin : MonoBehaviour
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
-                            //disablePanel = true;
+                            disablePanel = true;
                             chestAnimation.SetBool("Open", true);
                             /* _uiEnergyReward.SetActive(true);
                              EnergyParticle.SetActive(true);*/
-                            Invoke(nameof(PlayEnergyParticle), 1f);
+                            Invoke(nameof(PlayEnergyParticle), .2f);
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
@@ -184,7 +183,7 @@ public class SpinWheelSpin : MonoBehaviour
         _uiCoinReward.SetActive(false);
         _uiEnergyReward.SetActive(false);
         _uiFreeSpinReward.SetActive(false);
-        _backButton.SetActive(true);
+        _backButton.SetActive(false);
         Debug.Log("Goback togame");
     }
     public void BackToGameScene()
@@ -196,14 +195,14 @@ public class SpinWheelSpin : MonoBehaviour
     void PlayCoinParticle()
     {
         CoinParticle.SetActive(true);
-        chestAnimation.SetBool("Open", false);
+        //chestAnimation.SetBool("Open", false);
         Invoke(nameof(PLayCoinEndPopUp), 1f);
 
     }
     void PlayEnergyParticle()
     {
         EnergyParticle.SetActive(true);
-        chestAnimation.SetBool("Open", false);
+       // chestAnimation.SetBool("Open", false);
 
         Invoke(nameof(PlayEnergyEndPopUP),1f);
     }
@@ -211,13 +210,13 @@ public class SpinWheelSpin : MonoBehaviour
     void PlayEnergyEndPopUP()
     {
         _uiReturnToGame.SetActive(true);
-        //disablePanel = true;
+        disablePanel = DoFreeSpins;
         _uiEnergyReward.SetActive(true);
     }
     void PLayCoinEndPopUp()
     {
         _uiReturnToGame.SetActive(true);
-        //disablePanel = true;
+        disablePanel = DoFreeSpins;
         _uiCoinReward.SetActive(true);
     }
 

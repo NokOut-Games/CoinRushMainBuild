@@ -78,8 +78,8 @@ public class FacebookManager : MonoBehaviour
 		}
 		else
 		{
-			TextStatus.text = "Please login to continue.";
-			LoginButton.SetActive(true);// LogOutButton.SetActive(false);
+			//TextStatus.text = "Please login to continue.";
+			//LoginButton.SetActive(true);// LogOutButton.SetActive(false);
 		}
 	}
 

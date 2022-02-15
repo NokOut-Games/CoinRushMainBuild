@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Collections;
 
 public class LevelLoadManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class LevelLoadManager : MonoBehaviour
     [SerializeField] Animator mCloudAnimator;
     string levelPrefix = "Level";
     Tutorial tutorial;
+    [SerializeField] GameObject LoadingScreen;
     private void Awake()
     {
         if (instance == null)
@@ -27,85 +30,50 @@ public class LevelLoadManager : MonoBehaviour
     {
         SceneManager.LoadScene(levelPrefix + inLevelIndex);
     }
-    public async void LoadLevelASyncOf(int inLevelIndex)
-    {
-        AsyncOperation scene = SceneManager.LoadSceneAsync(levelPrefix + inLevelIndex);
-        scene.allowSceneActivation = false;
-        mCanvas.SetActive(true);
-        do
-        {
-
-            await System.Threading.Tasks.Task.Delay(100);
-        } while (scene.progress<0.9f);
-        scene.allowSceneActivation = true;
-        await System.Threading.Tasks.Task.Delay(1000);
-        mCloudAnimator.SetBool("Loaded", true);
-        await System.Threading.Tasks.Task.Delay(1000);
-        mCanvas.SetActive(false);
-        mCloudAnimator.SetBool("Loaded", false);
-
-
-
-    }
     public void GoToMapScreen(bool hasChoise =false)
     {
         GameManager.Instance.hasChoiceInLevel = hasChoise;
-       // GameManager.Instance._IsRefreshNeeded = true ;
         SceneManager.LoadScene("Map");
 
     }
-    public async void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0)
+    public void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0)
     {
         GameManager.Instance._PauseGame = false;
-        await System.Threading.Tasks.Task.Delay(delayInMilisec);
+
+        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec));       
+    }
+
+
+    IEnumerator LoadScene(string inLevelIndex,int loadTime=0)
+    {
+        mCanvas.SetActive(true);
+        yield return new WaitForSeconds(1f);
+
 
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
-        scene.allowSceneActivation = false;
-        mCanvas.SetActive(true);
-        await System.Threading.Tasks.Task.Delay(1000);
-        do
+
+        while (!scene.isDone)
         {
-        } 
-        while (scene.progress < 0.9f);
-        await System.Threading.Tasks.Task.Delay(1000);
-        scene.allowSceneActivation = true;
-        await System.Threading.Tasks.Task.Delay(2000);
+            yield return new WaitForSeconds(1f);
+        }
         mCloudAnimator.SetBool("Loaded", true);
+
         if (tutorial != null)
             tutorial.RegisterUserAction();
-        await System.Threading.Tasks.Task.Delay(1000);
+        yield return new WaitForSeconds(2f);
+
         mCanvas.SetActive(false);
         mCloudAnimator.SetBool("Loaded", false);
     }
 
 
 
-
-    public async void BacktoHome()
+    public void BacktoHome()
     {
-        AsyncOperation scene = SceneManager.LoadSceneAsync(levelPrefix + GameManager.Instance._playerCurrentLevel);
-        scene.allowSceneActivation = false;
-        mCanvas.SetActive(true);
-        await System.Threading.Tasks.Task.Delay(1000);
-        do
-        {
-
-            await System.Threading.Tasks.Task.Delay(1000);
-        } while (scene.progress < 0.9f);
-        scene.allowSceneActivation = true;
+        StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel));
         GameManager.Instance._IsRefreshNeeded = true;
 
-        await System.Threading.Tasks.Task.Delay(1000);
-        mCloudAnimator.SetBool("Loaded", true);
-        await System.Threading.Tasks.Task.Delay(1000);
         GameManager.Instance._PauseGame = false;
-
-        mCanvas.SetActive(false);
-        if (tutorial != null)
-            tutorial.RegisterUserAction();
-        mCloudAnimator.SetBool("Loaded", false);
-
-        //Make the GameToLoad GameManager Data
     }
     public void AssignTutorial(Tutorial tutorial)
     {

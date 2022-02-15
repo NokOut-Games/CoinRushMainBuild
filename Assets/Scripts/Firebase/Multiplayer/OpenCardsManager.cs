@@ -42,7 +42,7 @@ public class OpenCardsManager : MonoBehaviour
         if (_otherPlayerCurrentLevel != 0 || MultiplayerManager.Instance.MultiplayerBuildingDetails.Count>0)
         {
             InstantiateLevelAndPopulateTransformPoints();
-            Invoke(nameof(InstantiateBuildings), 0f);
+            Invoke(nameof(InstantiateBuildings), .5f);
         }
         else
         {
@@ -152,7 +152,7 @@ public class OpenCardsManager : MonoBehaviour
             }
             else
             {
-                if (MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._buildingCurrentLevel != 0)
+                if (BuildingsDetails[i]._buildingCurrentLevel != 0)
                 {
                     GameObject building = Resources.Load("Level" + _otherPlayerCurrentLevel + "/" + BuildingsDetails[i]._buildingName + BuildingsDetails[i]._buildingCurrentLevel) as GameObject;
                     otherPlayerBuilding = Instantiate(building, _otherPlayerBuildingsTransformList[i].position, _otherPlayerBuildingsTransformList[i].rotation);
@@ -176,7 +176,6 @@ public class OpenCardsManager : MonoBehaviour
     }
     public void GoBackToGame()
     {
-        FirebaseManager.Instance.ReadData(false);
         MultiplayerManager.Instance.BackToGame();
     }
 }

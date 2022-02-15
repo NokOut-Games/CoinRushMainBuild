@@ -209,7 +209,7 @@ public class MenuUI : MonoBehaviour
         shieldMaxMark.SetActive(isMax);
 
         _Shield.text = "" + GameManager.Instance._shield;
-       if(isMax&&!startCall) shieldToEnergyAnim.Play("Anim");
+       if(GameManager.Instance._shield > GameManager.Instance._maxShield && !startCall) shieldToEnergyAnim.Play("Anim");
     }
 
     public void OnViewFriendsButtonClick(bool inActivate)

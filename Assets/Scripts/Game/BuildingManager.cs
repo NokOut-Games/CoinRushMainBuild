@@ -33,7 +33,7 @@ public class BuildingData
 public class BuildingManager : MonoBehaviour
 {
     public List<BuildingData> _buildingData;
-    List<GameObject> _buildings = new List<GameObject>();
+    [SerializeField]List<GameObject> _buildings = new List<GameObject>();
 
     private GameManager mGameManager;
     private CameraController mCameraControllerRef;
@@ -85,54 +85,6 @@ public class BuildingManager : MonoBehaviour
             DestroyAllBuildings();
             SpawningBuilding();
         }
-
-        #region "Test Script When Not Grabbing details from FireBase"
-        //    for (int i = 0; i < _buildingData.Count; i++)
-        //    {
-        //        // Check what building are already spawned and are active currently if no buildings are spawned then spawn the plunk cards
-
-        ////        if (_buildingData[i]._buildingLevel <= 0)
-        ////        {
-        ////            GameObject GORef = Instantiate(_buildingData[i]._initialBuildingGameObject, _buildingData[i]._buildingSpawnPoint.position, Quaternion.identity);
-        ////            GORef.name = _buildingData[i]._buildingName;
-        ////            GORef.GetComponentInChildren<SpriteRenderer>().sprite = _buildingData[i].NextUpgradeImages[4];
-        ////            _buildingData[i].isBuildingSpawnedAndActive = true;
-
-        ////            _buildings.Add(GORef);
-        ////        }
-        ////        else if (!_buildingData[i].isBuildingDamaged)  // But if there are buildings already spawned and active the grab the information from Game Manager
-        ////        {
-        ////            GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[_buildingData[i]._buildingLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        ////            GORef.name = _buildingData[i]._buildingName;
-        ////            if (_buildingData[i].isBuildingShielded) // Get from GameManager
-        ////            {
-        ////                _buildingData[i].isBuildingShielded = true;
-        ////            }
-        ////            if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
-        ////            {
-        ////                _buildingData[i].didBuildingReachMaxLevel = true;
-        ////            }
-        ////            //GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[mGameManager._buildingGameManagerDataRef[i]._buildingCurrentLevel], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        ////            //GORef.name = _buildingData[i]._buildingName;
-        ////        }
-        ////        else
-        ////        {
-        ////            GameObject GORef = Instantiate(_buildingData[i].UpgradeLevels[_buildingData[i]._buildingLevel - 1], _buildingData[i]._buildingSpawnPoint.position, _buildingData[i]._buildingSpawnPoint.rotation);
-        ////            GORef.transform.position = new Vector3(GORef.transform.position.x, _buildingSinkPositionAmount, GORef.transform.position.z);
-        ////            GORef.transform.rotation = Quaternion.Euler(GORef.transform.eulerAngles.x, GORef.transform.eulerAngles.y, _buildingTiltRotationAmount);
-        ////            GORef.name = _buildingData[i]._buildingName;
-        ////            //if (_buildingData[i].isBuildingShielded)
-        ////            //{
-        ////            //    Debug.Log("Im Shielded");
-        ////            //}
-        ////            if (_buildingData[i]._buildingLevel >= _buildingData[i]._buildingMaxLevel)
-        ////            {
-        ////                _buildingData[i].didBuildingReachMaxLevel = true;
-        ////            }
-        ////        }
-        ////    }
-        ////
-        #endregion 
     }
 
     void Update()
@@ -291,6 +243,7 @@ public class BuildingManager : MonoBehaviour
 
         GameObject goRef = GameObject.Find(inBuildingName);
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = true;
+        _buildings.Remove(goRef);
         //Upgrading Scenario Starts Here
         Destroy(goRef, 1.25f);
         GameObject smokeVFX;
@@ -309,6 +262,7 @@ public class BuildingManager : MonoBehaviour
             newGoRef.transform.localScale = newBuildingSpawnScale;
             newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
             GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel, true, false);
+            _buildings.Add(newGoRef);
 
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
@@ -320,6 +274,7 @@ public class BuildingManager : MonoBehaviour
             newGoRef.name = _buildingData[inBuildingsElementNumber]._buildingName;
             GameManager.Instance.UpdateBuildingData(inBuildingName, inBuildingsElementNumber, inBuildingLevel, true, false);
 
+            _buildings.Add(newGoRef);
 
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
@@ -330,6 +285,7 @@ public class BuildingManager : MonoBehaviour
             Destroy(smokeVFX,1.5f);
         yield return new WaitForSeconds(2f);
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
+        FirebaseManager.Instance.WriteBuildingDataToFirebase();
     }
 
     
