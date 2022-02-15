@@ -47,9 +47,7 @@ public class LevelLoadManager : MonoBehaviour
     IEnumerator LoadScene(string inLevelIndex,int loadTime=0)
     {
         mCanvas.SetActive(true);
-        yield return new WaitForSeconds(1f);
-
-
+        yield return new WaitForSeconds(2f);
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
 
         while (!scene.isDone)
@@ -72,7 +70,6 @@ public class LevelLoadManager : MonoBehaviour
     {
         StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel));
         GameManager.Instance._IsRefreshNeeded = true;
-
         GameManager.Instance._PauseGame = false;
     }
     public void AssignTutorial(Tutorial tutorial)

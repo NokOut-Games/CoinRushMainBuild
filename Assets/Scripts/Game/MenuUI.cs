@@ -13,7 +13,6 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private GameObject levelCompletedPanel;
 
     public GameObject OpenCards;
-    public GameObject QuitButton;
 
     public TextMeshProUGUI _coinText;
     public TextMeshProUGUI _energyText;
@@ -123,7 +122,7 @@ public class MenuUI : MonoBehaviour
         screenItemsUIPanel.SetActive(false);
         DrawButtonPanelUI.SetActive(false);
         OpenCards.SetActive(false);
-        QuitButton.SetActive(false);
+        //QuitButton.SetActive(false);
 
        // mBuildMenuUI = FindObjectOfType<BuildMenuUI>();
         mBuildMenuUI.SetUpgradeButtons();
@@ -136,8 +135,7 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
-        OpenCards.SetActive(true);
-        QuitButton.SetActive(true);
+       // OpenCards.SetActive(true);
     }
 
 

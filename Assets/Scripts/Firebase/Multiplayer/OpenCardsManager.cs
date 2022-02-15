@@ -33,22 +33,17 @@ public class OpenCardsManager : MonoBehaviour
     [SerializeField] EnemyInfoPopulator profileInUI;
     [SerializeField]
     List<PlayerProfile> PresetProfiles = new List<PlayerProfile>();
+    bool isSpawned;
 
-    private void Start()
+    private void Awake()
     {
-        
         _otherPlayerCurrentLevel = MultiplayerManager.Instance._enemyPlayerLevel;
 
-        if (_otherPlayerCurrentLevel != 0 || MultiplayerManager.Instance.MultiplayerBuildingDetails.Count>0)
-        {
-            InstantiateLevelAndPopulateTransformPoints();
-            Invoke(nameof(InstantiateBuildings), .5f);
-        }
-        else
+        if ( MultiplayerManager.Instance.MultiplayerBuildingDetails.Count <= 0)
         {
             PlayerProfile profile = PresetProfiles[Random.Range(0, PresetProfiles.Count)];
             _otherPlayerCurrentLevel = profile.Level;
-            profileInUI.ChangeProfile(profile.Picture,profile.Name);
+            profileInUI.ChangeProfile(profile.Picture, profile.Name);
             InstantiateLevelAndPopulateTransformPoints();
             foreach (var building in profile.Buildings)
             {
@@ -57,7 +52,15 @@ public class OpenCardsManager : MonoBehaviour
                 building._isBuildingShielded = Random.Range(0, 100) > 50;
             }
             InstantiatePresetBuildings(profile.Buildings);
-        }    
+            profileInUI.ChangeProfile(profile.Picture, profile.Name);
+        }
+        else
+        {
+            InstantiateLevelAndPopulateTransformPoints();
+            InstantiateBuildings();
+           
+        }
+
     }
 
     void InstantiateLevelAndPopulateTransformPoints()
@@ -122,7 +125,27 @@ public class OpenCardsManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+     
+        if (!isSpawned)
+        {
+            isSpawned = true;
+           
+        }
 
+        //if (_otherPlayerBuildingsTransformList.Count == MultiplayerManager.Instance.MultiplayerBuildingDetails.Count) return;
+        //else
+        //{
+        //    InstantiateLevelAndPopulateTransformPoints();
+        //}
+
+        //if (_otherPlayerBuildings.Count == MultiplayerManager.Instance.MultiplayerBuildingDetails.Count) return;
+        //else
+        //{
+        //    InstantiateBuildings();
+        //}
+    }
 
     void InstantiatePresetBuildings(List<Building> BuildingsDetails)
     {

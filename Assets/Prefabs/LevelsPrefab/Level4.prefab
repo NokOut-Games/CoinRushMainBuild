@@ -5537,7 +5537,7 @@ Transform:
   - {fileID: 1002038256655096647}
   - {fileID: 1002038257623166873}
   m_Father: {fileID: 2372401428481844626}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1002038257623166872
 GameObject:
@@ -11779,7 +11779,7 @@ Transform:
   - {fileID: 1534757137431062769}
   - {fileID: 5870903974162387453}
   m_Father: {fileID: 2372401428481844626}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2222578376640896938
 GameObject:
@@ -13144,6 +13144,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 5694455117264853064}
   - {fileID: 8416691441394304507}
   - {fileID: 6700324375491582396}
   - {fileID: 1002038257356472827}
@@ -20859,6 +20860,54 @@ Transform:
   m_Father: {fileID: 965836751079317707}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3795590413664990240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5694455117264853064}
+  - component: {fileID: 7218643435462016356}
+  m_Layer: 0
+  m_Name: PostProcessing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5694455117264853064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795590413664990240}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.316022, y: 28.376915, z: -15.04845}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2372401428481844626}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7218643435462016356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3795590413664990240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: e917a9b61fea2a94baaeb4c3338dab02, type: 2}
 --- !u!1 &3805794067495711262
 GameObject:
   m_ObjectHideFlags: 0
@@ -24415,7 +24464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2372401428481844626}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7718385171414026422
 MonoBehaviour:
@@ -24558,6 +24607,7 @@ MonoBehaviour:
   _buildings: []
   mCameraParentRef: {fileID: 0}
   mBuildingConstructionVFX: {fileID: 7473104587106121702, guid: fb20ece43a4144530a620b8a819d303a, type: 3}
+  mBuildingConstructionMaxVFX: {fileID: 0}
   mCameraFocusSpeed: 0.5
   mBuildingSpawnTimeDelay: 1
   mBuildingShrinkAndEnlargeTime: 0.75
@@ -24566,13 +24616,13 @@ MonoBehaviour:
   newBuildingSpawnScale: {x: 0, y: 0, z: 0}
   mSizeToDecrease: 0
   mTimeDelayFromNewBuildingToCameraDefaultState: 1
-  _isAnotherBuildingInConstruction: 0
-  mCoroutineIsInProcess: 0
-  tempCheck: 0
   _shieldedBuildings: 
   _buildingSinkPositionAmount: 0
   _buildingTiltRotationAmount: 0
   _destroyedSmokeEffectVFX: {fileID: 0}
+  _destroyedPlayerPlunkCard: {fileID: 0}
+  _DestroyedBuildingPlunkOffsetFromBuilding: {x: 0, y: 0, z: 0}
+  menuUI: {fileID: 0}
 --- !u!1 &4409159776857725059
 GameObject:
   m_ObjectHideFlags: 0

@@ -2410,103 +2410,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983298928}
   m_CullTransparentMesh: 1
---- !u!1 &1012865287
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1012865288}
-  - component: {fileID: 1012865290}
-  - component: {fileID: 1012865289}
-  m_Layer: 0
-  m_Name: MultiplayerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1012865288
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012865287}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 972, y: 1794, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1012865289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012865287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91001f19bb77ccb48a7e8874f14c81b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentPlayerId: 
-  _currentPlayerName: 
-  _enemyPlayerID: 1417417415378427
-  _enemyName: 
-  _enemyTitle: 
-  _enemyPlayerLevel: 0
-  OpenCardDetails: []
-  OpenedCardSlot: 
-  OpenedPlayerID: []
-  isReWriting: 0
-  AttackCount: 0
-  attackedplayerIDList: []
-  attackedplayerNameList: []
-  CurrenetPlayerAttackData: []
-  MultiplayerBuildingDetails: []
-  isRevenging: 0
-  mOpenCardsManager: {fileID: 0}
-  _cardDeck: {fileID: 0}
-  mPlayerName: 
-  mPlayerID: 
-  mCoinData: 
-  mEnergyData: 
-  mPlayerCurrentLevelData: 
-  mNumberOfTimesGotAttacked: 
-  mLevelPrefix: Level
-  _dataBaseFetchTime: 0
-  _enemyBuildingDetails: []
---- !u!114 &1012865290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012865287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ac195bacb194c439d6b1c114659a1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyName: 
-  _enemyPlayerLevel: 1
-  _attackInfo: 0
-  _buildingMultiplayerDataRef: []
-  _buildingManagerRef: {fileID: 0}
-  _buildingCount: 0
-  _LevelHolder: []
-  onceDone: 0
-  _enemyBuildingDetails: []
-  mEnemyBuildingPrefabPopulateList: []
-  _enemyBuildings: []
-  _enemyBuildingsTransformList: []
-  OpenCardDetails: []
-  OpenedCardSlot: 
 --- !u!1 &1098220515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3003,80 +2906,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4258279162477888205, guid: 14e5266211c2a4e4087a51998c71595e, type: 3}
   m_PrefabInstance: {fileID: 1263274109}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1266492671
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1266492673}
-  - component: {fileID: 1266492672}
-  - component: {fileID: 1266492674}
-  m_Layer: 0
-  m_Name: FirebaseManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1266492672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266492671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95cec43474806d4bab2eafe4428a3e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _PlayerName: 
-  _PlayerID: 
-  _Coins: 
-  _Energy: 
-  _CurrentLevel: 
-  _NumberOfTimesAttacked: 
-  CurrentPlayerPhotoSprite: {fileID: 0}
-  AttackedData: []
-  OpenCardDetails: []
-  OpenedCardSlot: 
-  mLevelPrefix: Level
-  userTitle: Guest Users
-  readUserData: 0
-  loadMapScene: 0
---- !u!4 &1266492673
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266492671}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 540, y: 1080, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1266492674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266492671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd0561fd0ab247299ad0b61354ab592, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerList: []
-  _fbPlayerList: []
-  _randomEnemyID: 
-  _randomOpencardID: 
 --- !u!1 &1362700129 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 583600296738316829, guid: 92195e631d942984b8b0597e1c94aae1, type: 3}
@@ -3240,7 +3069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258842, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_RootOrder
@@ -3358,72 +3187,6 @@ RectTransform:
   m_AnchoredPosition: {x: -10, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1601156765
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1601156767}
-  - component: {fileID: 1601156768}
-  m_Layer: 0
-  m_Name: FacebookLoginManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1601156767
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601156765}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1601156768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601156765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e25eb4c66badc4996843b16a7f5dd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextStatus: {fileID: 0}
-  TextID: {fileID: 0}
-  LoginButton: {fileID: 0}
-  FriendsListButton: {fileID: 0}
-  ProfilePicture: {fileID: 0}
-  friendsTextPrefab: {fileID: 7458861448636885855, guid: 9e9ee214ef3e8e840ad739ad395aeead, type: 3}
-  GetFriendPos: {fileID: 0}
-  UserID: 102105239054110
-  FBFriendsNameList: []
-  FBFriendsIDList: []
-  isinFbPopup: 0
-  isFromTutorial: 0
-  randomPicID:
-  - {fileID: 21300000, guid: 110b95fe189560a46bdb2c1849ff448d, type: 3}
-  - {fileID: 21300000, guid: a0353c97aed73364dae3d979fbc8e341, type: 3}
-  - {fileID: 21300000, guid: 81c0875e45300184db9112250c12441a, type: 3}
-  - {fileID: 21300000, guid: 4b12fc7b3fc56a942a518b2853a6b2a8, type: 3}
-  - {fileID: 21300000, guid: 7df25b8ca1f1bd541938fb2cf7a9aa5b, type: 3}
-  - {fileID: 21300000, guid: ac5ebd78b88583a4499b26d58e551737, type: 3}
-  - {fileID: 21300000, guid: 50009379e81debe49880a6a569bdbc5d, type: 3}
-  - {fileID: 21300000, guid: c0316d567b5d16d459633433f9449521, type: 3}
-  - {fileID: 21300000, guid: 4b12fc7b3fc56a942a518b2853a6b2a8, type: 3}
-  - {fileID: 21300000, guid: ac5ebd78b88583a4499b26d58e551737, type: 3}
 --- !u!1 &1606421307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3652,6 +3415,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1620301627}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1620301630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3858,7 +3633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1657763912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4499,7 +4274,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4540,7 +4315,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9660,7 +9435,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3390255519619730494, guid: 9f35899d4737dfa4c8b5580ed2c3a62a, type: 3}
+  - {fileID: 2100000, guid: 934b70fcd40887642bc7d95724b01176, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14487,7 +14262,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8048228eaf567be4d944b1a2665ddc62, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19563,7 +19338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2477383579390255690, guid: 9f35899d4737dfa4c8b5580ed2c3a62a, type: 3}
+  - {fileID: 2100000, guid: 7548663b336dc3b4eb99f91bafd38ab3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19776,7 +19551,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3390255519619730494, guid: 9f35899d4737dfa4c8b5580ed2c3a62a, type: 3}
+  - {fileID: 2100000, guid: 934b70fcd40887642bc7d95724b01176, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20018,7 +19793,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8048228eaf567be4d944b1a2665ddc62, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25241,7 +25016,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3390255519619730494, guid: 9f35899d4737dfa4c8b5580ed2c3a62a, type: 3}
+  - {fileID: 2100000, guid: 934b70fcd40887642bc7d95724b01176, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25292,7 +25067,7 @@ Canvas:
   m_GameObject: {fileID: 4524371248616259749}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -25464,7 +25239,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8048228eaf567be4d944b1a2665ddc62, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25621,7 +25396,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8048228eaf567be4d944b1a2665ddc62, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26026,7 +25801,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2477383579390255690, guid: d3ec7fce688f3f249a7734456bd33295, type: 3}
+  - {fileID: 2100000, guid: 7548663b336dc3b4eb99f91bafd38ab3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -31158,7 +30933,7 @@ Transform:
   - {fileID: 6867623570567247115}
   - {fileID: 4425386349836829470}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6396248628311294404
 GameObject:
@@ -31384,7 +31159,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -31425,7 +31200,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36425,7 +36200,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -36466,7 +36241,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7838436323390675806, guid: 8342302912ee89e419bbbc9b932e113c, type: 3}
+  - {fileID: 2100000, guid: 17813497436ba524caae26da95a21dc6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -42448,6 +42223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a169e3c9a0d03f043ade148f2ee629a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _backButton: {fileID: 1620301629}
   _revengePanel: {fileID: 6735347}
   TransformPoints:
   - {fileID: 1925623909}
@@ -42463,6 +42239,7 @@ MonoBehaviour:
   RawAttackedPlayerID: []
   FilteredAttackedPlayerID: []
   FilteredAttackedName: []
+  FilteredAttackedBuilding: []
   _ENemy: {fileID: 8570487013063109843, guid: eea3af779f7472a4e86d1e0b76a32c39, type: 3}
   FBFriendsPanel: {fileID: 913529238}
   FBTransformPoints:

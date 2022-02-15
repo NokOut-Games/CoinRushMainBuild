@@ -268,7 +268,7 @@ public class FirebaseManager : MonoBehaviour
     {
         reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
         {
-
+            AttackedData.Clear();
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;

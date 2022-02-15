@@ -247,7 +247,7 @@ public class MultiplayerManager : MonoBehaviour
 
     void GetAttackData()
     {
-        reference.Child(FirebaseManager.Instance.userTitle).Child(FirebaseManager.Instance._PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
+     /*   reference.Child(FirebaseManager.Instance.userTitle).Child(FirebaseManager.Instance._PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
         {
 
             if (task.IsCompleted)
@@ -255,26 +255,21 @@ public class MultiplayerManager : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
 
                 if (snapshot.Exists)
-                {
+                {*/
                     CurrenetPlayerAttackData.Clear();
                     CurrenetPlayerAttackData = new List<AttackedPlayerInformation>();
 
                     attackedplayerIDList.Clear();
                     attackedplayerNameList.Clear();
-                    for (int i = 0; i < snapshot.ChildrenCount; i++)
+                    for (int i = 0; i < FirebaseManager.Instance.AttackedData.Count; i++)
                     {
-                        AttackedPlayerInformation attackData = new AttackedPlayerInformation();
-
-                        attackData._attackedPlayerID = snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
-                        attackData._attackedPlayerName = snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
-
-                        CurrenetPlayerAttackData.Add(attackData);
-                        attackedplayerIDList.Add(attackData._attackedPlayerID);
-                        attackedplayerNameList.Add(attackData._attackedPlayerName);
+                        CurrenetPlayerAttackData.Add(FirebaseManager.Instance.AttackedData[i]);
+                        attackedplayerIDList.Add(FirebaseManager.Instance.AttackedData[i]._attackedPlayerID);
+                        attackedplayerNameList.Add(FirebaseManager.Instance.AttackedData[i]._attackedPlayerName);
                     }
-                }
+     /*           }
             }
-        });
+        });*/
     }
 
     public void OnGettingAttackCard()

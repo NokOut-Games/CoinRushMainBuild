@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class RevengeAttackPanel : MonoBehaviour
 {
+    public Button _backButton;
     public GameObject _revengePanel;
     public List<RectTransform> TransformPoints;
     public List<GameObject> EnemyList = new List<GameObject>();
@@ -13,6 +14,7 @@ public class RevengeAttackPanel : MonoBehaviour
     public List<string> RawAttackedPlayerID;
     public List<string> FilteredAttackedPlayerID;
     public List<string> FilteredAttackedName = new List<string>();
+    public List<string> FilteredAttackedBuilding = new List<string>();
     Text enemyName;
 
     public GameObject _ENemy;
@@ -30,6 +32,7 @@ public class RevengeAttackPanel : MonoBehaviour
             if (FilteredAttackedPlayerID.Contains(RawAttackedPlayerID[i])) continue;
             FilteredAttackedPlayerID.Add(RawAttackedPlayerID[i]);
             FilteredAttackedName.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
+            FilteredAttackedBuilding.Add(MultiplayerManager.Instance.CurrenetPlayerAttackData[i]._attackedBuildingName);
         }
 
     }
@@ -37,6 +40,8 @@ public class RevengeAttackPanel : MonoBehaviour
     {
         _revengePanel.SetActive(true);
         EnemyList.Clear();
+        //FirebaseManager.Instance.AttackedData.Clear();
+
         for (int i = 0; i < FilteredAttackedPlayerID.Count; i++)
         {
             GameObject EnemySlot = Instantiate(_ENemy, TransformPoints[i].position, TransformPoints[i].rotation, TransformPoints[i].parent);
@@ -47,9 +52,9 @@ public class RevengeAttackPanel : MonoBehaviour
             System.Action<Sprite,int> ONGettingProfilePic = (Pic,index) =>
             {
                 EnemyList[index].transform.GetChild(3).GetComponent<Image>().sprite = Pic;
-
             };
             FacebookManager.Instance.GetProfilePictureWithId(FilteredAttackedPlayerID[i], ONGettingProfilePic, i);
+            //AttackedPlayerInformation a = new 
         }
 
     }
@@ -83,6 +88,7 @@ public class RevengeAttackPanel : MonoBehaviour
     }
     public void BackToGame()
     {
+        _backButton.interactable = false;
         LevelLoadManager.instance.BacktoHome();
     }
 }

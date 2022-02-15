@@ -237,7 +237,7 @@ public class BuildingManager : MonoBehaviour
     }
 
 
-    public IEnumerator UpgradeOrRepairBuilding(string inBuildingName, int inBuildingsElementNumber, int inBuildingLevel, Transform inBuildingSpawnPoint)
+    public IEnumerator UpgradeOrRepairBuilding(string inBuildingName, int inBuildingsElementNumber, int inBuildingLevel, Transform inBuildingSpawnPoint,bool isRepair =false)
     {
         //mCameraControllerRef._inBetweenConstructionProcess = true;
 
@@ -278,14 +278,15 @@ public class BuildingManager : MonoBehaviour
 
             newGoRef.transform.DOScale(1, mBuildingShrinkAndEnlargeTime);
         }
-
+        if (isRepair)
+            FirebaseManager.Instance.WriteBuildingDataToFirebase();
         if (_buildingData[inBuildingsElementNumber]._buildingMaxLevel == inBuildingLevel)
             Destroy(smokeVFX,5f);
         else
             Destroy(smokeVFX,1.5f);
         yield return new WaitForSeconds(2f);
         _buildingData[inBuildingsElementNumber]._isUnderConstruction = false;
-        FirebaseManager.Instance.WriteBuildingDataToFirebase();
+        
     }
 
     
@@ -306,7 +307,7 @@ public class BuildingManager : MonoBehaviour
             else
             {
                 //Repair the Building
-                StartCoroutine(UpgradeOrRepairBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint));
+                StartCoroutine(UpgradeOrRepairBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint,true));
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Image>().color = new Color32(0, 0, 0, 100);
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Building...";
@@ -319,7 +320,7 @@ public class BuildingManager : MonoBehaviour
             //Repair when the Building is Max
             if (_buildingData[inBuildingsElementNumber].isBuildingDamaged)
             {
-                StartCoroutine(UpgradeOrRepairBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint));
+                StartCoroutine(UpgradeOrRepairBuilding(_buildingData[inBuildingsElementNumber]._buildingName, inBuildingsElementNumber, _buildingData[inBuildingsElementNumber]._buildingLevel, _buildingData[inBuildingsElementNumber]._buildingSpawnPoint,true));
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Button>().interactable = false;
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponent<Image>().color = new Color32(0, 0, 0, 100);
                 _buildingData[inBuildingsElementNumber]._respectiveBuildingButtons.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "Building...";
@@ -333,7 +334,6 @@ public class BuildingManager : MonoBehaviour
         }
         if (_buildingData[inBuildingsElementNumber]._buildingLevel == _buildingData[inBuildingsElementNumber]._buildingMaxLevel)
         {
-            //_buildingData[inElementNumber]._respectiveBuildingButtons.GetComponent<Button>().interactable = false;
             _buildingData[inBuildingsElementNumber].didBuildingReachMaxLevel = true;
             CheckForAllBuildingMax();
         }

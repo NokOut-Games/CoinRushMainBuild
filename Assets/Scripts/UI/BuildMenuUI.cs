@@ -101,6 +101,7 @@ public class BuildMenuUI : MonoBehaviour
                     UpdateBuildingImage(buildingsButtonRef, inBuildingElementNumber);
                     UpdateStarsBasedOnBuildingState(buildingsButtonRef, inBuildingElementNumber);
                     StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber,mWaitTimeToShowNextUpgradeCost,ButtonState.Building));
+                   
                 }
                 else
                 {

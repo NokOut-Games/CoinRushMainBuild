@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
 
     [HideInInspector] public bool _buildButtonClicked = false;
     [HideInInspector] public bool _isCameraInConstructionView;
-    [HideInInspector] public bool _inBetweenConstructionProcess = false;
+    public bool _inBetweenConstructionProcess = false;
 
     public bool _CameraFreeRoam = true;
 
@@ -83,7 +83,8 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         if(openCardSelected) return;
-        if (!_inBetweenConstructionProcess&&!GameManager.Instance._PauseGame)
+        if (_inBetweenConstructionProcess) return;
+        if (!GameManager.Instance._PauseGame)
         {
             if (Input.GetMouseButtonDown(0))
             {

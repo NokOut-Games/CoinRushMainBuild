@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
     public static System.Action GotAnOpenCard;
     [HideInInspector] public bool refreshForOpenCard;
 
+   public  GameObject NoCoinsPopUp;
     private void Awake()
     {     
         if (Instance == null)
@@ -116,6 +117,7 @@ public class GameManager : MonoBehaviour
             OpenCardWritten = false;
         }
     }
+
     private IEnumerator AutomaticEnergyRefiller()
     {
         while (mIsFull)

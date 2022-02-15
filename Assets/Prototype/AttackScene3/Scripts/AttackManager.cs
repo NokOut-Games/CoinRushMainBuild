@@ -72,26 +72,14 @@ public class AttackManager : MonoBehaviour
 
     [SerializeField] EnemyInfoPopulator profileInUI;
     [SerializeField]List<PlayerProfile> PreSetPayers = new List<PlayerProfile>();
+    bool isSpawned;
+
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
-    private void Start()
-    {
-        mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
-        cam = Camera.main;
-        mCameraController = cam.GetComponent<AttackCameraController>();
-
         _enemyName.text = MultiplayerManager.Instance.mPlayerName;
         _enemyPlayerLevel = MultiplayerManager.Instance._enemyPlayerLevel;
-
-        if (_enemyPlayerLevel != 0 || MultiplayerManager.Instance.MultiplayerBuildingDetails.Count > 0)
-        {
-            InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
-
-            Invoke(nameof(InstantiateBuildingBasedOnLevel), 0f);
-        }
-        else
+        if ( MultiplayerManager.Instance.MultiplayerBuildingDetails.Count <= 0)
         {
             PlayerProfile profile = PreSetPayers[Random.Range(0, PreSetPayers.Count)];
             _enemyPlayerLevel = profile.Level;
@@ -107,10 +95,15 @@ public class AttackManager : MonoBehaviour
 
             InstantiatePresetBuildings(profile.Buildings);
             profileInUI.ChangeProfile(profile.Picture, profile.Name);
-
         }
-
-
+        else
+        {
+            InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
+            InstantiateBuildingBasedOnLevel();
+        }
+        mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
+        cam = Camera.main;
+        mCameraController = cam.GetComponent<AttackCameraController>();
 
         Invoke(nameof(UpdateCamerHorizontalBounds), 0.5f);
 
@@ -118,6 +111,31 @@ public class AttackManager : MonoBehaviour
         InvokeRepeating("DoMultiplierSwitching", 0.5f, _MultiplierSwitchTime);
         ShuffleBuildingCostList();
     }
+    private void Update()
+    {
+        TargetButtonPositionUpdate();
+
+      
+       /* if (!isSpawned)
+        {
+            isSpawned = true;
+            
+        }*/
+
+
+       /* if (_enemyBuildingsTransformList.Count == MultiplayerManager.Instance.MultiplayerBuildingDetails.Count) return;
+        else
+        {
+            InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints();
+        }
+
+        if (_enemyBuildings.Count == MultiplayerManager.Instance.MultiplayerBuildingDetails.Count) return;
+        else
+        {
+            InstantiateBuildingBasedOnLevel();
+        }*/
+    }
+
 
     void InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints()
     {
@@ -266,11 +284,6 @@ public class AttackManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update()
-    {
-        TargetButtonPositionUpdate();
-    }
-
     public void ResetAnim()
     {
         _spawnedTargetPoints[cachedTargetPoint].GetComponentInChildren<Animator>().SetBool("CanPlay", false);
@@ -529,7 +542,10 @@ public class AttackManager : MonoBehaviour
     public void BackButton()
     {
         _ScorePanel.GetComponentInChildren<Button>().interactable = false;
-        LevelLoadManager.instance.BacktoHome();
+        //MultiplayerManager.Instance.CheckAttackDataFromFirebase();
+         LevelLoadManager.instance.BacktoHome();
+        //ChangeEnemyBuildingData();
+
     }
 
 
