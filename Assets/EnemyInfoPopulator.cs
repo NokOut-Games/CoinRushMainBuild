@@ -10,21 +10,21 @@ public class EnemyInfoPopulator : MonoBehaviour
 
     private void Awake()
     {
-        MultiplayerPlayerData.GotEnemyName += ChangeProfile;
+        MultiplayerManager.GotEnemyName += ChangeProfile;
     }
 
 
     private void Start()
     {
 
-        nameTxt.text = MultiplayerManager.Instance._enemyName;
+        nameTxt.text = MultiplayerManager.Instance.Enemydata.UserDetails._playerName;
         picture.sprite = null;
         Action<Sprite> OnGettingPicture = (Pic) =>
         {
             picture.sprite = Pic;
         };
 
-        FacebookManager.Instance.GetProfilePictureWithId(MultiplayerManager.Instance._enemyPlayerID, OnGettingPicture);
+        FacebookManager.Instance.GetProfilePictureWithId(MultiplayerManager.Instance.Enemydata.UserDetails._playerID, OnGettingPicture);
     }
 
 

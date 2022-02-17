@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int _openedCards;
 
     [HideInInspector] public List<OpenCard> OpenCardDetails;
-    public List<int> OpenedCardSlot = new List<int>();
+   // public List<int> OpenedCardSlot = new List<int>();
 
     public List<Building> _buildingGameManagerDataRef;
 
@@ -159,10 +159,10 @@ public class GameManager : MonoBehaviour
         _openedCards = inOpenedCards;
         FirebaseManager.Instance.readUserData = true;
     }
-    public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails, List<int> inOpenCardSlot)
+    public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails/*, List<int> inOpenCardSlot*/)
     {
         OpenCardDetails = inOpenCardDetails;
-        OpenedCardSlot = inOpenCardSlot;
+        //OpenedCardSlot = inOpenCardSlot;
         GotAnOpenCard?.Invoke();
     }
 
@@ -177,7 +177,7 @@ public class GameManager : MonoBehaviour
         hasChoiceInLevel = true;
         LevelLoadManager.instance.LoadLevelASyncOf("Map", 1000);
         OpenCardDetails.Clear();
-        OpenedCardSlot.Clear();
+        //OpenedCardSlot.Clear();
     }
     public void AssignTutorial(Tutorial tutorial)
     {

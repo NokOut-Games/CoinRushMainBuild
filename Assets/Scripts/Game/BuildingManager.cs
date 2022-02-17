@@ -147,7 +147,7 @@ public class BuildingManager : MonoBehaviour
             GameManager.Instance._buildingGameManagerDataRef.Add(data);
         }
         FirebaseManager.Instance.WriteAllDataToFireBase();
-        FirebaseManager.Instance.AddBuildsInLevelListner();
+        //FirebaseManager.Instance.AddBuildsInLevelListner();
     }
 
     void DestroyAllBuildings()

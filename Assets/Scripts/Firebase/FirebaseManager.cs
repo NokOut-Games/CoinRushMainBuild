@@ -8,6 +8,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using Unity.IO;
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class FirebaseManager : MonoBehaviour
     DateTime crntDateTime;
     public bool loadMapScene;
 
+    public UserData userdata = new UserData();
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
@@ -92,10 +94,7 @@ public class FirebaseManager : MonoBehaviour
                 if (task.IsCompleted)
                 {
                     DataSnapshot snapshot = task.Result;
-                    GetUserDetailsAndBuildingDetails();
-                    GetMapDataAndSavedCards();
-                    GetOpenCardsDetails();
-                    GetAttackData();
+                    GetUserData();
                     if (calculatetime) GetTimeCalculations();                   
                 }
             });
@@ -107,26 +106,13 @@ public class FirebaseManager : MonoBehaviour
                 if (task.IsCompleted)
                 {
                     DataSnapshot snapshot = task.Result;
-                    GetUserDetailsAndBuildingDetails();
-                    GetMapDataAndSavedCards();
-                    GetAttackData();
+                    GetUserData();
                     if (calculatetime) GetTimeCalculations();
                 }
             });
         }
     }
-
-    private void HandleBuildingValueChanged(object sender, ValueChangedEventArgs e)
-    {
-        for (int i = 0; i < e.Snapshot.ChildrenCount; i++)
-        {
-           GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingDestroyed =bool.Parse(e.Snapshot.Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-           GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingShielded =bool.Parse(e.Snapshot.Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-        }
-        GameManager.Instance._IsRefreshNeeded = true;
-    }
-
-    void GetUserDetailsAndBuildingDetails()
+    void GetUserData()
     {
         reference.Child(userTitle).Child(_PlayerID).GetValueAsync().ContinueWith(task =>
         {
@@ -135,180 +121,74 @@ public class FirebaseManager : MonoBehaviour
                 DataSnapshot snapshot = task.Result;
                 if (snapshot.Exists)
                 {
-                    _PlayerName = snapshot.Child("UserDetails").Child("_playerName").Value.ToString();
-                    _PlayerID = snapshot.Child("UserDetails").Child("_playerID").Value.ToString();
-                    _CurrentLevel = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-                    _Coins = snapshot.Child("UserDetails").Child("_coins").Value.ToString();
-                    _Energy = snapshot.Child("UserDetails").Child("_energy").Value.ToString();
-                    _NumberOfTimesAttacked = snapshot.Child("UserDetails").Child("_numberOfTimesGotAttacked").Value.ToString();
+                    var json = snapshot.GetRawJsonValue();
+                    userdata = JsonUtility.FromJson<UserData>(json);
 
-                    reference.Child(userTitle).Child(_PlayerID).Child("Buildings").Child(mLevelPrefix + _CurrentLevel).ValueChanged += HandleBuildingValueChanged;//Event Handle
-
-                    GameManager.Instance._buildingGameManagerDataRef.Clear();
-                    List<Building> BuildingDetails = new List<Building>();
-                    for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + _CurrentLevel).ChildrenCount; i++)
-                    {
-                        Building builddata = new Building();
-                        builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + _CurrentLevel).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                        builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + _CurrentLevel).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                        builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + _CurrentLevel).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                        builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + _CurrentLevel).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-                        BuildingDetails.Add(builddata);
-                    }
-                    GameManager.Instance.UpdateUserDetails(BuildingDetails, int.Parse(_Coins), int.Parse(_Energy), int.Parse(_CurrentLevel), int.Parse(_NumberOfTimesAttacked));
+                    GameManager.Instance.UpdateUserDetails(userdata.Buildings, userdata.UserDetails._coins, userdata.UserDetails._energy, userdata.UserDetails._playerCurrentLevel, userdata.UserDetails._numberOfTimesGotAttacked);
+                    GameManager.Instance._CompletedLevelsInSet = userdata.MapData.LevelsInSet;//Get map  Details From Firebase
+                    GameManager.Instance.UpdateOpenCardDetails(userdata.OpenCards);                   
                     readUserData = true;
                 }               
             }
         });
     }
 
-    void GetMapDataAndSavedCards()
-    {
-        reference.Child(userTitle).Child(_PlayerID).GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-                if (snapshot.Exists)
-                {
-                    GameManager.Instance._SavedCardTypes.Clear();
-                    GameManager.Instance._CompletedLevelsInSet.Clear();
-                    GameManager.Instance._SetIndex = int.Parse(snapshot.Child("MapData").Child("SetIndex").Value.ToString());
-                    for (int i = 0; i < snapshot.Child("MapData").Child("LevelsInSet").ChildrenCount; i++)
-                    {
-                        GameManager.Instance._CompletedLevelsInSet.Add(int.Parse(snapshot.Child("MapData").Child("LevelsInSet").Child("" + i).Value.ToString()));//Get map  Details From Firebase
-                    }
-
-                    for (int i = 0; i < snapshot.Child("SaveCards").ChildrenCount; i++)
-                    {
-                        GameManager.Instance._SavedCardTypes.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
-                    }
-                }
-            }
-        });
-    }
-    public void AddBuildsInLevelListner()
-    {
-        reference.Child(userTitle).Child(_PlayerID).Child("Buildings").Child(mLevelPrefix + _CurrentLevel).ValueChanged -= HandleBuildingValueChanged;
-        reference.Child(userTitle).Child(_PlayerID).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).ValueChanged += HandleBuildingValueChanged;
-        _CurrentLevel = "" + GameManager.Instance._playerCurrentLevel;
-
-    }
-    void GetOpenCardsDetails()
-    {
-        reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").GetValueAsync().ContinueWith(task =>
-        {
-            if (task.IsCompleted)
-            {
-                DataSnapshot OpenCardSnapshot = task.Result;
-
-                if (OpenCardSnapshot.Exists)
-                {
-                    OpenedCardSlot.Clear();
-                    OpenCardDetails = new List<OpenCard>();
-                    for (int i = 0; i < OpenCardSnapshot.ChildrenCount; i++)
-                    {
-                        OpenCard CardData = new OpenCard();
-
-                        CardData._openedPlayerName = OpenCardSnapshot.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
-                        CardData._openedPlayerID = OpenCardSnapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-                        CardData._openedCardSlot = int.Parse(OpenCardSnapshot.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
-                        CardData._openedCardSelectedCard = int.Parse(OpenCardSnapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
-
-                        OpenCardDetails.Add(CardData);
-                        OpenedCardSlot.Add(CardData._openedCardSlot);
-                    }
-                    GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot);
-                   // reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;//Event Handle
-                }
-                else
-                {
-                    reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
-                    {
-                        if (task.IsCompleted)
-                        {
-
-                            //reference.Child(userTitle).Child(CurrentPlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;
-
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    //private void HandleOpenCardValueChanged(object sender, ValueChangedEventArgs e)
+    //void GetMapDataAndSavedCards()
     //{
-    //    if (e.Snapshot.Exists)
+    //    reference.Child(userTitle).Child(_PlayerID).GetValueAsync().ContinueWith(task =>
     //    {
-    //        Debug.Log("OpenCardDetailsExists");
-    //        OpenCardDetails = new List<OpenCardData>();
-    //        OpenedCardSlot.Clear();
-    //        for (int i = 0; i < e.Snapshot.ChildrenCount; i++)
+    //        if (task.IsCompleted)
     //        {
-    //            OpenCardData CardData = new OpenCardData();
+    //            DataSnapshot snapshot = task.Result;
+    //            if (snapshot.Exists)
+    //            {
+    //                GameManager.Instance._SavedCardTypes.Clear();
+    //                GameManager.Instance._CompletedLevelsInSet.Clear();
+    //                GameManager.Instance._SetIndex = int.Parse(snapshot.Child("MapData").Child("SetIndex").Value.ToString());
+    //                for (int i = 0; i < snapshot.Child("MapData").Child("LevelsInSet").ChildrenCount; i++)
+    //                {
+    //                    GameManager.Instance._CompletedLevelsInSet.Add(int.Parse(snapshot.Child("MapData").Child("LevelsInSet").Child("" + i).Value.ToString()));//Get map  Details From Firebase
+    //                }
 
-    //            CardData._openedPlayerName = e.Snapshot.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
-    //            CardData._openedPlayerID = e.Snapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-    //            CardData._openedPlayerPhotoURL = e.Snapshot.Child(i.ToString()).Child("_openedPlayerPhotoURL").Value.ToString();
-    //            CardData._openedCardSlot = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
-    //            CardData._openedCardSelectedCard = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
-
-    //            OpenCardDetails.Add(CardData);
-    //            OpenedCardSlot.Add(CardData._openedCardSlot);
-    //            //OpenedPlayerPhotoURL.Add(CardData._openedPlayerPhotoURL);
+    //                for (int i = 0; i < snapshot.Child("SaveCards").ChildrenCount; i++)
+    //                {
+    //                    GameManager.Instance._SavedCardTypes.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
+    //                }
+    //            }
     //        }
-    //        GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot, OpenedPlayerPhotoURL);
-
-    //        //OpenCardValueChange?.Invoke();
-    //    }
+    //    });
     //}
 
-    void GetAttackData()
-    {
-        reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
-        {
-            AttackedData.Clear();
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
+    //void GetAttackData()
+    //{
+    //    reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
+    //    {
+    //        AttackedData.Clear();
+    //        if (task.IsCompleted)
+    //        {
+    //            DataSnapshot snapshot = task.Result;
 
-                if (snapshot.Exists)
-                {
-                    AttackedData = new List<AttackedPlayerInformation>();
+    //            if (snapshot.Exists)
+    //            {
+    //                AttackedData = new List<AttackedPlayerInformation>();
 
-                    for (int i = 0; i < snapshot.ChildrenCount; i++)
-                    {
-                        AttackedPlayerInformation attackData = new AttackedPlayerInformation();
+    //                for (int i = 0; i < snapshot.ChildrenCount; i++)
+    //                {
+    //                    AttackedPlayerInformation attackData = new AttackedPlayerInformation();
 
-                        attackData._attackedPlayerID = snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
-                        attackData._attackedPlayerName = snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
-                        attackData._attackedBuildingName = snapshot.Child(i.ToString()).Child("_attackedBuildingName").Value.ToString();
+    //                    attackData._attackedPlayerID = snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
+    //                    attackData._attackedPlayerName = snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
+    //                    attackData._attackedBuildingName = snapshot.Child(i.ToString()).Child("_attackedBuildingName").Value.ToString();
 
-                        AttackedData.Add(attackData);
-                    }
-                    reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").ValueChanged += HandleAttackData;// Handle Event
-                }
-            }
-        });
-    }
+    //                    AttackedData.Add(attackData);
+    //                }
+                  
+    //               // reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").ValueChanged += HandleAttackData;// Handle Event
+    //            }
+    //        }
+    //    });
+    //}
 
-    private void HandleAttackData(object sender, ValueChangedEventArgs e)
-    {
-        AttackedData.Clear();
-        AttackedData = new List<AttackedPlayerInformation>();
-
-        for (int i = 0; i < e.Snapshot.ChildrenCount; i++)
-        {
-            AttackedPlayerInformation attackData = new AttackedPlayerInformation();
-
-            attackData._attackedPlayerID = e.Snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
-            attackData._attackedPlayerName = e.Snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
-            attackData._attackedBuildingName = e.Snapshot.Child(i.ToString()).Child("_attackedBuildingName").Value.ToString();
-
-            AttackedData.Add(attackData);
-        }
-    }
 
     void GetTimeCalculations()
     {
@@ -329,7 +209,6 @@ public class FirebaseManager : MonoBehaviour
         });
     } 
 
-
     public void GuestLogin()
     {
         userTitle = "Guest Users";
@@ -339,7 +218,6 @@ public class FirebaseManager : MonoBehaviour
             {
                 _PlayerID = auth.CurrentUser.UserId;
                 ReadData();
-
             }
             else
             {
@@ -375,7 +253,6 @@ public class FirebaseManager : MonoBehaviour
         FacebookManager.Instance.GetProfilePictureWithId(_PlayerName, OnGettingPic, true);
     }
 
-
     public void CreateNewFBUser(string inAccessToken)
     {
        Credential credential = FacebookAuthProvider.GetCredential(inAccessToken);
@@ -408,8 +285,7 @@ public class FirebaseManager : MonoBehaviour
                     WriteBuildingDataToFirebase();
                     loadMapScene = true;
                 }
-            }
-           
+            }   
         });
     }
 
@@ -431,14 +307,13 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-
     public void WriteBuildingDataToFirebase()
     {
         int i = 0;
         foreach (Building buildings in GameManager.Instance._buildingGameManagerDataRef)
         {
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(userTitle).Child(_PlayerID).Child("Buildings").Child(mLevelPrefix + GameManager.Instance._playerCurrentLevel).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(userTitle).Child(_PlayerID).Child("Buildings").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -454,8 +329,6 @@ public class FirebaseManager : MonoBehaviour
 
         reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task=>
         {
-
-
         });
 
         int i = 0;
@@ -464,10 +337,6 @@ public class FirebaseManager : MonoBehaviour
             string json = JsonUtility.ToJson(cards);
             reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
-                if (task.IsCompleted)
-                {
-                    //  Debug.Log("Write Successful");
-                }
             });
             i++;
         }
@@ -507,8 +376,6 @@ public class FirebaseManager : MonoBehaviour
                 Debug.Log("Write Successful");
             }
         });
-
-
     }
     void WriteMapDataToFirebase()
     {
@@ -535,7 +402,6 @@ public class FirebaseManager : MonoBehaviour
             WriteAllDataToFireBase();
         }
     }
-
     private void OnApplicationQuit()
     {
         if (readUserData&&!FacebookManager.Instance.isinFbPopup)
@@ -550,9 +416,6 @@ public class FirebaseManager : MonoBehaviour
             WriteAllDataToFireBase();
         }
     }
-
-
-
     public void WriteAllDataToFireBase()
     {
         WriteCardDataToFirebase();
@@ -562,5 +425,3 @@ public class FirebaseManager : MonoBehaviour
         CalculateLogOutTime();
     }
 }
-
-

@@ -2412,7 +2412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentPlayerId: 
   _currentPlayerName: 
-  _enemyPlayerID: 
+  _enemyPlayerID: 109561708307210
   _enemyName: 
   _enemyTitle: 
   _enemyPlayerLevel: 0
@@ -2435,8 +2435,22 @@ MonoBehaviour:
   mPlayerCurrentLevelData: 
   mNumberOfTimesGotAttacked: 
   mLevelPrefix: Level
-  _dataBaseFetchTime: 0.5
-  _enemyBuildingDetails: []
+  _dataBaseFetchTime: 0.25
+  Enemydata:
+    AttackedPlayer: []
+    Buildings: []
+    MapData:
+      LevelsInSet: 
+      SetIndex: 0
+    OpenCards: []
+    UserDetails:
+      LogOutTime: 
+      _coins: 0
+      _energy: 0
+      _numberOfTimesGotAttacked: 0
+      _playerCurrentLevel: 0
+      _playerID: 
+      _playerName: 
 --- !u!114 &1012865290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2552,6 +2566,25 @@ MonoBehaviour:
   userTitle: Guest Users
   readUserData: 0
   loadMapScene: 0
+  userdata:
+    AttackedPlayer: []
+    Buildings:
+    - _buildingName: 
+      _buildingCurrentLevel: 0
+      _isBuildingShielded: 0
+      _isBuildingDestroyed: 0
+    MapData:
+      LevelsInSet: 
+      SetIndex: 0
+    OpenCards: []
+    UserDetails:
+      LogOutTime: 
+      _coins: 0
+      _energy: 0
+      _numberOfTimesGotAttacked: 0
+      _playerCurrentLevel: 0
+      _playerID: 
+      _playerName: 
 --- !u!4 &1266492673
 Transform:
   m_ObjectHideFlags: 0

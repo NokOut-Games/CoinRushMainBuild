@@ -12,27 +12,14 @@ public class MultiplayerPlayerData : MonoBehaviour
     public List<Building> _buildingMultiplayerDataRef;
     public BuildingManager _buildingManagerRef;
     public int _buildingCount;
-
-    public List<GameObject> _LevelHolder = new List<GameObject>();
-
     public bool onceDone = false;
-
     public List<GameObject> _enemyBuildingDetails;
-
     public List<GameObject> mEnemyBuildingPrefabPopulateList;
     public List<GameObject> _enemyBuildings;
-
     public List<Transform> _enemyBuildingsTransformList;
-
     public List<OpenCard> OpenCardDetails;
     public List<int> OpenedCardSlot = new List<int>();
-
-    public static Action<string> GotEnemyName;
-
-    public void Start()
-    {
-        onceDone = false;
-    }
+   // public static Action<string> GotEnemyName;
 
     public void GetBuildingManagerDetails()
     {
@@ -52,7 +39,7 @@ public class MultiplayerPlayerData : MonoBehaviour
         _enemyPlayerLevel = inCurrentLevel;
         _attackInfo = inOpenCardData;
         _enemyName = inPlayerName;
-        GotEnemyName?.Invoke(inPlayerName);
+      //  GotEnemyName?.Invoke(inPlayerName);
     }
 
     public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails, List<int> inOpenCardSlot)
