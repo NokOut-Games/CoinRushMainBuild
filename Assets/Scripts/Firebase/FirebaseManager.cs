@@ -30,7 +30,6 @@ public class FirebaseManager : MonoBehaviour
 
     public string userTitle = "Guest Users";
 
-    public string Json;
     public bool readUserData;
     DateTime crntDateTime;
     public bool loadMapScene;
@@ -122,7 +121,6 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     var json = snapshot.GetRawJsonValue();
-                    Json = json;
                     userdata = JsonUtility.FromJson<UserData>(json);
 
                     GameManager.Instance.UpdateUserDetails(userdata.Buildings, userdata.UserDetails._coins, userdata.UserDetails._energy, userdata.UserDetails._playerCurrentLevel, userdata.UserDetails._numberOfTimesGotAttacked);
@@ -306,6 +304,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void WriteBuildingDataToFirebase()
     {
+        reference.Child(userTitle).Child(_PlayerID).Child("Buildings").SetValueAsync("0").ContinueWith(task =>{});
         int i = 0;
         foreach (Building buildings in GameManager.Instance._buildingGameManagerDataRef)
         {
@@ -324,10 +323,7 @@ public class FirebaseManager : MonoBehaviour
     public void WriteopenCardData()
     {
 
-        reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
-        {
-        });
-
+        reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>{});
         int i = 0;
         foreach (OpenCard cards in GameManager.Instance.OpenCardDetails)
         {

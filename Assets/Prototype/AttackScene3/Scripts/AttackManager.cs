@@ -371,14 +371,33 @@ public class AttackManager : MonoBehaviour
     public IEnumerator ScoreCalculation(Transform trans)
     {
 
+        //int RewardValue = _buildingCost[TargetObjectIndex];
+
+        //if (_multiplierSelected == true)
+        //{
+        //    _ScoreTextTwo.text = "Multiplier (2x) - " + RewardValue + "*2";
+        //    RewardValue = RewardValue * 2;
+        //}
+        //mGameManager._coins = mGameManager._coins + _buildingCost[TargetObjectIndex];
+
+        //_ScoreTextOne.text = "Building Cost - " + RewardValue;
+
+        //yield return new WaitForSeconds(7);
+        //_ScorePanel.SetActive(true);
+
         int RewardValue = _buildingCost[TargetObjectIndex];
 
         if (_multiplierSelected == true)
         {
             _ScoreTextTwo.text = "Multiplier (2x) - " + RewardValue + "*2";
-            RewardValue = RewardValue * 2;
+            RewardValue *= 2;
+            mGameManager._coins += RewardValue;
         }
-        mGameManager._coins = mGameManager._coins + _buildingCost[TargetObjectIndex];
+        else
+        {
+            mGameManager._coins += RewardValue;
+        }
+
 
         _ScoreTextOne.text = "Building Cost - " + RewardValue;
 

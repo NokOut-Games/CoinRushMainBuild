@@ -285,12 +285,14 @@ public class MultiplayerManager : MonoBehaviour
             { Debug.Log("Attaacked info Written"); }
         });
         AttackCount += 1;
-        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task =>
+        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task =>{});
+        reference.Child(_enemyTitle).Child(_currentPlayerId).Child("UserDetails").Child("_coins").SetValueAsync(GameManager.Instance._coins).ContinueWith(task =>
         {
             if (task.IsCompleted)
-            { Debug.Log("Attaacked info Written"); }
+            { 
+                FirebaseManager.Instance.ReadData(false, false);
+            }     
         });
-        FirebaseManager.Instance.ReadData(false, false);
     }
     public void OnClickViewIslandToOpenCard()
     {
