@@ -2412,29 +2412,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentPlayerId: 
   _currentPlayerName: 
-  _enemyPlayerID: 109561708307210
-  _enemyName: 
+  _enemyPlayerID: 1417417415378427
   _enemyTitle: 
   _enemyPlayerLevel: 0
   OpenCardDetails: []
   OpenedCardSlot: 
   OpenedPlayerID: []
   isReWriting: 0
+  MultiplayerBuildingDetails: []
   AttackCount: 0
+  isRevenging: 0
   attackedplayerIDList: []
   attackedplayerNameList: []
   CurrenetPlayerAttackData: []
-  MultiplayerBuildingDetails: []
-  isRevenging: 0
-  mOpenCardsManager: {fileID: 0}
-  _cardDeck: {fileID: 0}
-  mPlayerName: 
-  mPlayerID: 
-  mCoinData: 
-  mEnergyData: 
-  mPlayerCurrentLevelData: 
-  mNumberOfTimesGotAttacked: 
-  mLevelPrefix: Level
   _dataBaseFetchTime: 0.25
   Enemydata:
     AttackedPlayer: []
@@ -2443,6 +2433,7 @@ MonoBehaviour:
       LevelsInSet: 
       SetIndex: 0
     OpenCards: []
+    SaveCards: 
     UserDetails:
       LogOutTime: 
       _coins: 0
@@ -2463,18 +2454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ac195bacb194c439d6b1c114659a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyName: 
-  _enemyPlayerLevel: 1
-  _attackInfo: 0
-  _buildingMultiplayerDataRef: []
-  _buildingManagerRef: {fileID: 0}
-  _buildingCount: 0
-  _LevelHolder: []
-  onceDone: 0
-  _enemyBuildingDetails: []
-  mEnemyBuildingPrefabPopulateList: []
-  _enemyBuildings: []
-  _enemyBuildingsTransformList: []
   OpenCardDetails: []
   OpenedCardSlot: 
 --- !u!1 &1223172676
@@ -2564,19 +2543,17 @@ MonoBehaviour:
   OpenedCardSlot: 
   mLevelPrefix: Level
   userTitle: Guest Users
+  Json: 
   readUserData: 0
   loadMapScene: 0
   userdata:
     AttackedPlayer: []
-    Buildings:
-    - _buildingName: 
-      _buildingCurrentLevel: 0
-      _isBuildingShielded: 0
-      _isBuildingDestroyed: 0
+    Buildings: []
     MapData:
       LevelsInSet: 
       SetIndex: 0
     OpenCards: []
+    SaveCards: 
     UserDetails:
       LogOutTime: 
       _coins: 0
@@ -2606,7 +2583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266492671}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffd0561fd0ab247299ad0b61354ab592, type: 3}
   m_Name: 
@@ -3135,6 +3112,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: c0316d567b5d16d459633433f9449521, type: 3}
   - {fileID: 21300000, guid: 4b12fc7b3fc56a942a518b2853a6b2a8, type: 3}
   - {fileID: 21300000, guid: ac5ebd78b88583a4499b26d58e551737, type: 3}
+  _loadingScreen: {fileID: 1608694459}
 --- !u!1 &1608694459
 GameObject:
   m_ObjectHideFlags: 0

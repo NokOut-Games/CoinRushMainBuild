@@ -39,7 +39,6 @@ public class EnergySelector : MonoBehaviour
         int energyValue = mEnergyProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
 
         //Changing the Energy value in Gamemanager
-        mGameManager._energy += energyValue;
 
         //Assign it to chest which player clicks on and pass the values
         GameObject Chest = this.gameObject;

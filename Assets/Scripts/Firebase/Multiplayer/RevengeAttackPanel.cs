@@ -34,7 +34,6 @@ public class RevengeAttackPanel : MonoBehaviour
             FilteredAttackedName.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
             FilteredAttackedBuilding.Add(MultiplayerManager.Instance.CurrenetPlayerAttackData[i]._attackedBuildingName);
         }
-
     }
     public void OpenRevengePanel()
     {
@@ -54,9 +53,7 @@ public class RevengeAttackPanel : MonoBehaviour
                 EnemyList[index].transform.GetChild(3).GetComponent<Image>().sprite = Pic;
             };
             FacebookManager.Instance.GetProfilePictureWithId(FilteredAttackedPlayerID[i], ONGettingProfilePic, i);
-            //AttackedPlayerInformation a = new 
         }
-
     }
     public void GoBackFromRevengePanel()
     {
@@ -65,11 +62,6 @@ public class RevengeAttackPanel : MonoBehaviour
     public void RevengeFBFriends()
     {
         FBFriendsPanel.SetActive(true);
-    }
-
-    public void GoBackFromRevengeFBPanel()
-    {
-        FBFriendsPanel.SetActive(false);
         for (int i = 0; i < FacebookManager.Instance.FBFriendsIDList.Count; i++)
         {
             GameObject FBEnemySlot = Instantiate(_FBFriends, FBTransformPoints[i].position, FBTransformPoints[i].rotation, FBTransformPoints[i].parent);
@@ -77,14 +69,18 @@ public class RevengeAttackPanel : MonoBehaviour
 
             FBEnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FacebookManager.Instance.FBFriendsNameList[i];
             FBEnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID = FacebookManager.Instance.FBFriendsIDList[i];
-           // FacebookManager.Instance.GetFriendsPicture();
+            // FacebookManager.Instance.GetFriendsPicture();
             //FB.API("https" + "://graph.facebook.com/" + FacebookManager.Instance.FBFriendsIDList[i] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
             //{
             //    Debug.Log(FacebookManager.Instance.FBFriendsIDList[i] + "Pic ID");
             //    FBEnemyList[i].transform.GetChild(3).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
             //});
         }
+    }
 
+    public void GoBackFromRevengeFBPanel()
+    {
+        FBFriendsPanel.SetActive(false);
     }
     public void BackToGame()
     {

@@ -31,6 +31,8 @@ public class FacebookManager : MonoBehaviour
 	public bool isFromTutorial;
 
 	public List<Sprite> randomPicID = new List<Sprite>();
+
+	public GameObject _loadingScreen;
 	void Awake()
 	{
 		if (Instance == null)
@@ -65,6 +67,7 @@ public class FacebookManager : MonoBehaviour
 
 		if (FB.IsLoggedIn)
 		{
+			_loadingScreen.SetActive(true);
 			FB.API("/me?fields=name", HttpMethod.GET, DispName);
 			FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 			FB.API("/me?fields=id", HttpMethod.GET, DispID);

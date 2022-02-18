@@ -56,6 +56,7 @@ public class UserData
     public List<Building> Buildings;
     public MapData MapData;
     public List<OpenCard> OpenCards;
+    public List<int> SaveCards;
     public UserDetails UserDetails;
 }
 
@@ -80,6 +81,8 @@ public class OpenCard
     public string _openedPlayerID;
     public int _openedCardSelectedCard;
 }
+
+
 [System.Serializable]
 public class UserDetails
 {

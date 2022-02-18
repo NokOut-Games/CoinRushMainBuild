@@ -76,7 +76,6 @@ public class AttackManager : MonoBehaviour
         mCameraController = cam.GetComponent<AttackCameraController>();
 
         Invoke(nameof(UpdateCamerHorizontalBounds), 0.5f);
-
         Invoke(nameof(TargetInstantiation), 0.5f);
         InvokeRepeating("DoMultiplierSwitching", 0.5f, _MultiplierSwitchTime);
         ShuffleBuildingCostList();
@@ -364,7 +363,7 @@ public class AttackManager : MonoBehaviour
             Invoke(nameof(MakeBuildingDestroyed), 4.5f);
 
         }
-        ChangeEnemyBuildingData();
+        //ChangeEnemyBuildingData();
 
 
     }
@@ -438,10 +437,9 @@ public class AttackManager : MonoBehaviour
     }
     public void BackButton()
     {
+        MultiplayerManager.Instance.CheckAttackDataFromFirebase();
         _ScorePanel.GetComponentInChildren<Button>().interactable = false;
-        //MultiplayerManager.Instance.CheckAttackDataFromFirebase();
-         LevelLoadManager.instance.BacktoHome();
-        //ChangeEnemyBuildingData();
+        Invoke(nameof(ChangeEnemyBuildingData),0.5f);
 
     }
 

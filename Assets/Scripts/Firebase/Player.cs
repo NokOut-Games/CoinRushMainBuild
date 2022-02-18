@@ -16,8 +16,4 @@ public class Player
 
         _playerName = inPlayerName;
     }
-    public Player()
-    {
-
-    }
 }

@@ -14,59 +14,45 @@ public class AttackedPlayerInformation
     public string _attackedBuildingName;
 }
 
-//[System.Serializable]
-//public class OpenCard
-//{
-//    public int _openedCardSlot;
-//    public string _openedPlayerName;
-//    public string _openedPlayerID;
-//    public int _openedCardSelectedCard;
-//}
 public class MultiplayerManager : MonoBehaviour
 {
     public static MultiplayerManager Instance;
+    private DatabaseReference reference;
+
+    private AttackManager mAttackManager;
+    private CardDeck mCardDeck;
+    private PlayerIDDetails mplayerIDDetails;
+    private LevelLoadManager mLevelLoadManager;
+    private OpenCardsManager mOpenCardsManager;
+
     public string _currentPlayerId;
     public string _currentPlayerName;
 
     public string _enemyPlayerID;
-    public string _enemyName;
-
     public string _enemyTitle;
     public int _enemyPlayerLevel;
+    //public string _enemyName;
 
+//Open Card and Attack Scene References
     public List<OpenCard> OpenCardDetails;
     public List<int> OpenedCardSlot = new List<int>();
     public List<string> OpenedPlayerID = new List<string>();
-
     public bool isReWriting;
 
+    public List<Building> MultiplayerBuildingDetails = new List<Building>();
+   
     public int AttackCount;
+    public bool isRevenging;
     public List<string> attackedplayerIDList = new List<string>();
     public List<string> attackedplayerNameList = new List<string>();
     public List<AttackedPlayerInformation> CurrenetPlayerAttackData = new List<AttackedPlayerInformation>();
 
-    public List<Building> MultiplayerBuildingDetails = new List<Building>();
-
-    public bool isRevenging;
-
-    DatabaseReference reference;
-
-    private PlayerIDDetails mplayerIDDetails;
-
-    private MultiplayerPlayerData mMultiplayerPlayerData;
-    private LevelLoadManager mLevelLoadManager;
-    public OpenCardsManager mOpenCardsManager;
-
-    public CardDeck _cardDeck;
-    AttackManager mAttackManager;
-    public string mPlayerName, mPlayerID, mCoinData, mEnergyData, mPlayerCurrentLevelData, mNumberOfTimesGotAttacked;
-    [SerializeField] string mLevelPrefix = "Level";
-    private string mLevelName;
-    public float _dataBaseFetchTime;
-
+   public float _dataBaseFetchTime;
+    //Get Enemy Name and Picture
     public static Action<string> GotEnemyName;
-
+    //Get Enemy Data
     public UserData Enemydata = new UserData();
+    
     private void Awake()
     {
         if (Instance == null)
@@ -79,7 +65,6 @@ public class MultiplayerManager : MonoBehaviour
     void Start()
     {
         mplayerIDDetails = FindObjectOfType<PlayerIDDetails>();
-        mMultiplayerPlayerData = FindObjectOfType<MultiplayerPlayerData>();
         mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
         reference = FirebaseDatabase.DefaultInstance.RootReference;
     }
@@ -91,7 +76,7 @@ public class MultiplayerManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "OPENCARD")
         {
             mOpenCardsManager = FindObjectOfType<OpenCardsManager>();
-            _cardDeck = FindObjectOfType<CardDeck>();
+            mCardDeck = FindObjectOfType<CardDeck>();
         }
         if (SceneManager.GetActiveScene().name == "ATTACK")
         {
@@ -101,13 +86,13 @@ public class MultiplayerManager : MonoBehaviour
         //Writing OpenCards Details to a list in Multiplayer Manager
         if (isReWriting)
         {
-            for (int i = 0; i < _cardDeck._OpenCardSlotFilled.Count; i++)
+            for (int i = 0; i < mCardDeck._OpenCardSlotFilled.Count; i++)
             {
                 OpenCard card = new OpenCard();
                 card._openedPlayerID = _currentPlayerId;
                 card._openedPlayerName = _currentPlayerName;
-                card._openedCardSlot = _cardDeck._openCardSlot;
-                card._openedCardSelectedCard = _cardDeck._openedCardIndex;
+                card._openedCardSlot = mCardDeck._openCardSlot;
+                card._openedCardSelectedCard = mCardDeck._openedCardIndex;
 
                 OpenCardDetails.Add(card);
                 WriteOpenCardDataToFirebase();
@@ -154,12 +139,14 @@ public class MultiplayerManager : MonoBehaviour
                     var json = snapshot.GetRawJsonValue();
                     Enemydata = JsonUtility.FromJson<UserData>(json);
 
-                    OpenedCardSlot.Clear();
+                    _enemyPlayerLevel = Enemydata.UserDetails._playerCurrentLevel;
+
                     for (int i = 0;i< Enemydata.OpenCards.Count;i++)
                     {
                         OpenedCardSlot.Add(Enemydata.OpenCards[i]._openedCardSlot);
+                        OpenedPlayerID.Add(Enemydata.OpenCards[i]._openedPlayerID);
                     }
-                    mMultiplayerPlayerData.UpdateOpenCardDetails(Enemydata.OpenCards, OpenedCardSlot);
+
                     MultiplayerBuildingDetails = Enemydata.Buildings;
 
                     GotEnemyName?.Invoke(Enemydata.UserDetails._playerName);
@@ -224,7 +211,7 @@ public class MultiplayerManager : MonoBehaviour
         {
             //mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
             //_enemyPlayerID = mplayerIDDetails._randomEnemyID;
-            _enemyPlayerID = "109561708307210";
+           // _enemyPlayerID = "109561708307210";
             FirebaseManager.Instance.WriteCardDataToFirebase();
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
             FirebaseManager.Instance.WritePlayerDataToFirebase();
@@ -250,27 +237,22 @@ public class MultiplayerManager : MonoBehaviour
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
-                mPlayerCurrentLevelData = snapshot.Child("UserDetails").Child("_playerCurrentLevel").Value.ToString();
-                if (int.Parse(mPlayerCurrentLevelData) == mMultiplayerPlayerData._enemyPlayerLevel)
+
+                var json = snapshot.GetRawJsonValue();
+                Enemydata = JsonUtility.FromJson<UserData>(json);
+
+                if (Enemydata.UserDetails._playerCurrentLevel == _enemyPlayerLevel)
                 {
                     MultiplayerBuildingDetails.Clear();
-                    List<Building> BuildingDetails = new List<Building>();
-                    for (int i = 0; i < snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).ChildrenCount; i++)
-                    {
-                        Building builddata = new Building();
-                        builddata._buildingName = snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingName").Value.ToString();
-                        builddata._buildingCurrentLevel = int.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_buildingCurrentLevel").Value.ToString());
-                        builddata._isBuildingDestroyed = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingDestroyed").Value.ToString());
-                        builddata._isBuildingShielded = bool.Parse(snapshot.Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).Child("_isBuildingShielded").Value.ToString());
-                        BuildingDetails.Add(builddata);
-                        MultiplayerBuildingDetails.Add(builddata);
-                    }
-                    mMultiplayerPlayerData.UpdateUserDetails(BuildingDetails, int.Parse(mPlayerCurrentLevelData), int.Parse(mNumberOfTimesGotAttacked), mPlayerName);
+                    MultiplayerBuildingDetails = Enemydata.Buildings;
+                    Debug.LogError("Levels Same");
+                   
                 }
                 else
                 {
-                    FirebaseManager.Instance.ReadData(false);
+                    Debug.LogError("Levels Not Same");
                     mAttackManager.isDataChanging = false;
+                    FirebaseManager.Instance.ReadData(false,false);
                 }
             }
         });
@@ -283,7 +265,7 @@ public class MultiplayerManager : MonoBehaviour
         foreach (Building buildings in MultiplayerBuildingDetails)
         {
             string json = JsonUtility.ToJson(buildings);
-            reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("Buildings").Child(mLevelPrefix + mPlayerCurrentLevelData).Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
+            reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("Buildings").Child(i.ToString()).SetRawJsonValueAsync(json).ContinueWith(task =>
             {
                 if (task.IsCompleted)
                 {
@@ -308,7 +290,7 @@ public class MultiplayerManager : MonoBehaviour
             if (task.IsCompleted)
             { Debug.Log("Attaacked info Written"); }
         });
-
+        FirebaseManager.Instance.ReadData(false, false);
     }
     public void OnClickViewIslandToOpenCard()
     {
@@ -318,7 +300,7 @@ public class MultiplayerManager : MonoBehaviour
 
         //  mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
         // _enemyPlayerID = mplayerIDDetails._randomOpencardID;
-        _enemyPlayerID = "109561708307210";
+       // _enemyPlayerID = "109561708307210";
         FirebaseManager.Instance.WriteCardDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();
         FirebaseManager.Instance.WritePlayerDataToFirebase();

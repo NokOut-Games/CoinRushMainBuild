@@ -110,15 +110,14 @@ public class BoxReactor : MonoBehaviour
                             {
                                 rewardText.text = crateValueRef._value.ToString() + " Energies";
                                 GameManager.Instance._energy += crateValueRef._value;
-
+                                Debug.LogError(crateValueRef._value);
                             }
                             else
                             {
                                 rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
                                 GameManager.Instance._energy += crateValueRef._value*GameManager.Instance._MultiplierValue;
-
+                               
                             }
-
 
                             Invoke("InvokeKinematic", .75f);
                             break;

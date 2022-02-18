@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public int _minutes;
     [HideInInspector] public int _openedCards;
 
-    [HideInInspector] public List<OpenCard> OpenCardDetails;
+    public List<OpenCard> OpenCardDetails;
    // public List<int> OpenedCardSlot = new List<int>();
 
     public List<Building> _buildingGameManagerDataRef;
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
     public void UpdateBuildingData(string inBuildingName, int inBuildingIndex, int inLevel, bool inIsbuildingSpawn , bool inIsBuildingDestroyed)
     {
         if (tutorial != null)
-            tutorial.RegisterUserAction();
+        tutorial.RegisterUserAction();
         _buildingGameManagerDataRef[inBuildingIndex]._buildingName = inBuildingName;
         _buildingGameManagerDataRef[inBuildingIndex]._buildingCurrentLevel = inLevel;
         _buildingGameManagerDataRef[inBuildingIndex]._isBuildingDestroyed = inIsBuildingDestroyed;

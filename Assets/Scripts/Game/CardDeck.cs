@@ -59,7 +59,6 @@ public class CardDeck : MonoBehaviour
     bool mMakeDrawBtnEnable = true;
 
     public BuildingManager _buildingManagerRef;
-    public MultiplayerPlayerData mMultiplayerPlayerData;
 
     ScriptedCards mCards;
     [HideInInspector] public bool mHasThreeCardMatch;
@@ -114,7 +113,6 @@ public class CardDeck : MonoBehaviour
         {
             Invoke(nameof(PopulateFriendsOpenCardSlotsFromFirebase), .5f);
         }
-        mMultiplayerPlayerData = GameObject.Find("MultiplayerManager").GetComponent<MultiplayerPlayerData>();
         //mOpenCards = GameObject.Find("OpenHandPointsParent").GetComponent<OpenCards>();
 
         if (mDrawButtonState == DrawButtonState.NormalState)
@@ -169,9 +167,9 @@ public class CardDeck : MonoBehaviour
     private void PopulateFriendsOpenCardSlotsFromFirebase()
     {
         _OpenCardSlotFilled.Clear();
-        for (int i = 0; i < mMultiplayerPlayerData.OpenCardDetails.Count; i++)
+        for (int i = 0; i < MultiplayerManager.Instance.Enemydata.OpenCards.Count/* mMultiplayerPlayerData.OpenCardDetails.Count*/; i++)
         {
-            _OpenCardSlotFilled.Add(mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot);
+            _OpenCardSlotFilled.Add(MultiplayerManager.Instance.Enemydata.OpenCards[i]/* mMultiplayerPlayerData.OpenCardDetails[i]*/._openedCardSlot);
         }
     }
 
@@ -201,16 +199,16 @@ public class CardDeck : MonoBehaviour
 
     private void SpawnFriendsOpenCards()
     {
-        for (int i = 0; i < mMultiplayerPlayerData.OpenCardDetails.Count; i++)
+        for (int i = 0; i < MultiplayerManager.Instance.Enemydata.OpenCards.Count; i++)
         {
-            GameObject savedOpenCard = Instantiate(_openCardPrefabs[mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
-            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSelectedCard;
-            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = mMultiplayerPlayerData.OpenCardDetails[i]._openedCardSlot;
+            GameObject savedOpenCard = Instantiate(_openCardPrefabs[MultiplayerManager.Instance.Enemydata.OpenCards[i] ._openedCardSelectedCard], mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].position, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]].rotation, mOpenCards._OpenCardTransformPoint[_OpenCardSlotFilled[i]]);
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardSelectedCard = MultiplayerManager.Instance.Enemydata.OpenCards[i]._openedCardSelectedCard;
+            savedOpenCard.GetComponent<OpenCardSelector>()._OpenCardPosition = MultiplayerManager.Instance.Enemydata.OpenCards[i]._openedCardSlot;
             System.Action<Sprite> OnGettingPicture = (pic) =>
             {
                 savedOpenCard.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = pic;
             };
-            FacebookManager.Instance.GetProfilePictureWithId(mMultiplayerPlayerData.OpenCardDetails[i]._openedPlayerID, OnGettingPicture);
+            FacebookManager.Instance.GetProfilePictureWithId(MultiplayerManager.Instance.Enemydata.OpenCards[i]._openedPlayerID, OnGettingPicture);
         }
     }
 
@@ -250,12 +248,11 @@ public class CardDeck : MonoBehaviour
         Vector2 localMousePosition = _drawButtonRectTransform.InverseTransformPoint(Input.mousePosition);
         if (mDrawButtonState == DrawButtonState.OpenCardState)
         {
-            if (/*!_OpenCardTakenAlready && */!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance._PlayerID))
+            if (!MultiplayerManager.Instance.OpenedPlayerID.Contains(FirebaseManager.Instance._PlayerID))
             {
                 if (Input.GetMouseButtonDown(0) && drawButtonClick)
                 {
                     OpenHandCardAdder();
-                    //_OpenCardTakenAlready = true;
                 }
             }
             else menu.UIElementActivate(5, false);

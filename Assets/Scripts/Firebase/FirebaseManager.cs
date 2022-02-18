@@ -30,7 +30,7 @@ public class FirebaseManager : MonoBehaviour
 
     public string userTitle = "Guest Users";
 
-
+    public string Json;
     public bool readUserData;
     DateTime crntDateTime;
     public bool loadMapScene;
@@ -85,7 +85,7 @@ public class FirebaseManager : MonoBehaviour
     }
 
 
-    public void ReadData(bool calculatetime = true)
+    public void ReadData(bool calculatetime = true, bool readUserData=true)
     {
         if (userTitle == "Facebook Users")
         {
@@ -122,11 +122,13 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     var json = snapshot.GetRawJsonValue();
+                    Json = json;
                     userdata = JsonUtility.FromJson<UserData>(json);
 
                     GameManager.Instance.UpdateUserDetails(userdata.Buildings, userdata.UserDetails._coins, userdata.UserDetails._energy, userdata.UserDetails._playerCurrentLevel, userdata.UserDetails._numberOfTimesGotAttacked);
                     GameManager.Instance._CompletedLevelsInSet = userdata.MapData.LevelsInSet;//Get map  Details From Firebase
-                    GameManager.Instance.UpdateOpenCardDetails(userdata.OpenCards);                   
+                    GameManager.Instance.UpdateOpenCardDetails(userdata.OpenCards);
+                    GameManager.Instance._SavedCardTypes = userdata.SaveCards;  //.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
                     readUserData = true;
                 }               
             }
@@ -148,11 +150,6 @@ public class FirebaseManager : MonoBehaviour
     //                for (int i = 0; i < snapshot.Child("MapData").Child("LevelsInSet").ChildrenCount; i++)
     //                {
     //                    GameManager.Instance._CompletedLevelsInSet.Add(int.Parse(snapshot.Child("MapData").Child("LevelsInSet").Child("" + i).Value.ToString()));//Get map  Details From Firebase
-    //                }
-
-    //                for (int i = 0; i < snapshot.Child("SaveCards").ChildrenCount; i++)
-    //                {
-    //                    GameManager.Instance._SavedCardTypes.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
     //                }
     //            }
     //        }
@@ -327,7 +324,7 @@ public class FirebaseManager : MonoBehaviour
     public void WriteopenCardData()
     {
 
-        reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task=>
+        reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
         {
         });
 
