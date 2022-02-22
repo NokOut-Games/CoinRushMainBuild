@@ -15,7 +15,7 @@ public class AttackManager : MonoBehaviour
     public GameObject _multiplierGameObject;
     public GameObject _Cannon;
     public float _MultiplierSwitchTime = 1.0f;
-    public GameObject _ScorePanel;
+    public ResultPanelUI resultPanel;
     public Text _ScoreTextOne;
     public Text _ScoreTextTwo;
     public Text _ScoreTextThree;
@@ -370,39 +370,52 @@ public class AttackManager : MonoBehaviour
 
     public IEnumerator ScoreCalculation(Transform trans)
     {
-
-        //int RewardValue = _buildingCost[TargetObjectIndex];
-
-        //if (_multiplierSelected == true)
-        //{
-        //    _ScoreTextTwo.text = "Multiplier (2x) - " + RewardValue + "*2";
-        //    RewardValue = RewardValue * 2;
-        //}
-        //mGameManager._coins = mGameManager._coins + _buildingCost[TargetObjectIndex];
-
-        //_ScoreTextOne.text = "Building Cost - " + RewardValue;
-
-        //yield return new WaitForSeconds(7);
-        //_ScorePanel.SetActive(true);
-
         int RewardValue = _buildingCost[TargetObjectIndex];
-
-        if (_multiplierSelected == true)
+        
+        if (_multiplierSelected)
         {
-            _ScoreTextTwo.text = "Multiplier (2x) - " + RewardValue + "*2";
             RewardValue *= 2;
-            mGameManager._coins += RewardValue;
+            if (GameManager.Instance._MultiplierValue <= 1)
+            {
+                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
+                resultPanel.ShowMultiplierDetails(1, 0, "Attack Multiplier", "2");
+                resultPanel.ShowResultTotal(0, RewardValue.ToString());
+                mGameManager._coins += RewardValue;
+
+            }
+            else
+            {
+                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
+                resultPanel.ShowMultiplierDetails(1, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);
+                resultPanel.ShowMultiplierDetails(2, 0, "Attack Multiplier", "2");
+                resultPanel.ShowResultTotal(0, (RewardValue * GameManager.Instance._MultiplierValue).ToString());
+                mGameManager._coins += RewardValue * GameManager.Instance._MultiplierValue;
+            }
         }
         else
         {
-            mGameManager._coins += RewardValue;
+            if (GameManager.Instance._MultiplierValue <= 1)
+            {
+                mGameManager._coins += RewardValue;
+                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
+                resultPanel.ShowResultTotal(0, RewardValue.ToString());
+
+            }
+            else
+            {
+                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
+                resultPanel.ShowMultiplierDetails(1, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);
+                resultPanel.ShowResultTotal(0, (RewardValue * GameManager.Instance._MultiplierValue).ToString());
+                mGameManager._coins += RewardValue * GameManager.Instance._MultiplierValue;
+            }
         }
+       
 
 
-        _ScoreTextOne.text = "Building Cost - " + RewardValue;
+       // _ScoreTextOne.text = "Building Cost - " + RewardValue;
 
         yield return new WaitForSeconds(7);
-        _ScorePanel.SetActive(true);
+        resultPanel.gameObject.SetActive(true);
 
     }
 
@@ -457,7 +470,7 @@ public class AttackManager : MonoBehaviour
     public void BackButton()
     {
         MultiplayerManager.Instance.CheckAttackDataFromFirebase();
-        _ScorePanel.GetComponentInChildren<Button>().interactable = false;
+        resultPanel.GetComponentInChildren<Button>().interactable = false;
         Invoke(nameof(ChangeEnemyBuildingData),0.5f);
 
     }

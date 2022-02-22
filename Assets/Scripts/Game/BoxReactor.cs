@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class BoxReactor : MonoBehaviour
 {
-    [SerializeField] private GameObject RewardDisplayPanel;
-    [SerializeField] private TextMeshProUGUI rewardText;
+    [SerializeField] private ResultPanelUI RewardDisplayPanel;
 
     [SerializeField] private GameObject EnergyCanSmall;
 
@@ -108,13 +107,16 @@ public class BoxReactor : MonoBehaviour
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
-                                rewardText.text = crateValueRef._value.ToString() + " Energies";
+
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
                                 GameManager.Instance._energy += crateValueRef._value;
-                                Debug.LogError(crateValueRef._value);
                             }
                             else
                             {
-                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
                                 GameManager.Instance._energy += crateValueRef._value*GameManager.Instance._MultiplierValue;
                                
                             }
@@ -130,13 +132,16 @@ public class BoxReactor : MonoBehaviour
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
-                                rewardText.text = crateValueRef._value.ToString() + " Energies";
-                                GameManager.Instance._energy += crateValueRef._value;
 
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
+                                GameManager.Instance._energy += crateValueRef._value;
                             }
                             else
                             {
-                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
                                 GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
 
                             }
@@ -150,13 +155,16 @@ public class BoxReactor : MonoBehaviour
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
-                                rewardText.text = crateValueRef._value.ToString() + " Energies";
-                                GameManager.Instance._energy += crateValueRef._value;
 
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
+                                GameManager.Instance._energy += crateValueRef._value;
                             }
                             else
                             {
-                                rewardText.text = "Bet Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString() + " Energies";
+                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
+                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
                                 GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
 
                             }
@@ -208,7 +216,7 @@ public class BoxReactor : MonoBehaviour
 
     void ActiveRewardPanel()
     {
-        RewardDisplayPanel.SetActive(true);
+        RewardDisplayPanel.gameObject.SetActive(true);
     }
 
     public void BackToMainScene()

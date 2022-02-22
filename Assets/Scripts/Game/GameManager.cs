@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     
     private bool mIsFull = true;
 
-    [HideInInspector] public List<int> _SavedCardTypes = new List<int>();
+     public List<int> _SavedCardTypes = new List<int>();
     [HideInInspector] public bool _IsInAutoDraw;
 
     public bool _PauseGame;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int _MultiplierValue = 1;
 
-    [HideInInspector] public int _SetIndex;
+     public int _SetIndex;
      public List<int> _CompletedLevelsInSet;
     [HideInInspector] public bool hasChoiceInLevel;
 
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     public static System.Action GotAnOpenCard;
     [HideInInspector] public bool refreshForOpenCard;
 
-   public  GameObject NoCoinsPopUp;
+    public float cucuMultiplier = 1;
     private void Awake()
     {     
         if (Instance == null)

@@ -57,7 +57,8 @@ public class MapSceneManager : MonoBehaviour
                 PlayerPrefs.SetInt("MadeHisChoice", 1);
                 LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name,2000); 
                 GameManager.Instance._IsBuildingFromFBase = false;
-
+                GameManager.Instance._buildingGameManagerDataRef.Clear();
+                FirebaseManager.Instance.DeleteBuildingDataOnNewLevel();
             }
         }
     }

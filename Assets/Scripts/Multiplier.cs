@@ -23,26 +23,21 @@ public class Multiplier : MonoBehaviour
     [SerializeField]bool timerIsRunning;
     [SerializeField]float timeRemaining = 2;
     CardType cardType;
-    Cards[] matchCards;
-    Animator animator;
+    [SerializeField] Animator energyReduseAnimator;
+
     bool sceneLoaded;
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-    }
+  
     public void OnValueChange(float value)
     {
         if (tutorial != null) tutorial.RegisterUserAction();
         GameManager.Instance._MultiplierValue = Mathf.RoundToInt(value);
         sliderHandle.sprite = multiplieImages[GameManager.Instance._MultiplierValue-1];
-        /*int reduseEnergy = (GameManager.Instance._MultiplierValue * 3) - 3;*/
-        energyTxt.text = ""+ crntEnergy/*(GameManager.Instance._energy - reduseEnergy)*/;
+        energyTxt.text = ""+ crntEnergy;
         energyFiller.fillAmount = crntEnergy>50?50:crntEnergy /50;
         timerImage.gameObject.SetActive(false);
         timerIsRunning = false;
         timeRemaining = 2f;
         timerIsRunning = true;
-      
     }
 
     int GetMaxMultiplierValue()
@@ -68,16 +63,9 @@ public class Multiplier : MonoBehaviour
             else
             {  
                 timeRemaining = 0;
-                foreach (Cards cards in matchCards)
-                {
-                    cards.PlaySceneChangeAnimation();
-                }
                 if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
-                else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 1000);
-                //this.gameObject.SetActive(false);
-                animator.SetBool("GetOut", true);
+                else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 3000, cardType.ToString());
                 MultiplierEnergyReduse();
-
                 timerIsRunning = false;
                 sceneLoaded = true;
             }
@@ -85,20 +73,13 @@ public class Multiplier : MonoBehaviour
         else if (timerImage.fillAmount <= 0 && !sceneLoaded)
         {
             sceneLoaded = true;
-            foreach (Cards cards in matchCards)
-            {
-                cards.PlaySceneChangeAnimation();
-            }
             if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
-            else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 1000);
-            animator.SetBool("GetOut", true);
+            else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 3000, cardType.ToString());
             MultiplierEnergyReduse();
-
-            //this.gameObject.SetActive(false);
         }
     }
 
-    public void InitiateMulitiplier(CardType card,Cards[] matchcards)
+    public void InitiateMulitiplier(CardType card)
     {
         GameManager.Instance._PauseGame = true;
         if (tutorial != null) tutorial.RegisterUserAction();
@@ -109,12 +90,13 @@ public class Multiplier : MonoBehaviour
         energyTxt.text =""+GameManager.Instance._energy;
         energyFiller.fillAmount = crntEnergy > 50 ? 50 : crntEnergy / 50;
         cardType = card;
-       this.matchCards = matchcards;
     }
 
 
     void MultiplierEnergyReduse()
     {
+        energyReduseAnimator.GetComponent<TMP_Text>().text = ((GameManager.Instance._MultiplierValue * 3) - 3).ToString() + " Energy Redused";
+        energyReduseAnimator.Play("reduseEnergy");
         GameManager.Instance._energy -= (GameManager.Instance._MultiplierValue * 3)-3;
     }
 

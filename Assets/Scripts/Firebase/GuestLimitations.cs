@@ -9,9 +9,9 @@ public class GuestLimitations : MonoBehaviour
 
     void Start()
     {
-       if(FirebaseManager.Instance.userTitle == "Guest Users")
+       if(FirebaseManager.Instance.userTitle == "Facebook Users")
         {
-            OpenCardButton.SetActive(false);
+            OpenCardButton.SetActive(true);
             //GuestUpgradeButton.SetActive(true);
         }
     }

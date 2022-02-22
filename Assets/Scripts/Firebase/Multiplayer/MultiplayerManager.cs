@@ -227,7 +227,7 @@ public class MultiplayerManager : MonoBehaviour
     }
     void LoadAttackScene()
     {
-        LevelLoadManager.instance.LoadLevelASyncOf("ATTACK");
+        LevelLoadManager.instance.LoadLevelASyncOf("ATTACK",0,"ATTACK");
     }
 
     public void CheckAttackDataFromFirebase()

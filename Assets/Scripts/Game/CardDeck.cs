@@ -126,7 +126,7 @@ public class CardDeck : MonoBehaviour
                 mOnceDone = true;
                 mAutomaticDrawModeOn = true;
                 mAutoCardDraw = true;
-                StartCoroutine(AutomaticCardDrawing(2f));
+                StartCoroutine(AutomaticCardDrawing(3.5f));
             }
             else
             {
@@ -850,7 +850,7 @@ public class CardDeck : MonoBehaviour
     private void Shield()
     {
 
-        if (GameManager.Instance._shield <= GameManager.Instance._maxShield - 1)
+        if (GameManager.Instance._shield < GameManager.Instance._maxShield)
         {
             int randomNumber = Random.Range(0, _buildingManagerRef._buildingData.Count);
             while (_buildingManagerRef._shieldedBuildings.Contains(randomNumber))
@@ -941,8 +941,7 @@ public class CardDeck : MonoBehaviour
                 _Multiplier.gameObject.SetActive(true);
                 _Multiplier.AssignTutorial(tutorial);
                 _Multiplier.transform.SetAsLastSibling();
-                _Multiplier.InitiateMulitiplier(inType,matchedCards);
-                waitTime = 3000;
+                _Multiplier.InitiateMulitiplier(inType);
             }
             else
             {
@@ -952,7 +951,7 @@ public class CardDeck : MonoBehaviour
                 }
                 else
                 {
-                    LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime);
+                    LevelLoadManager.instance.LoadLevelASyncOf(inType.ToString(), waitTime, inType.ToString());
                 }
             }
            

@@ -11,7 +11,6 @@ public class LevelLoadManager : MonoBehaviour
     [SerializeField] Animator mCloudAnimator;
     string levelPrefix = "Level";
     Tutorial tutorial;
-    [SerializeField] GameObject LoadingScreen;
     private void Awake()
     {
         if (instance == null)
@@ -36,32 +35,29 @@ public class LevelLoadManager : MonoBehaviour
         SceneManager.LoadScene("Map");
 
     }
-    public void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0)
+    public void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0,string animName = "BACK")
     {
         GameManager.Instance._PauseGame = false;
 
-        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec));       
+        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec, animName));       
     }
 
 
-    IEnumerator LoadScene(string inLevelIndex,int loadTime=0)
+    IEnumerator LoadScene(string inLevelIndex,int loadTime=0, string animName = "BACK")
     {
-        mCanvas.SetActive(true);
+        yield return new WaitForSeconds(loadTime/1000);
+        //mCanvas.SetActive(true);
+        mCloudAnimator.Play("MAIN");
         yield return new WaitForSeconds(2f);
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
 
         while (!scene.isDone)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.75f);
         }
-        mCloudAnimator.SetBool("Loaded", true);
-
+        mCloudAnimator.Play(animName);
         if (tutorial != null)
             tutorial.RegisterUserAction();
-        yield return new WaitForSeconds(2f);
-
-        mCanvas.SetActive(false);
-        mCloudAnimator.SetBool("Loaded", false);
     }
 
 

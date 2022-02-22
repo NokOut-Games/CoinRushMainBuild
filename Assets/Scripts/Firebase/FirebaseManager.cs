@@ -126,6 +126,8 @@ public class FirebaseManager : MonoBehaviour
                     GameManager.Instance.UpdateUserDetails(userdata.Buildings, userdata.UserDetails._coins, userdata.UserDetails._energy, userdata.UserDetails._playerCurrentLevel, userdata.UserDetails._numberOfTimesGotAttacked);
                     GameManager.Instance._CompletedLevelsInSet = userdata.MapData.LevelsInSet;//Get map  Details From Firebase
                     GameManager.Instance.UpdateOpenCardDetails(userdata.OpenCards);
+                    GameManager.Instance._SetIndex = userdata.MapData.SetIndex;
+                    GameManager.Instance._CompletedLevelsInSet = userdata.MapData.LevelsInSet;
                     GameManager.Instance._SavedCardTypes = userdata.SaveCards;  //.Add(int.Parse(snapshot.Child("SaveCards").Child("" + i).Value.ToString()));//Get Save Card Details From Firebase
                     readUserData = true;
                 }               
@@ -301,10 +303,12 @@ public class FirebaseManager : MonoBehaviour
             }
         });
     }
-
+    public void DeleteBuildingDataOnNewLevel()
+    {
+        reference.Child(userTitle).Child(_PlayerID).Child("Buildings").RemoveValueAsync();
+    }
     public void WriteBuildingDataToFirebase()
     {
-        reference.Child(userTitle).Child(_PlayerID).Child("Buildings").SetValueAsync("0").ContinueWith(task =>{});
         int i = 0;
         foreach (Building buildings in GameManager.Instance._buildingGameManagerDataRef)
         {
