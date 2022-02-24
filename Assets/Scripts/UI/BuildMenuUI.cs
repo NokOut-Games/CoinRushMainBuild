@@ -96,6 +96,7 @@ public class BuildMenuUI : MonoBehaviour
             {
                 if (GameManager.Instance.HasEnoughCoins(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel]))
                 {
+                    GameManager.Instance.AddStars();
                     mBuildingManagerRef.GrabElementNumberBasedOnButtonClick(inBuildingElementNumber);
                     mGameManager._coins -= mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1];
                     UpdateBuildingImage(buildingsButtonRef, inBuildingElementNumber);

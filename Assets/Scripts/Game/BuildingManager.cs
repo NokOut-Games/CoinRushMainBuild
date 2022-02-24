@@ -66,6 +66,7 @@ public class BuildingManager : MonoBehaviour
     public Vector3 _DestroyedBuildingPlunkOffsetFromBuilding;
 
     [SerializeField] MenuUI menuUI;
+   public List<List<int>> listCost = new List<List<int>>();
 
 
     private void Awake()
@@ -84,6 +85,36 @@ public class BuildingManager : MonoBehaviour
             PutCurrentLevelBuildingdetails();
             DestroyAllBuildings();
             SpawningBuilding();
+            AllocateBuildingCostList();
+
+        }
+
+
+    }
+
+
+    void AllocateBuildingCostList()
+    {
+        int x = 0;
+        int buildingCount = GameManager.Instance.BuildingCost.Count / 5;
+        for (int i = 0; i < buildingCount; i++, x += 4)
+        {
+            listCost.Add(new List<int>());
+            for (int j = 0; j < GameManager.Instance.BuildingCost.Count / buildingCount; j++)
+            {
+                listCost[i].Add(int.Parse(GameManager.Instance.BuildingCost[j + x + i]));
+                Debug.Log(int.Parse(GameManager.Instance.BuildingCost[j + x + i]));
+            }
+           
+        }
+        AssignBuildingCost();
+    }
+    void AssignBuildingCost()
+    {
+        for (int i = 0; i <_buildingData.Count; i++)
+        {
+            Debug.Log(listCost[i][0]);
+            _buildingData[i].UpgradeCosts = listCost[i].ToArray();
         }
     }
 
@@ -96,6 +127,7 @@ public class BuildingManager : MonoBehaviour
             GetCurrentBuildingDetails();
             DestroyAllBuildings();
             SpawningBuilding();
+            AllocateBuildingCostList();
         }
     }
     private void ManageCameraStatesBasedOnBuildingConstruction()

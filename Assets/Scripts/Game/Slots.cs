@@ -25,6 +25,17 @@ public class Slots : MonoBehaviour
     public GameObject coinShower;
     public GameObject energyShower;
 
+    public int[] JackPotReward;
+    public int[] twoMatchReward;
+    public int[] singleReward;
+
+
+
+    [SerializeField] int totalSpins;
+    [SerializeField] int totalCoin;
+    [SerializeField] int totalEnergy;
+    [SerializeField] int totalCard;
+
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -89,17 +100,13 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        // _rewardText.text = "Trading Card Pack";
-                        _rewardPanel.SetTitle("LUCKY !");
-                        _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                        _rewardPanel.ShowResultTotal(0, "1");
-
+                        totalCard+= JackPotReward[2];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        spin += 5;
-                        _rewardPanel.SetTitle("IN LUCK !");
-                        _rewardPanel.ShowMultiplierDetails(2, 0, "No.of spins", spin.ToString());
+                        spin += JackPotReward[3];
+                       totalSpins+= JackPotReward[3];
+
                         if (spin == 0)
                         {
                             Invoke(nameof(RewardPanelInvoke), 2f);
@@ -107,37 +114,12 @@ public class Slots : MonoBehaviour
                         break;
                     case "Coins":
                         coinShower.SetActive(true);
-
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "5000");
-                            mGameManager._coins += 5000;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (5000 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._coins += 5000* GameManager.Instance._MultiplierValue;
-                        }
+                        totalCoin += JackPotReward[0];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
                         energyShower.SetActive(true);
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "10");
-                            mGameManager._energy += 10;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (10 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._energy += 10 * GameManager.Instance._MultiplierValue;
-                        }
+                        totalEnergy += JackPotReward[1];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
@@ -149,13 +131,12 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        //_rewardText.text = "Oops Try Again";
+                        totalCard += twoMatchReward[2];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
-                        spin += 3;
-                        _rewardPanel.SetTitle("IN LUCK !");
-                        _rewardPanel.ShowMultiplierDetails(2, 0, "No.of spins", spin.ToString());
+                        spin += twoMatchReward[3];
+                        totalSpins += twoMatchReward[3];
                         if (spin == 0)
                         {
                             Invoke(nameof(RewardPanelInvoke), 2f);
@@ -171,21 +152,7 @@ public class Slots : MonoBehaviour
                             _reels[i].coinParticle.SetActive(true);
                             _reels[i + 2].coinParticle.SetActive(true);
                         }
-
-
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "3000");
-                            mGameManager._coins += 3000;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (3000 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._coins += 3000 * GameManager.Instance._MultiplierValue;
-                        }
+                        totalCoin += twoMatchReward[0];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
@@ -199,19 +166,7 @@ public class Slots : MonoBehaviour
                             _reels[i].energyPaticle.SetActive(true);
                             _reels[i + 2].energyPaticle.SetActive(true);
                         }
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "5");
-                            mGameManager._energy += 5;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (5 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._energy += 5 * GameManager.Instance._MultiplierValue;
-                        }
+                        totalEnergy += twoMatchReward[1];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
@@ -223,13 +178,12 @@ public class Slots : MonoBehaviour
                 switch (_elementsName[i + 1]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        //_rewardText.text = "Oops Try Again";
+                        totalCard += twoMatchReward[2];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
-                    case "FreeSpins":                       
-                        spin += 3;
-                        _rewardPanel.SetTitle("IN LUCK !");
-                        _rewardPanel.ShowMultiplierDetails(2, 0, "No.of spins", spin.ToString());
+                    case "FreeSpins":
+                        spin += singleReward[3];
+                        totalSpins += singleReward[3];
                         if (spin == 0)
                         {
                             Invoke(nameof(RewardPanelInvoke), 2f);
@@ -247,19 +201,7 @@ public class Slots : MonoBehaviour
                             _reels[i + 2].coinParticle.SetActive(true);
                         }
 
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "3000");
-                            mGameManager._coins += 3000;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (3000 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._coins += 3000 * GameManager.Instance._MultiplierValue;
-                        }
+                        totalCoin += twoMatchReward[0];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
@@ -273,19 +215,7 @@ public class Slots : MonoBehaviour
                             _reels[i+1].energyPaticle.SetActive(true);
                             _reels[i + 2].energyPaticle.SetActive(true);
                         }
-                        if (GameManager.Instance._MultiplierValue <= 1)
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowResultTotal(0, "5");
-                            mGameManager._energy += 5;
-                        }
-                        else
-                        {
-                            _rewardPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-                            _rewardPanel.ShowMultiplierDetails(1, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                            _rewardPanel.ShowResultTotal(0, (5 * GameManager.Instance._MultiplierValue).ToString());
-                            mGameManager._energy += 5 * GameManager.Instance._MultiplierValue;
-                        }
+                        totalEnergy+= twoMatchReward[1];
                         Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
@@ -294,8 +224,25 @@ public class Slots : MonoBehaviour
             }
             else
             {
-                //_rewardText.text = "Oopsie Nothing is Identical";
-                Invoke(nameof(RewardPanelInvoke), 2f);
+
+
+                if (_elementsName[0]._slotElementGameObject.name == "Energy")
+                {
+                    totalEnergy += singleReward[1];
+                }
+                else if(_elementsName[0]._slotElementGameObject.name == "Coins")
+                {
+                    totalCoin += singleReward[0];
+                }
+                else if (_elementsName[0]._slotElementGameObject.name == "FreeSpins")
+                {
+                    totalSpins += singleReward[3];
+                }
+                else if (_elementsName[0]._slotElementGameObject.name == "TradingCards")
+                {
+                    totalCard += singleReward[2];
+                }
+                    Invoke(nameof(RewardPanelInvoke), 2f);
             }
         }
         
@@ -306,8 +253,46 @@ public class Slots : MonoBehaviour
         if (spin == 0 && _reels[2].mSpinOver == true)
         {
             _uiSpinButton.interactable = false;
-            _rewardPanel.gameObject.SetActive(true);
+            ShowResultPopUP();
         }
+    }
+    void ShowResultPopUP()
+    {
+        GameManager.Instance._coins += totalCoin;
+        GameManager.Instance._energy += totalEnergy;
+
+        _rewardPanel.ShowMultiplierDetails(0, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
+        _rewardPanel.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
+
+        List<int[]> result = CheckTheResult(totalCoin, totalEnergy, totalCard);
+        List<int> iconIndex = new List<int>();
+        List<string> value = new List<string>();
+        foreach (var item in result)
+        {
+            iconIndex.Add(item[0]);
+            value.Add((item[1]* GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+        }
+        _rewardPanel.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
+        if (totalSpins != 0)
+            _rewardPanel.ShowMultiplierDetails(2, 2, "No. of spins", totalSpins.ToString());
+        _rewardPanel.gameObject.SetActive(true);
+    }
+    List<int[]> CheckTheResult(int inCoin, int inEnergy, int inCard)
+    {
+        List<int[]> havingElementIndex = new List<int[]>();
+        if (inCoin > 0)
+        {
+            havingElementIndex.Add(new int[] { 0, inCoin });
+        }
+        if (inEnergy > 0)
+        {
+            havingElementIndex.Add(new int[] { 1, inEnergy });
+        }
+        if (inCard > 0)
+        {
+            havingElementIndex.Add(new int[] { 2, inCard });
+        }
+        return havingElementIndex;
     }
     public void ActiveLevelInvoke()
     {

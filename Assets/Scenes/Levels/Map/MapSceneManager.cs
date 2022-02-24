@@ -59,6 +59,7 @@ public class MapSceneManager : MonoBehaviour
                 GameManager.Instance._IsBuildingFromFBase = false;
                 GameManager.Instance._buildingGameManagerDataRef.Clear();
                 FirebaseManager.Instance.DeleteBuildingDataOnNewLevel();
+                FirebaseManager.Instance.DeleteOpenCardData();
             }
         }
     }

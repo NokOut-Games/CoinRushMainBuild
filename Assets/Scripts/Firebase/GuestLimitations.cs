@@ -5,15 +5,16 @@ using UnityEngine;
 public class GuestLimitations : MonoBehaviour
 {
     public GameObject OpenCardButton;
-    //public GameObject GuestUpgradeButton;
 
-    void Start()
+    private void Update()
     {
-       if(FirebaseManager.Instance.userTitle == "Facebook Users")
+        if (FirebaseManager.Instance.userTitle == "Facebook Users")
         {
             OpenCardButton.SetActive(true);
-            //GuestUpgradeButton.SetActive(true);
+        }
+        else
+        {
+            OpenCardButton.SetActive(false);
         }
     }
-
 }

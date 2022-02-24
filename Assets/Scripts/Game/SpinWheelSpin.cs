@@ -1,28 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class SpinWheelSpin : MonoBehaviour
 {
     public Button _uiSpinButton;
-    public GameObject _uiReturnToGame;
-    public GameObject _backButton;
-    public TextMeshProUGUI _uiCoinValue;
-    public TextMeshProUGUI _uiFreeSpinValue;
-    public TextMeshProUGUI _uiEnergyValue;
+    public ResultPanelUI _uiReturnToGame;
     public TextMeshProUGUI _uiFreeSpinCountValue;
+
     public Sprite _uiCoinSprite;
     public Sprite _uiFreeSpinSprite;
     public Sprite _uiEnergySprite;
-    public GameObject _uiCoinReward;
-    public GameObject _uiEnergyReward;
-    public GameObject _uiFreeSpinReward;   
+    public Sprite _uiCardSprite;
+
     public int coin = 0;
     public int Energy = 0;
     public int FreeSpins = 0;
+    public int cardCount = 0;
+    public int totalFreeSpin;
+
     public bool DoFreeSpins = false;
     public bool disablePanel = false;
+
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
 
@@ -41,8 +41,6 @@ public class SpinWheelSpin : MonoBehaviour
 
             spinWheel.OnSpinEnd(wheelPiece =>
             {
-               // mLightAnimator.SetBool("Spin",false);
-
                 if (FreeSpins == 0)
                 {
                     DoFreeSpins = false;
@@ -51,117 +49,95 @@ public class SpinWheelSpin : MonoBehaviour
                 switch (DoFreeSpins)
                 {
                     case false:
-                        //_uiReturnToGame.SetActive(true);
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
-                            Debug.Log(wheelPiece._Icon.name);
                             chestAnimation.SetBool("Open", true);
-                            /*_uiCoinReward.SetActive(true);
-                            CoinParticle.SetActive(true);*/
                             Invoke(nameof(PlayCoinParticle), .2f);
                            
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 coin += wheelPiece._Amount;
                                 mGameManager._coins += wheelPiece._Amount;
-                                _uiCoinValue.text = wheelPiece._Amount.ToString();
-
                             }
                             else
                             {
                                 coin += wheelPiece._Amount*GameManager.Instance._MultiplierValue;
                                 mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                _uiCoinValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
                             }
 
-                        }
+                        }else
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
-                            Debug.Log(wheelPiece._Icon.name);
                             chestAnimation.SetBool("Open", true);
                             Invoke(nameof(PlayEnergyParticle), .2f);
-
-                            /*_uiEnergyReward.SetActive(true);
-                            EnergyParticle.SetActive(true);*/
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 Energy += wheelPiece._Amount;
                                 mGameManager._energy += wheelPiece._Amount;
-                                _uiEnergyValue.text = wheelPiece._Amount.ToString();
                             }
                             else
                             {
                                 Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
                                 mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                _uiEnergyValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
                             }
-                        }
+                        }else
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
                         {
-                            Debug.Log(wheelPiece._Icon.name);
-                            _uiFreeSpinReward.SetActive(true);
                             FreeSpins += wheelPiece._Amount;
-                            _uiFreeSpinValue.text = wheelPiece._Amount.ToString();
-                            _backButton.SetActive(false);
-                            Invoke("BackToSpinWheel", 0.7f);
+                            totalFreeSpin += wheelPiece._Amount;
+                        }
+                        else if (wheelPiece._Icon == _uiCardSprite)
+                        {
+                            cardCount++;
                         }
                         break;
 
 
                     case true:
-                        //_uiReturnToGame.SetActive(true);
-                        _backButton.SetActive(false);
                         _uiSpinButton.interactable = true;
                         if (wheelPiece._Icon == _uiCoinSprite)
                         {
                             disablePanel = true;
                             chestAnimation.SetBool("Open", true);
-                            /* _uiCoinReward.SetActive(true);
-                             CoinParticle.SetActive(true);*/
                             Invoke(nameof(PlayCoinParticle), .2f);
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 coin += wheelPiece._Amount;
                                 mGameManager._coins += wheelPiece._Amount;
-                                _uiCoinValue.text = wheelPiece._Amount.ToString();
-
                             }
                             else
                             {
                                 coin += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
                                 mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                _uiCoinValue.text = "Bit Multiplier " + GameManager.Instance._MultiplierValue + "X" + "\n" + (wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
                             }
                         }
                         if (wheelPiece._Icon == _uiEnergySprite)
                         {
                             disablePanel = true;
                             chestAnimation.SetBool("Open", true);
-                            /* _uiEnergyReward.SetActive(true);
-                             EnergyParticle.SetActive(true);*/
                             Invoke(nameof(PlayEnergyParticle), .2f);
 
                             if (GameManager.Instance._MultiplierValue <= 1)
                             {
                                 Energy += wheelPiece._Amount;
                                 mGameManager._energy += wheelPiece._Amount;
-                                _uiEnergyValue.text = wheelPiece._Amount.ToString();
                             }
                             else
                             {
                                 Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
                                 mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                _uiEnergyValue.text ="Bit Multiplier "+ GameManager.Instance._MultiplierValue+"X"+"\n"+(wheelPiece._Amount * GameManager.Instance._MultiplierValue).ToString();
                             }
                         }
                         if (wheelPiece._Icon == _uiFreeSpinSprite)
                         {
-                            _uiFreeSpinReward.SetActive(true);
                             FreeSpins += wheelPiece._Amount;
-                            _uiFreeSpinValue.text = wheelPiece._Amount.ToString();
-                            Invoke("BackToSpinWheel", 0.7f);
+                            totalFreeSpin += wheelPiece._Amount;
+                        }
+                        else if (wheelPiece._Icon == _uiCardSprite)
+                        {
+                            cardCount++;
                         }
                         break;
                 }
@@ -170,21 +146,6 @@ public class SpinWheelSpin : MonoBehaviour
             spinWheel.Spin();
 
         });
-    }
-    void BackToSpinWheel()
-    {
-        _uiReturnToGame.SetActive(false);
-        _uiFreeSpinReward.SetActive(false);
-        _backButton.SetActive(true);
-    }
-    void BackToWheelOnFreeSpins()
-    {
-        _uiReturnToGame.SetActive(false);
-        _uiCoinReward.SetActive(false);
-        _uiEnergyReward.SetActive(false);
-        _uiFreeSpinReward.SetActive(false);
-        _backButton.SetActive(false);
-        Debug.Log("Goback togame");
     }
     public void BackToGameScene()
     {
@@ -195,29 +156,42 @@ public class SpinWheelSpin : MonoBehaviour
     void PlayCoinParticle()
     {
         CoinParticle.SetActive(true);
-        //chestAnimation.SetBool("Open", false);
-        Invoke(nameof(PLayCoinEndPopUp), 1f);
+        Invoke(nameof(ShowResultPopUP), 1f);
 
     }
     void PlayEnergyParticle()
     {
         EnergyParticle.SetActive(true);
-       // chestAnimation.SetBool("Open", false);
-
-        Invoke(nameof(PlayEnergyEndPopUP),1f);
+        Invoke(nameof(ShowResultPopUP),1f);
     }
 
-    void PlayEnergyEndPopUP()
+    void ShowResultPopUP()
     {
-        _uiReturnToGame.SetActive(true);
-        disablePanel = DoFreeSpins;
-        _uiEnergyReward.SetActive(true);
-    }
-    void PLayCoinEndPopUp()
-    {
-        _uiReturnToGame.SetActive(true);
-        disablePanel = DoFreeSpins;
-        _uiCoinReward.SetActive(true);
+        if (FreeSpins > 0)
+        {
+            chestAnimation.SetBool("Open", false);
+        }
+        else
+        {
+            _uiReturnToGame.ShowMultiplierDetails(0, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
+            _uiReturnToGame.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
+
+            List<int[]> result = CheckTheResult(coin, Energy, cardCount);
+            List<int> iconIndex = new List<int>();
+            List<string> value = new List<string>();
+            foreach (var item in result)
+            {
+                iconIndex.Add(item[0]);
+                value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+            }        
+            _uiReturnToGame.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
+            if (totalFreeSpin !=0)
+                _uiReturnToGame.ShowMultiplierDetails(2, 2, "No. of spins", totalFreeSpin.ToString());
+            _uiReturnToGame.gameObject.SetActive(true);
+
+            disablePanel = DoFreeSpins;
+        }
+       
     }
 
     private void Update()
@@ -232,9 +206,25 @@ public class SpinWheelSpin : MonoBehaviour
       
         if(disablePanel)
         {
-            Invoke("BackToWheelOnFreeSpins", 0.7f);
             disablePanel = false;
         }
+    }
+    List<int[]> CheckTheResult(int inCoin, int inEnergy, int inCard)
+    {
+       List<int[]> havingElementIndex = new List<int[]>();
+        if (inCoin > 0)
+        {
+            havingElementIndex.Add(new int[] { 0, inCoin });
+        }
+        if (inEnergy > 0)
+        {
+            havingElementIndex.Add(new int[] { 1, inEnergy });
+        }
+        if (inCard > 0)
+        {
+            havingElementIndex.Add(new int[] { 2, inCard });
+        }
+        return havingElementIndex;
     }
 
 }

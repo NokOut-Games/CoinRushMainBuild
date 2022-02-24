@@ -55,8 +55,6 @@ public class SpinWheel : MonoBehaviour
     //Wheel Piece Properties
     private Vector2 mPieceMinSize = new Vector2(81f, 146f);
     private Vector2 mPieceMaxSize = new Vector2(144f, 213f);
-    //private int mPiecesMin = 2;
-    //private int mPiecesMax = 16;
     public float mPieceAngle;
     public float mHalfPieceAngle;
     public float mHalfPieceAngleWithPaddings;
@@ -81,10 +79,6 @@ public class SpinWheel : MonoBehaviour
         PieceGenerator();
         CalculateWeightsAndIndices();
     }
-
-    /// <summary>
-    /// Spin Wheel dividing into number of parts user needs 
-    /// </summary>
     private void WheelDivider()
     {
         mPieceAngle = 360 / _wheelPieces.Length;
@@ -92,9 +86,6 @@ public class SpinWheel : MonoBehaviour
         mHalfPieceAngleWithPaddings = mHalfPieceAngle - (mHalfPieceAngle / 4f);
     }
 
-    /// <summary>
-    /// Audio Components Link Up
-    /// </summary>
     private void SetupAudio()
     {
         _audioSource.clip = _tickAudioClip;
@@ -102,9 +93,6 @@ public class SpinWheel : MonoBehaviour
         _audioSource.pitch = _pitch;
     }
 
-    /// <summary>
-    /// Generates piece according to images and values given in inspector
-    /// </summary>
     private void PieceGenerator()
     {
         for (int i = 0; i < _wheelPieces.Length; i++)
@@ -129,23 +117,15 @@ public class SpinWheel : MonoBehaviour
             pieceTrns.RotateAround(_wheelPiecesParent.position, Vector3.back, mPieceAngle * i);
         }
     }
-
-    /// <summary>
-    /// Used to resize the instantiated piece according to the divisions size and set its anchor points
-    /// </summary>
-    /// <param name="inPiece"></param>
     private void ResizePiece(Transform inPiece)
     {
         RectTransform rt = inPiece.GetComponent<RectTransform>();
-        float pieceWidth = Mathf.Lerp(mPieceMinSize.x, mPieceMaxSize.x, /*1f - Mathf.InverseLerp(mPiecesMin, mPiecesMax, _wheelPieces.Length)*/ Time.deltaTime);
-        float pieceHeight = Mathf.Lerp(mPieceMinSize.y, mPieceMaxSize.y, /*1f - Mathf.InverseLerp(mPiecesMin, mPiecesMax, _wheelPieces.Length)*/Time.deltaTime);
+        float pieceWidth = Mathf.Lerp(mPieceMinSize.x, mPieceMaxSize.x, Time.deltaTime);
+        float pieceHeight = Mathf.Lerp(mPieceMinSize.y, mPieceMaxSize.y, Time.deltaTime);
         rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, pieceWidth);
         rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, pieceHeight);
     }
 
-    /// <summary>
-    /// Calculates the accumulated overall weights for probability functions
-    /// </summary>
     private void CalculateWeightsAndIndices()
     {
         for (int i = 0; i < _wheelPieces.Length; i++)
@@ -165,9 +145,6 @@ public class SpinWheel : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// All spin functions when spin button is clicked
-    /// </summary>
     public void Spin()
     {
         if (mIsSpinning == false)
@@ -252,19 +229,10 @@ public class SpinWheel : MonoBehaviour
         mNeedleAnim.SetBool("SpinSlow", false);
     }
 
-    /// <summary>
-    /// Event Declaration
-    /// </summary>
-    /// <param name="action"></param>
     public void OnSpinEnd(UnityAction<WheelPiece> action)
     {
         onSpinEndEvent = action;
     }
-
-    /// <summary>
-    /// Gets A random value with a given probability
-    /// </summary>
-    /// <returns></returns>
     private int GetRandomPieceIndex()
     {
         double r = rand.NextDouble() * mAccumulatedWeight;
@@ -276,9 +244,5 @@ public class SpinWheel : MonoBehaviour
             }
         }
         return 0;
-    }
-    private void Update()
-    {
-       
     }
 }

@@ -24,9 +24,12 @@ public class Multiplier : MonoBehaviour
     [SerializeField]float timeRemaining = 2;
     CardType cardType;
     [SerializeField] Animator energyReduseAnimator;
-
+    Animator GetOutAnimator;
     bool sceneLoaded;
-  
+   void Start()
+    {
+        GetOutAnimator = GetComponent<Animator>();
+    }
     public void OnValueChange(float value)
     {
         if (tutorial != null) tutorial.RegisterUserAction();
@@ -98,6 +101,8 @@ public class Multiplier : MonoBehaviour
         energyReduseAnimator.GetComponent<TMP_Text>().text = ((GameManager.Instance._MultiplierValue * 3) - 3).ToString() + " Energy Redused";
         energyReduseAnimator.Play("reduseEnergy");
         GameManager.Instance._energy -= (GameManager.Instance._MultiplierValue * 3)-3;
+        // GetOutAnimator.SetBool("GetOut", true);
+        multiplierSlider.interactable = false;
     }
 
     public void AssignTutorial(Tutorial tutorial)

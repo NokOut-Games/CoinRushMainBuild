@@ -1963,6 +1963,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
+      propertyPath: cucuMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8841798954530258841, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -2130,11 +2134,11 @@ MonoBehaviour:
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 1756945701}
-    _chanceOfObtaining: 25.3
+    _chanceOfObtaining: 1
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 372791922}
-    _chanceOfObtaining: 1
+    _chanceOfObtaining: 10
     _index: 0
     _toughnessMeter: 0
   _reelRollDuration: 1
@@ -2493,7 +2497,7 @@ MonoBehaviour:
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 2047102621}
-    _chanceOfObtaining: 17.6
+    _chanceOfObtaining: 83.2
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 39604766}
@@ -2501,7 +2505,7 @@ MonoBehaviour:
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 1552555376}
-    _chanceOfObtaining: 18.1
+    _chanceOfObtaining: 10
     _index: 0
     _toughnessMeter: 0
   _reelRollDuration: 2
@@ -2957,7 +2961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2c1635b9789a122438cc714763cd852f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf8063012b8229c44b9bade0a9e853ef, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3316,9 +3320,20 @@ MonoBehaviour:
   _SlotDisplayHeadText: {fileID: 759786779}
   _rewardPanel: {fileID: 446653262}
   spin: 1
-  _elementsName: []
+  _elementsName:
+  - _slotElementGameObject: {fileID: 0}
+    _chanceOfObtaining: 0
+    _index: 0
+    _toughnessMeter: 0
   coinShower: {fileID: 692403449}
   energyShower: {fileID: 375672610}
+  JackPotReward: 88130000190000000100000005000000
+  twoMatchReward: b80b00000a0000000100000003000000
+  singleReward: e8030000050000000100000001000000
+  totalSpins: 0
+  totalCoin: 0
+  totalEnergy: 0
+  totalCard: 0
 --- !u!1 &1331059351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3827,6 +3842,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 122042333}
     m_Modifications:
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1326898986}
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ActiveLevelInvoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Slots, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6078822279340029974, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4256,7 +4283,7 @@ MonoBehaviour:
     _index: 0
     _toughnessMeter: 0
   - _slotElementGameObject: {fileID: 1087668755}
-    _chanceOfObtaining: 20.9
+    _chanceOfObtaining: 10
     _index: 0
     _toughnessMeter: 0
   _reelRollDuration: 1

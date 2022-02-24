@@ -104,22 +104,7 @@ public class BoxReactor : MonoBehaviour
 
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
-                                GameManager.Instance._energy += crateValueRef._value;
-                            }
-                            else
-                            {
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
-                                GameManager.Instance._energy += crateValueRef._value*GameManager.Instance._MultiplierValue;
-                               
-                            }
+                            SetRewardPanel(crateValueRef);
 
                             Invoke("InvokeKinematic", .75f);
                             break;
@@ -129,22 +114,7 @@ public class BoxReactor : MonoBehaviour
 
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
-                                GameManager.Instance._energy += crateValueRef._value;
-                            }
-                            else
-                            {
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
-                                GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
-
-                            }
+                            SetRewardPanel(crateValueRef);
                             Invoke("InvokeKinematic", .75f);
                             break;
                         case 100:
@@ -152,23 +122,7 @@ public class BoxReactor : MonoBehaviour
                             StartCoroutine(SpawnParticleCoroutine(EnergyCanLargeParticle,2,-10));
                             crateAnimRef.SetTrigger("isBreaking?");
                             isCanInstantiated = true;
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowResultTotal(0, crateValueRef._value.ToString());
-                                GameManager.Instance._energy += crateValueRef._value;
-                            }
-                            else
-                            {
-                                RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Bonus", "1");
-                                RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
-                                RewardDisplayPanel.ShowResultTotal(0, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
-                                GameManager.Instance._energy += crateValueRef._value * GameManager.Instance._MultiplierValue;
-
-                            }
-
+                            SetRewardPanel(crateValueRef);
                             Invoke("InvokeKinematic", .75f);
                             break;
                     }
@@ -222,6 +176,16 @@ public class BoxReactor : MonoBehaviour
     public void BackToMainScene()
     {
         LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+    }
+
+
+    void SetRewardPanel(ChestValue crateValueRef)
+    {
+
+        RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+        RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
+        RewardDisplayPanel.ShowResultTotal(1, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
+        GameManager.Instance._energy += (int)(crateValueRef._value * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
     }
 }
 

@@ -95,7 +95,10 @@ public class CardDeck : MonoBehaviour
     {
         GameManager.GotAnOpenCard += SpawnOpenCards;
     }
-
+    public void OnDestroy()
+    {
+        GameManager.GotAnOpenCard -= SpawnOpenCards;
+    }
     void ShieldAnimation()
     {
         shieldAnimation.gameObject.SetActive(true);
@@ -134,7 +137,7 @@ public class CardDeck : MonoBehaviour
                 DrawButton.sprite = drawNormal;
 
             }
-            SpawnOpenCards();
+           // SpawnOpenCards();
             if (GameManager.Instance._SavedCardTypes.Count > 0)
             {
                 foreach (int cardType in GameManager.Instance._SavedCardTypes)

@@ -8029,6 +8029,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1185880951}
     m_Modifications:
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 393824591816248679}
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToMainScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 6078822278018204008, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BoxReactor, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6078822279340029974, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8128,6 +8140,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6078822279340029974, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
   m_PrefabInstance: {fileID: 729175462}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &729175464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1131017089, guid: c93a16685181c954a972b4a27b83bbf1, type: 3}
+  m_PrefabInstance: {fileID: 729175462}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfbaae3cf9e069345bf2c21da127d622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &760419238 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e5595c59d61182c4c9df9b1186cf9222, type: 3}
@@ -16567,8 +16590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb44571b08ce46f40ab3ee92506d3a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RewardDisplayPanel: {fileID: 0}
-  rewardText: {fileID: 0}
+  RewardDisplayPanel: {fileID: 729175464}
   EnergyCanSmall: {fileID: 774371272166543383, guid: 358dfba0181e6e74db1dd681176b5007, type: 3}
   EnergyCanMedium: {fileID: 7333906914809265232, guid: b2afbc22b33d91845ba6ab9659ff2e74, type: 3}
   EnergyCanLarge: {fileID: 1449879326826623210, guid: 9574f87793fde5045aa69879466397d7, type: 3}
@@ -16777,7 +16799,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RewardDisplayPanel: {fileID: 0}
-  rewardText: {fileID: 0}
   EnergyCanSmall: {fileID: 774371272166543383, guid: 358dfba0181e6e74db1dd681176b5007, type: 3}
   EnergyCanMedium: {fileID: 7333906914809265232, guid: b2afbc22b33d91845ba6ab9659ff2e74, type: 3}
   EnergyCanLarge: {fileID: 1449879326826623210, guid: 9574f87793fde5045aa69879466397d7, type: 3}

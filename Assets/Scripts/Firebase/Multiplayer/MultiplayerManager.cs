@@ -95,7 +95,7 @@ public class MultiplayerManager : MonoBehaviour
                 card._openedCardSelectedCard = mCardDeck._openedCardIndex;
 
                 OpenCardDetails.Add(card);
-                WriteOpenCardDataToFirebase();
+                CheckOpenCardDataFromFirebase();
                 isReWriting = false;
             }
         }
@@ -155,45 +155,6 @@ public class MultiplayerManager : MonoBehaviour
         });
     }
 
-    //void GetOpenCardsDetails()
-    //{
-    //    reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("OpenCards").GetValueAsync().ContinueWith(task =>
-    //    {
-    //        if (task.IsCompleted)
-    //        {
-    //            DataSnapshot OpenCardSnapshot = task.Result;
-
-    //            if (OpenCardSnapshot.Exists)
-    //            {
-    //                OpenCardDetails = new List<OpenCard>();
-    //                for (int i = 0; i < OpenCardSnapshot.ChildrenCount; i++)
-    //                {
-    //                    OpenCard CardData = new OpenCard();
-
-    //                    CardData._openedPlayerName = OpenCardSnapshot.Child(i.ToString()).Child("_openedPlayerName").Value.ToString();
-    //                    CardData._openedPlayerID = OpenCardSnapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
-    //                    CardData._openedCardSlot = int.Parse(OpenCardSnapshot.Child(i.ToString()).Child("_openedCardSlot").Value.ToString());
-    //                    CardData._openedCardSelectedCard = int.Parse(OpenCardSnapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
-
-    //                    OpenCardDetails.Add(CardData);
-    //                    OpenedCardSlot.Add(CardData._openedCardSlot);
-    //                    OpenedPlayerID.Add(CardData._openedPlayerID);
-    //                }
-    //                mMultiplayerPlayerData.UpdateOpenCardDetails(OpenCardDetails, OpenedCardSlot);
-    //            }
-    //            else
-    //            {
-    //                reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("OpenCards").SetValueAsync("0").ContinueWith(task =>
-    //                {
-    //                    if (task.IsCompleted)
-    //                    {
-    //                    }
-    //                });
-    //            }              
-    //        }
-    //    });
-    //}
-
     void GetAttackData()
     {
         CurrenetPlayerAttackData.Clear(); attackedplayerIDList.Clear(); attackedplayerNameList.Clear();
@@ -229,7 +190,6 @@ public class MultiplayerManager : MonoBehaviour
     {
         LevelLoadManager.instance.LoadLevelASyncOf("ATTACK",0,"ATTACK");
     }
-
     public void CheckAttackDataFromFirebase()
     {
         reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
@@ -246,13 +206,12 @@ public class MultiplayerManager : MonoBehaviour
                     MultiplayerBuildingDetails.Clear();
                     MultiplayerBuildingDetails = Enemydata.Buildings;
                     Debug.LogError("Levels Same");
-                   
                 }
                 else
                 {
                     Debug.LogError("Levels Not Same");
                     mAttackManager.isDataChanging = false;
-                    FirebaseManager.Instance.ReadData(false,false);
+                    FirebaseManager.Instance.ReadData(false, false);
                 }
             }
         });
@@ -285,15 +244,16 @@ public class MultiplayerManager : MonoBehaviour
             { Debug.Log("Attaacked info Written"); }
         });
         AttackCount += 1;
-        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task =>{});
+        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task => { });
         reference.Child(_enemyTitle).Child(_currentPlayerId).Child("UserDetails").Child("_coins").SetValueAsync(GameManager.Instance._coins).ContinueWith(task =>
         {
             if (task.IsCompleted)
-            { 
+            {
                 FirebaseManager.Instance.ReadData(false, false);
-            }     
+            }
         });
     }
+
     public void OnClickViewIslandToOpenCard()
     {
         OpenedCardSlot.Clear();
@@ -313,6 +273,29 @@ public class MultiplayerManager : MonoBehaviour
     void LoadOpenCardScene()
     {
         LevelLoadManager.instance.LoadLevelASyncOf("OPENCARD");
+    }
+    public void CheckOpenCardDataFromFirebase()
+    {
+        reference.Child(_enemyTitle).Child(_enemyPlayerID).GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                var json = snapshot.GetRawJsonValue();
+                Enemydata = JsonUtility.FromJson<UserData>(json);
+
+                if (Enemydata.UserDetails._playerCurrentLevel == _enemyPlayerLevel)
+                {
+                    Debug.LogError("Levels Same");
+                    WriteOpenCardDataToFirebase();
+                }
+                else
+                {
+                    Debug.LogError("Levels Not Same");
+                }
+            }
+        });
     }
     public void WriteOpenCardDataToFirebase()
     {

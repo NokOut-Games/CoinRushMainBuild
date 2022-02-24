@@ -101,7 +101,7 @@ public class FacebookManager : MonoBehaviour
 	public void LoginWithFB(bool isFromTuto =false)
 	{
 		isFromTutorial = isFromTuto;
-		var permission = new List<string>() { "public_profile", "email" };
+		var permission = new List<string>() { "email","public_profile" };
 		FB.LogInWithReadPermissions(permission, AuthCallback);
 		isinFbPopup = true;
 	}

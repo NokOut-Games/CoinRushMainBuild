@@ -47,15 +47,6 @@ public class CannonShotController : MonoBehaviour
         }
     }
 
-
-
-    /// <summary>
-    ///  Calcuate the Projectile  of the Bullet from from Origin to Target
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="origin"></param>
-    /// <param name="time"></param>
-    /// <returns></returns>
     Vector3 CalculateVelocity(Vector3 target, Vector3 origin, float time)
     {
         //Define 
@@ -78,16 +69,11 @@ public class CannonShotController : MonoBehaviour
         return result;
 
     }
-
-    /// <summary>
-    /// Cannon look at the Target and Instantiate the Bullet Prefab
-    /// </summary>
-    /// <param name="tran"></param>
     public void AssignPos(Transform tran)
     {
         
         _TargetTransform = tran;
-        this.transform.position = new Vector3(_TargetTransform.position.x+520, CannonAttackPosition.y, _TargetTransform.position.z-427);// CannonAttackPosition.y, CannonAttackPosition.z);
+        this.transform.position = new Vector3(_TargetTransform.position.x, CannonAttackPosition.y, _TargetTransform.position.z-1000);//427 CannonAttackPosition.y, CannonAttackPosition.z);
         this.gameObject.SetActive(true);
         ballAnimation.SetBool("SHIELDED", _AttackManager._Shield);
        // Invoke("ShootBullet", 2.5f);

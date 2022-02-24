@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class AttackManager : MonoBehaviour
 {
-    public bool isDataChanging=true;
+    public bool isDataChanging = true;
 
     [SerializeField] private GameManager mGameManager;
     public List<GameObject> _spawnedTargetPoints = new List<GameObject>();
@@ -20,7 +20,8 @@ public class AttackManager : MonoBehaviour
     public Text _ScoreTextTwo;
     public Text _ScoreTextThree;
     public GameObject _bulletPre;
-    public Sprite _Sprite1, _Sprite2, _Sprite3, _Sprite4, _Sprite5, _Sprite6, _Sprite7, _Sprite8, _Sprite9;
+    //public Sprite _Sprite1, _Sprite2, _Sprite3, _Sprite4, _Sprite5, _Sprite6, _Sprite7, _Sprite8, _Sprite9;
+    public List<Sprite> valueSprites = new List<Sprite>(8);
     public Transform _TargetTransform;
     public bool _Shield = false;
     public Quaternion CameraAttackRotation;
@@ -62,7 +63,8 @@ public class AttackManager : MonoBehaviour
 
     public Vector3 _ballAndShieldOffsetToTargetTransform = new Vector3(0, 50, 0);
 
-    bool isSpawned;
+    [SerializeField] Transform cannonAnimationCamera;
+    [SerializeField] float DestroyAnimationDelay;
 
     private void Awake()
     {
@@ -102,7 +104,7 @@ public class AttackManager : MonoBehaviour
             _enemyBuildingsTransformList.Add(mTransformPoint.transform.GetChild(i));
         }
     }
- 
+
     void InstantiateBuildingBasedOnLevel()
     {
         for (int i = 0; i < MultiplayerManager.Instance.MultiplayerBuildingDetails.Count; i++)
@@ -173,9 +175,12 @@ public class AttackManager : MonoBehaviour
         for (int i = 0; i < _buildingCost.Count; i++)
         {
             int temp = _buildingCost[i];
+            Sprite spriteTemp = valueSprites[i];
             int randomIndex = Random.Range(i, _buildingCost.Count);
+            valueSprites[i] = valueSprites[randomIndex];
             _buildingCost[i] = _buildingCost[randomIndex];
             _buildingCost[randomIndex] = temp;
+            valueSprites[randomIndex] = spriteTemp;
         }
     }
 
@@ -193,13 +198,13 @@ public class AttackManager : MonoBehaviour
         }
 
 
-        int rand = Random.Range(0,_enemyBuildings.Count);
+        int rand = Random.Range(0, _enemyBuildings.Count);
         cachedTargetPoint = rand;
         _multiplierGameObject = _spawnedTargetPoints[cachedTargetPoint];
 
         _spawnedTargetPoints[cachedTargetPoint].GetComponentInChildren<Animator>().SetBool("CanPlay", true);
         Invoke("ResetAnim", 0.25f);
-    }  
+    }
     void TargetInstantiation()
     {
 
@@ -220,7 +225,7 @@ public class AttackManager : MonoBehaviour
 
             go.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
-                
+
                 AssignTarget(_enemyBuildings[int.Parse(go.name)].transform);
                 if (_shieldedEnemyBuildings[int.Parse(go.name)])
                     _Shield = _shieldedEnemyBuildings[int.Parse(go.name)];
@@ -285,32 +290,32 @@ public class AttackManager : MonoBehaviour
 
                 switch (_buildingCost[i])
                 {
+                    case 10:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[0];
+                        break;
+                    case 20:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[1];
+                        break;
+                    case 30:
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[2];
+                        break;
                     case 1000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite1;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[3];
                         break;
                     case 2000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite2;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[4];
                         break;
                     case 3000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite3;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[5];
                         break;
                     case 4000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite4;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[6];
                         break;
                     case 5000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite5;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[7];
                         break;
                     case 6000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite6;
-                        break;
-                    case 7000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite7;
-                        break;
-                    case 8000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite8;
-                        break;
-                    case 9000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _Sprite9;
+                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[8];
                         break;
                 }
 
@@ -341,17 +346,14 @@ public class AttackManager : MonoBehaviour
             _spawnedTargetPoints[i].SetActive(false);
 
         }
-        // if (_multiplierGameObject.name != _TargetTransform.gameObject.name)
-        {
-            _multiplierGameObject.SetActive(false);
-        }
+        _multiplierGameObject.SetActive(false);
 
 
+        CannonActivation();
 
         StartCoroutine(Transition());
         Camera.main.transform.rotation = CameraAttackRotation;
 
-        Invoke("CannonActivation", 0f);
         StartCoroutine(ScoreCalculation(_TargetTransform));
 
         if (_Shield == true)
@@ -360,64 +362,41 @@ public class AttackManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(MakeBuildingDestroyed), 4.5f);
+            Invoke(nameof(MakeBuildingDestroyed), DestroyAnimationDelay);
 
         }
-        //ChangeEnemyBuildingData();
 
 
     }
 
     public IEnumerator ScoreCalculation(Transform trans)
     {
-        int RewardValue = _buildingCost[TargetObjectIndex];
-        
+        float RewardValue = _buildingCost[TargetObjectIndex];
+
         if (_multiplierSelected)
         {
-            RewardValue *= 2;
-            if (GameManager.Instance._MultiplierValue <= 1)
-            {
-                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-                resultPanel.ShowMultiplierDetails(1, 0, "Attack Multiplier", "2");
-                resultPanel.ShowResultTotal(0, RewardValue.ToString());
-                mGameManager._coins += RewardValue;
+            RewardValue *= (_Shield ? 1.5f : 2);
+            resultPanel.ShowMultiplierDetails(2, 2, "Attack Multiplier", (_Shield ? 1.5f : 2).ToString());
+        }
 
-            }
-            else
-            {
-                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-                resultPanel.ShowMultiplierDetails(1, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);
-                resultPanel.ShowMultiplierDetails(2, 0, "Attack Multiplier", "2");
-                resultPanel.ShowResultTotal(0, (RewardValue * GameManager.Instance._MultiplierValue).ToString());
-                mGameManager._coins += RewardValue * GameManager.Instance._MultiplierValue;
-            }
+        resultPanel.ShowMultiplierDetails(0, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);
+        resultPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
+        if (RewardValue.ToString().Length < 3)
+        {
+            mGameManager._energy +=(int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+            resultPanel.ShowResultTotal(1, ((int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
+
         }
         else
         {
-            if (GameManager.Instance._MultiplierValue <= 1)
-            {
-                mGameManager._coins += RewardValue;
-                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-                resultPanel.ShowResultTotal(0, RewardValue.ToString());
-
-            }
-            else
-            {
-                resultPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-                resultPanel.ShowMultiplierDetails(1, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);
-                resultPanel.ShowResultTotal(0, (RewardValue * GameManager.Instance._MultiplierValue).ToString());
-                mGameManager._coins += RewardValue * GameManager.Instance._MultiplierValue;
-            }
+            mGameManager._coins += (int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+            resultPanel.ShowResultTotal(0, ((int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
         }
-       
 
-
-       // _ScoreTextOne.text = "Building Cost - " + RewardValue;
-
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(7.5f);
         resultPanel.gameObject.SetActive(true);
-
     }
+
 
     public void CannonActivation()
     {
@@ -428,7 +407,7 @@ public class AttackManager : MonoBehaviour
     {
         float t = 0.0f;
         Vector3 startingPos = Camera.main.transform.position;
-        Vector3 endPos = new Vector3(_TargetTransform.position.x-20+63.6f , CameraAttackPosition.y+220+26, _TargetTransform.position.z - 570-427); //new Vector3(-476.4f, 316, -570);
+        Vector3 endPos = cannonAnimationCamera.position; //new Vector3(-476.4f, 316, -570);
 
 
         while (t < 1.0f)
@@ -455,23 +434,23 @@ public class AttackManager : MonoBehaviour
                 {
                     if (MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._isBuildingShielded)
                     {
-                        MultiplayerManager.Instance.MultiplayerBuildingDetails[i] ._isBuildingShielded = false;
+                        MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._isBuildingShielded = false;
                     }
                     else
                     {
-                        MultiplayerManager.Instance.MultiplayerBuildingDetails[i] ._isBuildingDestroyed = true;
+                        MultiplayerManager.Instance.MultiplayerBuildingDetails[i]._isBuildingDestroyed = true;
                     }
                 }
             }
             MultiplayerManager.Instance.WriteDetailsOnAttackComplete();
         }
-       
+
     }
     public void BackButton()
     {
         MultiplayerManager.Instance.CheckAttackDataFromFirebase();
         resultPanel.GetComponentInChildren<Button>().interactable = false;
-        Invoke(nameof(ChangeEnemyBuildingData),0.5f);
+        Invoke(nameof(ChangeEnemyBuildingData), 0.5f);
 
     }
 
@@ -479,7 +458,7 @@ public class AttackManager : MonoBehaviour
     void MakeBuildingDestroyed()
     {
         _TargetTransform.position = new Vector3(_TargetTransform.position.x, _buildingSinkPositionAmount, _TargetTransform.position.z);
-        _TargetTransform.rotation = Quaternion.Euler(_TargetTransform.transform.eulerAngles.x, _TargetTransform.eulerAngles.y, _buildingTiltRotationAmount);
+        _TargetTransform.rotation = Quaternion.Euler(_buildingTiltRotationAmount, _TargetTransform.eulerAngles.y, _TargetTransform.eulerAngles.z);
         Instantiate(_destroyedSmokeEffectVFX, _TargetTransform.position, Quaternion.identity, _TargetTransform);
     }
 }

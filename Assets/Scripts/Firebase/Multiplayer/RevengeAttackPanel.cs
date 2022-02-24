@@ -27,13 +27,13 @@ public class RevengeAttackPanel : MonoBehaviour
     public void Start()
     {
         RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
-        for (int i = 0; i < RawAttackedPlayerID.Count; i++)
+       /* for (int i = 0; i < RawAttackedPlayerID.Count; i++)
         {
             if (FilteredAttackedPlayerID.Contains(RawAttackedPlayerID[i])) continue;
             FilteredAttackedPlayerID.Add(RawAttackedPlayerID[i]);
             FilteredAttackedName.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
             FilteredAttackedBuilding.Add(MultiplayerManager.Instance.CurrenetPlayerAttackData[i]._attackedBuildingName);
-        }
+        }*/
     }
     public void OpenRevengePanel()
     {

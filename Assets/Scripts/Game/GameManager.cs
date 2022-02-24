@@ -71,7 +71,14 @@ public class GameManager : MonoBehaviour
     public static System.Action GotAnOpenCard;
     [HideInInspector] public bool refreshForOpenCard;
 
+    public List<string> BuildingCost = new List<string>();
+
     public float cucuMultiplier = 1;
+
+    public int _cucuLevel = 1;
+    public int _stars = 0;
+
+    public int islandNumber =1;
     private void Awake()
     {     
         if (Instance == null)
@@ -117,7 +124,38 @@ public class GameManager : MonoBehaviour
             OpenCardWritten = false;
         }
     }
+    [ContextMenu("Add Stars")]
+    public void AddStars()
+    {
+        _stars += 1;
+        CheckCUCULevel(_stars);
 
+    }
+
+    public void CheckCUCULevel(int _inStars)
+    {
+        switch (_inStars)
+        {
+            case 5:
+                _cucuLevel = 1;
+                cucuMultiplier = 1.25f;
+                break;
+            case 10:
+                _cucuLevel = 2;
+                cucuMultiplier = 1.50f;
+                break;
+            case 15:
+                _cucuLevel = 3;
+                cucuMultiplier = 1.75f;
+                break;
+            case 20:
+                _cucuLevel = 4;
+                cucuMultiplier = 2;
+                break;
+            default:
+                break;
+        }
+    }
     private IEnumerator AutomaticEnergyRefiller()
     {
         while (mIsFull)
@@ -162,8 +200,8 @@ public class GameManager : MonoBehaviour
     public void UpdateOpenCardDetails(List<OpenCard> inOpenCardDetails/*, List<int> inOpenCardSlot*/)
     {
         OpenCardDetails = inOpenCardDetails;
-        //OpenedCardSlot = inOpenCardSlot;
         GotAnOpenCard?.Invoke();
+        //OpenedCardSlot = inOpenCardSlot;
     }
 
     public bool HasEnoughCoins(int amount)
@@ -177,7 +215,8 @@ public class GameManager : MonoBehaviour
         hasChoiceInLevel = true;
         LevelLoadManager.instance.LoadLevelASyncOf("Map", 1000);
         OpenCardDetails.Clear();
-        //OpenedCardSlot.Clear();
+        islandNumber++;
+        FirebaseManager.Instance.ReadEconomy();
     }
     public void AssignTutorial(Tutorial tutorial)
     {

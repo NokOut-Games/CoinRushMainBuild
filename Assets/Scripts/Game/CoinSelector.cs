@@ -53,20 +53,13 @@ public class CoinSelector : MonoBehaviour
     {
         int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
 
-        if (GameManager.Instance._MultiplierValue <= 1)
-        {           
-            RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-            RewardDisplayPanel.ShowResultTotal(0, coinValue.ToString());
-            mGameManager._coins += coinValue;
-        }
-        else
-        {
-            RewardDisplayPanel.ShowMultiplierDetails(0, 0, "Cucu Multiplier", "1");
-            RewardDisplayPanel.ShowMultiplierDetails(1, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
-            RewardDisplayPanel.ShowResultTotal(0, (coinValue * GameManager.Instance._MultiplierValue).ToString());
+       
+        RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+        RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
 
-            mGameManager._coins += coinValue* GameManager.Instance._MultiplierValue;
-        }
+        RewardDisplayPanel.ShowResultTotal(0, (coinValue * GameManager.Instance._MultiplierValue).ToString());
+
+        mGameManager._coins +=(int) (coinValue* GameManager.Instance._MultiplierValue *GameManager.Instance.cucuMultiplier);
         //Assign it to chest which player clicks on and pass the values
         GameObject SelectedPig = this.gameObject;
         SelectedPig.GetComponent<ChestValue>()._value = coinValue;
@@ -102,9 +95,6 @@ public class CoinSelector : MonoBehaviour
         PlayParticleEffects(CoinShowerParticleEffect , CoinShowerSpawnPoint,2);
 
         Invoke(nameof(DisplayRewardAndInvokeScene), 3f);
-
-  
-
     }
 
     
