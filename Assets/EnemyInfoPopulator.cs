@@ -17,7 +17,7 @@ public class EnemyInfoPopulator : MonoBehaviour
     private void Start()
     {
 
-        nameTxt.text = MultiplayerManager.Instance.Enemydata.UserDetails._playerName;
+//        nameTxt.text = MultiplayerManager.Instance.Enemydata.UserDetails._playerName;
         picture.sprite = null;
         Action<Sprite> OnGettingPicture = (Pic) =>
         {

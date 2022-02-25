@@ -35,6 +35,10 @@ public class GameManager : MonoBehaviour
     public int _shield;
     public int _maxShield;
 
+    public int _cucuLevel = 1;
+    public int _stars = 0;
+    public float _cucuMultiplier = 1;
+
     public int _playerCurrentLevel = 1;
     public int _minutes;
     [HideInInspector] public int _openedCards;
@@ -86,6 +90,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(AutomaticEnergyRefiller());
+        CheckCUCULevel(_stars);
     }
 
     private void Update()
@@ -182,6 +187,39 @@ public class GameManager : MonoBehaviour
     public void AssignTutorial(Tutorial tutorial)
     {
         this.tutorial = tutorial;
+    }
+
+    [ContextMenu("Add Stars")]
+    public void AddStars()
+    {
+        _stars += 1;
+        CheckCUCULevel(_stars);
+        
+    }
+
+    public void CheckCUCULevel(int _inStars)
+    {
+        switch (_inStars)
+        {
+            case 5:
+                _cucuLevel = 1;
+                _cucuMultiplier = 1.25f;
+                break;
+            case 10:
+                _cucuLevel = 2;
+                _cucuMultiplier = 1.50f;
+                break;
+            case 15:
+                _cucuLevel = 3;
+                _cucuMultiplier = 1.75f;
+                break;
+            case 20:
+                _cucuLevel = 4;
+                _cucuMultiplier = 2;
+                break;
+            default:
+                break;
+        }
     }
 }
 

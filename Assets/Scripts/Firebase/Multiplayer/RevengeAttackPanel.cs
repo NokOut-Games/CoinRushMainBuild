@@ -26,7 +26,7 @@ public class RevengeAttackPanel : MonoBehaviour
 
     public void Start()
     {
-        RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
+//        RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
         for (int i = 0; i < RawAttackedPlayerID.Count; i++)
         {
             if (FilteredAttackedPlayerID.Contains(RawAttackedPlayerID[i])) continue;

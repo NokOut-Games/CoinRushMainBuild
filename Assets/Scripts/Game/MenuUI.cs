@@ -11,7 +11,8 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private GameObject screenItemsUIPanel;
     [SerializeField] private GameObject DrawButtonPanelUI;
     [SerializeField] private GameObject levelCompletedPanel;
-
+    [SerializeField] private GameObject mcucuLevelPanel;
+ 
     public GameObject OpenCards;
 
     public TextMeshProUGUI _coinText;
@@ -138,6 +139,15 @@ public class MenuUI : MonoBehaviour
        // OpenCards.SetActive(true);
     }
 
+    public void OnStarClicked()
+    {
+        mcucuLevelPanel.SetActive(true);
+    }
+
+    public void OnCUCUReturn()
+    {
+        mcucuLevelPanel.SetActive(false);
+    }
 
     public void OnOptionButtonPress(bool inActivate)
     {
