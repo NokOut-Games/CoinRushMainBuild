@@ -34,11 +34,11 @@ public class CoinProbability : MonoBehaviour
     private void Awake()
     {
         _coins = new List<Coins>(5);
-        _coins.Add(new Coins(5000, mChanceA, 0, 0));
-        _coins.Add(new Coins(25000, mChanceB, 0, 0));
-        _coins.Add(new Coins(100000, mChanceC, 0, 0));
-        _coins.Add(new Coins(500000, mChanceD, 0, 0));
-        _coins.Add(new Coins(1000000, mChanceE, 0, 0));
+        _coins.Add(new Coins(15000, mChanceA, 0, 0));
+        _coins.Add(new Coins(75000, mChanceB, 0, 0));
+        _coins.Add(new Coins(300000, mChanceC, 0, 0));
+        _coins.Add(new Coins(1500000, mChanceD, 0, 0));
+        _coins.Add(new Coins(3000000, mChanceE, 0, 0));
     }
 
     public void Start()

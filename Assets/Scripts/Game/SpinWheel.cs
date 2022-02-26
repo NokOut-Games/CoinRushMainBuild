@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 [System.Serializable]
 public class WheelPiece
@@ -103,12 +104,12 @@ public class SpinWheel : MonoBehaviour
 
             if (i % 2 == 0 || i == 0)
             {
-                pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
+                pieceTrns.GetChild(1).GetComponent<TMP_Text>().text = piece._Label;
             }
             else
             {
-                pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;
-                pieceTrns.GetChild(1).GetComponent<Text>().color = Color.yellow;
+                pieceTrns.GetChild(1).GetComponent<TMP_Text>().text = piece._Label;
+                pieceTrns.GetChild(1).GetComponent<TMP_Text>().color = Color.yellow;
             }
             pieceTrns.GetChild(0).GetComponent<Image>().sprite = piece._Icon;
             //pieceTrns.GetChild(1).GetComponent<Text>().text = piece._Label;

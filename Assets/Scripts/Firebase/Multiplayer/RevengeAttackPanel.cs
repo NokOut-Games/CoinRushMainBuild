@@ -23,17 +23,17 @@ public class RevengeAttackPanel : MonoBehaviour
     public List<RectTransform> FBTransformPoints;
     public GameObject _FBFriends;
     public List<GameObject> FBEnemyList = new List<GameObject>();
+    [SerializeField]Transform ContentOfRevenge;
 
     public void Start()
     {
         RawAttackedPlayerID =MultiplayerManager.Instance.attackedplayerIDList;
-       /* for (int i = 0; i < RawAttackedPlayerID.Count; i++)
+        for (int i = 0; i < RawAttackedPlayerID.Count; i++)
         {
             if (FilteredAttackedPlayerID.Contains(RawAttackedPlayerID[i])) continue;
             FilteredAttackedPlayerID.Add(RawAttackedPlayerID[i]);
             FilteredAttackedName.Add(MultiplayerManager.Instance.attackedplayerNameList[i]);
-            FilteredAttackedBuilding.Add(MultiplayerManager.Instance.CurrenetPlayerAttackData[i]._attackedBuildingName);
-        }*/
+        }
     }
     public void OpenRevengePanel()
     {
@@ -43,7 +43,8 @@ public class RevengeAttackPanel : MonoBehaviour
 
         for (int i = 0; i < FilteredAttackedPlayerID.Count; i++)
         {
-            GameObject EnemySlot = Instantiate(_ENemy, TransformPoints[i].position, TransformPoints[i].rotation, TransformPoints[i].parent);
+            //GameObject EnemySlot = Instantiate(_ENemy, TransformPoints[i].position, TransformPoints[i].rotation, TransformPoints[i].parent);
+            GameObject EnemySlot = Instantiate(_ENemy, ContentOfRevenge);
             EnemyList.Add(EnemySlot);
 
             EnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FilteredAttackedName[i];
@@ -69,12 +70,12 @@ public class RevengeAttackPanel : MonoBehaviour
 
             FBEnemyList[i].transform.GetChild(0).GetComponent<Text>().text = FacebookManager.Instance.FBFriendsNameList[i];
             FBEnemyList[i].transform.GetChild(2).GetComponent<RevengeButton>().EnemyID = FacebookManager.Instance.FBFriendsIDList[i];
-            // FacebookManager.Instance.GetFriendsPicture();
-            //FB.API("https" + "://graph.facebook.com/" + FacebookManager.Instance.FBFriendsIDList[i] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
-            //{
-            //    Debug.Log(FacebookManager.Instance.FBFriendsIDList[i] + "Pic ID");
-            //    FBEnemyList[i].transform.GetChild(3).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
-            //});
+           // FacebookManager.Instance.GetFriendsPicture();
+            /*FB.API("https" + "://graph.facebook.com/" + FacebookManager.Instance.FBFriendsIDList[i] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+            {
+                Debug.Log(FacebookManager.Instance.FBFriendsIDList[i] + "Pic ID");
+                FBEnemyList[i].transform.GetChild(3).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
+            });*/
         }
     }
 

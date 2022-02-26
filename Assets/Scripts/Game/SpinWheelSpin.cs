@@ -29,6 +29,8 @@ public class SpinWheelSpin : MonoBehaviour
     [SerializeField] GameObject CoinParticle;
     [SerializeField] GameObject EnergyParticle;
     [SerializeField] Animator chestAnimation;
+
+    [SerializeField] GameObject endParticle;
     private void Start()
     {
          mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -41,6 +43,7 @@ public class SpinWheelSpin : MonoBehaviour
 
             spinWheel.OnSpinEnd(wheelPiece =>
             {
+                endParticle.SetActive(true);
                 if (FreeSpins == 0)
                 {
                     DoFreeSpins = false;
@@ -170,6 +173,9 @@ public class SpinWheelSpin : MonoBehaviour
         if (FreeSpins > 0)
         {
             chestAnimation.SetBool("Open", false);
+            CoinParticle.SetActive(true);
+            EnergyParticle.SetActive(true);
+            endParticle.SetActive(true);
         }
         else
         {
@@ -182,7 +188,10 @@ public class SpinWheelSpin : MonoBehaviour
             foreach (var item in result)
             {
                 iconIndex.Add(item[0]);
-                value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+                if (item[0] != 2)
+                    value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+                else
+                    value.Add((item[1]).ToString());
             }        
             _uiReturnToGame.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
             if (totalFreeSpin !=0)

@@ -54,7 +54,9 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-
+        /* CreateNewGuestUser();
+         LevelLoadManager.instance.GoToMapScreen(true);
+         ReadEconomy();*/
         if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();

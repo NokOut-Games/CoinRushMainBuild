@@ -98,7 +98,7 @@ public class BoxReactor : MonoBehaviour
                     //Instantiating cans based on chest value
                     switch (other.gameObject.GetComponent<ChestValue>()._value)
                     {
-                        case 10:
+                        case 15:
                             can = Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
                             StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
 
@@ -108,7 +108,7 @@ public class BoxReactor : MonoBehaviour
 
                             Invoke("InvokeKinematic", .75f);
                             break;
-                        case 25:
+                        case 30:
                             can = Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
                             StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
 
@@ -117,7 +117,7 @@ public class BoxReactor : MonoBehaviour
                             SetRewardPanel(crateValueRef);
                             Invoke("InvokeKinematic", .75f);
                             break;
-                        case 100:
+                        case 75:
                             can = Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
                             StartCoroutine(SpawnParticleCoroutine(EnergyCanLargeParticle,2,-10));
                             crateAnimRef.SetTrigger("isBreaking?");

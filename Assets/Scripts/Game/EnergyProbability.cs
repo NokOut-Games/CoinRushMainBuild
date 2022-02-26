@@ -35,9 +35,9 @@ public class EnergyProbability : MonoBehaviour
     private void Awake()
     {
         _energies = new List<Energy>(3);
-        _energies.Add(new Energy(10, mChanceA, 0, 0));
-        _energies.Add(new Energy(25, mChanceB, 0, 0));
-        _energies.Add(new Energy(100, mChanceC, 0, 0));
+        _energies.Add(new Energy(15, mChanceA, 0, 0));
+        _energies.Add(new Energy(30, mChanceB, 0, 0));
+        _energies.Add(new Energy(75, mChanceC, 0, 0));
     }
 
     public void Start()

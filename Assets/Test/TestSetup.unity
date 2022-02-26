@@ -21360,7 +21360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCardHolderParent: {fileID: 0}
-  clicks: 0
   _playerHandPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -21377,7 +21376,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
   - {fileID: 11400000, guid: 0952565636ceb1c4889cc007d2310ddd, type: 2}
-  _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 0}
   drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
@@ -21385,25 +21383,32 @@ MonoBehaviour:
   _drawButtonRectTransform: {fileID: 0}
   mMaxHoldTime: 5
   timeForCardAnimation: 2
-  time: 0
-  maxTime: 5
   _drawButtonFillerImage: {fileID: 0}
-  _jokerList: []
-  onceDonee: 0
-  mHowManyCardSetsAreActive: 0
-  _cardsThatCanBeReplacedByJoker: []
   _openCardPrefabs: []
-  positionNumber: 0
+  _openedCardIndex: 0
+  _openCardSlot: 0
   _OpenCardSlotFilled: 
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
   blackOutScreen: {fileID: 0}
-  _levelManager: {fileID: 0}
+  threeCardEffect: {fileID: 0}
+  shieldAnimation: {fileID: 0}
+  shieldParticle: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mHasThreeCardMatch: 0
   mJokerFindWithMultiCardPair: 0
   mJokerProbability: 0
+  mDrawButtonState: 0
+  _Multiplier: {fileID: 0}
+  uIcam: {fileID: 0}
+  drawBtnParticle: {fileID: 0}
+  jokerPairCardTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!114 &914831827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21417,7 +21422,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mCardHolderParent: {fileID: 0}
-  clicks: 0
   _playerHandPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -21433,7 +21437,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 40daae7ed65653649a08e2626aaba052, type: 2}
   - {fileID: 11400000, guid: bef5d9154e82bb54da248be5deb27a0c, type: 2}
   - {fileID: 11400000, guid: 59c4025fd9e49e74988aea7b0e8417db, type: 2}
-  _CardList: []
   mCardListGameObject: []
   DrawButton: {fileID: 1927502875}
   drawNormal: {fileID: 5885589207639308909, guid: 0e8c491a4cac94442a3a14e6f3a82518, type: 3}
@@ -21441,25 +21444,32 @@ MonoBehaviour:
   _drawButtonRectTransform: {fileID: 1927502874}
   mMaxHoldTime: 3
   timeForCardAnimation: 2
-  time: 0
-  maxTime: 5
   _drawButtonFillerImage: {fileID: 1927502866}
-  _jokerList: []
-  onceDonee: 0
-  mHowManyCardSetsAreActive: 0
-  _cardsThatCanBeReplacedByJoker: []
   _openCardPrefabs: []
-  positionNumber: 0
+  _openedCardIndex: 0
+  _openCardSlot: 0
   _OpenCardSlotFilled: 
   cardDeckAnimation2D: {fileID: 0}
   cardDeckAnimation3D: {fileID: 0}
   backToDeckAnimation3D: {fileID: 0}
   blackOutScreen: {fileID: 0}
-  _levelManager: {fileID: 0}
+  threeCardEffect: {fileID: 0}
+  shieldAnimation: {fileID: 0}
+  shieldParticle: {fileID: 0}
   _buildingManagerRef: {fileID: 0}
   mHasThreeCardMatch: 0
   mJokerFindWithMultiCardPair: 0
   mJokerProbability: 0
+  mDrawButtonState: 0
+  _Multiplier: {fileID: 0}
+  uIcam: {fileID: 0}
+  drawBtnParticle: {fileID: 0}
+  jokerPairCardTransforms:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  menu: {fileID: 0}
 --- !u!23 &914831828
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -53808,20 +53818,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _CameraParent: {fileID: 455892550}
-  mPanSpeed: 20
-  mAutoDragPanSpeed: 0
   _CameraLeftBound: -230
   _CameraRightBound: 230
-  timeToAcceleration: 0
-  mTimeTakenToAutoPan: 0
   mCameraNearBound: -350
   mCameraFarBound: -515
-  _currentView: {fileID: 0}
   _views:
   - {fileID: 794824809}
   - {fileID: 1960566431}
   - {fileID: 390699815}
-  _transitionSpeed: 4
   mDrawButtonRectTransform: {fileID: 0}
   mOpenHandRectTransform: {fileID: 0}
   mScrollViewRectTransform: {fileID: 0}
@@ -53832,7 +53836,9 @@ MonoBehaviour:
   _isCameraInConstructionView: 0
   _inBetweenConstructionProcess: 0
   _CameraFreeRoam: 1
-  mMenuUI: {fileID: 0}
+  uIcam: {fileID: 0}
+  TouchTime: 0.11
+  openCardSelected: 0
 --- !u!114 &2014685402
 MonoBehaviour:
   m_ObjectHideFlags: 0

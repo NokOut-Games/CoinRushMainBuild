@@ -6,7 +6,6 @@ using UnityEngine;
 public class EconomyLoader : MonoBehaviour
 {
     public List<string> levels = new List<string>();
-    public List<LevelsCost> LevelList = new List<LevelsCost>();
     public List<string> ListOfStringsInExcel = new List<string>();
     Dictionary<string, string> Building = new Dictionary<string, string>();
 
@@ -45,6 +44,7 @@ public class EconomyLoader : MonoBehaviour
         for (int i = 0; i < ListOfStringsInExcel.Count ; i+=2)
         {
             Building.Add(ListOfStringsInExcel[i], ListOfStringsInExcel[i + 1]);
+            levels.Add(ListOfStringsInExcel[i + 1]);
         }
 
         int levelNo = 1;
@@ -52,6 +52,7 @@ public class EconomyLoader : MonoBehaviour
         int j = 0;
         foreach (var item in Building)
         {
+            
             costes.Add(item.Key, item.Value);
             Debug.Log(j % 40);
             if (j % 40 == 39)
@@ -59,7 +60,6 @@ public class EconomyLoader : MonoBehaviour
                FirebaseManager.Instance.WriteEconomy(levelNo, costes);
                 levelNo += 1;
                 costes.Clear();
-                levels.Clear();
             }
             j++;
         }

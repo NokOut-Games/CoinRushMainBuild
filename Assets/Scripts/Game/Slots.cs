@@ -40,11 +40,11 @@ public class Slots : MonoBehaviour
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         mLevelLoadManager = mGameManager.gameObject.GetComponent<LevelLoadManager>();
-        _uiSpinButton.onClick.AddListener(()=>
+        _uiSpinButton.onClick.AddListener(() =>
         {
             for (int i = 0; i < _reels.Length; i++)
             {
-               _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
+                _reels[i].mReelsRollerParent.DOLocalMoveY(0, .5f, false);
                 _reels[i].mSpinOver = false;
             }
             if (spin > 0)
@@ -65,23 +65,24 @@ public class Slots : MonoBehaviour
             _uiSpinButton.interactable = true;
         }
     }
-    
+
     private IEnumerator DelayedSpin()
     {
         foreach (Reels reel in _reels)
         {
-            reel._roll = true;                                                                                          
-            reel.OnReelRollEnd(reel => 
-            {   
+            reel._roll = true;
+            reel.OnReelRollEnd(reel =>
+            {
+                reel._slotElementGameObject.GetComponent<Animator>().Play("SlotReward");
                 _elementsName.Add(reel);
-                ResultChecker(); 
+                ResultChecker();
             });
             reel.mdisableRoll = false;
         }
-        for (int i = 0; i < _reels.Length; i++) 
+        for (int i = 0; i < _reels.Length; i++)
         {
-            yield return new WaitForSeconds(Random.Range(1f,2.5f));
-            if(i==2)
+            yield return new WaitForSeconds(Random.Range(1f, 2.5f));
+            if (i == 2)
             {
                 yield return new WaitForSeconds(1.5f);
             }
@@ -95,17 +96,18 @@ public class Slots : MonoBehaviour
         energyShower.SetActive(false);
         for (int i = 0; i < _elementsName.Count - 2; i++)
         {
-            if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name && _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
             {
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
-                        totalCard+= JackPotReward[2];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        totalCard += JackPotReward[2];
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
                         spin += JackPotReward[3];
-                       totalSpins+= JackPotReward[3];
+                        totalSpins += JackPotReward[3];
 
                         if (spin == 0)
                         {
@@ -115,24 +117,27 @@ public class Slots : MonoBehaviour
                     case "Coins":
                         coinShower.SetActive(true);
                         totalCoin += JackPotReward[0];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
                         energyShower.SetActive(true);
                         totalEnergy += JackPotReward[1];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
                         break;
                 }
             }
-            else if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name || _elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            else if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name || _elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
             {
                 switch (_elementsName[i]._slotElementGameObject.name)
                 {
                     case "TradingCards":
                         totalCard += twoMatchReward[2];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
                         spin += twoMatchReward[3];
@@ -143,17 +148,19 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name)
+                        if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name)
                         {
                             _reels[i].coinParticle.SetActive(true);
-                            _reels[i+1].coinParticle.SetActive(true);
-                        }else if(_elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                            _reels[i + 1].coinParticle.SetActive(true);
+                        }
+                        else if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
                         {
                             _reels[i].coinParticle.SetActive(true);
                             _reels[i + 2].coinParticle.SetActive(true);
                         }
                         totalCoin += twoMatchReward[0];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
                         if (_elementsName[i]._slotElementGameObject.name == _elementsName[i + 1]._slotElementGameObject.name)
@@ -167,19 +174,21 @@ public class Slots : MonoBehaviour
                             _reels[i + 2].energyPaticle.SetActive(true);
                         }
                         totalEnergy += twoMatchReward[1];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
                         break;
                 }
             }
-            else if( _elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+            else if (_elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
             {
                 switch (_elementsName[i + 1]._slotElementGameObject.name)
                 {
                     case "TradingCards":
                         totalCard += twoMatchReward[2];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "FreeSpins":
                         spin += singleReward[3];
@@ -190,33 +199,35 @@ public class Slots : MonoBehaviour
                         }
                         break;
                     case "Coins":
-                        if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        if (_elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
                         {
-                            _reels[i+1].coinParticle.SetActive(true);
+                            _reels[i + 1].coinParticle.SetActive(true);
                             _reels[i + 1].coinParticle.SetActive(true);
                         }
-                        else if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        else if (_elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
                         {
-                            _reels[i+1].coinParticle.SetActive(true);
+                            _reels[i + 1].coinParticle.SetActive(true);
                             _reels[i + 2].coinParticle.SetActive(true);
                         }
 
                         totalCoin += twoMatchReward[0];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     case "Energy":
-                        if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        if (_elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
                         {
-                            _reels[i+1].energyPaticle.SetActive(true);
+                            _reels[i + 1].energyPaticle.SetActive(true);
                             _reels[i + 2].energyPaticle.SetActive(true);
                         }
-                        else if (_elementsName[i+1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
+                        else if (_elementsName[i + 1]._slotElementGameObject.name == _elementsName[i + 2]._slotElementGameObject.name)
                         {
-                            _reels[i+1].energyPaticle.SetActive(true);
+                            _reels[i + 1].energyPaticle.SetActive(true);
                             _reels[i + 2].energyPaticle.SetActive(true);
                         }
-                        totalEnergy+= twoMatchReward[1];
-                        Invoke(nameof(RewardPanelInvoke), 2f);
+                        totalEnergy += twoMatchReward[1];
+                        if (spin == 0)
+                            Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
                     default:
                         break;
@@ -230,7 +241,7 @@ public class Slots : MonoBehaviour
                 {
                     totalEnergy += singleReward[1];
                 }
-                else if(_elementsName[0]._slotElementGameObject.name == "Coins")
+                else if (_elementsName[0]._slotElementGameObject.name == "Coins")
                 {
                     totalCoin += singleReward[0];
                 }
@@ -242,10 +253,11 @@ public class Slots : MonoBehaviour
                 {
                     totalCard += singleReward[2];
                 }
+                if (spin == 0)
                     Invoke(nameof(RewardPanelInvoke), 2f);
             }
         }
-        
+
     }
 
     public void RewardPanelInvoke()
@@ -270,7 +282,10 @@ public class Slots : MonoBehaviour
         foreach (var item in result)
         {
             iconIndex.Add(item[0]);
-            value.Add((item[1]* GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+            if (item[0] != 2)
+                value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+            else
+                value.Add((item[1]).ToString());
         }
         _rewardPanel.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
         if (totalSpins != 0)
