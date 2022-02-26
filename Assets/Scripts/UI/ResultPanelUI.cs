@@ -26,7 +26,7 @@ public class ResultPanelUI : MonoBehaviour
         {
             resultsElement[i].transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = rewardIcons[IconIndex[i]];
             int currency = int.Parse( Value[i]);
-            resultsElement[i].transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = currency.ToString("C");
+            resultsElement[i].transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = currency.ToString();
             resultsElement[i].SetActive(true);
         }
     }
@@ -36,7 +36,7 @@ public class ResultPanelUI : MonoBehaviour
             resultsElement[0].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = rewardIcons[IconIndex];
             int currency = int.Parse(Value);
 
-            resultsElement[0].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = currency.ToString("C");
+            resultsElement[0].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = currency.ToString();
             resultsElement[0].SetActive(true);
        
     }

@@ -50,7 +50,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] GameObject friendScreen;
     [SerializeField] Transform content;
     [SerializeField] Camera uIcam;
-
+    [SerializeField] private GameObject mcucuLevelPanel;
     bool isInoptionScreen => RectTransformUtility.RectangleContainsScreenPoint(optionScreen, Input.mousePosition, uIcam);
 
 
@@ -83,7 +83,26 @@ public class MenuUI : MonoBehaviour
         profileImage.sprite = pic;
     }
 
-   
+    public void OnStarClicked()
+    {
+        mcucuLevelPanel.GetComponent<Animator>().SetTrigger("StarButtonClicked?");
+        UpdateCUCULevelAndMultiplierText();
+
+    }
+
+    void UpdateCUCULevelAndMultiplierText()
+    {
+        GameObject PanelReference = mcucuLevelPanel.transform.Find("Panel Background").gameObject;
+        PanelReference.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = GameManager.Instance._cucuLevel.ToString();
+        PanelReference.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = GameManager.Instance.cucuMultiplier.ToString();
+    }
+
+    public void OnCUCUReturn()
+    {
+        //mcucuLevelPanel.SetActive(false);
+        mcucuLevelPanel.GetComponent<Animator>().SetTrigger("BackButtonClicked?");
+
+    }
 
     private void Update()
     {

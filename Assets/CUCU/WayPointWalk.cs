@@ -31,7 +31,7 @@ public class WayPointWalk : MonoBehaviour
 
             if(changeIndex)
             {
-                anim.SetInteger("DanceIndex", Random.Range(0, 3)); // always 1 extra value for animation using random function
+                anim.SetInteger("DanceIndex", Random.Range(0, 8)); // always 1 extra value for animation using random function
                 changeIndex = false;         
             }
             anim.SetBool("Walking", false);
@@ -50,10 +50,10 @@ public class WayPointWalk : MonoBehaviour
            anim.SetBool("Dance", false);
             anim.SetBool("Walking", true);
         }
-        Transform wp = waypoints[_currentWaypointIndex];
-        if (Vector3.Distance(transform.position, wp.position) < 0.01f)
+        Transform waypoint = waypoints[_currentWaypointIndex];
+        if (Vector3.Distance(transform.position, waypoint.position) < 0.01f)
         {
-            transform.position = wp.position;
+            transform.position = waypoint.position;
             _waitCounter = 0f;
             _waiting = true;
             changeIndex = true;
@@ -61,8 +61,8 @@ public class WayPointWalk : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position,wp.position,_walkSpeed * Time.deltaTime);
-            transform.LookAt(wp.position);
+            transform.position = Vector3.MoveTowards(transform.position,waypoint.position,_walkSpeed * Time.deltaTime);
+            transform.LookAt(waypoint.position);
         }
     }
 }

@@ -65,6 +65,7 @@ public class AttackManager : MonoBehaviour
 
     [SerializeField] Transform cannonAnimationCamera;
     [SerializeField] float DestroyAnimationDelay;
+    [SerializeField] GameObject debree;
 
     private void Awake()
     {
@@ -150,7 +151,10 @@ public class AttackManager : MonoBehaviour
                 }
                 enemyBuilding.transform.position = new Vector3(enemyBuilding.transform.position.x, _buildingSinkPositionAmount, enemyBuilding.transform.position.z);
                 enemyBuilding.transform.rotation = Quaternion.Euler(enemyBuilding.transform.eulerAngles.x, enemyBuilding.transform.eulerAngles.y, _buildingTiltRotationAmount);
-                Instantiate(_destroyedSmokeEffectVFX, enemyBuilding.transform.position, Quaternion.identity, enemyBuilding.transform);
+                
+                Instantiate(_destroyedSmokeEffectVFX, enemyBuilding.transform.position, Quaternion.identity, enemyBuilding.transform).transform.GetChild(0).localPosition = new Vector3(0, 0, -enemyBuilding.transform.GetComponentInChildren<BoxCollider>().size.z / 2);
+                Instantiate(debree, enemyBuilding.transform.position+new Vector3(0, 0, -enemyBuilding.transform.GetComponentInChildren<BoxCollider>().size.z / 2), Quaternion.identity, enemyBuilding.transform);
+
                 _enemyBuildings.Add(enemyBuilding);
             }
         }
@@ -460,6 +464,7 @@ public class AttackManager : MonoBehaviour
         _TargetTransform.position = new Vector3(_TargetTransform.position.x, _buildingSinkPositionAmount, _TargetTransform.position.z);
         _TargetTransform.rotation = Quaternion.Euler(_buildingTiltRotationAmount, _TargetTransform.eulerAngles.y, _TargetTransform.eulerAngles.z);
         Instantiate(_destroyedSmokeEffectVFX, _TargetTransform.position, Quaternion.identity, _TargetTransform);
+        Instantiate(debree, _TargetTransform.position, Quaternion.identity, _TargetTransform);
     }
 }
 
