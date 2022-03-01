@@ -295,7 +295,6 @@ public class CardDeck : MonoBehaviour
                     {
                         if (drawButtonClick && DrawButton.gameObject.activeInHierarchy == true && mMakeDrawBtnEnable && !mAutoCardDraw)
                         {
-                            mMakeDrawBtnEnable = false;
                             time = 0;
                             DrawCard();
                         }
@@ -437,7 +436,6 @@ public class CardDeck : MonoBehaviour
         {
             if (canClick && mMakeDrawBtnEnable && GameManager.Instance._energy > 0)
             {
-                mMakeDrawBtnEnable = false;
                 DrawCard();
             }
             yield return new WaitForSeconds(timeForCardAnimation);
@@ -446,10 +444,14 @@ public class CardDeck : MonoBehaviour
 
     private void DrawCard()
     {
+        if (CardDeckAnimator.GetCurrentAnimatorStateInfo(0).IsName("Back")) return;
+
         if (_CardList.Count >= 8)
         {
             return;
         }
+        mMakeDrawBtnEnable = false;
+
         GameManager.Instance._energy -= 1;
 
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();

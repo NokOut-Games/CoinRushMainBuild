@@ -73,7 +73,7 @@ public class BoxReactor : MonoBehaviour
             {
                 isCollided = true;
                 //Destroy(other.gameObject.GetComponent<BoxCollider>());
-                
+                GetComponent<Animator>().Play("break");
 
                 PlayParticleEffects(other.gameObject);
 
@@ -85,13 +85,13 @@ public class BoxReactor : MonoBehaviour
                 other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
                 //Disabling the particle Effect
-                other.transform.Find("Wind_Effect").gameObject.SetActive(false);
+                other.transform.GetChild(0).Find("Wind_Effect").gameObject.SetActive(false);
 
                 //Getting the can spawn location to spawn the can
                 canSpawnLocation = other.transform.Find("CanSpawnLocation").gameObject;
 
                 //Getting references
-                Animator crateAnimRef = other.transform.parent.gameObject.GetComponent<Animator>();
+                Animator crateAnimRef = other.transform.GetChild(0).gameObject.GetComponent<Animator>();
                 ChestValue crateValueRef = other.gameObject.GetComponent<ChestValue>();
 
                 if (!isCanInstantiated)
@@ -132,7 +132,7 @@ public class BoxReactor : MonoBehaviour
                 //Invoke("ActiveRewardPanel", 3f);
             }
         }
-        StopCoroutine(energySelector.energyCoroutine);
+       // StopCoroutine(energySelector.energyCoroutine);
     }
 
     IEnumerator CanGameObjectZoomIn(GameObject inCan)
@@ -147,7 +147,7 @@ public class BoxReactor : MonoBehaviour
 
         yield return new WaitForSeconds(.3f);
         inCan.transform.DOScale(mEndGameCanScaleValue, 1);
-        Camera.main.transform.DOMove(cameraTargetPosition, mCameraMoveDuration, false);
+        //Camera.main.transform.DOMove(cameraTargetPosition, mCameraMoveDuration, false);
 
         // Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, 2 * Time.deltaTime);
         Invoke("ActiveRewardPanel", 2f);

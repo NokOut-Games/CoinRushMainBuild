@@ -12,14 +12,14 @@ public class MapCameraController : MonoBehaviour
     void Update()
     {
        
-        if (Input.touchCount > 0&& !GameManager.Instance.isInTutorial)
+        if (Input.touchCount > 0/*&& !GameManager.Instance.isInTutorial*/)
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Moved )//&& transform.position.z < _EndBoundary + mBounceDistance && transform.position.z > mStartBoundary - mBounceDistance)
+            if (touch.phase == TouchPhase.Moved && transform.position.z < _EndBoundary + mBounceDistance && transform.position.z > mStartBoundary - mBounceDistance)
             {
                 if (IsBound(touch)) return;
-                transform.position = transform.position + new Vector3(0, 0, -touch.deltaPosition.y) * mSlideSpeed;
+                transform.position = transform.position + new Vector3(0, -touch.deltaPosition.y, 0) * mSlideSpeed;
 
             }
         }
@@ -27,13 +27,13 @@ public class MapCameraController : MonoBehaviour
         {
             if (mStartBoundary < _EndBoundary)
             {
-                if (transform.position.z > _EndBoundary)
+                if (transform.position.y > _EndBoundary)
                 {
-                    transform.position = Vector3.Lerp(transform.position, transform.position - (Vector3.forward * mBounceDistance), mLearpSpeed * Time.deltaTime);
+                    transform.position = Vector3.Lerp(transform.position, transform.position - (Vector3.up* mBounceDistance), mLearpSpeed * Time.deltaTime);
                 }
-                else if (transform.position.z < mStartBoundary)
+                else if (transform.position.y < mStartBoundary)
                 {
-                    transform.position = Vector3.Lerp(transform.position, transform.position + (Vector3.forward * mBounceDistance), mLearpSpeed * Time.deltaTime);
+                    transform.position = Vector3.Lerp(transform.position, transform.position + (Vector3.up * mBounceDistance), mLearpSpeed * Time.deltaTime);
                 }
             }
         }
@@ -43,8 +43,8 @@ public class MapCameraController : MonoBehaviour
     {
         /*if (transform.position.z > _EndBoundary + mBounceDistance && -touch.deltaPosition.y > 0) return true;
         else if (transform.position.z < mStartBoundary - mBounceDistance && -touch.deltaPosition.y < 0) return true;
-        else*/ if (transform.position.z > _EndBoundary + mBounceDistance && -touch.deltaPosition.y > 0) return true;
-        else if (transform.position.z < mStartBoundary - mBounceDistance && -touch.deltaPosition.y < 0) return true;
+        else*/ if (transform.position.y > _EndBoundary + mBounceDistance && -touch.deltaPosition.y > 0) return true;
+        else if (transform.position.y < mStartBoundary - mBounceDistance && -touch.deltaPosition.y < 0) return true;
         else return false;
     }
 }

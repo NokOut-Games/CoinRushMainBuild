@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
      public int _SetIndex;
      public List<int> _CompletedLevelsInSet;
-    [HideInInspector] public bool hasChoiceInLevel;
+     public bool hasChoiceInLevel;
 
 
 

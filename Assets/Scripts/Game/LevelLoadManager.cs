@@ -11,6 +11,7 @@ public class LevelLoadManager : MonoBehaviour
     [SerializeField] Animator mCloudAnimator;
     string levelPrefix = "Level";
     Tutorial tutorial;
+    bool isSceneLoad;
     private void Awake()
     {
         if (instance == null)
@@ -31,6 +32,7 @@ public class LevelLoadManager : MonoBehaviour
     }
     public void GoToMapScreen(bool hasChoise =false)
     {
+       
         GameManager.Instance.hasChoiceInLevel = hasChoise;
         SceneManager.LoadScene("Map");
 
@@ -38,7 +40,8 @@ public class LevelLoadManager : MonoBehaviour
     public void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0,string animName = "BACK")
     {
         GameManager.Instance._PauseGame = false;
-
+        if (isSceneLoad) return;
+        isSceneLoad = true;
         StartCoroutine(LoadScene(inLevelIndex, delayInMilisec, animName));       
     }
 
@@ -56,14 +59,17 @@ public class LevelLoadManager : MonoBehaviour
             yield return new WaitForSeconds(.75f);
         }
         mCloudAnimator.Play(animName);
+        isSceneLoad = false;
         if (tutorial != null)
-            tutorial.RegisterUserAction();
+             tutorial.RegisterUserAction();
     }
 
 
 
     public void BacktoHome()
     {
+        if (isSceneLoad) return;
+        isSceneLoad = true;
         StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel));
         GameManager.Instance._IsRefreshNeeded = true;
         GameManager.Instance._PauseGame = false;

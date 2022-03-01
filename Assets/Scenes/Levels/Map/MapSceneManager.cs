@@ -8,7 +8,7 @@ public class MapSceneManager : MonoBehaviour
     [SerializeField] LevelSet[] levelSets;
     [SerializeField] int unlockedLevel;
     [SerializeField] MapCameraController mCameraController;
-    [SerializeField]Button backBtn;
+    [SerializeField] Button backBtn;
     [SerializeField] GameObject AllLevelCompleted;
 
 
@@ -27,7 +27,7 @@ public class MapSceneManager : MonoBehaviour
         // Debug.LogError(GameManager.Instance._SetIndex);
         MakeSetCompletedUntilIndex(GameManager.Instance._SetIndex,GameManager.Instance._CompletedLevelsInSet);
         SetMapScreen(GameManager.Instance.hasChoiceInLevel);
-        mCameraController.transform.position = new Vector3(0, 0, GameManager.Instance._playerCurrentLevel);
+        //mCameraController.transform.position = new Vector3(0, 0, GameManager.Instance._playerCurrentLevel);
         if (GameManager.Instance._SetIndex >= levelSets.Length - 1 && IsSetCompleted(GameManager.Instance._SetIndex))
         {
             backBtn.gameObject.SetActive(true);
@@ -41,11 +41,11 @@ public class MapSceneManager : MonoBehaviour
         mCameraController._EndBoundary = unlockedLevel;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit)&& !TutorialManager.Instance.isPopUpRunning)
+        if (Physics.Raycast(ray, out RaycastHit hit))//&& !TutorialManager.Instance.isPopUpRunning)
         {
             if (hit.collider.CompareTag("MapTarget"))
             {
-                FirebaseManager.Instance.readUserData = true;
+              //  FirebaseManager.Instance.readUserData = true;
 
                 hit.collider.transform.parent.GetChild(2).gameObject.SetActive(false);
                 GameManager.Instance.hasChoiceInLevel = false;
@@ -85,7 +85,8 @@ public class MapSceneManager : MonoBehaviour
         }
 
     }
-    void SetMapScreen(bool hasChoise=false)
+    [ContextMenu("SetMapScreen")]
+    public void SetMapScreen(bool hasChoise=false)
     {
         int i = 0;
         foreach (var levelSet in levelSets)

@@ -5399,10 +5399,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1022091277}
     - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
-      propertyPath: backToDeckAnimation3D
-      value: 
-      objectReference: {fileID: 1524899109}
-    - target: {fileID: 8026521174156452495, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: _drawButtonFillerImage
       value: 
       objectReference: {fileID: 2098336736}
@@ -22570,11 +22566,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f7b3b8fcc198094ba39b3d7b4d0643f, type: 3}
---- !u!1 &1524899109 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6962121340648890636, guid: 8f7b3b8fcc198094ba39b3d7b4d0643f, type: 3}
-  m_PrefabInstance: {fileID: 1524899108}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1525166517
 GameObject:
   m_ObjectHideFlags: 0
@@ -23546,7 +23537,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.3
   far clip plane: 100004.3
   field of view: 60
   orthographic: 0

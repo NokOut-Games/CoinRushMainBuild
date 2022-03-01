@@ -309,7 +309,7 @@ public class Slots : MonoBehaviour
         }
         return havingElementIndex;
     }
-    public void ActiveLevelInvoke()
+    public void BackToHome()
     {
         LevelLoadManager.instance.BacktoHome();
     }
