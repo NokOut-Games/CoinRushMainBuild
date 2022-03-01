@@ -38,8 +38,8 @@ public class RevengeAttackPanel : MonoBehaviour
     public void OpenRevengePanel()
     {
         _revengePanel.SetActive(true);
-        //EnemyList.Clear();
         DestroyAllListOfAttackedPlayers(EnemyList);
+        EnemyList.Clear();
         //FirebaseManager.Instance.AttackedData.Clear();
 
         for (int i = 0; i < FilteredAttackedPlayerID.Count; i++)

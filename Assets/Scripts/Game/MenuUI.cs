@@ -182,13 +182,34 @@ public class MenuUI : MonoBehaviour
     }
 
 
+    //private void UpdateCoinAndEnergyTextFields()
+    //{
+    //    var currentCoin = mGameManager._coins.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
+    //    _coinText.text = currentCoin.Substring(0, currentCoin.Length - 2);
+
+    //    var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
+    //    _energyText.text = energyBarMax.ToString("D2");
+
+
+    //    if (mGameManager._energy > mGameManager._maxEnergy)
+    //    {
+    //        int newEnergy = mGameManager._energy - mGameManager._maxEnergy;
+    //        _extraEnergytext.text = "+ " + newEnergy + " extra";
+    //    }
+    //    else
+    //    {
+    //        DisplayTime(mRegenerationTimer);
+    //        _extraEnergytext.text = "+ " + mGameManager._regenerationEnergy + " in " + string.Format("{0:00}:{1:00}", mMinutes, mSeconds) + " mins ";
+    //    }
+    //}
+
     private void UpdateCoinAndEnergyTextFields()
     {
         var currentCoin = mGameManager._coins.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
         _coinText.text = currentCoin.Substring(0, currentCoin.Length - 2);
 
-        var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
-        _energyText.text = energyBarMax.ToString("D2");
+        //var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
+        _energyText.text = mGameManager.energyBarMax.ToString("D2");
 
 
         if (mGameManager._energy > mGameManager._maxEnergy)
@@ -198,12 +219,10 @@ public class MenuUI : MonoBehaviour
         }
         else
         {
-            DisplayTime(mRegenerationTimer);
-            _extraEnergytext.text = "+ " + mGameManager._regenerationEnergy + " in " + string.Format("{0:00}:{1:00}", mMinutes, mSeconds) + " mins ";
+            //GameManager.Instance.DisplayTime(mRegenerationTimer);
+            _extraEnergytext.text = "+ " + mGameManager._regenerationEnergy + " in " + string.Format("{0:00}:{1:00}", mGameManager.mMinutes, mGameManager.mSeconds) + " mins ";
         }
     }
-
-
     public IEnumerator ShowLevelCompletedParticlesCoroutine()
     {
         buildPanelGameObject.GetComponent<Animator>().SetBool("Show", false);

@@ -89,6 +89,7 @@ public class CardDeck : MonoBehaviour
     Cards[] matchedCards = new Cards[3];
     [SerializeField] MenuUI menu;
 
+    public bool isDrawButtonHolded = false;
 
 
     private void Awake()
@@ -300,6 +301,7 @@ public class CardDeck : MonoBehaviour
                         }
                         else
                         {
+                            if(!isDrawButtonHolded)
                             BackToNormalState();
                         }
 
@@ -315,8 +317,8 @@ public class CardDeck : MonoBehaviour
                             {
                                 time += Time.deltaTime;
                                 var displayValue = Mathf.Lerp(0, 1, time / mMaxHoldTime);
-                                _drawButtonFillerImage.fillAmount = displayValue;//Mathf.Lerp(0, 1, 3f * Time.fixedDeltaTime);
-
+                                _drawButtonFillerImage.fillAmount = displayValue;
+                                isDrawButtonHolded = true;
 
                                 if (time >= mMaxHoldTime)
                                 {
@@ -336,6 +338,7 @@ public class CardDeck : MonoBehaviour
                 }
                 if (Input.GetMouseButtonUp(0))
                 {
+                    isDrawButtonHolded = false;
                     _drawButtonFillerImage.fillAmount = 0;
                     DrawButton.color = new Color32(255, 255, 255, 255);
                     if (drawButtonClick)
@@ -346,7 +349,7 @@ public class CardDeck : MonoBehaviour
                 }
                 if (Input.GetMouseButtonDown(0))
                 {
-                    if (drawButtonClick && mAutoCardDraw)
+                    if (drawButtonClick && mAutoCardDraw &&!isDrawButtonHolded)
                     {
                         BackToNormalState();
                     }

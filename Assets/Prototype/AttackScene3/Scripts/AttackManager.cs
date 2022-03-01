@@ -301,19 +301,19 @@ public class AttackManager : MonoBehaviour
                     case 30:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[2];
                         break;
-                    case 1000:
+                    case 15000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[3];
                         break;
-                    case 2000:
+                    case 21000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[4];
                         break;
-                    case 3000:
+                    case 30000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[5];
                         break;
-                    case 4000:
+                    case 45000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[6];
                         break;
-                    case 5000:
+                    case 75000:
                         _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[7];
                         break;
                     case 6000:

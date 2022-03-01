@@ -98,8 +98,8 @@ public class Multiplier : MonoBehaviour
 
     void MultiplierEnergyReduse()
     {
-        energyReduseAnimator.GetComponent<TMP_Text>().text = ((GameManager.Instance._MultiplierValue * 3) - 3).ToString() + " Energy Redused";
-        energyReduseAnimator.Play("reduseEnergy");
+        energyReduseAnimator.GetComponent<TMP_Text>().text = ((GameManager.Instance._MultiplierValue * 3) - 3).ToString() + " Energy Reduced";
+       if(GameManager.Instance._MultiplierValue>1) energyReduseAnimator.Play("reduseEnergy");
         GameManager.Instance._energy -= (GameManager.Instance._MultiplierValue * 3)-3;
         // GetOutAnimator.SetBool("GetOut", true);
         multiplierSlider.interactable = false;

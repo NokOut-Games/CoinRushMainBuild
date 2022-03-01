@@ -38,7 +38,7 @@ public class MapSceneManager : MonoBehaviour
     {
         
 
-        mCameraController._EndBoundary = unlockedLevel;
+        //mCameraController._EndBoundary = unlockedLevel;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))//&& !TutorialManager.Instance.isPopUpRunning)

@@ -16,7 +16,7 @@ public class SpinWheelSpin : MonoBehaviour
 
     public int coin = 0;
     public int Energy = 0;
-    public int FreeSpins = 0;
+    public int FreeSpins = 1;
     public int cardCount = 0;
     public int totalFreeSpin;
 
@@ -37,6 +37,8 @@ public class SpinWheelSpin : MonoBehaviour
 
         _uiSpinButton.onClick.AddListener(() =>
         {
+            if (FreeSpins == 0) return;
+
             CoinParticle.SetActive(false);
             EnergyParticle.SetActive(false);
             _uiSpinButton.interactable = false;

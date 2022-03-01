@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: a3c4ac29ea575cc46b6e1711b8eaab6e, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: ea82aa242d705b34087de66013fa35b1, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -755,7 +755,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -3938,7 +3938,7 @@ MonoBehaviour:
   _uiCardSprite: {fileID: 0}
   coin: 0
   Energy: 0
-  FreeSpins: 0
+  FreeSpins: 1
   cardCount: 0
   totalFreeSpin: 0
   DoFreeSpins: 0

@@ -79,6 +79,12 @@ public class GameManager : MonoBehaviour
     public int _stars = 0;
 
     public int islandNumber =1;
+
+    private float mRegenerationTimer;
+    private float mNextRegenTimer;
+    public float mMinutes;
+    public float mSeconds;
+    public int energyBarMax;
     private void Awake()
     {     
         if (Instance == null)
@@ -93,10 +99,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(AutomaticEnergyRefiller());
+        mRegenerationTimer = MinutesToSecondsConverter(_minutes);
+        mNextRegenTimer = MinutesToSecondsConverter(_minutes);
     }
 
     private void Update()
     {
+        energyBarMax = Mathf.Clamp(_energy, 0, 50);
+        if (_energy < _maxEnergy)
+        {
+            DisplayTime(mRegenerationTimer);
+        }
+
         _shield = Mathf.Clamp(_shield, 0, _maxShield);
         _energy = Mathf.Clamp(_energy, 0, 1000);
         if(_energy < 0)
@@ -124,6 +138,22 @@ public class GameManager : MonoBehaviour
             OpenCardWritten = false;
         }
     }
+
+    public void DisplayTime(float inTimeToDisplay)
+    {
+        if (mRegenerationTimer > 0)
+        {
+            mRegenerationTimer -= Time.deltaTime;
+        }
+        if (mRegenerationTimer < 0 && inTimeToDisplay < 0)
+        {
+            inTimeToDisplay = 0;
+            mRegenerationTimer = mNextRegenTimer;
+        }
+        mMinutes = Mathf.FloorToInt(inTimeToDisplay / 60);
+        mSeconds = Mathf.FloorToInt(inTimeToDisplay % 60);
+    }
+
     [ContextMenu("Add Stars")]
     public void AddStars()
     {

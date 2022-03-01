@@ -2683,7 +2683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999349783187219442, guid: 3328ff73c94d0a849a405f787ea50fe7, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3999349783187219442, guid: 3328ff73c94d0a849a405f787ea50fe7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6682,7 +6682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mSlideSpeed: 0.003
   mStartBoundary: 0
-  _EndBoundary: 73.62
+  _EndBoundary: 15
   mBounceDistance: 0.4
   mLearpSpeed: 2
 --- !u!1 &296754507
@@ -15548,10 +15548,11 @@ Transform:
   m_LocalPosition: {x: -0.5, y: 7.12, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1335223187}
   - {fileID: 1623995875}
   - {fileID: 126323239}
   m_Father: {fileID: 1492748557}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!114 &631000075
 MonoBehaviour:
@@ -34161,7 +34162,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1492748557}
+    m_TransformParent: {fileID: 631000074}
     m_Modifications:
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_RootOrder
@@ -34173,39 +34174,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4244273
+      value: 0.42442733
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4244273
+      value: 0.42442733
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.23
+      value: -1.73
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.31
+      value: 1.1950109
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.5
+      value: 0.487904
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.92387956
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.38268343
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1806732812792294510, guid: 9711377ab692aca4fbf4f607c6d55969, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -37937,7 +37938,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1335223187}
   - {fileID: 631000074}
   - {fileID: 1608443777}
   m_Father: {fileID: 2007444372}
@@ -41827,7 +41827,7 @@ Transform:
   - {fileID: 416140468}
   - {fileID: 138326528}
   m_Father: {fileID: 1492748557}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!114 &1608443778
 MonoBehaviour:
@@ -42246,7 +42246,7 @@ Transform:
   - {fileID: 360041656}
   - {fileID: 1147291115}
   m_Father: {fileID: 631000074}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 214.692, z: 0}
 --- !u!1 &1625813752
 GameObject:
