@@ -47,7 +47,7 @@ public class PlayerIDDetails : MonoBehaviour
 
                         if (snapshot.Child("Facebook Users").HasChild(mPlayerUserId))
                         {
-                            _playerList.Add(mPlayerUserId);
+                           // _playerList.Add(mPlayerUserId);
                             _fbPlayerList.Add(mPlayerUserId);
                         }
                     }
@@ -58,7 +58,7 @@ public class PlayerIDDetails : MonoBehaviour
                     mGuestPlayerUserId = dataSnapshot2.Key;
                     if (snapshot.Child("Guest Users").HasChild(mGuestPlayerUserId))
                     {
-                        _playerList.Add(mGuestPlayerUserId);
+                      //  _playerList.Add(mGuestPlayerUserId);
                     }
                 }
 
