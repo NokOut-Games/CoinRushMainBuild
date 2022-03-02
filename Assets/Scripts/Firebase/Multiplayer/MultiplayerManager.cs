@@ -170,8 +170,8 @@ public class MultiplayerManager : MonoBehaviour
     {
         if (!isRevenging)
         {
-            //mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
-            //_enemyPlayerID = mplayerIDDetails._randomEnemyID;
+            mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
+            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
            // _enemyPlayerID = "109561708307210";
             FirebaseManager.Instance.WriteCardDataToFirebase();
             FirebaseManager.Instance.WriteBuildingDataToFirebase();
@@ -260,8 +260,8 @@ public class MultiplayerManager : MonoBehaviour
         OpenCardDetails.Clear();
         OpenedPlayerID.Clear();
 
-        //  mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
-        // _enemyPlayerID = mplayerIDDetails._randomOpencardID;
+          mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
+         _enemyPlayerID = mplayerIDDetails._randomOpencardID;
        // _enemyPlayerID = "109561708307210";
         FirebaseManager.Instance.WriteCardDataToFirebase();
         FirebaseManager.Instance.WriteBuildingDataToFirebase();

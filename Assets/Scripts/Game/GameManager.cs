@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         energyBarMax = Mathf.Clamp(_energy, 0, 50);
         if (_energy < _maxEnergy)
         {
