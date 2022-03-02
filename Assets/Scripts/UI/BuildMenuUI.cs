@@ -229,17 +229,17 @@ public class BuildMenuUI : MonoBehaviour
                 if (!mBuildingManagerRef._buildingData[inBuildingElementNumber].isBuildingDamaged)
                 {
                     inButton.transform.GetChild(1).GetComponent<Image>().sprite = _BuyButtonStates[0];
-                    inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel].ToString();
+                    inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + ConvertToText(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel]);//.ToString();
                 }
                 else
                 {
                     inButton.transform.GetChild(1).GetComponent<Image>().sprite = _BuyButtonStates[1];
-                    inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + (mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel] / 2).ToString();
+                    inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + ConvertToText((mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel] / 2));//.ToString();
                 }
             }
             else
             {
-                inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel].ToString();
+                inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + ConvertToText(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel]);//.ToString();
             }
         }
         else
@@ -254,7 +254,7 @@ public class BuildMenuUI : MonoBehaviour
                 inButton.transform.GetChild(1).gameObject.SetActive(true);
                 inButton.transform.GetChild(5).gameObject.SetActive(false);
                 inButton.transform.GetChild(1).GetComponent<Image>().sprite = _BuyButtonStates[1];
-                inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text ="  " +(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1] / 2).ToString();
+                inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "  " + ConvertToText((mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1] / 2));//.ToString();
 
                 //AssignBuildingNameAndButtonFunction(inButton,inBuildingElementNumber);
             }
@@ -262,6 +262,14 @@ public class BuildMenuUI : MonoBehaviour
             //inButton.transform.GetChild(1).GetComponent<Button>().interactable = false;
             //inButton.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "MAXED";
         }
+    }
+    string ConvertToText(int score)
+    {
+        float scoreF = (float)score;
+        if (scoreF > 100000) return (scoreF / 10000).ToString("F2") + "B";
+        else if (scoreF > 10000) return (scoreF / 10000).ToString("F2") + "M";
+        else if (scoreF > 1000) return (scoreF / 1000).ToString("F2") + "K";
+        else return scoreF.ToString();
     }
 }
 

@@ -54,14 +54,12 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-        /* CreateNewGuestUser();
-         LevelLoadManager.instance.GoToMapScreen(true);
-         ReadEconomy();*/
+       
         if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();
-            LevelLoadManager.instance.GoToMapScreen(true);
             ReadEconomy();
+            LevelLoadManager.instance.GoToMapScreen(true);
 
         }
         else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
@@ -133,16 +131,19 @@ public class FirebaseManager : MonoBehaviour
                     GameManager.Instance.UpdateOpenCardDetails(userdata.OpenCards);
                     GameManager.Instance._SetIndex = userdata.MapData.SetIndex;
                     GameManager.Instance._SavedCardTypes = userdata.SaveCards;
-                    ReadEconomy();
+                    GameManager.Instance.islandNumber = userdata.UserDetails.islandNumber;
 
                     //Get Changed Build and OpenCard Value 
                     reference.Child(userTitle).Child(_PlayerID).Child("Buildings").ValueChanged += HandleBuildingValueChanged;//Event Handle
                     reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;//Event Handle
 
+                    ReadEconomy(userdata.UserDetails.islandNumber);
                 }
             }
         });
     }
+
+
     private void HandleBuildingValueChanged(object sender, ValueChangedEventArgs e)
     {
         Debug.Log("HaveChange");
@@ -428,10 +429,10 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    public void ReadEconomy()
+    public void ReadEconomy(int islandNumber=1)
     {
-        reference.Child("Economy").Child("Level" + GameManager.Instance.islandNumber).GetValueAsync().ContinueWith(task =>
-         {
+        reference.Child("Economy").Child("Level" + islandNumber).GetValueAsync().ContinueWith(task =>
+        {
 
              List<string> cost = new List<string>();
              DataSnapshot snapshot = task.Result;
@@ -440,7 +441,7 @@ public class FirebaseManager : MonoBehaviour
                  cost.Add(dataSnapshot.Value.ToString());
              }
              GameManager.Instance.BuildingCost = cost;
-             readUserData = true;
+           if(islandNumber != 1)  readUserData = true;
 
          });
     }

@@ -248,7 +248,7 @@ public class GameManager : MonoBehaviour
         LevelLoadManager.instance.LoadLevelASyncOf("Map", 1000);
         OpenCardDetails.Clear();
         islandNumber++;
-        FirebaseManager.Instance.ReadEconomy();
+        FirebaseManager.Instance.ReadEconomy(islandNumber);
     }
     public void AssignTutorial(Tutorial tutorial)
     {

@@ -65,7 +65,7 @@ public class AttackManager : MonoBehaviour
 
     [SerializeField] Transform cannonAnimationCamera;
     [SerializeField] float DestroyAnimationDelay;
-
+    [SerializeField] GameObject attackCanvas;
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -227,7 +227,7 @@ public class AttackManager : MonoBehaviour
 
             go.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
-
+                attackCanvas.SetActive(false);
                 AssignTarget(_enemyBuildings[int.Parse(go.name)].transform);
                 if (_shieldedEnemyBuildings[int.Parse(go.name)])
                     _Shield = _shieldedEnemyBuildings[int.Parse(go.name)];
@@ -378,7 +378,7 @@ public class AttackManager : MonoBehaviour
         if (_multiplierSelected)
         {
             RewardValue *= (_Shield ? 1.5f : 2);
-            resultPanel.ShowMultiplierDetails(2, 2, "Attack Multiplier", (_Shield ? 1.5f : 2).ToString());
+            resultPanel.ShowMultiplierDetails(2, 3, "Attack Multiplier", (_Shield ? 1.5f : 2).ToString());
         }
 
         resultPanel.ShowMultiplierDetails(0, 0, "Multiplier", "" + GameManager.Instance._MultiplierValue);

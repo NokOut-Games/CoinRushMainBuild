@@ -459,15 +459,15 @@ public class CardDeck : MonoBehaviour
 
         Camera.main.GetComponent<CameraController>().DrawButtonClicked();
 
-        if (!mHasJoker && Random.Range(0, 100) < mJokerProbability)
+       /* if (!mHasJoker && Random.Range(0, 100) < mJokerProbability)
         {
             mCards = mScriptedCards[0];//card will be joker if no joker is there and the chance of getting joker is with percentage            
         }
         else
-        {
+        {*/
             mCards = mScriptedCards[Random.Range(1, mScriptedCards.Count)];
 
-        }
+       // }
         pickCard3D.GetComponent<Renderer>().material.mainTexture = mCards._cardTex;
         CardDeckAnimator.Play("Draw");
         //pickCard3D.SetActive(true);

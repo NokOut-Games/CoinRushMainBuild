@@ -20,11 +20,12 @@ public class PlayerIDDetails : MonoBehaviour
     public string _randomEnemyID;
     public string _randomOpencardID;
 
+    public List<string> localPlayerList;
     void Start()
     {
         mAuth = FirebaseAuth.DefaultInstance;
         mReference = FirebaseDatabase.DefaultInstance.RootReference;
-        Invoke(nameof(FetchDetails),1f);
+      //  Invoke(nameof(FetchDetails),1f);
     }
 
    public void FetchDetails()
@@ -88,10 +89,15 @@ public class PlayerIDDetails : MonoBehaviour
     //}
     public void GetRandomEnemyID(string inCurrentPlayerID)
     {
-        _playerList.Remove(inCurrentPlayerID); _fbPlayerList.Remove(inCurrentPlayerID);//FirebaseManager.Instance.CurrentPlayerID);
+      //  _playerList.Remove(inCurrentPlayerID); _fbPlayerList.Remove(inCurrentPlayerID);//FirebaseManager.Instance.CurrentPlayerID);
        // _randomEnemyID = _playerList[UnityEngine.Random.Range(0, _playerList.Count)]; 
-        _randomEnemyID = _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
-        _randomOpencardID= _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
+        //_randomEnemyID = _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
+       // _randomOpencardID= _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
+
+        _randomEnemyID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
+        _randomOpencardID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
+
+
     }
 
 }

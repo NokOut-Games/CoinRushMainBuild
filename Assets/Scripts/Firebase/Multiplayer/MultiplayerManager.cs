@@ -147,6 +147,7 @@ public class MultiplayerManager : MonoBehaviour
                         OpenedPlayerID.Add(Enemydata.OpenCards[i]._openedPlayerID);
                     }
 
+                    OpenCardDetails = Enemydata.OpenCards;
                     MultiplayerBuildingDetails = Enemydata.Buildings;
 
                     GotEnemyName?.Invoke(Enemydata.UserDetails._playerName);
