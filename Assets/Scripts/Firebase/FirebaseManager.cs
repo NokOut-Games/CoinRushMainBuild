@@ -79,10 +79,20 @@ public class FirebaseManager : MonoBehaviour
             };
             FacebookManager.Instance.GetProfilePictureWithId(_PlayerName, OnGettingPic, true);
         }
+
+   
     }
 
     public void RemoveGuestUser(string id)
     {
+        Firebase.Auth.FirebaseUser user = auth.CurrentUser;
+        if (user.UserId != null)
+        {
+            user.DeleteAsync().ContinueWith(task => {
+
+                Debug.Log("User deleted successfully.");
+            });
+        }
         reference.Child("Guest Users").Child(id).RemoveValueAsync();
     }
 

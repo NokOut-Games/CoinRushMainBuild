@@ -118,11 +118,12 @@ public class FacebookManager : MonoBehaviour
             TextStatus.text = result.Error;
         }
 		if (result.Cancelled) return;
-		if(isFromTutorial) FirebaseManager.Instance.RemoveGuestUser(FirebaseManager.Instance.auth.CurrentUser.UserId);
+		if(isFromTutorial)
+			FirebaseManager.Instance.RemoveGuestUser(FirebaseManager.Instance.auth.CurrentUser.UserId);
 		FirebaseManager.Instance.userTitle = "Facebook Users";
-		FB.API("/me?fields=name", HttpMethod.GET, DispName);
 		FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 		FB.API("/me?fields=id", HttpMethod.GET, DispID);
+		FB.API("/me?fields=name", HttpMethod.GET, DispName);
         //LoginButton.SetActive(false);
          aToken = AccessToken.CurrentAccessToken;
 		Debug.Log(aToken.TokenString);

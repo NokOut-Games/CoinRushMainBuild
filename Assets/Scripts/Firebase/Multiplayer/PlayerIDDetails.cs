@@ -20,12 +20,12 @@ public class PlayerIDDetails : MonoBehaviour
     public string _randomEnemyID;
     public string _randomOpencardID;
 
-    public List<string> localPlayerList;
+  //  public List<string> localPlayerList;
     void Start()
     {
         mAuth = FirebaseAuth.DefaultInstance;
         mReference = FirebaseDatabase.DefaultInstance.RootReference;
-      //  Invoke(nameof(FetchDetails),1f);
+        Invoke(nameof(FetchDetails),1f);
     }
 
    public void FetchDetails()
@@ -36,9 +36,10 @@ public class PlayerIDDetails : MonoBehaviour
             {
                 DataSnapshot snapshot = task.Result;
                 Debug.Log("FB Count : "+snapshot.Child("Facebook Users").ChildrenCount);
-                _playerList = new List<string>();
+                //_playerList = new List<string>();
+                _fbPlayerList= new List<string>();
 
-                             
+
                 foreach (var dataSnapshot in snapshot.Child("Facebook Users").Children)
                 {
 
@@ -54,14 +55,14 @@ public class PlayerIDDetails : MonoBehaviour
                     }
                 }
 
-                foreach (var dataSnapshot2 in snapshot.Child("Guest Users").Children)
-                {
-                    mGuestPlayerUserId = dataSnapshot2.Key;
-                    if (snapshot.Child("Guest Users").HasChild(mGuestPlayerUserId))
-                    {
-                      //  _playerList.Add(mGuestPlayerUserId);
-                    }
-                }
+                //foreach (var dataSnapshot2 in snapshot.Child("Guest Users").Children)
+                //{
+                //    mGuestPlayerUserId = dataSnapshot2.Key;
+                //    if (snapshot.Child("Guest Users").HasChild(mGuestPlayerUserId))
+                //    {
+                //      //  _playerList.Add(mGuestPlayerUserId);
+                //    }
+               // }
 
                    // AddUsersToList(snapshot, "Facebook Users", _fbPlayerList);
             }
@@ -89,13 +90,14 @@ public class PlayerIDDetails : MonoBehaviour
     //}
     public void GetRandomEnemyID(string inCurrentPlayerID)
     {
-      //  _playerList.Remove(inCurrentPlayerID); _fbPlayerList.Remove(inCurrentPlayerID);//FirebaseManager.Instance.CurrentPlayerID);
+        //_playerList.Remove(inCurrentPlayerID); 
        // _randomEnemyID = _playerList[UnityEngine.Random.Range(0, _playerList.Count)]; 
-        //_randomEnemyID = _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
-       // _randomOpencardID= _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
+        _fbPlayerList.Remove(inCurrentPlayerID);//FirebaseManager.Instance.CurrentPlayerID);
+        _randomEnemyID = _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
+        //_randomOpencardID= _fbPlayerList[UnityEngine.Random.Range(0, _fbPlayerList.Count)];
 
-        _randomEnemyID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
-        _randomOpencardID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
+       // _randomEnemyID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
+       // _randomOpencardID = localPlayerList[UnityEngine.Random.Range(0, localPlayerList.Count)];
 
 
     }

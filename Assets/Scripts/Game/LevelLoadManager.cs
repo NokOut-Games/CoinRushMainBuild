@@ -42,21 +42,22 @@ public class LevelLoadManager : MonoBehaviour
         GameManager.Instance._PauseGame = false;
         if (isSceneLoad) return;
         isSceneLoad = true;
-        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec, animName));       
+         StartCoroutine(LoadScene(inLevelIndex, delayInMilisec, animName));       
+        //LoadScene(inLevelIndex, delayInMilisec, animName);
     }
 
 
-    IEnumerator LoadScene(string inLevelIndex,int loadTime=0, string animName = "BACK")
+    IEnumerator /*void*/ LoadScene(string inLevelIndex,int loadTime=0, string animName = "BACK")
     {
-        yield return new WaitForSeconds(loadTime/1000);
-        //mCanvas.SetActive(true);
-        mCloudAnimator.Play("MAIN");
-        yield return new WaitForSeconds(2f);
+        //yield return new WaitForSeconds(loadTime/1000);
+        mCanvas.SetActive(true);
+        // yield return new WaitForSeconds(2f);
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
+        mCloudAnimator.Play("MAIN");
 
         while (!scene.isDone)
         {
-            yield return new WaitForSeconds(.75f);
+            yield return new WaitForSeconds(.005f);
         }
         mCloudAnimator.Play(animName);
         isSceneLoad = false;
@@ -64,13 +65,12 @@ public class LevelLoadManager : MonoBehaviour
              tutorial.RegisterUserAction();
     }
 
-
-
     public void BacktoHome()
     {
         if (isSceneLoad) return;
         isSceneLoad = true;
         StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel));
+        //LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel);
         GameManager.Instance._IsRefreshNeeded = true;
         GameManager.Instance._PauseGame = false;
     }
