@@ -53,7 +53,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private GameObject mcucuLevelPanel;
     bool isInoptionScreen => RectTransformUtility.RectangleContainsScreenPoint(optionScreen, Input.mousePosition, uIcam);
 
-
+    public GameObject StickerPanel;
 
     private void OnEnable()
     {
@@ -74,6 +74,10 @@ public class MenuUI : MonoBehaviour
         profileName.text = FirebaseManager.Instance._PlayerName;
     }
 
+    public void OpenStickerPanel()
+    {
+        StickerPanel.SetActive(true);
+    }
      void UpdateName(string name)
      { 
          profileName.text = name; 
