@@ -55,14 +55,14 @@ public class FirebaseManager : MonoBehaviour
     private void Start()
     {
        
-        if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
+       /* if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();
             ReadEconomy();
             LevelLoadManager.instance.GoToMapScreen(true);
 
         }
-        else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
+        else*/ if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
             _PlayerID = PlayerPrefs.GetString("id");

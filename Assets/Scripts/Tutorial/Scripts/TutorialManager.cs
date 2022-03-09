@@ -38,7 +38,9 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");       
+        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");    
+            GameManager.Instance.isInTutorial = false;
+
     }
     public void StartNextTutorial(int tutorialIndex)
     {

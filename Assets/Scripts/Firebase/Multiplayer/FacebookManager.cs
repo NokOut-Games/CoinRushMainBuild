@@ -71,7 +71,7 @@ public class FacebookManager : MonoBehaviour
 			FB.API("/me?fields=name", HttpMethod.GET, DispName);
 			FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 			FB.API("/me?fields=id", HttpMethod.GET, DispID);
-			//GetFriends();
+			GetFBFriends();
 
 			FirebaseManager.Instance.userTitle = "Facebook Users";
 			FirebaseManager.Instance.ReadData();
@@ -123,7 +123,8 @@ public class FacebookManager : MonoBehaviour
 		FB.API("/me?fields=name", HttpMethod.GET, DispName);
 		FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
 		FB.API("/me?fields=id", HttpMethod.GET, DispID);
-        //LoginButton.SetActive(false);
+		//LoginButton.SetActive(false);
+		GetFBFriends();
          aToken = AccessToken.CurrentAccessToken;
 		Debug.Log(aToken.TokenString);
 	}
@@ -167,38 +168,39 @@ public class FacebookManager : MonoBehaviour
 		}
 	}
 
-	public void GetFriends(Transform content)
+    public void GetFriends(Transform content)
+    {
+        //GameObject go = Instantiate(friendsTextPrefab, content);
+        string query = "/me/friends";
+        FB.API(query, HttpMethod.GET, result =>
+        {
+            //Debug.Log("the raw" + result.RawResult);
+            var localDictionary = (Dictionary<string, object>)Json.Deserialize(result.RawResult);
+            //Debug.Log("Local Dictionary: " + localDictionary);
+            var friendList = (List<object>)localDictionary["data"];
+            //Debug.Log(friendList);
+
+            Vector3 offset = new Vector3(0, 0, 0);
+            foreach (var dict in friendList)
+            {
+                GameObject go = Instantiate(friendsTextPrefab, content);
+                go.transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = ((Dictionary<string, object>)dict)["name"].ToString();
+                FB.API("https" + "://graph.facebook.com/" + ((Dictionary<string, object>)dict)["id"] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
+                {
+                    go.transform.GetChild(0).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
+                });
+                /*Debug.Log(((Dictionary<string, object>)dict)["name"].ToString());*/
+                /*				go.transform.SetParent(GetFriendPos.transform, false);*/
+                offset += new Vector3(0, -50, 0);
+
+            }
+        });
+    }
+
+
+    public void GetFBFriends()
 	{
-		//GameObject go = Instantiate(friendsTextPrefab, content);
-		string query = "/me/friends";
-		FB.API(query, HttpMethod.GET, result =>
-		{
-			//Debug.Log("the raw" + result.RawResult);
-			var localDictionary = (Dictionary<string, object>)Json.Deserialize(result.RawResult);
-			//Debug.Log("Local Dictionary: " + localDictionary);
-			var friendList = (List<object>)localDictionary["data"];
-			//Debug.Log(friendList);
-
-			Vector3 offset = new Vector3(0, 0, 0);
-			foreach (var dict in friendList)
-			{
-				GameObject go = Instantiate(friendsTextPrefab, content);
-				go.transform.GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = ((Dictionary<string, object>)dict)["name"].ToString();
-				FB.API("https" + "://graph.facebook.com/" + ((Dictionary<string, object>)dict)["id"] + "/picture?type=large", HttpMethod.GET, delegate (IGraphResult result)
-				{
-					go.transform.GetChild(0).GetComponent<Image>().sprite = Sprite.Create(result.Texture, new Rect(0, 0, 200, 125), new Vector2(0.5f, 0.5f), 100);
-				});
-				/*Debug.Log(((Dictionary<string, object>)dict)["name"].ToString());*/
-/*				go.transform.SetParent(GetFriendPos.transform, false);*/
-				offset += new Vector3(0, -50, 0);
-			}
-		});
-	}
-
-
-	public void GetFriends()
-	{
-		Debug.Log("Loged in");
+		//Debug.Log("Loged in");
 		string query = "/me/friends";
 		FB.API(query, HttpMethod.GET, result =>
 		{

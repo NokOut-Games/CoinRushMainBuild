@@ -15,7 +15,7 @@ public class GuestLogin : MonoBehaviour
     }
     private void Start()
     {
-        if (FirebaseManager.Instance.auth.CurrentUser != null && !FirebaseManager.Instance.auth.CurrentUser.IsAnonymous) loadingScreen.SetActive(true);
+       // if (FirebaseManager.Instance.auth.CurrentUser != null && !FirebaseManager.Instance.auth.CurrentUser.IsAnonymous) loadingScreen.SetActive(true);
     }
     private void Update()
     {

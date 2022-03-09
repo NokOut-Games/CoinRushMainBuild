@@ -24,6 +24,8 @@ public class RevengeAttackPanel : MonoBehaviour
     public GameObject _FBFriends;
     public List<GameObject> FBEnemyList = new List<GameObject>();
     [SerializeField]Transform ContentOfRevenge;
+    public Transform ContentOfFBRevenge;
+
 
     public void Start()
     {
@@ -65,10 +67,12 @@ public class RevengeAttackPanel : MonoBehaviour
     {
         FBFriendsPanel.SetActive(true);
         DestroyAllListOfAttackedPlayers(FBEnemyList);
+        FBEnemyList.Clear();
         for (int i = 0; i < FacebookManager.Instance.FBFriendsIDList.Count; i++)
         {
-            GameObject FBEnemySlot = Instantiate(_FBFriends, FBTransformPoints[i].position, FBTransformPoints[i].rotation, FBTransformPoints[i].parent);
-            FBEnemyList.Add(FBEnemySlot);
+           // GameObject FBEnemySlot = Instantiate(_FBFriends, FBTransformPoints[i].position, FBTransformPoints[i].rotation, FBTransformPoints[i].parent);
+            GameObject FBEnemySlot = Instantiate(_FBFriends,ContentOfFBRevenge);
+          FBEnemyList.Add(FBEnemySlot);
 
             FBEnemySlot.transform.GetChild(0).GetComponent<Text>().text = FacebookManager.Instance.FBFriendsNameList[i];
             FBEnemySlot.transform.GetChild(2).GetComponent<RevengeButton>().EnemyID = FacebookManager.Instance.FBFriendsIDList[i];

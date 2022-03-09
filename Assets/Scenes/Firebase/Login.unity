@@ -2152,6 +2152,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickGuestLogin
       objectReference: {fileID: 0}
+    - target: {fileID: 1546953524037181035, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1546953524506491832, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2561,6 +2565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentPlayerId: 
   _currentPlayerName: 
+  _currentPlayerLevel: 0
   _enemyPlayerID: 109561708307210
   _enemyTitle: 
   _enemyPlayerLevel: 0
@@ -2574,7 +2579,6 @@ MonoBehaviour:
   attackedplayerIDList: []
   attackedplayerNameList: []
   CurrenetPlayerAttackData: []
-  _dataBaseFetchTime: 0.25
   Enemydata:
     AttackedPlayer: []
     Buildings: []
@@ -2592,6 +2596,7 @@ MonoBehaviour:
       islandNumber: 1
       _playerID: 
       _playerName: 
+  GotEnemyData: 0
 --- !u!1 &1223172676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2728,12 +2733,6 @@ MonoBehaviour:
   _fbPlayerList: []
   _randomEnemyID: 
   _randomOpencardID: 
-  localPlayerList:
-  - 1417417415378427
-  - 2848713725426135
-  - 100214029252217
-  - 108814785044551
-  - 109561708307210
 --- !u!1 &1362459163
 GameObject:
   m_ObjectHideFlags: 0
