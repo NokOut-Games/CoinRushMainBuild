@@ -5,7 +5,7 @@ using UnityEngine;
 public class StickersMenu : MonoBehaviour
 {
     public GameObject _stickerPanel;
-    public GameObject _selectedSetPanel;
+   // public GameObject _selectedSetPanel;
     public List<GameObject> _stickerSet;
     public Transform _parentGameObject;
     // Start is called before the first frame update

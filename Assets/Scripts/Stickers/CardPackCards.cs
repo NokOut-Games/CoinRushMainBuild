@@ -13,6 +13,8 @@ public class CardPackCards : ScriptableObject
 {
     public string _cardName;
     public int _starValue;
+    public int _unlockLevel;
+    public string _setName;
     public StickerSet set;
     public Sprite _cardPicture;
 }
