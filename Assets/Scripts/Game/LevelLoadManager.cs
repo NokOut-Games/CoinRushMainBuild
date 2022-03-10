@@ -48,15 +48,13 @@ public class LevelLoadManager : MonoBehaviour
 
     IEnumerator LoadScene(string inLevelIndex,int loadTime=0, string animName = "BACK")
     {
-        yield return new WaitForSeconds(loadTime/1000);
-        //mCanvas.SetActive(true);
-        mCloudAnimator.Play("MAIN");
-        yield return new WaitForSeconds(2f);
+        mCanvas.SetActive(true);
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
+        mCloudAnimator.Play("MAIN");
 
         while (!scene.isDone)
         {
-            yield return new WaitForSeconds(.75f);
+            yield return new WaitForSeconds(.005f);
         }
         mCloudAnimator.Play(animName);
         isSceneLoad = false;

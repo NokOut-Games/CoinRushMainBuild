@@ -27,6 +27,7 @@ public class MultiplayerManager : MonoBehaviour
 
     public string _currentPlayerId;
     public string _currentPlayerName;
+    public int _currentPlayerLevel;
 
     public string _enemyPlayerID;
     public string _enemyTitle;
@@ -47,12 +48,13 @@ public class MultiplayerManager : MonoBehaviour
     public List<string> attackedplayerNameList = new List<string>();
     public List<AttackedPlayerInformation> CurrenetPlayerAttackData = new List<AttackedPlayerInformation>();
 
-   public float _dataBaseFetchTime;
+  // public float _dataBaseFetchTime;
     //Get Enemy Name and Picture
     public static Action<string> GotEnemyName;
     //Get Enemy Data
     public UserData Enemydata = new UserData();
-    
+
+    public bool GotEnemyData=false;
     private void Awake()
     {
         if (Instance == null)
@@ -68,10 +70,29 @@ public class MultiplayerManager : MonoBehaviour
         mLevelLoadManager = FindObjectOfType<LevelLoadManager>();
         reference = FirebaseDatabase.DefaultInstance.RootReference;
     }
+
+    public void GatherOpponentData()
+    {      
+        mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
+       _enemyPlayerID = mplayerIDDetails._randomEnemyID;
+        ReadEnemyData();
+    }
     void Update()
     {
+
         _currentPlayerName = FirebaseManager.Instance.userdata.UserDetails._playerName;
         _currentPlayerId = FirebaseManager.Instance.userdata.UserDetails._playerID;
+        _currentPlayerLevel = FirebaseManager.Instance.userdata.UserDetails._playerCurrentLevel;
+
+        if(SceneManager.GetActiveScene().name == "Level"+ _currentPlayerLevel)
+        {
+            if (!GotEnemyData)
+            {
+                GatherOpponentData();
+                GotEnemyData = true;
+            }
+           
+        }
 
         if (SceneManager.GetActiveScene().name == "OPENCARD")
         {
@@ -101,9 +122,8 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    IEnumerator ReadEnemyData()
+    void ReadEnemyData()
     {
-        yield return new WaitForSeconds(_dataBaseFetchTime);
 
         reference.GetValueAsync().ContinueWith(task =>
         {
@@ -171,19 +191,12 @@ public class MultiplayerManager : MonoBehaviour
     {
         if (!isRevenging)
         {
-            mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
-            _enemyPlayerID = mplayerIDDetails._randomEnemyID;
-           // _enemyPlayerID = "109561708307210";
-            FirebaseManager.Instance.WriteCardDataToFirebase();
-            FirebaseManager.Instance.WriteBuildingDataToFirebase();
-            FirebaseManager.Instance.WritePlayerDataToFirebase();
-            StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 1);
+            LevelLoadManager.instance.LoadLevelASyncOf("ATTACK", 0, "ATTACK");
         }
-        else
+        if(isRevenging)
         {
-            StartCoroutine(ReadEnemyData());
-            Invoke(nameof(LoadAttackScene), 1);
+            ReadEnemyData();
+            Invoke(nameof(LoadAttackScene), 1f);
             isRevenging = false;
         }
     }
@@ -216,7 +229,7 @@ public class MultiplayerManager : MonoBehaviour
                 }
             }
         });
-        Invoke("BackToGame", 2.5f);
+        Invoke("BackToGame", 1.5f);
     }
 
     public void WriteDetailsOnAttackComplete()
@@ -245,8 +258,7 @@ public class MultiplayerManager : MonoBehaviour
             { Debug.Log("Attaacked info Written"); }
         });
         AttackCount += 1;
-        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task => { });
-        reference.Child(_enemyTitle).Child(_currentPlayerId).Child("UserDetails").Child("_coins").SetValueAsync(GameManager.Instance._coins).ContinueWith(task =>
+        reference.Child(_enemyTitle).Child(_enemyPlayerID).Child("UserDetails").Child("_numberOfTimesGotAttacked").SetValueAsync(AttackCount.ToString()).ContinueWith(task =>
         {
             if (task.IsCompleted)
             {
@@ -260,15 +272,7 @@ public class MultiplayerManager : MonoBehaviour
         OpenedCardSlot.Clear();
         OpenCardDetails.Clear();
         OpenedPlayerID.Clear();
-
-          mplayerIDDetails.GetRandomEnemyID(FirebaseManager.Instance._PlayerID);
-         _enemyPlayerID = mplayerIDDetails._randomOpencardID;
-       // _enemyPlayerID = "109561708307210";
-        FirebaseManager.Instance.WriteCardDataToFirebase();
-        FirebaseManager.Instance.WriteBuildingDataToFirebase();
-        FirebaseManager.Instance.WritePlayerDataToFirebase();
-        StartCoroutine(ReadEnemyData());
-        Invoke(nameof(LoadOpenCardScene), 1.5f);
+        Invoke(nameof(LoadOpenCardScene), 0.5f);
     }
 
     void LoadOpenCardScene()
@@ -313,6 +317,7 @@ public class MultiplayerManager : MonoBehaviour
     }
     public void BackToGame()
     {
+        GotEnemyData = false;
         LevelLoadManager.instance.BacktoHome();
     }
 }

@@ -304,8 +304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 217}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 189}
+  m_SizeDelta: {x: 328.3246, y: 94.6381}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &112436701
 MonoBehaviour:
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loading.....
+  m_text: Loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -354,13 +354,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -574,11 +574,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _coins
-      value: 100000
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _energy
-      value: 25
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2858469283422625867, guid: 168b1fc8fe3d98041a3816ef69daa413, type: 3}
       propertyPath: _shield
@@ -2128,6 +2128,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506918, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506918, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0fb4d5480a383d441a43e5a0fdf5379b, type: 3}
+    - target: {fileID: 1546953523476506936, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 761.1119
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506936, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 160.9196
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506936, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000019073
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953523476506936, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -326.40002
+      objectReference: {fileID: 0}
     - target: {fileID: 1546953523476506937, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
@@ -2152,13 +2176,57 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickGuestLogin
       objectReference: {fileID: 0}
+    - target: {fileID: 1546953524037181078, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524037181078, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 3c3b160050536ed41a65d5fbfdb3f907, type: 3}
+    - target: {fileID: 1546953524037181078, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524037181078, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524037181078, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1546953524506491832, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524540656793, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524540656793, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 3c3b160050536ed41a65d5fbfdb3f907, type: 3}
+    - target: {fileID: 1546953524540656793, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524540656793, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524540656793, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1546953524540656795, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1546953524971144268, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1546953524996485358, guid: 8a758fc27a330e04fbb23f7da1364cfb, type: 3}
       propertyPath: m_IsActive
@@ -2561,7 +2629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentPlayerId: 
   _currentPlayerName: 
-  _enemyPlayerID: 109561708307210
+  _currentPlayerLevel: 0
+  _enemyPlayerID: 
   _enemyTitle: 
   _enemyPlayerLevel: 0
   OpenCardDetails: []
@@ -2574,7 +2643,6 @@ MonoBehaviour:
   attackedplayerIDList: []
   attackedplayerNameList: []
   CurrenetPlayerAttackData: []
-  _dataBaseFetchTime: 0.25
   Enemydata:
     AttackedPlayer: []
     Buildings: []
@@ -2590,8 +2658,10 @@ MonoBehaviour:
       _numberOfTimesGotAttacked: 0
       _playerCurrentLevel: 0
       islandNumber: 1
+      behaviour: 0
       _playerID: 
       _playerName: 
+  GotEnemyData: 0
 --- !u!1 &1223172676
 GameObject:
   m_ObjectHideFlags: 0
@@ -2696,6 +2766,7 @@ MonoBehaviour:
       _numberOfTimesGotAttacked: 0
       _playerCurrentLevel: 0
       islandNumber: 1
+      behaviour: 0
       _playerID: 
       _playerName: 
 --- !u!4 &1266492673
@@ -2728,12 +2799,6 @@ MonoBehaviour:
   _fbPlayerList: []
   _randomEnemyID: 
   _randomOpencardID: 
-  localPlayerList:
-  - 1417417415378427
-  - 2848713725426135
-  - 100214029252217
-  - 108814785044551
-  - 109561708307210
 --- !u!1 &1362459163
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,7 +3550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3510,6 +3575,240 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608694459}
   m_CullTransparentMesh: 1
+--- !u!1 &1650431653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1650431655}
+  - component: {fileID: 1650431654}
+  m_Layer: 0
+  m_Name: RNG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1650431654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650431653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970d1001301b9104ca3ef0f4ea0ca1c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayTime: 0
+  NoOfBackToDeck: 0
+  NoOfThreeCardMatch: 0
+  Behaviour: 0
+  MultiplierMaxingCount: 0
+  EnergyEmptingCount: 0
+  CardProbability:
+  - Name: JOKER
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+    CardType: 3
+  - Name: ENERGY
+    Value: 4
+    RareNess: 0
+    Rewards: 1
+    CardType: 4
+  - Name: FORTUNEWHEEL
+    Value: 10
+    RareNess: 0
+    Rewards: 0
+    CardType: 6
+  - Name: SLOTMACHINE
+    Value: 5
+    RareNess: 0
+    Rewards: 0
+    CardType: 7
+  - Name: ATTACK
+    Value: 30
+    RareNess: 0
+    Rewards: 0
+    CardType: 0
+  - Name: COINS
+    Value: 50
+    RareNess: 0
+    Rewards: 0
+    CardType: 5
+  - Name: SHIELD
+    Value: 4
+    RareNess: 0
+    Rewards: 0
+    CardType: 2
+  EnergySceneProbability:
+  - Name: HIGH VALUE
+    Value: 1
+    RareNess: 0
+    Rewards: 1
+  - Name: MID VALUE
+    Value: 20
+    RareNess: 0
+    Rewards: 1
+  - Name: LOW VALUE
+    Value: 79
+    RareNess: 0
+    Rewards: 1
+  CoinSceneProbability:
+  - Name: HIGH
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+  - Name: MID I
+    Value: 2
+    RareNess: 0
+    Rewards: 0
+  - Name: MID II
+    Value: 7
+    RareNess: 0
+    Rewards: 0
+  - Name: MID III
+    Value: 40
+    RareNess: 0
+    Rewards: 0
+  - Name: LOW
+    Value: 50
+    RareNess: 0
+    Rewards: 0
+  SpinWheelSceneProbability:
+  - Name: WHEEL PART I
+    Value: 4
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART II
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART III
+    Value: 30
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART IV
+    Value: 3
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART V
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART VI
+    Value: 70
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART VII
+    Value: 2
+    RareNess: 0
+    Rewards: 0
+  - Name: WHEEL PART VIII
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+  AttackSceneProbability:
+  - Name: BUILDING 1
+    Value: 1
+    RareNess: 0
+    Rewards: 0
+  - Name: BUILDING 2
+    Value: 4
+    RareNess: 0
+    Rewards: 1
+  - Name: BUILDING 3
+    Value: 8
+    RareNess: 0
+    Rewards: 1
+  - Name: BUILDING 4
+    Value: 60
+    RareNess: 0
+    Rewards: 0
+  - Name: BUILDING 5
+    Value: 20
+    RareNess: 0
+    Rewards: 0
+  - Name: BUILDING 6
+    Value: 10
+    RareNess: 0
+    Rewards: 0
+  - Name: BUILDING 7
+    Value: 8
+    RareNess: 0
+    Rewards: 0
+  - Name: BUILDING 8
+    Value: 30
+    RareNess: 0
+    Rewards: 1
+  SlotMachineSceneProbability:
+  - Name: 
+    Value: 5
+    RareNess: 5
+    Rewards: 0
+  - Name: 
+    Value: 2
+    RareNess: 2
+    Rewards: 1
+  - Name: 
+    Value: 4
+    RareNess: 3
+    Rewards: 3
+  - Name: 
+    Value: 1
+    RareNess: 1
+    Rewards: 2
+  - Name: 
+    Value: 20
+    RareNess: 20
+    Rewards: 0
+  - Name: 
+    Value: 10
+    RareNess: 10
+    Rewards: 1
+  - Name: 
+    Value: 8
+    RareNess: 8
+    Rewards: 3
+  - Name: 
+    Value: 1
+    RareNess: 0
+    Rewards: 2
+  - Name: 
+    Value: 80
+    RareNess: 0
+    Rewards: 0
+  - Name: 
+    Value: 30
+    RareNess: 0
+    Rewards: 1
+  - Name: 
+    Value: 15
+    RareNess: 0
+    Rewards: 3
+  - Name: 
+    Value: 1
+    RareNess: 0
+    Rewards: 2
+--- !u!4 &1650431655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650431653}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 768, y: 1024, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1708845257
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,9 +22,6 @@ public class BoxReactor : MonoBehaviour
 
     [SerializeField] private float RewardDisplayInvokeTime;
 
-    private bool isCanInstantiated;
-    private bool isCollided;
-
     public GameObject can;
 
     [Header("Camera Shake Values: ")]
@@ -46,13 +43,6 @@ public class BoxReactor : MonoBehaviour
     [SerializeField] private GameObject HitSmokeRingEffect;
 
 
-    private void Start()
-    {
-       // mLevelLoadManagerRef = GameObject.Find("GameManager").GetComponent<LevelLoadManager>();
-        isCollided = false; 
-        isCanInstantiated = false;
-    }
-
     void PlayParticleEffects(GameObject inChest)
     {
         Transform CollisionSmokeSpawnPoint = inChest.transform.Find("CollisionSmokeSpawner").transform;
@@ -65,100 +55,25 @@ public class BoxReactor : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision other)
-    {
-        
-        if (!isCollided)
+    {               
+        if (other.gameObject.tag == "EnergyChestBox")
         {
-            if (other.gameObject.tag == "EnergyChestBox")
-            {
-                isCollided = true;
-                //Destroy(other.gameObject.GetComponent<BoxCollider>());
-                GetComponent<Animator>().Play("break");
+            GetComponent<Animator>().Play("break");
+            PlayParticleEffects(other.gameObject);
+            energySelector = other.gameObject.GetComponent<EnergySelector>();
+            energySelector.EnergyFalling = false;
+            Camera.main.DOShakePosition(mDuration, mStrength, mVibration, mRandomness, true);
+            other.transform.GetChild(0).Find("Wind_Effect").gameObject.SetActive(false);
+            canSpawnLocation = other.transform.Find("CanSpawnLocation").gameObject;
 
-                PlayParticleEffects(other.gameObject);
+            Animator crateAnimRef = other.transform.GetChild(0).gameObject.GetComponent<Animator>();
+            ChestValue crateValueRef = other.gameObject.GetComponent<ChestValue>();    
 
-                energySelector = other.gameObject.GetComponent<EnergySelector>();
-                //Stopping Coroutine Just in Case
-                energySelector.EnergyFalling = false;
-                Camera.main.DOShakePosition(mDuration, mStrength, mVibration, mRandomness, true);
-
-                //other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
-                //Disabling the particle Effect
-                other.transform.GetChild(0).Find("Wind_Effect").gameObject.SetActive(false);
-
-                //Getting the can spawn location to spawn the can
-                canSpawnLocation = other.transform.Find("CanSpawnLocation").gameObject;
-
-                //Getting references
-                Animator crateAnimRef = other.transform.GetChild(0).gameObject.GetComponent<Animator>();
-                ChestValue crateValueRef = other.gameObject.GetComponent<ChestValue>();
-
-                if (!isCanInstantiated)
-                    //Instantiating cans based on chest value
-                    switch (other.gameObject.GetComponent<ChestValue>()._value)
-                    {
-                        case 15:
-                            can = Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
-                            StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
-
-                            crateAnimRef.SetTrigger("isBreaking?");
-                            isCanInstantiated = true;
-                            SetRewardPanel(crateValueRef);
-
-                            Invoke("InvokeKinematic", .75f);
-                            break;
-                        case 30:
-                            can = Instantiate(EnergyCanMedium, canSpawnLocation.transform.position, Quaternion.identity);
-                            StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2,-10));
-
-                            crateAnimRef.SetTrigger("isBreaking?");
-                            isCanInstantiated = true;
-                            SetRewardPanel(crateValueRef);
-                            Invoke("InvokeKinematic", .75f);
-                            break;
-                        case 75:
-                            can = Instantiate(EnergyCanLarge, canSpawnLocation.transform.position, Quaternion.identity);
-                            StartCoroutine(SpawnParticleCoroutine(EnergyCanLargeParticle,2,-10));
-                            crateAnimRef.SetTrigger("isBreaking?");
-                            isCanInstantiated = true;
-                            SetRewardPanel(crateValueRef);
-                            Invoke("InvokeKinematic", .75f);
-                            break;
-                    }
-                StartCoroutine(CanGameObjectZoomIn(can));
-
-                //Starting to activate Reward Panel
-                //Invoke("ActiveRewardPanel", 3f);
-            }
+            Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
+            StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2, -10));
+            crateAnimRef.SetTrigger("isBreaking?");
+            SetRewardPanel(crateValueRef);                                       
         }
-       // StopCoroutine(energySelector.energyCoroutine);
-    }
-
-    IEnumerator CanGameObjectZoomIn(GameObject inCan)
-    {
-        yield return new WaitForSeconds(.5f);
-        //while (true)
-        //{
-        Vector3 canHeightTargetPosition = new Vector3(inCan.transform.position.x, inCan.transform.position.y + mCanYHeight, inCan.transform.position.z);
-        Vector3 cameraTargetPosition = new Vector3(inCan.transform.position.x, inCan.transform.position.y + mCameraYHeight, inCan.transform.position.z - mCameraZoomAmount);
-        //inCan.transform.position = Vector3.Lerp(inCan.transform.position, canHeightTargetPosition, 1 * Time.deltaTime);
-        //inCan.transform.DOMove(canHeightTargetPosition, mCanMoveDuration, false)/*.OnUpdate(()=> can.transform.GetChild(0).gameObject.SetActive(true))*/.OnComplete(() => can.transform.GetChild(0).gameObject.SetActive(true));
-
-        yield return new WaitForSeconds(.3f);
-      //  inCan.transform.DOScale(mEndGameCanScaleValue, 1);
-        //Camera.main.transform.DOMove(cameraTargetPosition, mCameraMoveDuration, false);
-
-        // Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, 2 * Time.deltaTime);
-        Invoke("ActiveRewardPanel", 2f);
-
-        yield return null;
-        //}
-    }
-
-    void InvokeKinematic()
-    {
-        can.GetComponent<Rigidbody>().isKinematic = true;
     }
 
 
@@ -175,21 +90,17 @@ public class BoxReactor : MonoBehaviour
 
     public void BackToMainScene()
     {
-        LevelLoadManager.instance.BacktoHome(); //Need to change it from zero to some other value. Will be doing that when scene save system is Done.
+        LevelLoadManager.instance.BacktoHome();
     }
 
 
     void SetRewardPanel(ChestValue crateValueRef)
     {
-
         RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
         RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-        RewardDisplayPanel.ShowResultTotal(1, (crateValueRef._value * GameManager.Instance._MultiplierValue).ToString());
-        GameManager.Instance._energy += (int)(crateValueRef._value * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+        RewardDisplayPanel.ShowResultTotal(1, Mathf.RoundToInt(crateValueRef._value * GameManager.Instance._MultiplierValue* GameManager.Instance.cucuMultiplier).ToString());
+        Invoke(nameof(ActiveRewardPanel), 2f);
+
+        GameManager.Instance._energy += Mathf.RoundToInt(crateValueRef._value * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
     }
 }
-
-
-
-//other.transform.parent.GetComponent<Animator>().SetTrigger("isBreaking?");
-//rewardText.text = other.gameObject.GetComponent<ChestValue>()._value.ToString() + "Energy";

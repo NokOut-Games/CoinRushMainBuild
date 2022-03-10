@@ -51,16 +51,17 @@ public class CoinSelector : MonoBehaviour
 
     private void OnMouseDown()
     {
-        int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
+        //int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
 
-       
+       int coinValue = int.Parse(GameManager.Instance.minigameEconomy.CoinReward[RNG.instance.GetRandom(RNG.instance.CoinSceneProbability)]);
+
         RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
         RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
 
-        RewardDisplayPanel.ShowResultTotal(0, (coinValue * GameManager.Instance._MultiplierValue).ToString());
+        RewardDisplayPanel.ShowResultTotal(0, Mathf.RoundToInt(coinValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
 
-        mGameManager._coins +=(int) (coinValue* GameManager.Instance._MultiplierValue *GameManager.Instance.cucuMultiplier);
-        //Assign it to chest which player clicks on and pass the values
+        mGameManager._coins += Mathf.RoundToInt(coinValue* GameManager.Instance._MultiplierValue *GameManager.Instance.cucuMultiplier);
+
         GameObject SelectedPig = this.gameObject;
         SelectedPig.GetComponent<ChestValue>()._value = coinValue;
         CoinShowerSpawnPoint = SelectedPig.transform.GetChild(0).transform;

@@ -7,43 +7,29 @@ using UnityEngine.UI;
 public class AttackManager : MonoBehaviour
 {
     public bool isDataChanging = true;
-
-    [SerializeField] private GameManager mGameManager;
+    private GameManager mGameManager;
     public List<GameObject> _spawnedTargetPoints = new List<GameObject>();
-    public GameObject _TargetPrefab;
-    public GameObject _multiplierPrefab;
     public GameObject _multiplierGameObject;
     public GameObject _Cannon;
     public float _MultiplierSwitchTime = 1.0f;
     public ResultPanelUI resultPanel;
-    public Text _ScoreTextOne;
-    public Text _ScoreTextTwo;
-    public Text _ScoreTextThree;
-    public GameObject _bulletPre;
-    //public Sprite _Sprite1, _Sprite2, _Sprite3, _Sprite4, _Sprite5, _Sprite6, _Sprite7, _Sprite8, _Sprite9;
-    public List<Sprite> valueSprites = new List<Sprite>(8);
+   // public List<Sprite> valueSprites = new List<Sprite>(8);
     public Transform _TargetTransform;
     public bool _Shield = false;
     public Quaternion CameraAttackRotation;
     public Vector3 CameraAttackPosition;
     public bool _AllowInteraction = true;
-    public GameObject MultiplierGO;
     public GameObject _CanvasGO;
     public GameObject _TargetButton;
     public float HeightAdjustment = 100;
-    public Sprite _TargetSprite;
-    public Sprite _MultiplierSprite;
-    public GameObject shieldPref;
     public bool _multiplierSelected = false;
 
     private Camera cam;
     private int cachedTargetPoint = -1;
     private int TargetObjectIndex;
     private float transitionDuration = 2.5f;
-    public GameObject obj;
     public int _enemyPlayerLevel;
 
-    public List<GameObject> mEnemyBuildingPrefabPopulateList;
     public List<GameObject> _enemyBuildings;
 
     [SerializeField] private GameObject mTransformPoint;
@@ -66,6 +52,10 @@ public class AttackManager : MonoBehaviour
     [SerializeField] Transform cannonAnimationCamera;
     [SerializeField] float DestroyAnimationDelay;
     [SerializeField] GameObject attackCanvas;
+
+    [SerializeField] Sprite EnergySprite;
+    [SerializeField] Sprite CoinSprite;
+    int reward;
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -80,13 +70,20 @@ public class AttackManager : MonoBehaviour
         Invoke(nameof(UpdateCamerHorizontalBounds), 0.5f);
         Invoke(nameof(TargetInstantiation), 0.5f);
         InvokeRepeating("DoMultiplierSwitching", 0.5f, _MultiplierSwitchTime);
-        ShuffleBuildingCostList();
+       // ShuffleBuildingCostList();
     }
     private void Update()
     {
         TargetButtonPositionUpdate();
     }
-
+    void Start()
+    {
+        _buildingCost.Clear();
+        foreach (var cost in GameManager.Instance.minigameEconomy.AttackReward)
+        {
+            _buildingCost.Add(int.Parse(cost));
+        }
+    }
 
     void InstantiateLevelAndPopulateShieldedBuildingsWithTransformPoints()
     {
@@ -177,16 +174,11 @@ public class AttackManager : MonoBehaviour
         for (int i = 0; i < _buildingCost.Count; i++)
         {
             int temp = _buildingCost[i];
-            Sprite spriteTemp = valueSprites[i];
             int randomIndex = Random.Range(i, _buildingCost.Count);
-            valueSprites[i] = valueSprites[randomIndex];
             _buildingCost[i] = _buildingCost[randomIndex];
             _buildingCost[randomIndex] = temp;
-            valueSprites[randomIndex] = spriteTemp;
         }
     }
-
-    // Update is called once per frame
     public void ResetAnim()
     {
         _spawnedTargetPoints[cachedTargetPoint].GetComponentInChildren<Animator>().SetBool("CanPlay", false);
@@ -227,18 +219,17 @@ public class AttackManager : MonoBehaviour
 
             go.GetComponentInChildren<Button>().onClick.AddListener(() =>
             {
+                TargetObjectIndex = int.Parse(go.name);
+
                 attackCanvas.SetActive(false);
                 AssignTarget(_enemyBuildings[int.Parse(go.name)].transform);
                 if (_shieldedEnemyBuildings[int.Parse(go.name)])
                     _Shield = _shieldedEnemyBuildings[int.Parse(go.name)];
 
-                TargetObjectIndex = int.Parse(go.name);
 
                 if (_multiplierGameObject.name == go.name)
                 {
-
                     _multiplierSelected = true;
-
                 }
 
                 for (int i = 0; i < _spawnedTargetPoints.Count; i++)
@@ -289,43 +280,23 @@ public class AttackManager : MonoBehaviour
                         // _multiplierGameObject.transform.GetChild(0).gameObject.SetActive(true);
                     }
                 }
-
-                switch (_buildingCost[i])
+                
+                if (i == TargetObjectIndex)
                 {
-                    case 10:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[0];
-                        break;
-                    case 20:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[1];
-                        break;
-                    case 30:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[2];
-                        break;
-                    case 15000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[3];
-                        break;
-                    case 21000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[4];
-                        break;
-                    case 30000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[5];
-                        break;
-                    case 45000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[6];
-                        break;
-                    case 75000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[7];
-                        break;
-                    case 6000:
-                        _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = valueSprites[8];
-                        break;
+                     reward  = int.Parse(GameManager.Instance.minigameEconomy.AttackReward[RNG.instance.GetRandom(RNG.instance.AttackSceneProbability)]);
+                    _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = reward > 100 ? CoinSprite : EnergySprite;
+                    _spawnedTargetPoints[i].transform.GetChild(1).GetChild(1).GetComponent<TMPro.TMP_Text>().text = reward.ConvertToText("F0");
+                }
+                else
+                {
+                    _spawnedTargetPoints[i].transform.GetChild(1).gameObject.GetComponent<TargetBuildingValues>()._Sprite = _buildingCost[i] > 100 ? CoinSprite : EnergySprite;
+                    _spawnedTargetPoints[i].transform.GetChild(1).GetChild(1).GetComponent<TMPro.TMP_Text>().text = _buildingCost[i].ConvertToText("F0");
                 }
 
-
             }
-            Invoke("DisableBuildingCost", 2f);
-            CancelInvoke("DoMultiplierSwitching");
-            Invoke("PerformTarget", 2.1f);
+            Invoke(nameof(DisableBuildingCost), 2f);
+            CancelInvoke(nameof(DoMultiplierSwitching));
+            Invoke(nameof(PerformTarget), 2.1f);
         }
     }
 
@@ -335,7 +306,6 @@ public class AttackManager : MonoBehaviour
         for (int i = 0; i < _spawnedTargetPoints.Count; i++)
         {
             _spawnedTargetPoints[i].SetActive(false);
-
         }
         _multiplierGameObject.SetActive(false);
     }
@@ -346,7 +316,6 @@ public class AttackManager : MonoBehaviour
         for (int i = 0; i < _spawnedTargetPoints.Count; i++)
         {
             _spawnedTargetPoints[i].SetActive(false);
-
         }
         _multiplierGameObject.SetActive(false);
 
@@ -365,15 +334,12 @@ public class AttackManager : MonoBehaviour
         else
         {
             Invoke(nameof(MakeBuildingDestroyed), DestroyAnimationDelay);
-
         }
-
-
     }
 
     public IEnumerator ScoreCalculation(Transform trans)
     {
-        float RewardValue = _buildingCost[TargetObjectIndex];
+        float RewardValue = reward;
 
         if (_multiplierSelected)
         {
@@ -385,14 +351,14 @@ public class AttackManager : MonoBehaviour
         resultPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
         if (RewardValue.ToString().Length < 3)
         {
-            mGameManager._energy +=(int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
-            resultPanel.ShowResultTotal(1, ((int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
+            mGameManager._energy += Mathf.RoundToInt(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+            resultPanel.ShowResultTotal(1, (Mathf.Round(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
 
         }
         else
         {
-            mGameManager._coins += (int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
-            resultPanel.ShowResultTotal(0, ((int)(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
+            mGameManager._coins += Mathf.RoundToInt(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+            resultPanel.ShowResultTotal(0, (Mathf.Round(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
         }
 
         yield return new WaitForSeconds(7.5f);

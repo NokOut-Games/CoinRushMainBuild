@@ -73,8 +73,26 @@ public class SpinWheel : MonoBehaviour
 
     public Animator mLightAnimator;
 
+
+    void Awake()
+    {
+        for (int i = 0; i < _wheelPieces.Length; i++)
+        {
+            _wheelPieces[i]._Amount = int.Parse(GameManager.Instance.minigameEconomy.SpinReward[i]);
+            _wheelPieces[i]._Label = ConvertToText(int.Parse(GameManager.Instance.minigameEconomy.SpinReward[i]));
+        }
+    }
+    string ConvertToText(int score)
+    {
+        float scoreF = (float)score;
+        if (scoreF >= 1000000000) return (scoreF / 1000000000).ToString("F0") + "B";
+        else if (scoreF >= 1000000) return (scoreF / 1000000).ToString("F0") + "M";
+        else if (scoreF >= 1000) return (scoreF / 1000).ToString("F0") + "K";
+        else return scoreF.ToString();
+    }
     private void Start()
     {
+       
         WheelDivider();
         SetupAudio();
         PieceGenerator();
@@ -162,7 +180,8 @@ public class SpinWheel : MonoBehaviour
             }
             mIsSpinning = true;
 
-            int index = GetRandomPieceIndex();
+            // int index = GetRandomPieceIndex();
+            int index = RNG.instance.GetRandom(RNG.instance.SpinWheelSceneProbability);
             WheelPiece piece = _wheelPieces[index];
 
             if (piece._Chance == 0 && mNonZeroChancesIndices.Count != 0)

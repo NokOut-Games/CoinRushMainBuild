@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]float TouchTime = 0.11f;
 
     [HideInInspector] public bool openCardSelected;
-
+    float viewChangeSpeed =2f;
     private void Start()
     {
         mCardDeck = GameObject.Find("CardDeck").GetComponent<CardDeck>();
@@ -158,16 +158,12 @@ public class CameraController : MonoBehaviour
     private void ViewShifter(int inViewNumber, float inTransitionSpeed)
     {
         _currentView = _views[inViewNumber];
-        _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, 0.1f);
+        _CameraParent.position = Vector3.Lerp(_CameraParent.position, _currentView.position, viewChangeSpeed * Time.deltaTime);
 
         _CameraParent.eulerAngles = new Vector3(
-            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, 0.1f),
-            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, 0.1f),
-            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, 0.1f));
-
-         
-
-
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.x, _currentView.transform.rotation.eulerAngles.x, viewChangeSpeed * Time.deltaTime),
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.y, _currentView.transform.rotation.eulerAngles.y, viewChangeSpeed * Time.deltaTime),
+            Mathf.LerpAngle(_CameraParent.rotation.eulerAngles.z, _currentView.transform.rotation.eulerAngles.z, viewChangeSpeed * Time.deltaTime));
     }
     bool IsBoundary(Touch touch)
     {
@@ -200,7 +196,7 @@ public class CameraController : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 if (IsBoundary(touch)) return;
-                Vector3 moveTo = _CameraParent.transform.position + mPreTouchMovementVector.normalized * (10 / touchMovedTime);
+                Vector3 moveTo = _CameraParent.transform.position + mPreTouchMovementVector.normalized*(10 / touchMovedTime);
                 moveTo = new Vector3(Mathf.Clamp(moveTo.x, _CameraLeftBound - 60, _CameraRightBound + 60), moveTo.y, Mathf.Clamp(moveTo.z, mCameraFarBound - 60, mCameraNearBound + 60));
                 if (touchMovedTime < 0.15f && touchMovedTime > 0.01f) _CameraParent.transform.DOMove(moveTo, .3f);
             }

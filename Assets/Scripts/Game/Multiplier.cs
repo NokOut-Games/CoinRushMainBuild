@@ -18,10 +18,10 @@ public class Multiplier : MonoBehaviour
     [SerializeField] Image energyFiller;
 
     Tutorial tutorial;
-    float waitTime = 5f;
+    float waitTime = 3f;
     float crntEnergy=> (GameManager.Instance._energy - ((GameManager.Instance._MultiplierValue * 3) - 3));
     [SerializeField]bool timerIsRunning;
-    [SerializeField]float timeRemaining = 2;
+    [SerializeField]float timeRemaining = 3;
     CardType cardType;
     [SerializeField] Animator energyReduseAnimator;
     Animator GetOutAnimator;
@@ -39,7 +39,7 @@ public class Multiplier : MonoBehaviour
         energyFiller.fillAmount = crntEnergy>50?50:crntEnergy /50;
         timerImage.gameObject.SetActive(false);
         timerIsRunning = false;
-        timeRemaining = 2f;
+        timeRemaining = 1f;
         timerIsRunning = true;
     }
 
@@ -67,7 +67,7 @@ public class Multiplier : MonoBehaviour
             {  
                 timeRemaining = 0;
                 if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
-                else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 3000, cardType.ToString());
+                else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 0, cardType.ToString());
                 MultiplierEnergyReduse();
                 timerIsRunning = false;
                 sceneLoaded = true;
@@ -77,7 +77,7 @@ public class Multiplier : MonoBehaviour
         {
             sceneLoaded = true;
             if (cardType == CardType.ATTACK) MultiplayerManager.Instance.OnGettingAttackCard();
-            else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 3000, cardType.ToString());
+            else LevelLoadManager.instance.LoadLevelASyncOf(cardType.ToString(), 0, cardType.ToString());
             MultiplierEnergyReduse();
         }
     }

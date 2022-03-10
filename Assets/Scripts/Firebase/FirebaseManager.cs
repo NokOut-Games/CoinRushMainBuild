@@ -35,6 +35,7 @@ public class FirebaseManager : MonoBehaviour
     public bool loadMapScene;
 
     public UserData userdata = new UserData();
+    
 
 
     private void Awake()
@@ -58,7 +59,6 @@ public class FirebaseManager : MonoBehaviour
         if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();
-            ReadEconomy();
             LevelLoadManager.instance.GoToMapScreen(true);
 
         }
@@ -79,10 +79,19 @@ public class FirebaseManager : MonoBehaviour
             };
             FacebookManager.Instance.GetProfilePictureWithId(_PlayerName, OnGettingPic, true);
         }
+       
     }
 
     public void RemoveGuestUser(string id)
     {
+        Firebase.Auth.FirebaseUser user = auth.CurrentUser;
+        if (user.UserId != null)
+        {
+            user.DeleteAsync().ContinueWith(task => {
+
+                Debug.Log("User deleted successfully.");
+            });
+        }
         reference.Child("Guest Users").Child(id).RemoveValueAsync();
     }
 
@@ -132,12 +141,13 @@ public class FirebaseManager : MonoBehaviour
                     GameManager.Instance._SetIndex = userdata.MapData.SetIndex;
                     GameManager.Instance._SavedCardTypes = userdata.SaveCards;
                     GameManager.Instance.islandNumber = userdata.UserDetails.islandNumber;
-
+                    RNG.instance.Behaviour = (PlayerBehaviour)userdata.UserDetails.behaviour;
                     //Get Changed Build and OpenCard Value 
                     reference.Child(userTitle).Child(_PlayerID).Child("Buildings").ValueChanged += HandleBuildingValueChanged;//Event Handle
                     reference.Child(userTitle).Child(_PlayerID).Child("OpenCards").ValueChanged += HandleOpenCardValueChanged;//Event Handle
 
                     ReadEconomy(userdata.UserDetails.islandNumber);
+                    ReadMiniGameEconomy();
                 }
             }
         });
@@ -172,42 +182,12 @@ public class FirebaseManager : MonoBehaviour
                 CardData._openedPlayerID = e.Snapshot.Child(i.ToString()).Child("_openedPlayerID").Value.ToString();
                 CardData._openedCardSelectedCard = int.Parse(e.Snapshot.Child(i.ToString()).Child("_openedCardSelectedCard").Value.ToString());
                 OpenCardDetails.Add(CardData);
-                // OpenedCardSlot.Add(CardData._openedCardSlot);
             }
             GameManager.Instance.UpdateOpenCardDetails(OpenCardDetails);
-            // OpenCardValueChange?.Invoke();
         }
     }
 
-    //void GetAttackData()
-    //{
-    //    reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").GetValueAsync().ContinueWith(task =>
-    //    {
-    //        AttackedData.Clear();
-    //        if (task.IsCompleted)
-    //        {
-    //            DataSnapshot snapshot = task.Result;
-
-    //            if (snapshot.Exists)
-    //            {
-    //                AttackedData = new List<AttackedPlayerInformation>();
-
-    //                for (int i = 0; i < snapshot.ChildrenCount; i++)
-    //                {
-    //                    AttackedPlayerInformation attackData = new AttackedPlayerInformation();
-
-    //                    attackData._attackedPlayerID = snapshot.Child(i.ToString()).Child("_attackedPlayerID").Value.ToString();
-    //                    attackData._attackedPlayerName = snapshot.Child(i.ToString()).Child("_attackedPlayerName").Value.ToString();
-    //                    attackData._attackedBuildingName = snapshot.Child(i.ToString()).Child("_attackedBuildingName").Value.ToString();
-
-    //                    AttackedData.Add(attackData);
-    //                }
-
-    //               // reference.Child(userTitle).Child(_PlayerID).Child("AttackedPlayer").ValueChanged += HandleAttackData;// Handle Event
-    //            }
-    //        }
-    //    });
-    //}
+ 
 
     void GetTimeCalculations()
     {
@@ -262,6 +242,8 @@ public class FirebaseManager : MonoBehaviour
             _PlayerID = newUser.UserId;
             SaveNewUserInFirebase(newPlayer);
             WriteBuildingDataToFirebase();
+            ReadMiniGameEconomy();
+            ReadEconomy();
             loadMapScene = true;
         });
         _PlayerName = "Guest" + UnityEngine.Random.Range(100000, 999999);
@@ -279,7 +261,6 @@ public class FirebaseManager : MonoBehaviour
         {
             FirebaseUser newFBUser;
             newFBUser = task.Result;
-
             if (task.IsCompleted) CheckFbUser(newFBUser);
 
         });
@@ -316,6 +297,7 @@ public class FirebaseManager : MonoBehaviour
         playerDetails._playerCurrentLevel = GameManager.Instance._playerCurrentLevel;
         playerDetails._numberOfTimesGotAttacked = GameManager.Instance._openedCards;
         playerDetails.islandNumber = GameManager.Instance.islandNumber;
+        playerDetails.Behaviour = (int) RNG.instance.Behaviour;
         string json = JsonUtility.ToJson(playerDetails);
         reference.Child(userTitle).Child(_PlayerID).Child("UserDetails").SetRawJsonValueAsync(json).ContinueWith(task =>
         {
@@ -419,21 +401,22 @@ public class FirebaseManager : MonoBehaviour
             }
         });
     }
-
-
-    public void WriteEconomy(Dictionary<string, string> a)
+    public void ReadMiniGameData(string GameName)
     {
-        reference.Child("Economy").SetValueAsync(a).ContinueWith(a =>
+        reference.Child("Economy").Child(GameName).GetValueAsync().ContinueWith(task =>
         {
+            DataSnapshot snapshot = task.Result;
+            var json = snapshot.GetRawJsonValue();
+            Debug.Log(json);
+         
 
+         
         });
     }
-
     public void ReadEconomy(int islandNumber=1)
     {
         reference.Child("Economy").Child("Level" + islandNumber).GetValueAsync().ContinueWith(task =>
         {
-
              List<string> cost = new List<string>();
              DataSnapshot snapshot = task.Result;
              foreach (var dataSnapshot in snapshot.Children)
@@ -441,20 +424,40 @@ public class FirebaseManager : MonoBehaviour
                  cost.Add(dataSnapshot.Value.ToString());
              }
              GameManager.Instance.BuildingCost = cost;
-           if(islandNumber != 1)  readUserData = true;
+             readUserData = true;
 
-         });
+        });
     }
-    public void WriteEconomy(int leveleNo, Dictionary<string, string> level)
+    public void WriteEconomy(string title, List<string> level)
     {
-        reference.Child("Economy").Child("Level" + leveleNo.ToString()).SetValueAsync(level).ContinueWith(a =>
+        reference.Child("Economy").Child(title).SetValueAsync(level).ContinueWith(a =>
         {
         });
     }
-    public void WriteEconomy(int leveleNo, List<string> level)
+    public void ReadMiniGameEconomy()
     {
-        reference.Child("Economy").Child("Level" + leveleNo.ToString()).SetValueAsync(level).ContinueWith(a =>
+        reference.Child("Economy").Child("MiniGameEconomy").GetValueAsync().ContinueWith(task =>
         {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                if (snapshot.Exists)
+                {
+                    var json = snapshot.GetRawJsonValue();
+                    GameManager.Instance.minigameEconomy = JsonUtility.FromJson<MiniGameEconomy>(json);
+                }
+            }
+        });
+    }
+    public void WriteMiniGameEconomy(MiniGameEconomy dataClass)
+    {
+        string json = JsonUtility.ToJson(dataClass);
+        reference.Child("Economy").Child("MiniGameEconomy").SetRawJsonValueAsync(json).ContinueWith(task =>
+        {
+            if (task.IsCompleted)
+            {
+                Debug.Log("Write Successful");
+            }
         });
     }
     private void OnApplicationPause(bool pause)
@@ -485,5 +488,6 @@ public class FirebaseManager : MonoBehaviour
         WriteBuildingDataToFirebase();
         WritePlayerDataToFirebase();
         CalculateLogOutTime();
+        RNG.instance.Save();
     }
 }

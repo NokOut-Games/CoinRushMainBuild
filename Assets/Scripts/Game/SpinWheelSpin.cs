@@ -22,6 +22,7 @@ public class SpinWheelSpin : MonoBehaviour
 
     public bool DoFreeSpins = false;
     public bool disablePanel = false;
+    bool onSpin;
 
     [SerializeField] private SpinWheel spinWheel;
     private GameManager mGameManager;
@@ -33,120 +34,74 @@ public class SpinWheelSpin : MonoBehaviour
     [SerializeField] GameObject endParticle;
     private void Start()
     {
-         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         _uiSpinButton.onClick.AddListener(() =>
         {
-            if (FreeSpins == 0) return;
+            if (FreeSpins == 0 && onSpin) return;
+            onSpin = true;
 
             CoinParticle.SetActive(false);
             EnergyParticle.SetActive(false);
+            chestAnimation.SetBool("Open", false);
             _uiSpinButton.interactable = false;
 
             spinWheel.OnSpinEnd(wheelPiece =>
             {
+                onSpin = false;
                 endParticle.SetActive(true);
                 if (FreeSpins == 0)
                 {
                     DoFreeSpins = false;
                 }
-                
-                switch (DoFreeSpins)
+
+                if (wheelPiece._Icon == _uiCoinSprite)
                 {
-                    case false:
-                        if (wheelPiece._Icon == _uiCoinSprite)
-                        {
-                            chestAnimation.SetBool("Open", true);
-                            Invoke(nameof(PlayCoinParticle), .2f);
-                           
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-                                coin += wheelPiece._Amount;
-                                mGameManager._coins += wheelPiece._Amount;
-                            }
-                            else
-                            {
-                                coin += wheelPiece._Amount*GameManager.Instance._MultiplierValue;
-                                mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                            }
+                    disablePanel = true;
+                    chestAnimation.SetBool("Open", true);
+                    Invoke(nameof(PlayCoinParticle), .2f);
 
-                        }else
-                        if (wheelPiece._Icon == _uiEnergySprite)
-                        {
-                            chestAnimation.SetBool("Open", true);
-                            Invoke(nameof(PlayEnergyParticle), .2f);
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-                                Energy += wheelPiece._Amount;
-                                mGameManager._energy += wheelPiece._Amount;
-                            }
-                            else
-                            {
-                                Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                            }
-                        }else
-                        if (wheelPiece._Icon == _uiFreeSpinSprite)
-                        {
-                            FreeSpins += wheelPiece._Amount;
-                            totalFreeSpin += wheelPiece._Amount;
-                        }
-                        else if (wheelPiece._Icon == _uiCardSprite)
-                        {
-                            cardCount++;
-                        }
-                        break;
-
-
-                    case true:
-                        _uiSpinButton.interactable = true;
-                        if (wheelPiece._Icon == _uiCoinSprite)
-                        {
-                            disablePanel = true;
-                            chestAnimation.SetBool("Open", true);
-                            Invoke(nameof(PlayCoinParticle), .2f);
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-                                coin += wheelPiece._Amount;
-                                mGameManager._coins += wheelPiece._Amount;
-                            }
-                            else
-                            {
-                                coin += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                            }
-                        }
-                        if (wheelPiece._Icon == _uiEnergySprite)
-                        {
-                            disablePanel = true;
-                            chestAnimation.SetBool("Open", true);
-                            Invoke(nameof(PlayEnergyParticle), .2f);
-
-                            if (GameManager.Instance._MultiplierValue <= 1)
-                            {
-                                Energy += wheelPiece._Amount;
-                                mGameManager._energy += wheelPiece._Amount;
-                            }
-                            else
-                            {
-                                Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                                mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
-                            }
-                        }
-                        if (wheelPiece._Icon == _uiFreeSpinSprite)
-                        {
-                            FreeSpins += wheelPiece._Amount;
-                            totalFreeSpin += wheelPiece._Amount;
-                        }
-                        else if (wheelPiece._Icon == _uiCardSprite)
-                        {
-                            cardCount++;
-                        }
-                        break;
+                    if (GameManager.Instance._MultiplierValue <= 1)
+                    {
+                        coin += wheelPiece._Amount;
+                        mGameManager._coins += wheelPiece._Amount;
+                    }
+                    else
+                    {
+                        coin += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                        mGameManager._coins += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                    }
                 }
-                _uiSpinButton.interactable = true;
+                if (wheelPiece._Icon == _uiEnergySprite)
+                {
+                    
+                    chestAnimation.SetBool("Open", true);
+                    Invoke(nameof(PlayEnergyParticle), .2f);
+
+                    if (GameManager.Instance._MultiplierValue <= 1)
+                    {
+                        Energy += wheelPiece._Amount;
+                        mGameManager._energy += wheelPiece._Amount;
+                    }
+                    else
+                    {
+                        Energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                        mGameManager._energy += wheelPiece._Amount * GameManager.Instance._MultiplierValue;
+                    }
+                }
+                if (wheelPiece._Icon == _uiFreeSpinSprite)
+                {
+                    FreeSpins += wheelPiece._Amount;
+                    totalFreeSpin += wheelPiece._Amount;
+                }
+                if (wheelPiece._Icon == _uiCardSprite)
+                {
+                   
+                    chestAnimation.SetBool("Open", true);
+                    Invoke(nameof(ShowResultPopUP), 1f);
+                    cardCount++;
+                }
+
             });
             spinWheel.Spin();
 
@@ -167,7 +122,7 @@ public class SpinWheelSpin : MonoBehaviour
     void PlayEnergyParticle()
     {
         EnergyParticle.SetActive(true);
-        Invoke(nameof(ShowResultPopUP),1f);
+        Invoke(nameof(ShowResultPopUP), 1f);
     }
 
     void ShowResultPopUP()
@@ -175,9 +130,9 @@ public class SpinWheelSpin : MonoBehaviour
         if (FreeSpins > 0)
         {
             chestAnimation.SetBool("Open", false);
-            CoinParticle.SetActive(true);
-            EnergyParticle.SetActive(true);
-            endParticle.SetActive(true);
+            CoinParticle.SetActive(false);
+            EnergyParticle.SetActive(false);
+            endParticle.SetActive(false);
         }
         else
         {
@@ -191,22 +146,23 @@ public class SpinWheelSpin : MonoBehaviour
             {
                 iconIndex.Add(item[0]);
                 if (item[0] != 2)
-                    value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+                    value.Add(Mathf.Round(item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString("F0"));
                 else
-                    value.Add((item[1]).ToString());
-            }        
+                    value.Add(Mathf.Round(item[1]).ToString("F0"));
+            }
             _uiReturnToGame.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
-            if (totalFreeSpin !=0)
+            if (totalFreeSpin != 0)
                 _uiReturnToGame.ShowMultiplierDetails(2, 2, "No. of spins", totalFreeSpin.ToString());
             _uiReturnToGame.gameObject.SetActive(true);
 
             disablePanel = DoFreeSpins;
         }
-       
+
     }
 
     private void Update()
-    {    if(FreeSpins<10)
+    {
+        if (FreeSpins < 10)
         {
             _uiFreeSpinCountValue.text = FreeSpins.ToString();
         }
@@ -214,15 +170,15 @@ public class SpinWheelSpin : MonoBehaviour
         {
             _uiFreeSpinCountValue.text = FreeSpins.ToString();
         }
-      
-        if(disablePanel)
+
+        if (disablePanel)
         {
             disablePanel = false;
         }
     }
     List<int[]> CheckTheResult(int inCoin, int inEnergy, int inCard)
     {
-       List<int[]> havingElementIndex = new List<int[]>();
+        List<int[]> havingElementIndex = new List<int[]>();
         if (inCoin > 0)
         {
             havingElementIndex.Add(new int[] { 0, inCoin });

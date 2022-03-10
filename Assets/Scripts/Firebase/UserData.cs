@@ -45,6 +45,7 @@ public class UserDetails
     public int _numberOfTimesGotAttacked;
     public int _playerCurrentLevel;
     public int islandNumber=1;
+    public int behaviour;
     public string _playerID;
     public string _playerName;
 }

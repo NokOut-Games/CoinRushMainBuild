@@ -29,41 +29,21 @@ public class CoinProbability : MonoBehaviour
 
     private Coins mCoin;
 
-    private float mChanceA = 90, mChanceB = 30, mChanceC = 2, mChanceD = 1, mChanceE = .5f;
+    private float mChanceA = 95, mChanceB = 5, mChanceC = 2, mChanceD = 1, mChanceE = .5f;
 
     private void Awake()
     {
         _coins = new List<Coins>(5);
-        _coins.Add(new Coins(15000, mChanceA, 0, 0));
-        _coins.Add(new Coins(75000, mChanceB, 0, 0));
-        _coins.Add(new Coins(300000, mChanceC, 0, 0));
-        _coins.Add(new Coins(1500000, mChanceD, 0, 0));
-        _coins.Add(new Coins(3000000, mChanceE, 0, 0));
+        _coins.Add(new Coins(int.Parse(GameManager.Instance.minigameEconomy.CoinReward[0]), mChanceA, 0, 0));
+        _coins.Add(new Coins(int.Parse(GameManager.Instance.minigameEconomy.CoinReward[1]), mChanceB, 0, 0));
+        _coins.Add(new Coins(int.Parse(GameManager.Instance.minigameEconomy.CoinReward[2]), mChanceC, 0, 0));
+        _coins.Add(new Coins(int.Parse(GameManager.Instance.minigameEconomy.CoinReward[3]), mChanceD, 0, 0));
+        _coins.Add(new Coins(int.Parse(GameManager.Instance.minigameEconomy.CoinReward[4]), mChanceE, 0, 0));
     }
 
     public void Start()
     {
         CalculateIndexAndTotalToughness();
-
-        #region Example Probability Thing
-        //for (int i = 0;i <= 5;i++)
-        //{
-        //    if(i == 3)
-        //    {
-        //        continue;
-        //    }
-        //    Debug.Log(i);
-        //}
-        #endregion
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            SceneManager.LoadScene(0);
-           
-        }
     }
 
     /// <summary>

@@ -25,9 +25,9 @@ public class Slots : MonoBehaviour
     public GameObject coinShower;
     public GameObject energyShower;
 
-    public int[] JackPotReward;
-    public int[] twoMatchReward;
-    public int[] singleReward;
+    public List<int> JackPotReward= new List<int>();
+    public List<int> twoMatchReward = new List<int>();
+    public List<int> singleReward = new List<int>();
 
 
 
@@ -36,6 +36,152 @@ public class Slots : MonoBehaviour
     [SerializeField] int totalEnergy;
     [SerializeField] int totalCard;
 
+    void Awake()
+    {
+        PopulateProbability();
+        AddElementToListFromAndTo(JackPotReward, 0, 4);
+        AddElementToListFromAndTo(twoMatchReward, 4, 8);
+        AddElementToListFromAndTo(singleReward, 8, 12);
+    }
+    void PopulateProbability()
+    {
+        SlotReward value = (SlotReward)RNG.instance.GetRandom(RNG.instance.SlotMachineSceneProbability);
+        switch (value)
+        {
+            case SlotReward.CoinJackPot:
+                foreach (var reel in _reels)
+                {
+                    reel._reelElements[3]._chanceOfObtaining = 94;
+                }
+                break;
+            case SlotReward.EnergyJackPot:
+                foreach (var reel in _reels)
+                {
+                    reel._reelElements[2]._chanceOfObtaining = 94;
+                }
+                break;
+            case SlotReward.FreeSpinJackPot:
+                foreach (var reel in _reels)
+                {
+                    reel._reelElements[1]._chanceOfObtaining = 94;
+                }
+                break;
+            case SlotReward.CardJackPot:
+                foreach (var reel in _reels)
+                {
+                    reel._reelElements[0]._chanceOfObtaining = 94;
+                }
+                break;
+            case SlotReward.CoinMidPot:
+                if (Random.Range(1, 100) > 70)
+                {
+                    _reels[0]._reelElements[3]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[3]._chanceOfObtaining = 4;
+                    _reels[2]._reelElements[3]._chanceOfObtaining = 90;
+                }
+                else if (Random.Range(1, 100) > 30)
+                {
+                    _reels[0]._reelElements[3]._chanceOfObtaining = 4;
+                    _reels[1]._reelElements[3]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[3]._chanceOfObtaining = 90;
+                }
+                else
+                {
+                    _reels[0]._reelElements[3]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[3]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[3]._chanceOfObtaining = 4;
+                }              
+                break;
+            case SlotReward.EnergyMidPot:
+                if (Random.Range(1, 100) > 70)
+                {
+                    _reels[0]._reelElements[2]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[2]._chanceOfObtaining = 4;
+                    _reels[2]._reelElements[2]._chanceOfObtaining = 90;
+                }
+                else if (Random.Range(1, 100) > 30)
+                {
+                    _reels[0]._reelElements[2]._chanceOfObtaining = 4;
+                    _reels[1]._reelElements[2]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[2]._chanceOfObtaining = 90;
+                }
+                else
+                {
+                    _reels[0]._reelElements[2]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[2]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[2]._chanceOfObtaining = 4;
+                }
+                break;
+            case SlotReward.FreeMidPot:
+                if (Random.Range(1, 100) > 70)
+                {
+                    _reels[0]._reelElements[1]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[1]._chanceOfObtaining = 4;
+                    _reels[2]._reelElements[1]._chanceOfObtaining = 90;
+                }
+                else if (Random.Range(1, 100) > 60)
+                {
+                    _reels[0]._reelElements[1]._chanceOfObtaining = 4;
+                    _reels[1]._reelElements[1]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[1]._chanceOfObtaining = 90;
+                }
+                else
+                {
+                    _reels[0]._reelElements[1]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[1]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[1]._chanceOfObtaining = 4;
+                }
+                break;
+            case SlotReward.CardMidPot:
+                if (Random.Range(1, 100) > 70)
+                {
+                    _reels[0]._reelElements[0]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[0]._chanceOfObtaining = 4;
+                    _reels[2]._reelElements[0]._chanceOfObtaining = 90;
+                }
+                else if (Random.Range(1, 100) > 60)
+                {
+                    _reels[0]._reelElements[0]._chanceOfObtaining = 4;
+                    _reels[1]._reelElements[0]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[0]._chanceOfObtaining = 90;
+                }
+                else
+                {
+                    _reels[0]._reelElements[0]._chanceOfObtaining = 90;
+                    _reels[1]._reelElements[0]._chanceOfObtaining = 90;
+                    _reels[2]._reelElements[0]._chanceOfObtaining = 4;
+                }
+                break;
+            case SlotReward.CoinLowPot:
+                _reels[0]._reelElements[3]._chanceOfObtaining = 90;
+                _reels[1]._reelElements[3]._chanceOfObtaining = 4;
+                _reels[2]._reelElements[3]._chanceOfObtaining = 10;
+                break;
+            case SlotReward.EnergyLowPot:
+                _reels[0]._reelElements[2]._chanceOfObtaining = 90;
+                _reels[1]._reelElements[2]._chanceOfObtaining = 4;
+                _reels[2]._reelElements[2]._chanceOfObtaining = 10;
+                break;
+            case SlotReward.FreeLowPot:
+                 _reels[0]._reelElements[1]._chanceOfObtaining = 90;
+                 _reels[1]._reelElements[1]._chanceOfObtaining = 1;
+                _reels[2]._reelElements[1]._chanceOfObtaining = 1;
+                break;
+            case SlotReward.CardLowPot:
+                _reels[0]._reelElements[0]._chanceOfObtaining = 90;
+                _reels[1]._reelElements[0]._chanceOfObtaining = 1;
+                _reels[2]._reelElements[0]._chanceOfObtaining = 1;
+                break;
+        }
+    }
+    void AddElementToListFromAndTo(List<int> list,int fromIndex, int toIndex)
+    {
+        list.Clear();
+        for (int i = fromIndex; i < toIndex; i++)
+        {
+            list.Add(int.Parse(GameManager.Instance.minigameEconomy.SlotReward[i]));
+        }
+    }
     private void Start()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -283,9 +429,9 @@ public class Slots : MonoBehaviour
         {
             iconIndex.Add(item[0]);
             if (item[0] != 2)
-                value.Add((item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+                value.Add(Mathf.Round(item[1] * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString("F0"));
             else
-                value.Add((item[1]).ToString());
+                value.Add(Mathf.Round(item[1]).ToString("F0"));
         }
         _rewardPanel.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
         if (totalSpins != 0)

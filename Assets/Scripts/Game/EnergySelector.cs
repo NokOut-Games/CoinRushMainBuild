@@ -17,9 +17,6 @@ public class EnergySelector : MonoBehaviour
 
     public IEnumerator energyCoroutine;
 
-
-    [Header("Other References: ")]
-    [SerializeField] private GameManager mGameManager;
     [SerializeField] Vector3 CameraOffset;
     [SerializeField] Transform ground;
     [SerializeField] float groundOffset;
@@ -30,18 +27,13 @@ public class EnergySelector : MonoBehaviour
     void Start()
     {
         EnergyFalling = true;
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
 
     private void OnMouseDown()
     {
-        int energyValue = mEnergyProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
-
-        //Changing the Energy value in Gamemanager
-        mGameManager._energy += energyValue;
-
-        //Assign it to chest which player clicks on and pass the values
+      //  int energyValue = mEnergyProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
+        int energyValue =int.Parse(GameManager.Instance.minigameEconomy.EnergyReward[RNG.instance.GetRandom(RNG.instance.EnergySceneProbability)]);
         GameObject Chest = this.gameObject;
         Chest.GetComponent<ChestValue>()._value = energyValue;
 
@@ -50,7 +42,6 @@ public class EnergySelector : MonoBehaviour
 
         ground.position = new Vector3(groundOffset, ground.position.y, ground.position.z);
         olCloud.SetActive(false);
-        //Destroy other chests Colliders except the ones clicked
         for (int i = 0; i < mEnergyChests.Length; i++)
         {
             if (mEnergyChests[i].transform.name != Chest.name)
@@ -64,36 +55,21 @@ public class EnergySelector : MonoBehaviour
 
     public IEnumerator CameraZoomAndFollowEnergy(GameObject inChest)
     {
-        //Destroy the parachute
-       // Destroy(inChest.transform.Find("Parachut").gameObject , 1f);
         while (true)
         {
-            //Make the chest rotation to zero
-           // inChest.transform.rotation = Quaternion.identity;
-
-
             if (EnergyFalling)
             {
-                //Make the camera to zoom-in
                 Vector3 targetPosition = inChest.transform.position + CameraOffset- new Vector3(0,0, cameraXOffset);
                 Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetPosition, CameraFocusSpeed * Time.deltaTime);
                 Camera.main.transform.SetParent(inChest.transform);
                 
-                //Change the Animator
                 inChest.transform.GetChild(0).GetComponent<Animator>().SetTrigger("isFalling?");
-
-                //Make the camera fall down
-                //inChest.transform.position += Vector3.down * dropSpeed * Time.fixedDeltaTime;
+        
                 dropSpeed += gainedAcceleration * Time.fixedDeltaTime ;
                 inChest.GetComponent<Rigidbody>().AddForce(Vector3.down * dropSpeed * Time.deltaTime);
-
-
-                //Play the falling particle Effect
                 inChest.transform.GetChild(0).Find("Wind_Effect").gameObject.SetActive(true);
             }
 
-            //Change the Scrolling Speed to make it look faster
-            //BackgroundParentRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 100;
             CloudBackRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 150;
             CloudFrontRef.GetComponent<BackgroundScrolling>().mScrollSpeed = 200;
 

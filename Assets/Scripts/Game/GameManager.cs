@@ -21,6 +21,17 @@ public class Building
     public bool _isBuildingShielded;
     public bool _isBuildingDestroyed;
 }
+[System.Serializable]
+
+
+public class MiniGameEconomy
+{
+    public List<string> AttackReward = new List<string>();
+    public List<string> CoinReward = new List<string>();
+    public List<string> EnergyReward = new List<string>();
+    public List<string> SlotReward = new List<string>();
+    public List<string> SpinReward = new List<string>();
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -40,7 +51,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int _openedCards;
 
     public List<OpenCard> OpenCardDetails;
-   // public List<int> OpenedCardSlot = new List<int>();
 
     public List<Building> _buildingGameManagerDataRef;
 
@@ -72,6 +82,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool refreshForOpenCard;
 
     public List<string> BuildingCost = new List<string>();
+    public MiniGameEconomy minigameEconomy = new MiniGameEconomy();
 
     public float cucuMultiplier = 1;
 
@@ -85,6 +96,8 @@ public class GameManager : MonoBehaviour
     public float mMinutes;
     public float mSeconds;
     public int energyBarMax;
+
+    public bool hasJoker;
     private void Awake()
     {     
         if (Instance == null)

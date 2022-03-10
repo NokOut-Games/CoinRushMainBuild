@@ -24,16 +24,16 @@ public class ResultPanelUI : MonoBehaviour
     {
         for (int i = 0; i < IconIndex.Length; i++)
         {
-            resultsElement[i].transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = rewardIcons[IconIndex[i]];
-            resultsElement[i].transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = Value[i].ToString();
-            resultsElement[i].SetActive(true);
+            resultsElement[IconIndex.Length-1].transform.GetChild(i).GetChild(0).GetComponent<Image>().sprite = rewardIcons[IconIndex[i]];
+            resultsElement[IconIndex.Length - 1].transform.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = Value[i].ConvertToText("F0");
+            resultsElement[IconIndex.Length - 1].SetActive(true);
         }
     }
     public void ShowResultTotal(int IconIndex, string Value)
     {
        
             resultsElement[0].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = rewardIcons[IconIndex];
-            resultsElement[0].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = Value.ToString();
+            resultsElement[0].transform.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = Value.ConvertToText("F0");
             resultsElement[0].SetActive(true);
        
     }

@@ -154,7 +154,6 @@ public class MenuUI : MonoBehaviour
         buildPanelGameObject.SetActive(false);
         screenItemsUIPanel.SetActive(true);
         DrawButtonPanelUI.SetActive(true);
-       // OpenCards.SetActive(true);
     }
 
 
@@ -180,28 +179,6 @@ public class MenuUI : MonoBehaviour
         GameManager.Instance.CurrentLevelCompleted();
         GameManager.Instance._PauseGame = false;
     }
-
-
-    //private void UpdateCoinAndEnergyTextFields()
-    //{
-    //    var currentCoin = mGameManager._coins.ToString("N1", System.Globalization.CultureInfo.InvariantCulture);
-    //    _coinText.text = currentCoin.Substring(0, currentCoin.Length - 2);
-
-    //    var energyBarMax = Mathf.Clamp(mGameManager._energy, 0, 50);
-    //    _energyText.text = energyBarMax.ToString("D2");
-
-
-    //    if (mGameManager._energy > mGameManager._maxEnergy)
-    //    {
-    //        int newEnergy = mGameManager._energy - mGameManager._maxEnergy;
-    //        _extraEnergytext.text = "+ " + newEnergy + " extra";
-    //    }
-    //    else
-    //    {
-    //        DisplayTime(mRegenerationTimer);
-    //        _extraEnergytext.text = "+ " + mGameManager._regenerationEnergy + " in " + string.Format("{0:00}:{1:00}", mMinutes, mSeconds) + " mins ";
-    //    }
-    //}
 
     private void UpdateCoinAndEnergyTextFields()
     {

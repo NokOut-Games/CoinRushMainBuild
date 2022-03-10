@@ -11,9 +11,15 @@ public class Player
     public int _coins = 1000;
     public int _energy = 25;
     public int _numberOfTimesGotAttacked;
+    public int Behaviour;
     public Player(string inPlayerID, string inPlayerName = "Guest")
     {
         _playerID = inPlayerID;       
         _playerName = inPlayerName;
     }
+}
+
+public enum PlayerBehaviour
+{
+    Conservative, Aggressive
 }
