@@ -190,9 +190,9 @@ public class MultiplayerManager : MonoBehaviour
     {
         if (!isRevenging)
         {
-            // FirebaseManager.Instance.WriteCardDataToFirebase();
-            // FirebaseManager.Instance.WriteBuildingDataToFirebase();
-            // FirebaseManager.Instance.WritePlayerDataToFirebase();
+             FirebaseManager.Instance.WriteCardDataToFirebase();
+             FirebaseManager.Instance.WriteBuildingDataToFirebase();
+             FirebaseManager.Instance.WritePlayerDataToFirebase();
             LevelLoadManager.instance.LoadLevelASyncOf("ATTACK", 0, "ATTACK");
         }
         if(isRevenging)
@@ -292,8 +292,8 @@ public class MultiplayerManager : MonoBehaviour
         Invoke(nameof(LoadOpenCardScene), 0.5f);
        // FirebaseManager.Instance.WriteCardDataToFirebase();
        // _enemyPlayerID = "109561708307210";
-       // FirebaseManager.Instance.WriteBuildingDataToFirebase();
-       // FirebaseManager.Instance.WritePlayerDataToFirebase();
+        FirebaseManager.Instance.WriteBuildingDataToFirebase();
+        FirebaseManager.Instance.WritePlayerDataToFirebase();
     }
 
     void LoadOpenCardScene()
