@@ -36,7 +36,7 @@ public class FirebaseManager : MonoBehaviour
 
     public UserData userdata = new UserData();
 
-
+    public bool fbExistingUser = false;
     private void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
@@ -55,14 +55,14 @@ public class FirebaseManager : MonoBehaviour
     private void Start()
     {
        
-        if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
+        if (/*auth.CurrentUser == null && */!PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();
             ReadEconomy();
             LevelLoadManager.instance.GoToMapScreen(true);
 
         }
-        else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
+      /*  else if (auth.CurrentUser != null && !auth.CurrentUser.IsAnonymous)
         {
             userTitle = "Facebook Users";
             _PlayerID = PlayerPrefs.GetString("id");
@@ -78,7 +78,7 @@ public class FirebaseManager : MonoBehaviour
 
             };
             FacebookManager.Instance.GetProfilePictureWithId(_PlayerName, OnGettingPic, true);
-        }
+        }*/
 
    
     }
@@ -101,6 +101,7 @@ public class FirebaseManager : MonoBehaviour
     {
         if (userTitle == "Facebook Users")
         {
+           
             reference.Child(userTitle).Child(_PlayerID).GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsCompleted)
@@ -108,6 +109,7 @@ public class FirebaseManager : MonoBehaviour
                     DataSnapshot snapshot = task.Result;
                     GetUserData();
                     if (calculatetime) GetTimeCalculations();
+
                 }
             });
         }
@@ -123,6 +125,9 @@ public class FirebaseManager : MonoBehaviour
                 }
             });
         }
+        Debug.LogError("I came till here 1");
+        
+        Debug.LogError("I came till here 2");
     }
     void GetUserData()
     {
@@ -306,6 +311,7 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     ReadData();
+                    fbExistingUser = true;
                 }
                 else
                 {
@@ -495,5 +501,18 @@ public class FirebaseManager : MonoBehaviour
         WriteBuildingDataToFirebase();
         WritePlayerDataToFirebase();
         CalculateLogOutTime();
+    }
+
+
+    private void Update()
+    {
+        if(fbExistingUser==true && userdata.UserDetails._playerCurrentLevel!=0)
+        {
+            SceneManager.LoadScene("Level" + userdata.UserDetails._playerCurrentLevel);
+            //LevelLoadManager.instance.LoadLevelASyncOf("Level" + userdata.UserDetails._playerCurrentLevel);
+            //LevelLoadManager.instance.BacktoHome();
+            GameManager.Instance._IsRefreshNeeded = true;
+            fbExistingUser = false;
+        }
     }
 }

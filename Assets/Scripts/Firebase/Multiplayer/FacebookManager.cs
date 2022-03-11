@@ -67,6 +67,7 @@ public class FacebookManager : MonoBehaviour
 
 		if (FB.IsLoggedIn)
 		{
+			
 			_loadingScreen.SetActive(true);
 			FB.API("/me?fields=name", HttpMethod.GET, DispName);
 			FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);

@@ -22,7 +22,7 @@ public class GuestLogin : MonoBehaviour
         if (FirebaseManager.Instance.readUserData)
         {
             LevelLoadManager.instance.LoadLevelOf(GameManager.Instance._playerCurrentLevel);
-            PlayerPrefs.SetInt("MadeHisChoice", 1);
+          //  PlayerPrefs.SetInt("MadeHisChoice", 1);
             GameManager.Instance._IsBuildingFromFBase = true;
         }else if (FirebaseManager.Instance.loadMapScene)
         {
