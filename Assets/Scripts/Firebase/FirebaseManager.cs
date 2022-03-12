@@ -36,6 +36,7 @@ public class FirebaseManager : MonoBehaviour
 
     public UserData userdata = new UserData();
 
+    public bool FbUserexisting = false;
 
     private void Awake()
     {
@@ -296,6 +297,7 @@ public class FirebaseManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     ReadData();
+                    FbUserexisting = true;
                 }
                 else
                 {
@@ -485,5 +487,14 @@ public class FirebaseManager : MonoBehaviour
         WriteBuildingDataToFirebase();
         WritePlayerDataToFirebase();
         CalculateLogOutTime();
+    }
+
+    private void Update()
+    {
+       if( FbUserexisting && userdata.UserDetails._playerCurrentLevel!=0)
+        {
+            SceneManager.LoadScene("Level" + userdata.UserDetails._playerCurrentLevel);
+            FbUserexisting = false;
+        }
     }
 }

@@ -35,6 +35,7 @@ public class FacebookManager : MonoBehaviour
 	public GameObject _loadingScreen;
 	void Awake()
 	{
+		_loadingScreen.SetActive(false);
 		if (Instance == null)
 		{
 			Instance = this;
@@ -65,25 +66,25 @@ public class FacebookManager : MonoBehaviour
 			TextStatus.text = "Failed to Initialize the Facebook SDK";
 		}
 
-		if (FB.IsLoggedIn)
-		{
-			_loadingScreen.SetActive(true);
-			FB.API("/me?fields=name", HttpMethod.GET, DispName);
-			FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
-			FB.API("/me?fields=id", HttpMethod.GET, DispID);
-			GetFBFriends();
+		//if (FB.IsLoggedIn)
+		//{
+		//	_loadingScreen.SetActive(true);
+		//	FB.API("/me?fields=name", HttpMethod.GET, DispName);
+		//	FB.API("me/picture?type=square&height=128&width=128", HttpMethod.GET, GetPicture);
+		//	FB.API("/me?fields=id", HttpMethod.GET, DispID);
+		//	GetFBFriends();
 
-			FirebaseManager.Instance.userTitle = "Facebook Users";
-			FirebaseManager.Instance.ReadData();
-			LoginButton.SetActive(false); //LogOutButton.SetActive(true);
-			//FriendsListButton.SetActive(true);
-			//DisplayFbFriends();
-		}
-		else
-		{
-			//TextStatus.text = "Please login to continue.";
-			//LoginButton.SetActive(true);// LogOutButton.SetActive(false);
-		}
+		//	FirebaseManager.Instance.userTitle = "Facebook Users";
+		//	FirebaseManager.Instance.ReadData();
+		//	LoginButton.SetActive(false); //LogOutButton.SetActive(true);
+		//	//FriendsListButton.SetActive(true);
+		//	//DisplayFbFriends();
+		//}
+		//else
+		//{
+		//	//TextStatus.text = "Please login to continue.";
+		//	//LoginButton.SetActive(true);// LogOutButton.SetActive(false);
+		//}
 	}
 
 	private void OnHideUnity(bool isGameShown)
@@ -117,6 +118,7 @@ public class FacebookManager : MonoBehaviour
         {
             TextStatus.text = result.Error;
         }
+		_loadingScreen.SetActive(true);
 		if (result.Cancelled) return;
 		if(isFromTutorial) FirebaseManager.Instance.RemoveGuestUser(FirebaseManager.Instance.auth.CurrentUser.UserId);
 		FirebaseManager.Instance.userTitle = "Facebook Users";
