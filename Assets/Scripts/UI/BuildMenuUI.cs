@@ -85,10 +85,11 @@ public class BuildMenuUI : MonoBehaviour
                 {
                     GameManager.Instance.AddStars();
                     mBuildingManagerRef.GrabElementNumberBasedOnButtonClick(inBuildingElementNumber);
-                    mGameManager._coins -= mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel];
+                    mGameManager._coins -= mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1];
                     UpdateBuildingImage(buildingsButtonRef, inBuildingElementNumber);
                     UpdateStarsBasedOnBuildingState(buildingsButtonRef, inBuildingElementNumber);
-                    StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber,mWaitTimeToShowNextUpgradeCost,ButtonState.Building));               
+                    StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber, mWaitTimeToShowNextUpgradeCost, ButtonState.Building));
+
                 }
                 else
                 {
@@ -101,7 +102,7 @@ public class BuildMenuUI : MonoBehaviour
             {
                 if (mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel != 5)
                 {
-                    if (GameManager.Instance.HasEnoughCoins(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel/2]))
+                    if (GameManager.Instance.HasEnoughCoins(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel]))
                     {
                         mBuildingManagerRef.GrabElementNumberBasedOnButtonClick(inBuildingElementNumber);
                         mBuildingManagerRef._buildingData[inBuildingElementNumber].isBuildingDamaged = false;
@@ -109,7 +110,7 @@ public class BuildMenuUI : MonoBehaviour
                         mGameManager._coins -= mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel] / 2;
                         UpdateBuildingImage(buildingsButtonRef, inBuildingElementNumber);
                         UpdateStarsBasedOnBuildingState(buildingsButtonRef, inBuildingElementNumber);
-                        StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber, mWaitTimeToShowNextUpgradeCost, ButtonState.Building));                
+                        StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber, mWaitTimeToShowNextUpgradeCost, ButtonState.Building));
                     }
                     else
                     {
@@ -120,7 +121,7 @@ public class BuildMenuUI : MonoBehaviour
                 }
                 else
                 {
-                    if (GameManager.Instance.HasEnoughCoins(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1]/2))
+                    if (GameManager.Instance.HasEnoughCoins(mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1]))
                     {
                         mBuildingManagerRef.GrabElementNumberBasedOnButtonClick(inBuildingElementNumber);
                         mBuildingManagerRef._buildingData[inBuildingElementNumber].isBuildingDamaged = false;
@@ -128,7 +129,7 @@ public class BuildMenuUI : MonoBehaviour
                         mGameManager._coins -= mBuildingManagerRef._buildingData[inBuildingElementNumber].UpgradeCosts[mBuildingManagerRef._buildingData[inBuildingElementNumber]._buildingLevel - 1] / 2;
                         UpdateBuildingImage(buildingsButtonRef, inBuildingElementNumber);
                         UpdateStarsBasedOnBuildingState(buildingsButtonRef, inBuildingElementNumber);
-                        StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber, mWaitTimeToShowNextUpgradeCost, ButtonState.Building));                    
+                        StartCoroutine(ButtonTextManagament(buildingsButtonRef, inBuildingElementNumber, mWaitTimeToShowNextUpgradeCost, ButtonState.Building));
                     }
                     else
                     {
