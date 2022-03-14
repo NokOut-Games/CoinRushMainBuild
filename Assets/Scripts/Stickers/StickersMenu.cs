@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StickersMenu : MonoBehaviour
 {
-    public GameObject _stickerPanel;
-   // public GameObject _selectedSetPanel;
     public List<GameObject> _stickerSet;
     public Transform _parentGameObject;
     // Start is called before the first frame update
@@ -17,18 +15,6 @@ public class StickersMenu : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void BackToStickerPanel()
-    {
-
-    }
-    public void BackToGameScene()
-    {
-        _stickerPanel.SetActive(false);
-    }
+   
 }
