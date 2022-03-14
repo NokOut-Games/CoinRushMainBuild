@@ -20,14 +20,14 @@ public class MapSceneManager : MonoBehaviour
             TutorialManager.Instance.StartNextTutorial(0);
             GameManager.Instance.isInTutorial = true;
         }
-        backBtn.onClick.AddListener(()=>{ LevelLoadManager.instance.BacktoHome(); });
+        backBtn.onClick.AddListener(() => { LevelLoadManager.instance.BacktoHome(); });
 
         if (GameManager.Instance.hasChoiceInLevel) backBtn.gameObject.SetActive(false);
-      
+
         // Debug.LogError(GameManager.Instance._SetIndex);
-        MakeSetCompletedUntilIndex(GameManager.Instance._SetIndex,GameManager.Instance._CompletedLevelsInSet);
+        MakeSetCompletedUntilIndex(GameManager.Instance._SetIndex, GameManager.Instance._CompletedLevelsInSet);
         SetMapScreen(GameManager.Instance.hasChoiceInLevel);
-        //mCameraController.transform.position = new Vector3(0, 0, GameManager.Instance._playerCurrentLevel);
+
         if (GameManager.Instance._SetIndex >= levelSets.Length - 1 && IsSetCompleted(GameManager.Instance._SetIndex))
         {
             backBtn.gameObject.SetActive(true);
@@ -36,7 +36,7 @@ public class MapSceneManager : MonoBehaviour
     }
     private void Update()
     {
-        
+
 
         //mCameraController._EndBoundary = unlockedLevel;
 
@@ -45,7 +45,7 @@ public class MapSceneManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("MapTarget"))
             {
-              //  FirebaseManager.Instance.readUserData = true;
+                //  FirebaseManager.Instance.readUserData = true;
 
                 hit.collider.transform.parent.GetChild(2).gameObject.SetActive(false);
                 GameManager.Instance.hasChoiceInLevel = false;
@@ -55,7 +55,7 @@ public class MapSceneManager : MonoBehaviour
                 hit.collider.transform.parent.GetChild(0).GetComponent<Animator>().SetBool("OpenCloud", true);
                 GameManager.Instance._playerCurrentLevel = hit.collider.transform.parent.GetComponent<Level>().levelNO;
                 PlayerPrefs.SetInt("MadeHisChoice", 1);
-                LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name,2000); 
+                LevelLoadManager.instance.LoadLevelASyncOf(hit.collider.transform.parent.gameObject.name, 2);
                 GameManager.Instance._IsBuildingFromFBase = false;
                 GameManager.Instance._buildingGameManagerDataRef.Clear();
                 FirebaseManager.Instance.DeleteBuildingDataOnNewLevel();
@@ -64,21 +64,23 @@ public class MapSceneManager : MonoBehaviour
         }
     }
 
-    void MakeSetCompletedUntilIndex(int inIndex,List<int> inCompletedLevelIndexes)
+    void MakeSetCompletedUntilIndex(int inIndex, List<int> inCompletedLevelIndexes)
     {
         unlockedLevel = 0;
         for (int i = 0; i < levelSets.Length; i++)
         {
-          //  Debug.LogError(i);
+            //  Debug.LogError(i);
+
             if (i > inIndex)
                 return;
+            mCameraController.transform.position = new Vector3(mCameraController.transform.position.x, levelSets[i].gameObject.transform.position.y, mCameraController.transform.position.z);
             for (int j = 0; j < levelSets[i].levels.Length; j++)
             {
                 unlockedLevel++;
                 //mCameraController.transform.position = new Vector3(0, 0, unlockedLevel);
-                if ((i < inIndex)|| (i == inIndex && inCompletedLevelIndexes.Contains(j)))
+                if ((i < inIndex) || (i == inIndex && inCompletedLevelIndexes.Contains(j)))
                 {
-                   // mCameraController.transform.position = new Vector3(0, 0, unlockedLevel-1);
+                    // mCameraController.transform.position = new Vector3(0, 0, unlockedLevel-1);
                     levelSets[i].levels[j].isUnlocked = true;
                 }
             }
@@ -86,7 +88,7 @@ public class MapSceneManager : MonoBehaviour
 
     }
     [ContextMenu("SetMapScreen")]
-    public void SetMapScreen(bool hasChoise=false)
+    public void SetMapScreen(bool hasChoise = false)
     {
         int i = 0;
         foreach (var levelSet in levelSets)
@@ -97,7 +99,7 @@ public class MapSceneManager : MonoBehaviour
                 {
                     level.transform.GetChild(0).gameObject.SetActive(false);
                     level.transform.GetChild(2).gameObject.SetActive(false);
-                   //unlockedLevel = (int)(level.gameObject.name[level.gameObject.name.Length-1]);
+                    //unlockedLevel = (int)(level.gameObject.name[level.gameObject.name.Length-1]);
                 }
                 else
                     level.transform.GetChild(2).gameObject.SetActive(hasChoise);
@@ -119,13 +121,13 @@ public class MapSceneManager : MonoBehaviour
         }
         else
         {
-            if (GameManager.Instance._SetIndex < levelSets.Length-1)
+            if (GameManager.Instance._SetIndex < levelSets.Length - 1)
             {
                 GameManager.Instance._CompletedLevelsInSet.Clear();
                 GameManager.Instance._SetIndex++;
             }
         }
-        
+
     }
     bool IsSetCompleted(int inSetIndex)
     {

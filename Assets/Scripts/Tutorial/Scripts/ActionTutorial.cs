@@ -26,6 +26,7 @@ public class ActionTutorial : Tutorial
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(2,false);
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(3,false);
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(5, false);
+                GameObject.Find("GameCanvas").GetComponent<MenuUI>().UIElementActivate(6, false);
 
                 break;
 
@@ -38,6 +39,7 @@ public class ActionTutorial : Tutorial
             case TutorialActionType.Building:
                 GameManager.Instance.AssignTutorial(this);
                 GameObject.Find("GameCanvas").GetComponent<MenuUI>().BuildButton();
+                GameManager.Instance._PauseGame = true;
                 break;
             case TutorialActionType.Multiplier:
                 GameObject.Find("CardDeck").GetComponent<CardDeck>().AssignTutorial(this,CardType.JOKER);              

@@ -38,14 +38,6 @@ public class SpinWheelSpin : MonoBehaviour
 
         _uiSpinButton.onClick.AddListener(() =>
         {
-            if (FreeSpins == 0 && onSpin) return;
-            onSpin = true;
-
-            CoinParticle.SetActive(false);
-            EnergyParticle.SetActive(false);
-            chestAnimation.SetBool("Open", false);
-            _uiSpinButton.interactable = false;
-
             spinWheel.OnSpinEnd(wheelPiece =>
             {
                 onSpin = false;
@@ -74,7 +66,7 @@ public class SpinWheelSpin : MonoBehaviour
                 }
                 if (wheelPiece._Icon == _uiEnergySprite)
                 {
-                    
+
                     chestAnimation.SetBool("Open", true);
                     Invoke(nameof(PlayEnergyParticle), .2f);
 
@@ -96,13 +88,20 @@ public class SpinWheelSpin : MonoBehaviour
                 }
                 if (wheelPiece._Icon == _uiCardSprite)
                 {
-                   
+
                     chestAnimation.SetBool("Open", true);
                     Invoke(nameof(ShowResultPopUP), 1f);
                     cardCount++;
                 }
 
             });
+            if (FreeSpins <= 0 && onSpin) return;
+            onSpin = true;
+
+            CoinParticle.SetActive(false);
+            EnergyParticle.SetActive(false);
+            chestAnimation.SetBool("Open", false);
+
             spinWheel.Spin();
 
         });
@@ -136,6 +135,8 @@ public class SpinWheelSpin : MonoBehaviour
         }
         else
         {
+            _uiReturnToGame.gameObject.SetActive(true);
+
             _uiReturnToGame.ShowMultiplierDetails(0, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
             _uiReturnToGame.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
 
@@ -153,7 +154,6 @@ public class SpinWheelSpin : MonoBehaviour
             _uiReturnToGame.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
             if (totalFreeSpin != 0)
                 _uiReturnToGame.ShowMultiplierDetails(2, 2, "No. of spins", totalFreeSpin.ToString());
-            _uiReturnToGame.gameObject.SetActive(true);
 
             disablePanel = DoFreeSpins;
         }

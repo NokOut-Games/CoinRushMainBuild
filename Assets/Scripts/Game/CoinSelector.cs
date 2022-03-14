@@ -38,6 +38,7 @@ public class CoinSelector : MonoBehaviour
     private LevelLoadManager mlevelLoadManagerRef;
 
     [SerializeField] private float HammerImpactTime;
+    int coinValue;
 
     private void Start()
     {
@@ -53,14 +54,9 @@ public class CoinSelector : MonoBehaviour
     {
         //int coinValue = mCoinProbability.DisplayTheFinalElementBasedOnRandomValueGenerated();
 
-       int coinValue = int.Parse(GameManager.Instance.minigameEconomy.CoinReward[RNG.instance.GetRandom(RNG.instance.CoinSceneProbability)]);
+        coinValue = int.Parse(GameManager.Instance.minigameEconomy.CoinReward[RNG.instance.GetRandom(RNG.instance.CoinSceneProbability)]);
 
-        RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
-        RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
-
-        RewardDisplayPanel.ShowResultTotal(0, Mathf.RoundToInt(coinValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
-
-        mGameManager._coins += Mathf.RoundToInt(coinValue* GameManager.Instance._MultiplierValue *GameManager.Instance.cucuMultiplier);
+       
 
         GameObject SelectedPig = this.gameObject;
         SelectedPig.GetComponent<ChestValue>()._value = coinValue;
@@ -108,6 +104,12 @@ public class CoinSelector : MonoBehaviour
     void DisplayRewardAndInvokeScene()
     {
         RewardDisplayPanel.gameObject.SetActive(true);
+        RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
+        RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Multiplier", GameManager.Instance.cucuMultiplier.ToString());
+
+        RewardDisplayPanel.ShowResultTotal(0, Mathf.RoundToInt(coinValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier).ToString());
+
+        mGameManager._coins += Mathf.RoundToInt(coinValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
     }
 
    

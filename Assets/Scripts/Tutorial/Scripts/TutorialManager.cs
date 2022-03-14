@@ -38,7 +38,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");       
+        Tutorials = Resources.LoadAll<Tutorial>("Tutorials");      
+        
     }
     public void StartNextTutorial(int tutorialIndex)
     {
@@ -71,6 +72,8 @@ public class TutorialManager : MonoBehaviour
         TutorialHintTxt.gameObject.SetActive(false);
         TutorialUIPopUp.SetActive(false);
         isPopUpRunning = false;
+        GameManager.Instance._PauseGame = false;
+
         StartNextTutorial(currentTutorialIndex + 1);
     }
     void OnTimerFinish()

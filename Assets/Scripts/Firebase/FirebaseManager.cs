@@ -55,7 +55,7 @@ public class FirebaseManager : MonoBehaviour
 
     private void Start()
     {
-       
+      
         if (auth.CurrentUser == null && !PlayerPrefs.HasKey("MadeHisChoice"))
         {
             CreateNewGuestUser();
@@ -79,7 +79,7 @@ public class FirebaseManager : MonoBehaviour
             };
             FacebookManager.Instance.GetProfilePictureWithId(_PlayerName, OnGettingPic, true);
         }
-       
+
     }
 
     public void RemoveGuestUser(string id)

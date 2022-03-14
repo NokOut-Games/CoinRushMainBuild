@@ -91,7 +91,7 @@ public class CardDeck : MonoBehaviour
 
     public bool isDrawButtonHolded = false;
 
-
+    [SerializeField] Popup _PopUp;
 
     private void Awake()
     {
@@ -347,7 +347,10 @@ public class CardDeck : MonoBehaviour
                     }
                 }
             }
-            else BackToNormalState();
+            else
+            {
+                BackToNormalState();
+            }
         }
     }
 
@@ -369,7 +372,7 @@ public class CardDeck : MonoBehaviour
         {
             mCardHolderParent.transform.parent.SetAsLastSibling();
         }
-        Invoke("ThreeCardEffectActivate", 3.2f);
+        Invoke(nameof(ThreeCardEffectActivate), 2.25f);
 
         _CardList[mSelectionCards[inSelectedIndex] - 1].PlayThreeCardMatchAnim(-320);
         mFlotingJoker.GetComponent<Cards>().PlayThreeCardMatchAnim(0, _CardList[mSelectionCards[inSelectedIndex]].gameObject.GetComponent<Image>().sprite);
@@ -439,12 +442,15 @@ public class CardDeck : MonoBehaviour
 
     private void DrawCard()
     {
+
         if (CardDeckAnimator.GetCurrentAnimatorStateInfo(0).IsName("Back")) return;
 
         if (_CardList.Count >= 8)
         {
             return;
         }
+        if (GameManager.Instance._energy < 0)
+            _PopUp.AwakePopUp(Popup.PopUp.Energy, 100);
         mMakeDrawBtnEnable = false;
 
         GameManager.Instance._energy -= 1;
@@ -669,6 +675,8 @@ public class CardDeck : MonoBehaviour
             _CardList.RemoveAt(jokerIndex);
             GameManager.Instance._SavedCardTypes.RemoveAt(jokerIndex);
             mHasThreeCardMatch = true;
+            menu.disableUi = true;
+
 
             if (jokerIndex > newCardIndex)
             {
@@ -807,6 +815,8 @@ public class CardDeck : MonoBehaviour
             {
                 mThreeCardMatchIndex = i;
                 mHasThreeCardMatch = true;
+                menu.disableUi = true;
+
                 canClick = false;
                 CardType matchedCard = _CardList[i]._cardType;
 
@@ -827,6 +837,7 @@ public class CardDeck : MonoBehaviour
                 Debug.Log("Pair with joker");
                 mThreeCardMatchIndex = i;
                 mHasThreeCardMatch = true;
+                menu.disableUi = true;
                 canClick = false;
                 CardType matchedCard = _CardList[i]._cardType;
                 Invoke(nameof(PlayThreeCardAnimation), 1.5f);
@@ -859,6 +870,8 @@ public class CardDeck : MonoBehaviour
         StartCoroutine(menu.UpDateShieldInUICoroutine(.5f));
 
         mHasThreeCardMatch = false;
+        menu.disableUi = false;
+
     }
 
     void PlayThreeCardAnimation()
@@ -929,7 +942,7 @@ public class CardDeck : MonoBehaviour
             if (GameManager.Instance._energy >= 3)
             {
                 _drawButtonRectTransform.parent.SetAsFirstSibling();
-                _Multiplier.gameObject.SetActive(true);
+                _Multiplier.transform.parent.gameObject.SetActive(true);
                 _Multiplier.AssignTutorial(tutorial);
                 _Multiplier.transform.SetAsLastSibling();
                 _Multiplier.InitiateMulitiplier(inType);

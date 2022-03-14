@@ -5,12 +5,10 @@ using UnityEngine;
 public class CannonShotController : MonoBehaviour
 {
 
-    public Rigidbody _bulletPrefab, _bullet;
-    public Transform _shotPoint;
+    public Rigidbody  _bullet;
     public Transform _TargetTransform;
     public AttackManager _AttackManager;
     public Vector3 CannonAttackPosition;
-    Quaternion rot;
     public bool fixCameraRot = false;
     public bool Halfwayreached = true;
     public bool ishalfwayreached = true;
@@ -20,9 +18,10 @@ public class CannonShotController : MonoBehaviour
     public GameObject shieldPref;
 
     public Vector3 cameraTargetPos;
-    private Vector3 velocity = Vector3.zero;
-    BallLaunch mBallLaunch;
     [SerializeField] Animator ballAnimation;
+    [SerializeField] GameObject coinParticle;
+    [SerializeField] GameObject energyParticle;
+
 
     void FixedUpdate()
     {
@@ -75,6 +74,14 @@ public class CannonShotController : MonoBehaviour
         _TargetTransform = tran;
         this.transform.position = new Vector3(_TargetTransform.position.x, CannonAttackPosition.y, _TargetTransform.position.z-1000);//427 CannonAttackPosition.y, CannonAttackPosition.z);
         this.gameObject.SetActive(true);
+        if (_AttackManager.reward > 100)
+        {
+            coinParticle.SetActive(true);
+        }
+        else
+        {
+            energyParticle.SetActive(true);
+        }
         ballAnimation.SetBool("SHIELDED", _AttackManager._Shield);
        // Invoke("ShootBullet", 2.5f);
     }

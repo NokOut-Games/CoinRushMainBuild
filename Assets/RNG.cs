@@ -34,7 +34,7 @@ public class RNG : MonoBehaviour
     private void Awake()
     {
         Load();
-        StartCoroutine(CheckPlayerState(300));
+        StartCoroutine(CheckPlayerState(1200));
 
         if (instance != null && instance != this)
         {

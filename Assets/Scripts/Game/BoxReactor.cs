@@ -41,6 +41,7 @@ public class BoxReactor : MonoBehaviour
 
     [SerializeField] private GameObject HitSmokeEffect;
     [SerializeField] private GameObject HitSmokeRingEffect;
+    [SerializeField] int rewardValue;
 
 
     void PlayParticleEffects(GameObject inChest)
@@ -72,7 +73,8 @@ public class BoxReactor : MonoBehaviour
             Instantiate(EnergyCanSmall, canSpawnLocation.transform.position, Quaternion.identity);
             StartCoroutine(SpawnParticleCoroutine(EnergyCanMediumParticle, 2, -10));
             crateAnimRef.SetTrigger("isBreaking?");
-            SetRewardPanel(crateValueRef);                                       
+            rewardValue = crateValueRef._value;
+            Invoke(nameof(SetRewardPanel), 2f);
         }
     }
 
@@ -83,24 +85,20 @@ public class BoxReactor : MonoBehaviour
         Instantiate(g, canSpawnLocation.transform.position+new Vector3(0,10,z), Quaternion.identity);
     }
 
-    void ActiveRewardPanel()
-    {
-        RewardDisplayPanel.gameObject.SetActive(true);
-    }
-
     public void BackToMainScene()
     {
         LevelLoadManager.instance.BacktoHome();
     }
 
 
-    void SetRewardPanel(ChestValue crateValueRef)
+    void SetRewardPanel()
     {
+        RewardDisplayPanel.gameObject.SetActive(true);
+
         RewardDisplayPanel.ShowMultiplierDetails(0, 0, " Multiplier", GameManager.Instance._MultiplierValue.ToString());
         RewardDisplayPanel.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
-        RewardDisplayPanel.ShowResultTotal(1, Mathf.RoundToInt(crateValueRef._value * GameManager.Instance._MultiplierValue* GameManager.Instance.cucuMultiplier).ToString());
-        Invoke(nameof(ActiveRewardPanel), 2f);
+        RewardDisplayPanel.ShowResultTotal(1, Mathf.RoundToInt(rewardValue * GameManager.Instance._MultiplierValue* GameManager.Instance.cucuMultiplier).ToString());
 
-        GameManager.Instance._energy += Mathf.RoundToInt(crateValueRef._value * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
+        GameManager.Instance._energy += Mathf.RoundToInt(rewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
     }
 }

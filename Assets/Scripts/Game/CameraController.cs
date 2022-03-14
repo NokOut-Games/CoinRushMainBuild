@@ -36,10 +36,10 @@ public class CameraController : MonoBehaviour
     float touchHoldTime;
 
     [SerializeField] Camera uIcam;
-    bool drawButtonClick => RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
-    bool OpenCardRegionClick => RectTransformUtility.RectangleContainsScreenPoint(mOpenHandRectTransform, Input.mousePosition, uIcam);
+    bool drawButtonClick => !GameManager.Instance._PauseGame && RectTransformUtility.RectangleContainsScreenPoint(mDrawButtonRectTransform, Input.mousePosition, uIcam);
+    bool OpenCardRegionClick => !GameManager.Instance._PauseGame && RectTransformUtility.RectangleContainsScreenPoint(mOpenHandRectTransform, Input.mousePosition, uIcam);
     bool BuildScrollViewClick =>!GameManager.Instance._PauseGame&& RectTransformUtility.RectangleContainsScreenPoint(mScrollViewRectTransform, Input.mousePosition, uIcam);
-    bool GetToNormalView => !_buildButtonClicked && !_DrawButtonClicked && !mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial;
+    bool GetToNormalView => !GameManager.Instance._PauseGame&&!_buildButtonClicked && !_DrawButtonClicked && !mCardDeck.mHasThreeCardMatch && !mCardDeck.mJokerFindWithMultiCardPair && !TutorialManager.Instance.isPopUpRunning && !GameManager.Instance.isInTutorial;
     [SerializeField]float TouchTime = 0.11f;
 
     [HideInInspector] public bool openCardSelected;
@@ -57,8 +57,8 @@ public class CameraController : MonoBehaviour
     public void BuildButtonClicked()
     {
         _buildButtonClicked = true;
-        transform.localEulerAngles = Vector3.zero;
-        transform.localPosition = Vector3.zero;
+        //transform.localEulerAngles = Vector3.zero;
+        //transform.localPosition = Vector3.zero;
         _CameraFreeRoam = false;
     }
 

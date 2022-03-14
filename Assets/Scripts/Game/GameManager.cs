@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
     {
         _IsBuildingFromFBase = false;
         hasChoiceInLevel = true;
-        LevelLoadManager.instance.LoadLevelASyncOf("Map", 1000);
+        LevelLoadManager.instance.LoadLevelASyncOf("Map", 1);
         OpenCardDetails.Clear();
         islandNumber++;
         FirebaseManager.Instance.ReadEconomy(islandNumber);

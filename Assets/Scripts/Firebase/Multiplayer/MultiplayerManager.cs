@@ -225,7 +225,6 @@ public class MultiplayerManager : MonoBehaviour
                 {
                     Debug.LogError("Levels Not Same");
                     mAttackManager.isDataChanging = false;
-                    FirebaseManager.Instance.ReadData(false, false);
                 }
             }
         });
@@ -262,7 +261,7 @@ public class MultiplayerManager : MonoBehaviour
         {
             if (task.IsCompleted)
             {
-                FirebaseManager.Instance.ReadData(false, false);
+              
             }
         });
     }

@@ -139,7 +139,6 @@ public class CardDeckAnimation : MonoBehaviour
 
     private void OffEffect()
     {
-        effects.SetActive(false);
-      
+        effects.SetActive(false);  
     }
 }

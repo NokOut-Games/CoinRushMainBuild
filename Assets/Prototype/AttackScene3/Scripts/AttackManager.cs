@@ -55,7 +55,7 @@ public class AttackManager : MonoBehaviour
 
     [SerializeField] Sprite EnergySprite;
     [SerializeField] Sprite CoinSprite;
-    int reward;
+    public int reward;
     private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -325,7 +325,7 @@ public class AttackManager : MonoBehaviour
         StartCoroutine(Transition());
         Camera.main.transform.rotation = CameraAttackRotation;
 
-        StartCoroutine(ScoreCalculation(_TargetTransform));
+        StartCoroutine(ScoreCalculation());
 
         if (_Shield == true)
         {
@@ -337,8 +337,10 @@ public class AttackManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ScoreCalculation(Transform trans)
-    {
+    public IEnumerator ScoreCalculation()
+    {      
+        yield return new WaitForSeconds(7.5f);
+        resultPanel.gameObject.SetActive(true);
         float RewardValue = reward;
 
         if (_multiplierSelected)
@@ -360,9 +362,6 @@ public class AttackManager : MonoBehaviour
             mGameManager._coins += Mathf.RoundToInt(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier);
             resultPanel.ShowResultTotal(0, (Mathf.Round(RewardValue * GameManager.Instance._MultiplierValue * GameManager.Instance.cucuMultiplier)).ToString());
         }
-
-        yield return new WaitForSeconds(7.5f);
-        resultPanel.gameObject.SetActive(true);
     }
 
 
@@ -417,7 +416,6 @@ public class AttackManager : MonoBehaviour
     public void BackButton()
     {
         MultiplayerManager.Instance.CheckAttackDataFromFirebase();
-        resultPanel.GetComponentInChildren<Button>().interactable = false;
         Invoke(nameof(ChangeEnemyBuildingData), 0.5f);
 
     }

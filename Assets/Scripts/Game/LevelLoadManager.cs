@@ -39,15 +39,17 @@ public class LevelLoadManager : MonoBehaviour
     }
     public void LoadLevelASyncOf(string inLevelIndex,int delayInMilisec=0,string animName = "BACK")
     {
+       
         GameManager.Instance._PauseGame = false;
         if (isSceneLoad) return;
         isSceneLoad = true;
-        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec, animName));       
+        StartCoroutine(LoadScene(inLevelIndex, delayInMilisec,  animName));       
     }
 
 
     IEnumerator LoadScene(string inLevelIndex,int loadTime=0, string animName = "BACK")
     {
+        yield return new WaitForSeconds(loadTime);
         mCanvas.SetActive(true);
         AsyncOperation scene = SceneManager.LoadSceneAsync(inLevelIndex);
         mCloudAnimator.Play("MAIN");
@@ -68,7 +70,7 @@ public class LevelLoadManager : MonoBehaviour
     {
         if (isSceneLoad) return;
         isSceneLoad = true;
-        StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel));
+        StartCoroutine(LoadScene(levelPrefix + GameManager.Instance._playerCurrentLevel,0));
         GameManager.Instance._IsRefreshNeeded = true;
         GameManager.Instance._PauseGame = false;
     }

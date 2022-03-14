@@ -418,6 +418,7 @@ public class Slots : MonoBehaviour
     {
         GameManager.Instance._coins += totalCoin;
         GameManager.Instance._energy += totalEnergy;
+        _rewardPanel.gameObject.SetActive(true);
 
         _rewardPanel.ShowMultiplierDetails(0, 0, "Multiplier", GameManager.Instance._MultiplierValue.ToString());
         _rewardPanel.ShowMultiplierDetails(1, 1, "Cucu Bonus", GameManager.Instance.cucuMultiplier.ToString());
@@ -436,7 +437,6 @@ public class Slots : MonoBehaviour
         _rewardPanel.ShowResultTotal(iconIndex.ToArray(), value.ToArray());
         if (totalSpins != 0)
             _rewardPanel.ShowMultiplierDetails(2, 2, "No. of spins", totalSpins.ToString());
-        _rewardPanel.gameObject.SetActive(true);
     }
     List<int[]> CheckTheResult(int inCoin, int inEnergy, int inCard)
     {

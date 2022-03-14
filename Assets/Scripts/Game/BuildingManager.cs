@@ -174,7 +174,6 @@ public class BuildingManager : MonoBehaviour
             GameManager.Instance._buildingGameManagerDataRef.Add(data);
         }
         FirebaseManager.Instance.WriteAllDataToFireBase();
-        //FirebaseManager.Instance.AddBuildsInLevelListner();
     }
 
     void DestroyAllBuildings()
@@ -190,7 +189,7 @@ public class BuildingManager : MonoBehaviour
     {
         for (int i = 0; i < _buildingData.Count; i++)
         {
-            if (_buildingData[i]._buildingLevel <= 0) /*&& !GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingDestroyed && !GameManager.Instance._buildingGameManagerDataRef[i]._isBuildingSpawned*/
+            if (_buildingData[i]._buildingLevel <= 0)
             {
                 if (!_buildingData[i].isBuildingDamaged)
                 {

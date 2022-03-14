@@ -53,7 +53,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private GameObject mcucuLevelPanel;
     bool isInoptionScreen => RectTransformUtility.RectangleContainsScreenPoint(optionScreen, Input.mousePosition, uIcam);
 
-
+    public bool disableUi;
 
     private void OnEnable()
     {
@@ -159,6 +159,7 @@ public class MenuUI : MonoBehaviour
 
     public void OnOptionButtonPress(bool inActivate)
     {
+        if (disableUi) return;
         isOptionactivate = inActivate;
         Optionanimator.SetBool("Show", inActivate);
         GameManager.Instance._PauseGame = inActivate;
