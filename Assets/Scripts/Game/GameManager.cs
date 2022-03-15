@@ -273,5 +273,10 @@ public class GameManager : MonoBehaviour
     {
         this.tutorial = tutorial;
     }
+
+    void ShowStickerAnimation(int setIndex,int StickerIndex)
+    {
+
+    }
 }
 

@@ -248,6 +248,9 @@ public class Slots : MonoBehaviour
                 {
                     case "TradingCards":
                         totalCard += JackPotReward[2];
+                        int SetsNumber = Random.Range(0, GameManager.Instance.UnLockedListAndIndex.Count);
+                        int StickerIndex = Random.Range(4, 9);
+                        GameManager.Instance.UnLockedListAndIndex[SetsNumber].StickerIndex.Add(StickerIndex);
                         if (spin == 0)
                             Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
@@ -282,6 +285,9 @@ public class Slots : MonoBehaviour
                 {
                     case "TradingCards":
                         totalCard += twoMatchReward[2];
+                        int SetsNumber = Random.Range(0, GameManager.Instance.UnLockedListAndIndex.Count);
+                        int StickerIndex = Random.Range(0, 5);
+                        GameManager.Instance.UnLockedListAndIndex[SetsNumber].StickerIndex.Add(StickerIndex);
                         if (spin == 0)
                             Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
@@ -333,6 +339,9 @@ public class Slots : MonoBehaviour
                 {
                     case "TradingCards":
                         totalCard += twoMatchReward[2];
+                        int SetsNumber = Random.Range(0, GameManager.Instance.UnLockedListAndIndex.Count);
+                        int StickerIndex = Random.Range(0, 5);
+                        GameManager.Instance.UnLockedListAndIndex[SetsNumber].StickerIndex.Add(StickerIndex);
                         if (spin == 0)
                             Invoke(nameof(RewardPanelInvoke), 2f);
                         break;
@@ -398,6 +407,9 @@ public class Slots : MonoBehaviour
                 else if (_elementsName[0]._slotElementGameObject.name == "TradingCards")
                 {
                     totalCard += singleReward[2];
+                    int SetsNumber = Random.Range(0, GameManager.Instance.UnLockedListAndIndex.Count);
+                    int StickerIndex = Random.Range(0, 3);
+                    GameManager.Instance.UnLockedListAndIndex[SetsNumber].StickerIndex.Add(StickerIndex);
                 }
                 if (spin == 0)
                     Invoke(nameof(RewardPanelInvoke), 2f);

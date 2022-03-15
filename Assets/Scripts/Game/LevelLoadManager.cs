@@ -78,4 +78,8 @@ public class LevelLoadManager : MonoBehaviour
     {
         this.tutorial = tutorial;
     }
+    public void LoadStickerScene()
+    {
+
+    }
 }
