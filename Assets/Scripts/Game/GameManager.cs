@@ -32,7 +32,11 @@ public class MiniGameEconomy
     public List<string> SlotReward = new List<string>();
     public List<string> SpinReward = new List<string>();
 }
-
+[System.Serializable]
+public class StickerSetIndex
+{
+    public List<int> StickerIndex = new List<int>();
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -98,6 +102,8 @@ public class GameManager : MonoBehaviour
     public int energyBarMax;
 
     public bool hasJoker;
+
+    public List<StickerSetIndex> UnLockedListAndIndex;
     private void Awake()
     {     
         if (Instance == null)

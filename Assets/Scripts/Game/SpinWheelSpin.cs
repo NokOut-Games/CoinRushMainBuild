@@ -92,6 +92,9 @@ public class SpinWheelSpin : MonoBehaviour
                     chestAnimation.SetBool("Open", true);
                     Invoke(nameof(ShowResultPopUP), 1f);
                     cardCount++;
+                    int SetsNumber = Random.Range(0, GameManager.Instance.UnLockedListAndIndex.Count);
+                    int StickerIndex = Random.Range(0, 9);
+                    GameManager.Instance.UnLockedListAndIndex[SetsNumber].StickerIndex.Add(StickerIndex);
                 }
 
             });
