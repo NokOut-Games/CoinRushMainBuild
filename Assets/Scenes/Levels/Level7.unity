@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 1e241164d6e25754b86d98f6d5f0591e, type: 2}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 0a85df4b80445934aa310a907f251b1c, type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3145,7 +3145,7 @@ PrefabInstance:
       objectReference: {fileID: 1983817684}
     - target: {fileID: 5228743769700604471, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -125.031494
+      value: -125.03125
       objectReference: {fileID: 0}
     - target: {fileID: 5943582559855211168, guid: a8d7ca6ee58cdf845aec832d700b28d8, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3913,7 +3913,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 72bc5c5fcd114e543ae946eb6c46fc4a, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!4 &508205388
 Transform:
   m_ObjectHideFlags: 0
@@ -11784,6 +11784,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5219406649510598130, guid: ef53a50402c5d4587957894f7c243174, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3038be3caff1ac8448b192dec68d59e4, type: 2}
     - target: {fileID: 8026521174156452490, guid: ef53a50402c5d4587957894f7c243174, type: 3}
       propertyPath: m_RootOrder
       value: 13
