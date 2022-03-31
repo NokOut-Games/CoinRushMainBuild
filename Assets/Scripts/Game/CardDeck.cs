@@ -16,7 +16,7 @@ public class CardDeck : MonoBehaviour
     public List<Transform> _playerHandPoints;
 
     [SerializeField] private List<ScriptedCards> mScriptedCards;
-    private List<Cards> _CardList = new List<Cards>();
+    public List<Cards> _CardList = new List<Cards>();
     [HideInInspector] public List<GameObject> mCardListGameObject;
     private List<Vector3> _PositionList = new List<Vector3>();
     private List<Vector3> _RotationList = new List<Vector3>();

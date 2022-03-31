@@ -33,8 +33,7 @@ public class RNG : MonoBehaviour
     bool forOnce;
     private void Awake()
     {
-        Load();
-        StartCoroutine(CheckPlayerState(1200));
+       
 
         if (instance != null && instance != this)
         {
@@ -44,6 +43,11 @@ public class RNG : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
 
+    }
+    private void Start()
+    {
+        Load();
+        StartCoroutine(CheckPlayerState(1200));
     }
     private void Update()
     {

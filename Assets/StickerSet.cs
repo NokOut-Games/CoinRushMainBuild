@@ -12,12 +12,47 @@ public class StickerSet : MonoBehaviour
     public int CurrentSetIndex;
     [SerializeField] Button nextBtn;
     [SerializeField] Button previousBtn;
+    [SerializeField] Transform ContentTransform;
+    [SerializeField] GameObject stickerSetPrefab;
+    List<GameObject> listofSets = new List<GameObject>();
+    [SerializeField] GameObject stickerScreen;
+    [SerializeField] GameObject stickerSetScreen;
+
     private void Start()
     {
+        nextBtn.onClick.AddListener(OnNextButtonPress);
+        previousBtn.onClick.AddListener(OnPreviousButtonPress);
     }
+
+    public void PopulateStickerSets()
+    {
+        foreach (var setGO in listofSets)
+        {
+            Destroy(setGO);
+        }
+        foreach (var stickerset in StickerCollections)
+        {
+            GameObject Set = Instantiate(stickerSetPrefab, ContentTransform);
+            Set.transform.GetChild(0).GetComponent<TMP_Text>().text = stickerset.StickerSetName;
+            Button setBtn = Set.GetComponent<Button>();
+            setBtn.interactable = false;
+            if (stickerset.isUnlocked)
+            {
+                setBtn.interactable = true;
+                setBtn.onClick.AddListener(() =>
+                {
+                    CurrentSetIndex = stickerset.StickerSetIndex;
+                    PopulateTheSetToScreen();
+                    stickerSetScreen.SetActive(false);
+                });
+            }
+            listofSets.Add(Set);
+        }
+    }
+
     public void PopulateTheSetToScreen()
     {
-        
+        stickerScreen.SetActive(true);
         int i = 0;
         foreach (var sticker in Stickers)
         {
@@ -28,12 +63,23 @@ public class StickerSet : MonoBehaviour
         }
         titleText.text = StickerCollections[CurrentSetIndex].StickerSetName;
         rewardText.text = StickerCollections[CurrentSetIndex].Reward.ToString();
+        nextBtn.gameObject.SetActive(true);
+        previousBtn.gameObject.SetActive(true);
+
+        if (CurrentSetIndex >= StickerCollections.Count - 1)
+        {
+            nextBtn.gameObject.SetActive(false);
+        }
+        if (CurrentSetIndex <= 0)
+        { 
+            previousBtn.gameObject.SetActive(false);
+        }
     }
     public void OnNextButtonPress()
     {
         previousBtn.gameObject.SetActive(true);
         CurrentSetIndex++;
-        if (CurrentSetIndex >= StickerCollections.Count-1) nextBtn.gameObject.SetActive(false);
+        if (CurrentSetIndex >= StickerCollections.Count - 1) nextBtn.gameObject.SetActive(false);
         PopulateTheSetToScreen();
     }
     public void OnPreviousButtonPress()
@@ -56,8 +102,9 @@ public class StickerSet : MonoBehaviour
 [System.Serializable]
 public class StickerDB
 {
-   public string StickerSetName;
-   public int StickerSetIndex;
+    public string StickerSetName;
+    public int StickerSetIndex;
     public int Reward;
-   public StickerSO[] StickersInset;
+    public bool isUnlocked;
+    public StickerSO[] StickersInset;
 }
